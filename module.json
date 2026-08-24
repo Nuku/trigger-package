@@ -8,6 +8,9 @@
       "name": "Nuku"
     }
   ],
+  "url": "https://github.com/Nuku/trigger-package",
+  "manifest": "https://raw.githubusercontent.com/Nuku/trigger-package/master/module.json",
+  "download": "https://github.com/Nuku/trigger-package/archive/refs/heads/master.zip",
   "compatibility": {
     "minimum": "14",
     "verified": "14"
