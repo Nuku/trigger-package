@@ -1,6 +1,363 @@
 [
-{"id":"B471BloTrg00001X","name":"Bloodletting Kukri — Persistent Bleed","folder":"Equipment","description":"Apply 1d8 persistent bleed on a critical Bloodletting Kukri hit; conditional temporary Hit Points remain native/manual.","priority":0,"tags":["pf2e","equipment","bloodletting-kukri"],"variables":{"B471BloEvt00001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"B471BloEvt00001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"},"B471BloEvt00001X:outputs:outcome":{"type":"outcome","isArray":false,"label":"Outcome"}},"nodes":[{"id":"B471BloEvt00001X","type":"attack-roll-event","state":"attack","inputs":{},"outs":{"out":{"connection":"B471BloMch00001X:ins:in"}},"position":{"x":0,"y":0}},{"id":"B471BloMch00001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:bloodletting-kukri"},"list":{"connection":"B471BloEvt00001X:outputs:options"}},"outs":{"true":{"connection":"B471BloSpl00001X:ins:in"}},"position":{"x":320,"y":0}},{"id":"B471BloSpl00001X","type":"split-outcome","inputs":{"input":{"connection":"B471BloEvt00001X:outputs:outcome"}},"outs":{"criticalSuccess":{"connection":"B471BloPer00001X:ins:in"}},"position":{"x":640,"y":0}},{"id":"B471BloPer00001X","type":"persistent-damage","state":"fixed","inputs":{"formula":{"value":"1d8[bleed]"},"target":{"connection":"B471BloEvt00001X:outputs:target"},"name":{"value":"Effect: Bloodletting Kukri"}},"position":{"x":960,"y":0}}]},
-{"id":"B471ScTTrg00001X","name":"Scalding Gauntlets (True) — Sickened and Persistent Fire","folder":"Equipment","description":"Apply sickened 1 for 1 hour and 4d6 persistent fire on failed or critically failed Scalding Gauntlets (True) saves; grab/restrain qualification and immunity remain native/manual.","priority":0,"tags":["pf2e","equipment","scalding-gauntlets-true"],"variables":{"B471ScTEvt00001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"B471ScTEvt00001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"},"B471ScTEvt00001X:outputs:outcome":{"type":"outcome","isArray":false,"label":"Outcome"}},"nodes":[{"id":"B471ScTEvt00001X","type":"check-roll-event","state":"check","inputs":{"for":{"value":"saving-throw"}},"outs":{"out":{"connection":"B471ScTMch00001X:ins:in"}},"position":{"x":0,"y":0}},{"id":"B471ScTMch00001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:scalding-gauntlets-true"},"list":{"connection":"B471ScTEvt00001X:outputs:options"}},"outs":{"true":{"connection":"B471ScTSpl00001X:ins:in"}},"position":{"x":320,"y":0}},{"id":"B471ScTSpl00001X","type":"split-outcome","inputs":{"input":{"connection":"B471ScTEvt00001X:outputs:outcome"}},"outs":{"failure":{"connection":"B471ScTSck00001X:ins:in"},"criticalFailure":{"connection":"B471ScTSck00001X:ins:in"}},"position":{"x":640,"y":0}},{"id":"B471ScTSck00001X","type":"create-condition","state":"timed","inputs":{"condition":{"value":"sickened"},"value":{"value":1},"duration":{"value":1},"unit":{"value":"hours"},"name":{"value":"Effect: Scalding Gauntlets (True)"},"target":{"connection":"B471ScTEvt00001X:outputs:target"}},"outs":{"out":{"connection":"B471ScTPer00001X:ins:in"}},"position":{"x":960,"y":0}},{"id":"B471ScTPer00001X","type":"persistent-damage","state":"fixed","inputs":{"formula":{"value":"4d6[fire]"},"target":{"connection":"B471ScTEvt00001X:outputs:target"},"name":{"value":"Effect: Scalding Gauntlets (True)"}},"position":{"x":1280,"y":0}}]},
-{"id":"B471BasTrg00001X","name":"Basilisk Eye — Slowed","folder":"Equipment","description":"Apply slowed 1 for 1 minute on a failed Basilisk Eye Fortitude save; Shield Block trigger and temporary immunity remain native/manual.","priority":0,"tags":["pf2e","equipment","basilisk-eye"],"variables":{"B471BasEvt00001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"B471BasEvt00001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"},"B471BasEvt00001X:outputs:outcome":{"type":"outcome","isArray":false,"label":"Outcome"}},"nodes":[{"id":"B471BasEvt00001X","type":"check-roll-event","state":"check","inputs":{"for":{"value":"saving-throw"}},"outs":{"out":{"connection":"B471BasMch00001X:ins:in"}},"position":{"x":0,"y":0}},{"id":"B471BasMch00001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:basilisk-eye"},"list":{"connection":"B471BasEvt00001X:outputs:options"}},"outs":{"true":{"connection":"B471BasSpl00001X:ins:in"}},"position":{"x":320,"y":0}},{"id":"B471BasSpl00001X","type":"split-outcome","inputs":{"input":{"connection":"B471BasEvt00001X:outputs:outcome"}},"outs":{"failure":{"connection":"B471BasSlo00001X:ins:in"},"criticalFailure":{"connection":"B471BasSlo00001X:ins:in"}},"position":{"x":640,"y":0}},{"id":"B471BasSlo00001X","type":"create-condition","state":"timed","inputs":{"condition":{"value":"slowed"},"value":{"value":1},"duration":{"value":1},"unit":{"value":"minutes"},"name":{"value":"Effect: Basilisk Eye"},"target":{"connection":"B471BasEvt00001X:outputs:target"}},"position":{"x":960,"y":0}}]},
-{"id":"B471DwaTrg00001X","name":"Dwarven Daisy (Lesser) — Dazzled","folder":"Equipment","description":"Apply dazzled for 1 round on a failed or critically failed Lesser Dwarven Daisy Fortitude save; Strike damage remains native/manual.","priority":0,"tags":["pf2e","equipment","dwarven-daisy-lesser"],"variables":{"B471DwaEvt00001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"B471DwaEvt00001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"},"B471DwaEvt00001X:outputs:outcome":{"type":"outcome","isArray":false,"label":"Outcome"}},"nodes":[{"id":"B471DwaEvt00001X","type":"check-roll-event","state":"check","inputs":{"for":{"value":"saving-throw"}},"outs":{"out":{"connection":"B471DwaMch00001X:ins:in"}},"position":{"x":0,"y":0}},{"id":"B471DwaMch00001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:dwarven-daisy-lesser"},"list":{"connection":"B471DwaEvt00001X:outputs:options"}},"outs":{"true":{"connection":"B471DwaSpl00001X:ins:in"}},"position":{"x":320,"y":0}},{"id":"B471DwaSpl00001X","type":"split-outcome","inputs":{"input":{"connection":"B471DwaEvt00001X:outputs:outcome"}},"outs":{"failure":{"connection":"B471DwaDaz00001X:ins:in"},"criticalFailure":{"connection":"B471DwaDaz00001X:ins:in"}},"position":{"x":640,"y":0}},{"id":"B471DwaDaz00001X","type":"create-condition","state":"timed","inputs":{"condition":{"value":"dazzled"},"duration":{"value":1},"unit":{"value":"rounds"},"name":{"value":"Effect: Dwarven Daisy (Lesser)"},"target":{"connection":"B471DwaEvt00001X:outputs:target"}},"position":{"x":960,"y":0}}]}
+  {
+    "id": "B471ScTTrg00001X",
+    "name": "Scalding Gauntlets (True) — Sickened",
+    "folder": "Equipment",
+    "description": "Apply sickened by save outcome; persistent fire damage remains native/manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "equipment",
+      "scalding-gauntlets-true"
+    ],
+    "variables": {
+      "B471ScTEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B471ScTEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B471ScTEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B471ScTEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B471ScTMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B471ScTMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:scalding-gauntlets-true"
+          },
+          "list": {
+            "connection": "B471ScTEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B471ScTSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B471ScTSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B471ScTEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "failure": {
+            "connection": "B471ScTSck00001X:ins:in"
+          },
+          "criticalFailure": {
+            "connection": "B471ScTSck00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B471ScTSck00001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "sickened"
+          },
+          "value": {
+            "value": 1
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "hours"
+          },
+          "name": {
+            "value": "Effect: Scalding Gauntlets (True)"
+          },
+          "target": {
+            "connection": "B471ScTEvt00001X:outputs:target"
+          }
+        },
+        "outs": {},
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      }
+    ]
+  },
+  {
+    "id": "B471BasTrg00001X",
+    "name": "Basilisk Eye — Slowed",
+    "folder": "Equipment",
+    "description": "Apply slowed 1 for 1 minute on a failed Basilisk Eye Fortitude save; Shield Block trigger and temporary immunity remain native/manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "equipment",
+      "basilisk-eye"
+    ],
+    "variables": {
+      "B471BasEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B471BasEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B471BasEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B471BasEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B471BasMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B471BasMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:basilisk-eye"
+          },
+          "list": {
+            "connection": "B471BasEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B471BasSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B471BasSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B471BasEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "failure": {
+            "connection": "B471BasSlo00001X:ins:in"
+          },
+          "criticalFailure": {
+            "connection": "B471BasSlo00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B471BasSlo00001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "slowed"
+          },
+          "value": {
+            "value": 1
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "minutes"
+          },
+          "name": {
+            "value": "Effect: Basilisk Eye"
+          },
+          "target": {
+            "connection": "B471BasEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      }
+    ]
+  },
+  {
+    "id": "B471DwaTrg00001X",
+    "name": "Dwarven Daisy (Lesser) — Dazzled",
+    "folder": "Equipment",
+    "description": "Apply dazzled for 1 round on a failed or critically failed Lesser Dwarven Daisy Fortitude save; Strike damage remains native/manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "equipment",
+      "dwarven-daisy-lesser"
+    ],
+    "variables": {
+      "B471DwaEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B471DwaEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B471DwaEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B471DwaEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B471DwaMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B471DwaMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:dwarven-daisy-lesser"
+          },
+          "list": {
+            "connection": "B471DwaEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B471DwaSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B471DwaSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B471DwaEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "failure": {
+            "connection": "B471DwaDaz00001X:ins:in"
+          },
+          "criticalFailure": {
+            "connection": "B471DwaDaz00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B471DwaDaz00001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "dazzled"
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "rounds"
+          },
+          "name": {
+            "value": "Effect: Dwarven Daisy (Lesser)"
+          },
+          "target": {
+            "connection": "B471DwaEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      }
+    ]
+  }
 ]

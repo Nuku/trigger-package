@@ -5,25 +5,273 @@
     "folder": "Spells",
     "description": "Apply Crucible of Iron's save-based dazzled, enfeebled, immobilized, and persistent fire effects; Escape, heightening, and initial damage remain native/manual.",
     "priority": 0,
-    "tags": ["pf2e", "spell", "crucible-of-iron"],
+    "tags": [
+      "pf2e",
+      "spell",
+      "crucible-of-iron"
+    ],
     "variables": {
-      "B470CriEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
-      "B470CriEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
-      "B470CriEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+      "B470CriEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B470CriEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B470CriEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
     },
     "nodes": [
-      {"id": "B470CriEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B470CriMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
-      {"id": "B470CriMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:crucible-of-iron"}, "list": {"connection": "B470CriEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B470CriSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
-      {"id": "B470CriSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B470CriEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B470CriSuc00001X:ins:in"}, "failure": {"connection": "B470CriFDz00001X:ins:in"}, "criticalFailure": {"connection": "B470CriCDz00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
-      {"id": "B470CriSuc00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Crucible of Iron"}, "target": {"connection": "B470CriEvt00001X:outputs:target"}}, "outs": {"out": {"connection": "B470CriSPr00001X:ins:in"}}, "position": {"x": 960, "y": 0}},
-      {"id": "B470CriSPr00001X", "type": "persistent-damage", "state": "fixed", "inputs": {"formula": {"value": "1d10[fire]"}, "target": {"connection": "B470CriEvt00001X:outputs:target"}, "name": {"value": "Effect: Crucible of Iron"}}, "position": {"x": 960, "y": 160}},
-      {"id": "B470CriFDz00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Crucible of Iron"}, "target": {"connection": "B470CriEvt00001X:outputs:target"}}, "outs": {"out": {"connection": "B470CriFEn00001X:ins:in"}}, "position": {"x": 960, "y": 320}},
-      {"id": "B470CriFEn00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "enfeebled"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Crucible of Iron"}, "target": {"connection": "B470CriEvt00001X:outputs:target"}}, "outs": {"out": {"connection": "B470CriFPr00001X:ins:in"}}, "position": {"x": 960, "y": 480}},
-      {"id": "B470CriFPr00001X", "type": "persistent-damage", "state": "fixed", "inputs": {"formula": {"value": "1d10[fire]"}, "target": {"connection": "B470CriEvt00001X:outputs:target"}, "name": {"value": "Effect: Crucible of Iron"}}, "position": {"x": 960, "y": 640}},
-      {"id": "B470CriCDz00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Crucible of Iron"}, "target": {"connection": "B470CriEvt00001X:outputs:target"}}, "outs": {"out": {"connection": "B470CriCEn00001X:ins:in"}}, "position": {"x": 1280, "y": 0}},
-      {"id": "B470CriCEn00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "enfeebled"}, "value": {"value": 2}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Crucible of Iron"}, "target": {"connection": "B470CriEvt00001X:outputs:target"}}, "outs": {"out": {"connection": "B470CriCIm00001X:ins:in"}}, "position": {"x": 1280, "y": 160}},
-      {"id": "B470CriCIm00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "immobilized"}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Crucible of Iron"}, "target": {"connection": "B470CriEvt00001X:outputs:target"}}, "outs": {"out": {"connection": "B470CriCPr00001X:ins:in"}}, "position": {"x": 1280, "y": 320}},
-      {"id": "B470CriCPr00001X", "type": "persistent-damage", "state": "fixed", "inputs": {"formula": {"value": "1d10[fire]"}, "target": {"connection": "B470CriEvt00001X:outputs:target"}, "name": {"value": "Effect: Crucible of Iron"}}, "position": {"x": 1280, "y": 480}}
+      {
+        "id": "B470CriEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B470CriMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B470CriMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:crucible-of-iron"
+          },
+          "list": {
+            "connection": "B470CriEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B470CriSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B470CriSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B470CriEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "success": {
+            "connection": "B470CriSuc00001X:ins:in"
+          },
+          "failure": {
+            "connection": "B470CriFDz00001X:ins:in"
+          },
+          "criticalFailure": {
+            "connection": "B470CriCDz00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B470CriSuc00001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "dazzled"
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "rounds"
+          },
+          "name": {
+            "value": "Effect: Crucible of Iron"
+          },
+          "target": {
+            "connection": "B470CriEvt00001X:outputs:target"
+          }
+        },
+        "outs": {},
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      },
+      {
+        "id": "B470CriFDz00001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "dazzled"
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "minutes"
+          },
+          "name": {
+            "value": "Effect: Crucible of Iron"
+          },
+          "target": {
+            "connection": "B470CriEvt00001X:outputs:target"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B470CriFEn00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 320
+        }
+      },
+      {
+        "id": "B470CriFEn00001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "enfeebled"
+          },
+          "value": {
+            "value": 1
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "minutes"
+          },
+          "name": {
+            "value": "Effect: Crucible of Iron"
+          },
+          "target": {
+            "connection": "B470CriEvt00001X:outputs:target"
+          }
+        },
+        "outs": {},
+        "position": {
+          "x": 960,
+          "y": 480
+        }
+      },
+      {
+        "id": "B470CriCDz00001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "dazzled"
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "minutes"
+          },
+          "name": {
+            "value": "Effect: Crucible of Iron"
+          },
+          "target": {
+            "connection": "B470CriEvt00001X:outputs:target"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B470CriCEn00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 1280,
+          "y": 0
+        }
+      },
+      {
+        "id": "B470CriCEn00001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "enfeebled"
+          },
+          "value": {
+            "value": 2
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "minutes"
+          },
+          "name": {
+            "value": "Effect: Crucible of Iron"
+          },
+          "target": {
+            "connection": "B470CriEvt00001X:outputs:target"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B470CriCIm00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 1280,
+          "y": 160
+        }
+      },
+      {
+        "id": "B470CriCIm00001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "immobilized"
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "minutes"
+          },
+          "name": {
+            "value": "Effect: Crucible of Iron"
+          },
+          "target": {
+            "connection": "B470CriEvt00001X:outputs:target"
+          }
+        },
+        "outs": {},
+        "position": {
+          "x": 1280,
+          "y": 320
+        }
+      }
     ]
   },
   {
@@ -32,17 +280,106 @@
     "folder": "Spells",
     "description": "Apply grabbed on a successful Murderous Vine spell attack; the vine's Escape DC, persistent end-turn damage, and destruction remain native/manual.",
     "priority": 0,
-    "tags": ["pf2e", "spell", "murderous-vine"],
+    "tags": [
+      "pf2e",
+      "spell",
+      "murderous-vine"
+    ],
     "variables": {
-      "B470MurEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
-      "B470MurEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
-      "B470MurEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+      "B470MurEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B470MurEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B470MurEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
     },
     "nodes": [
-      {"id": "B470MurEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B470MurMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
-      {"id": "B470MurMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:murderous-vine"}, "list": {"connection": "B470MurEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B470MurSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
-      {"id": "B470MurSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B470MurEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B470MurGrb00001X:ins:in"}, "criticalSuccess": {"connection": "B470MurGrb00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
-      {"id": "B470MurGrb00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "grabbed"}, "name": {"value": "Effect: Murderous Vine"}, "target": {"connection": "B470MurEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+      {
+        "id": "B470MurEvt00001X",
+        "type": "attack-roll-event",
+        "state": "attack",
+        "inputs": {},
+        "outs": {
+          "out": {
+            "connection": "B470MurMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B470MurMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:murderous-vine"
+          },
+          "list": {
+            "connection": "B470MurEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B470MurSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B470MurSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B470MurEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "success": {
+            "connection": "B470MurGrb00001X:ins:in"
+          },
+          "criticalSuccess": {
+            "connection": "B470MurGrb00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B470MurGrb00001X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "grabbed"
+          },
+          "name": {
+            "value": "Effect: Murderous Vine"
+          },
+          "target": {
+            "connection": "B470MurEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      }
     ]
   }
 ]

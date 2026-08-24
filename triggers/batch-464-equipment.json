@@ -1,62 +1,120 @@
 [
   {
-    "id": "B464TjmTrg00001X",
-    "name": "Twigjack Sack (Major) — Persistent Bleed",
-    "folder": "Equipment",
-    "description": "Apply 5 persistent bleed damage on a successful or critical Twigjack Sack (Major) Strike; splash and other damage remain native/manual.",
-    "priority": 0,
-    "tags": ["pf2e", "equipment", "twigjack-sack-major"],
-    "variables": {"B464TjmEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B464TjmEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B464TjmEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
-    "nodes": [
-      {"id": "B464TjmEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B464TjmMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
-      {"id": "B464TjmMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:twigjack-sack-major"}, "list": {"connection": "B464TjmEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B464TjmSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
-      {"id": "B464TjmSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B464TjmEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B464TjmPer00001X:ins:in"}, "criticalSuccess": {"connection": "B464TjmPer00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
-      {"id": "B464TjmPer00001X", "type": "persistent-damage", "state": "fixed", "inputs": {"formula": {"value": "5[bleed]"}, "target": {"connection": "B464TjmEvt00001X:outputs:target"}, "name": {"value": "Effect: Twigjack Sack (Major)"}}, "position": {"x": 960, "y": 0}}
-    ]
-  },
-  {
-    "id": "B464AcmTrg00001X",
-    "name": "Acid Flask (Major) — Persistent Acid",
-    "folder": "Equipment",
-    "description": "Apply 4d6 persistent acid damage on a successful or critical Acid Flask (Major) Strike; splash and initial damage remain native/manual.",
-    "priority": 0,
-    "tags": ["pf2e", "equipment", "acid-flask-major"],
-    "variables": {"B464AcmEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B464AcmEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B464AcmEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
-    "nodes": [
-      {"id": "B464AcmEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B464AcmMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
-      {"id": "B464AcmMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:acid-flask-major"}, "list": {"connection": "B464AcmEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B464AcmSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
-      {"id": "B464AcmSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B464AcmEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B464AcmPer00001X:ins:in"}, "criticalSuccess": {"connection": "B464AcmPer00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
-      {"id": "B464AcmPer00001X", "type": "persistent-damage", "state": "fixed", "inputs": {"formula": {"value": "4d6[acid]"}, "target": {"connection": "B464AcmEvt00001X:outputs:target"}, "name": {"value": "Effect: Acid Flask (Major)"}}, "position": {"x": 960, "y": 0}}
-    ]
-  },
-  {
-    "id": "B464DcgTrg00001X",
-    "name": "Decaying (Greater) — Persistent Void",
-    "folder": "Equipment",
-    "description": "Apply 4d4 persistent void damage on a critical Decaying (Greater) weapon hit; shield targeting remains native/manual.",
-    "priority": 0,
-    "tags": ["pf2e", "equipment", "decaying-greater"],
-    "variables": {"B464DcgEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B464DcgEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B464DcgEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
-    "nodes": [
-      {"id": "B464DcgEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B464DcgMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
-      {"id": "B464DcgMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:decaying-greater"}, "list": {"connection": "B464DcgEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B464DcgSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
-      {"id": "B464DcgSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B464DcgEvt00001X:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "B464DcgPer00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
-      {"id": "B464DcgPer00001X", "type": "persistent-damage", "state": "fixed", "inputs": {"formula": {"value": "4d4[void]"}, "target": {"connection": "B464DcgEvt00001X:outputs:target"}, "name": {"value": "Effect: Decaying (Greater)"}}, "position": {"x": 960, "y": 0}}
-    ]
-  },
-  {
     "id": "B464GlaTrg00001X",
     "name": "Glamorous Buckler — Dazzled",
     "folder": "Equipment",
     "description": "Apply dazzled for 1 round on a successful Glamorous Buckler Dazzling Feint check; raised-buckler qualification and daily frequency remain native/manual.",
     "priority": 0,
-    "tags": ["pf2e", "equipment", "glamorous-buckler"],
-    "variables": {"B464GlaEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B464GlaEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B464GlaEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "tags": [
+      "pf2e",
+      "equipment",
+      "glamorous-buckler"
+    ],
+    "variables": {
+      "B464GlaEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B464GlaEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B464GlaEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
     "nodes": [
-      {"id": "B464GlaEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "skill-check"}}, "outs": {"out": {"connection": "B464GlaMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
-      {"id": "B464GlaMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:glamorous-buckler"}, "list": {"connection": "B464GlaEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B464GlaSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
-      {"id": "B464GlaSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B464GlaEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B464GlaDaz00001X:ins:in"}, "criticalSuccess": {"connection": "B464GlaDaz00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
-      {"id": "B464GlaDaz00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Glamorous Buckler"}, "target": {"connection": "B464GlaEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+      {
+        "id": "B464GlaEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "skill-check"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B464GlaMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B464GlaMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:glamorous-buckler"
+          },
+          "list": {
+            "connection": "B464GlaEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B464GlaSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B464GlaSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B464GlaEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "success": {
+            "connection": "B464GlaDaz00001X:ins:in"
+          },
+          "criticalSuccess": {
+            "connection": "B464GlaDaz00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B464GlaDaz00001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "dazzled"
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "rounds"
+          },
+          "name": {
+            "value": "Effect: Glamorous Buckler"
+          },
+          "target": {
+            "connection": "B464GlaEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      }
     ]
   }
 ]

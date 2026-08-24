@@ -1,37 +1,206 @@
 [
   {
-    "id": "B343ChaTrg00001X",
-    "name": "Chastise — Persistent Spirit",
-    "folder": "Feats",
-    "description": "Apply 2/4/6 persistent spirit damage by Chastise Will-save outcome; frightened prerequisite, immunity, and later damage doubling remain native/manual.",
-    "priority": 0,
-    "tags": ["pf2e", "feat", "chastise"],
-    "variables": {"B343ChaEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B343ChaEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B343ChaEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
-    "nodes": [
-      {"id": "B343ChaEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B343ChaMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
-      {"id": "B343ChaMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:chastise"}, "list": {"connection": "B343ChaEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B343ChaSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
-      {"id": "B343ChaSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B343ChaEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B343ChaPer00001X:ins:in"}, "failure": {"connection": "B343ChaPer00002X:ins:in"}, "criticalFailure": {"connection": "B343ChaPer00003X:ins:in"}}, "position": {"x": 640, "y": 0}},
-      {"id": "B343ChaPer00001X", "type": "persistent-damage", "state": "fixed", "inputs": {"formula": {"value": "2[spirit]"}, "target": {"connection": "B343ChaEvt00001X:outputs:target"}, "name": {"value": "Effect: Chastise"}}, "position": {"x": 960, "y": 160}},
-      {"id": "B343ChaPer00002X", "type": "persistent-damage", "state": "fixed", "inputs": {"formula": {"value": "4[spirit]"}, "target": {"connection": "B343ChaEvt00001X:outputs:target"}, "name": {"value": "Effect: Chastise"}}, "position": {"x": 960, "y": 0}},
-      {"id": "B343ChaPer00003X", "type": "persistent-damage", "state": "fixed", "inputs": {"formula": {"value": "6[spirit]"}, "target": {"connection": "B343ChaEvt00001X:outputs:target"}, "name": {"value": "Effect: Chastise"}}, "position": {"x": 960, "y": -160}}
-    ]
-  },
-  {
     "id": "B343AegTrg00001X",
     "name": "Aegis for the Innocent — Dazzled/Blinded",
     "folder": "Feats",
     "description": "Apply dazzled for 1 round on a successful Aegis for the Innocent save, dazzled for 1 minute on failure, and blinded for 1 round plus dazzled on critical failure; barrier placement, push, and damage remain native/manual.",
     "priority": 0,
-    "tags": ["pf2e", "feat", "aegis-for-the-innocent"],
-    "variables": {"B343AegEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B343AegEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B343AegEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "tags": [
+      "pf2e",
+      "feat",
+      "aegis-for-the-innocent"
+    ],
+    "variables": {
+      "B343AegEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B343AegEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B343AegEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
     "nodes": [
-      {"id": "B343AegEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B343AegMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
-      {"id": "B343AegMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:aegis-for-the-innocent"}, "list": {"connection": "B343AegEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B343AegSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
-      {"id": "B343AegSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B343AegEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B343AegDaz00001X:ins:in"}, "failure": {"connection": "B343AegDaz00002X:ins:in"}, "criticalFailure": {"connection": "B343AegDaz00003X:ins:in"}}, "position": {"x": 640, "y": 0}},
-      {"id": "B343AegDaz00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Aegis for the Innocent"}, "target": {"connection": "B343AegEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 160}},
-      {"id": "B343AegDaz00002X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Aegis for the Innocent"}, "target": {"connection": "B343AegEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}},
-      {"id": "B343AegDaz00003X", "type": "create-condition", "state": "timed", "outs": {"out": {"connection": "B343AegBli00001X:ins:in"}}, "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Aegis for the Innocent"}, "target": {"connection": "B343AegEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -160}},
-      {"id": "B343AegBli00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "blinded"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Aegis for the Innocent"}, "target": {"connection": "B343AegEvt00001X:outputs:target"}}, "position": {"x": 1280, "y": -160}}
+      {
+        "id": "B343AegEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B343AegMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B343AegMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:aegis-for-the-innocent"
+          },
+          "list": {
+            "connection": "B343AegEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B343AegSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B343AegSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B343AegEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "success": {
+            "connection": "B343AegDaz00001X:ins:in"
+          },
+          "failure": {
+            "connection": "B343AegDaz00002X:ins:in"
+          },
+          "criticalFailure": {
+            "connection": "B343AegDaz00003X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B343AegDaz00001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "dazzled"
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "rounds"
+          },
+          "name": {
+            "value": "Effect: Aegis for the Innocent"
+          },
+          "target": {
+            "connection": "B343AegEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 160
+        }
+      },
+      {
+        "id": "B343AegDaz00002X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "dazzled"
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "minutes"
+          },
+          "name": {
+            "value": "Effect: Aegis for the Innocent"
+          },
+          "target": {
+            "connection": "B343AegEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      },
+      {
+        "id": "B343AegDaz00003X",
+        "type": "create-condition",
+        "state": "timed",
+        "outs": {
+          "out": {
+            "connection": "B343AegBli00001X:ins:in"
+          }
+        },
+        "inputs": {
+          "condition": {
+            "value": "dazzled"
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "minutes"
+          },
+          "name": {
+            "value": "Effect: Aegis for the Innocent"
+          },
+          "target": {
+            "connection": "B343AegEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": -160
+        }
+      },
+      {
+        "id": "B343AegBli00001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "blinded"
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "rounds"
+          },
+          "name": {
+            "value": "Effect: Aegis for the Innocent"
+          },
+          "target": {
+            "connection": "B343AegEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 1280,
+          "y": -160
+        }
+      }
     ]
   },
   {
@@ -40,15 +209,161 @@
     "folder": "Feats",
     "description": "Apply prone on a successful Arcane Slam Athletics check and prone plus dazzled for 1 round on a critical success; grapple requirements, damage, and release remain native/manual.",
     "priority": 0,
-    "tags": ["pf2e", "feat", "arcane-slam"],
-    "variables": {"B343ArcEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B343ArcEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B343ArcEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "tags": [
+      "pf2e",
+      "feat",
+      "arcane-slam"
+    ],
+    "variables": {
+      "B343ArcEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B343ArcEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B343ArcEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
     "nodes": [
-      {"id": "B343ArcEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "skill-check"}}, "outs": {"out": {"connection": "B343ArcMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
-      {"id": "B343ArcMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:arcane-slam"}, "list": {"connection": "B343ArcEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B343ArcSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
-      {"id": "B343ArcSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B343ArcEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B343ArcPrn00001X:ins:in"}, "criticalSuccess": {"connection": "B343ArcPrn00002X:ins:in"}}, "position": {"x": 640, "y": 0}},
-      {"id": "B343ArcPrn00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "prone"}, "name": {"value": "Effect: Arcane Slam"}, "target": {"connection": "B343ArcEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
-      {"id": "B343ArcPrn00002X", "type": "create-condition", "state": "fixed", "outs": {"out": {"connection": "B343ArcDaz00001X:ins:in"}}, "inputs": {"condition": {"value": "prone"}, "name": {"value": "Effect: Arcane Slam"}, "target": {"connection": "B343ArcEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}},
-      {"id": "B343ArcDaz00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Arcane Slam"}, "target": {"connection": "B343ArcEvt00001X:outputs:target"}}, "position": {"x": 1280, "y": -80}}
+      {
+        "id": "B343ArcEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "skill-check"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B343ArcMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B343ArcMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:arcane-slam"
+          },
+          "list": {
+            "connection": "B343ArcEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B343ArcSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B343ArcSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B343ArcEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "success": {
+            "connection": "B343ArcPrn00001X:ins:in"
+          },
+          "criticalSuccess": {
+            "connection": "B343ArcPrn00002X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B343ArcPrn00001X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "prone"
+          },
+          "name": {
+            "value": "Effect: Arcane Slam"
+          },
+          "target": {
+            "connection": "B343ArcEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 80
+        }
+      },
+      {
+        "id": "B343ArcPrn00002X",
+        "type": "create-condition",
+        "state": "fixed",
+        "outs": {
+          "out": {
+            "connection": "B343ArcDaz00001X:ins:in"
+          }
+        },
+        "inputs": {
+          "condition": {
+            "value": "prone"
+          },
+          "name": {
+            "value": "Effect: Arcane Slam"
+          },
+          "target": {
+            "connection": "B343ArcEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": -80
+        }
+      },
+      {
+        "id": "B343ArcDaz00001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "dazzled"
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "rounds"
+          },
+          "name": {
+            "value": "Effect: Arcane Slam"
+          },
+          "target": {
+            "connection": "B343ArcEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 1280,
+          "y": -80
+        }
+      }
     ]
   }
 ]

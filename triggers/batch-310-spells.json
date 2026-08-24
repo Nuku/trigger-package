@@ -5,14 +5,142 @@
     "folder": "Spells",
     "description": "Apply immobilized for 1 round on a failed or critically failed Vampiric Maiden Fortitude save; damage, temporary Hit Points, and Interact/Escape removal remain native/manual.",
     "priority": 0,
-    "tags": ["pf2e", "spell", "vampiric-maiden"],
-    "variables": {"B310VpmEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B310VpmEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B310VpmEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "tags": [
+      "pf2e",
+      "spell",
+      "vampiric-maiden"
+    ],
+    "variables": {
+      "B310VpmEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B310VpmEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B310VpmEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
     "nodes": [
-      {"id": "B310VpmEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B310VpmMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
-      {"id": "B310VpmMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:vampiric-maiden"}, "list": {"connection": "B310VpmEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B310VpmSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
-      {"id": "B310VpmSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B310VpmEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B310VpmFai00001X:ins:in"}, "criticalFailure": {"connection": "B310VpmCfl00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
-      {"id": "B310VpmFai00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "immobilized"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Vampiric Maiden"}, "target": {"connection": "B310VpmEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
-      {"id": "B310VpmCfl00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "immobilized"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Vampiric Maiden"}, "target": {"connection": "B310VpmEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+      {
+        "id": "B310VpmEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B310VpmMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B310VpmMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:vampiric-maiden"
+          },
+          "list": {
+            "connection": "B310VpmEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B310VpmSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B310VpmSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B310VpmEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "failure": {
+            "connection": "B310VpmFai00001X:ins:in"
+          },
+          "criticalFailure": {
+            "connection": "B310VpmCfl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B310VpmFai00001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "immobilized"
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "rounds"
+          },
+          "name": {
+            "value": "Effect: Vampiric Maiden"
+          },
+          "target": {
+            "connection": "B310VpmEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 80
+        }
+      },
+      {
+        "id": "B310VpmCfl00001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "immobilized"
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "rounds"
+          },
+          "name": {
+            "value": "Effect: Vampiric Maiden"
+          },
+          "target": {
+            "connection": "B310VpmEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": -80
+        }
+      }
     ]
   },
   {
@@ -21,28 +149,107 @@
     "folder": "Spells",
     "description": "Apply blinded on a critical failure against Eclipse Burst; area targeting, damage, light counteract, and cleanup remain native/manual.",
     "priority": 0,
-    "tags": ["pf2e", "spell", "eclipse-burst"],
-    "variables": {"B310EcbEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B310EcbEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B310EcbEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "tags": [
+      "pf2e",
+      "spell",
+      "eclipse-burst"
+    ],
+    "variables": {
+      "B310EcbEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B310EcbEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B310EcbEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
     "nodes": [
-      {"id": "B310EcbEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B310EcbMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
-      {"id": "B310EcbMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:eclipse-burst"}, "list": {"connection": "B310EcbEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B310EcbSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
-      {"id": "B310EcbSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B310EcbEvt00001X:outputs:outcome"}}, "outs": {"criticalFailure": {"connection": "B310EcbBli00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
-      {"id": "B310EcbBli00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "blinded"}, "name": {"value": "Effect: Eclipse Burst"}, "target": {"connection": "B310EcbEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
-    ]
-  },
-  {
-    "id": "B310WshTrg00001X",
-    "name": "Warshard Shot — Persistent Spirit",
-    "folder": "Spells",
-    "description": "Apply rank-based persistent spirit damage on a critical Warshard Shot spell attack; the AC penalty, damage, and heightened scaling remain native/manual.",
-    "priority": 0,
-    "tags": ["pf2e", "spell", "warshard-shot"],
-    "variables": {"B310WshEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B310WshEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B310WshEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
-    "nodes": [
-      {"id": "B310WshEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B310WshMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
-      {"id": "B310WshMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:warshard-shot"}, "list": {"connection": "B310WshEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B310WshSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
-      {"id": "B310WshSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B310WshEvt00001X:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "B310WshPer00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
-      {"id": "B310WshPer00001X", "type": "persistent-damage", "state": "fixed", "inputs": {"formula": {"value": "@item.rank[persistent,spirit]"}, "target": {"connection": "B310WshEvt00001X:outputs:target"}, "name": {"value": "Effect: Warshard Shot"}}, "position": {"x": 960, "y": 0}}
+      {
+        "id": "B310EcbEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B310EcbMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B310EcbMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:eclipse-burst"
+          },
+          "list": {
+            "connection": "B310EcbEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B310EcbSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B310EcbSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B310EcbEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "criticalFailure": {
+            "connection": "B310EcbBli00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B310EcbBli00001X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "blinded"
+          },
+          "name": {
+            "value": "Effect: Eclipse Burst"
+          },
+          "target": {
+            "connection": "B310EcbEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      }
     ]
   }
 ]

@@ -1,5 +1,395 @@
 [
-  {"id":"B370WhiTrg00001X","name":"Whispers of the Void — Persistent Void and Drained","folder":"Spells","description":"Apply rank-scaled persistent void damage by Whispers of the Void Fortitude-save outcome, plus drained 1/2 and doomed 1 on failures; targeting, heightened handling, and recovery remain native/manual.","priority":0,"tags":["pf2e","spell","whispers-of-the-void"],"variables":{"B370WhiEvt00001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"B370WhiEvt00001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"},"B370WhiEvt00001X:outputs:outcome":{"type":"outcome","isArray":false,"label":"Outcome"}},"nodes":[{"id":"B370WhiEvt00001X","type":"check-roll-event","state":"check","inputs":{"for":{"value":"saving-throw"}},"outs":{"out":{"connection":"B370WhiMch00001X:ins:in"}},"position":{"x":0,"y":0}},{"id":"B370WhiMch00001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:whispers-of-the-void"},"list":{"connection":"B370WhiEvt00001X:outputs:options"}},"outs":{"true":{"connection":"B370WhiSpl00001X:ins:in"}},"position":{"x":320,"y":0}},{"id":"B370WhiSpl00001X","type":"split-outcome","inputs":{"input":{"connection":"B370WhiEvt00001X:outputs:outcome"}},"outs":{"success":{"connection":"B370WhiPer00001X:ins:in"},"failure":{"connection":"B370WhiPer00002X:ins:in"},"criticalFailure":{"connection":"B370WhiPer00003X:ins:in"}},"position":{"x":640,"y":0}},{"id":"B370WhiPer00001X","type":"persistent-damage","state":"fixed","inputs":{"formula":{"value":"floor(@item.rank/2)d8[void]"},"target":{"connection":"B370WhiEvt00001X:outputs:target"},"name":{"value":"Effect: Whispers of the Void"}},"position":{"x":960,"y":120}},{"id":"B370WhiPer00002X","type":"persistent-damage","state":"fixed","outs":{"out":{"connection":"B370WhiDra00001X:ins:in"}},"inputs":{"formula":{"value":"floor(@item.rank/2)*2d8[void]"},"target":{"connection":"B370WhiEvt00001X:outputs:target"},"name":{"value":"Effect: Whispers of the Void"}},"position":{"x":960,"y":0}},{"id":"B370WhiPer00003X","type":"persistent-damage","state":"fixed","outs":{"out":{"connection":"B370WhiDra00002X:ins:in"}},"inputs":{"formula":{"value":"floor(@item.rank/2)*2d8[void]"},"target":{"connection":"B370WhiEvt00001X:outputs:target"},"name":{"value":"Effect: Whispers of the Void"}},"position":{"x":960,"y":-120}},{"id":"B370WhiDra00001X","type":"create-condition","state":"fixed","inputs":{"condition":{"value":"drained"},"value":{"value":1},"name":{"value":"Effect: Whispers of the Void"},"target":{"connection":"B370WhiEvt00001X:outputs:target"}},"position":{"x":1280,"y":0}},{"id":"B370WhiDra00002X","type":"create-condition","state":"fixed","outs":{"out":{"connection":"B370WhiDmd00001X:ins:in"}},"inputs":{"condition":{"value":"drained"},"value":{"value":2},"name":{"value":"Effect: Whispers of the Void"},"target":{"connection":"B370WhiEvt00001X:outputs:target"}},"position":{"x":1280,"y":-120}},{"id":"B370WhiDmd00001X","type":"create-condition","state":"fixed","inputs":{"condition":{"value":"doomed"},"value":{"value":1},"name":{"value":"Effect: Whispers of the Void"},"target":{"connection":"B370WhiEvt00001X:outputs:target"}},"position":{"x":1600,"y":-120}}]},
-  {"id":"B370UnsTrg00001X","name":"Unseasonable Squall — Prone","folder":"Spells","description":"Apply prone on a failed or critically failed Unseasonable Squall Fortitude save; forced movement, damage, flying-specific degree changes, area, and object effects remain native/manual.","priority":0,"tags":["pf2e","spell","unseasonable-squall"],"variables":{"B370UnsEvt00001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"B370UnsEvt00001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"},"B370UnsEvt00001X:outputs:outcome":{"type":"outcome","isArray":false,"label":"Outcome"}},"nodes":[{"id":"B370UnsEvt00001X","type":"check-roll-event","state":"check","inputs":{"for":{"value":"saving-throw"}},"outs":{"out":{"connection":"B370UnsMch00001X:ins:in"}},"position":{"x":0,"y":0}},{"id":"B370UnsMch00001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:unseasonable-squall"},"list":{"connection":"B370UnsEvt00001X:outputs:options"}},"outs":{"true":{"connection":"B370UnsSpl00001X:ins:in"}},"position":{"x":320,"y":0}},{"id":"B370UnsSpl00001X","type":"split-outcome","inputs":{"input":{"connection":"B370UnsEvt00001X:outputs:outcome"}},"outs":{"failure":{"connection":"B370UnsPrn00001X:ins:in"},"criticalFailure":{"connection":"B370UnsPrn00001X:ins:in"}},"position":{"x":640,"y":0}},{"id":"B370UnsPrn00001X","type":"create-condition","state":"fixed","inputs":{"condition":{"value":"prone"},"name":{"value":"Effect: Unseasonable Squall"},"target":{"connection":"B370UnsEvt00001X:outputs:target"}},"position":{"x":960,"y":0}}]},
-  {"id":"B370VolTrg00001X","name":"Volcanic Eruption — Clumsy","folder":"Spells","description":"Apply clumsy 1 on a failed or critically failed Volcanic Eruption save; encased state, escape, damage, area, and heightened handling remain native/manual.","priority":0,"tags":["pf2e","spell","volcanic-eruption"],"variables":{"B370VolEvt00001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"B370VolEvt00001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"},"B370VolEvt00001X:outputs:outcome":{"type":"outcome","isArray":false,"label":"Outcome"}},"nodes":[{"id":"B370VolEvt00001X","type":"check-roll-event","state":"check","inputs":{"for":{"value":"saving-throw"}},"outs":{"out":{"connection":"B370VolMch00001X:ins:in"}},"position":{"x":0,"y":0}},{"id":"B370VolMch00001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:volcanic-eruption"},"list":{"connection":"B370VolEvt00001X:outputs:options"}},"outs":{"true":{"connection":"B370VolSpl00001X:ins:in"}},"position":{"x":320,"y":0}},{"id":"B370VolSpl00001X","type":"split-outcome","inputs":{"input":{"connection":"B370VolEvt00001X:outputs:outcome"}},"outs":{"failure":{"connection":"B370VolClm00001X:ins:in"},"criticalFailure":{"connection":"B370VolClm00001X:ins:in"}},"position":{"x":640,"y":0}},{"id":"B370VolClm00001X","type":"create-condition","state":"fixed","inputs":{"condition":{"value":"clumsy"},"value":{"value":1},"name":{"value":"Effect: Volcanic Eruption"},"target":{"connection":"B370VolEvt00001X:outputs:target"}},"position":{"x":960,"y":0}}]}
+  {
+    "id": "B370WhiTrg00001X",
+    "name": "Whispers of the Void — Drained",
+    "folder": "Spells",
+    "description": "Apply drained by save outcome; persistent void damage remains native/manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "spell",
+      "whispers-of-the-void"
+    ],
+    "variables": {
+      "B370WhiEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B370WhiEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B370WhiEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B370WhiEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B370WhiMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B370WhiMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:whispers-of-the-void"
+          },
+          "list": {
+            "connection": "B370WhiEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B370WhiSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B370WhiSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B370WhiEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "failure": {
+            "connection": "B370WhiDra00001X:ins:in"
+          },
+          "criticalFailure": {
+            "connection": "B370WhiDra00002X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B370WhiDra00001X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "drained"
+          },
+          "value": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Whispers of the Void"
+          },
+          "target": {
+            "connection": "B370WhiEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 1280,
+          "y": 0
+        }
+      },
+      {
+        "id": "B370WhiDra00002X",
+        "type": "create-condition",
+        "state": "fixed",
+        "outs": {
+          "out": {
+            "connection": "B370WhiDmd00001X:ins:in"
+          }
+        },
+        "inputs": {
+          "condition": {
+            "value": "drained"
+          },
+          "value": {
+            "value": 2
+          },
+          "name": {
+            "value": "Effect: Whispers of the Void"
+          },
+          "target": {
+            "connection": "B370WhiEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 1280,
+          "y": -120
+        }
+      },
+      {
+        "id": "B370WhiDmd00001X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "doomed"
+          },
+          "value": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Whispers of the Void"
+          },
+          "target": {
+            "connection": "B370WhiEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 1600,
+          "y": -120
+        }
+      }
+    ]
+  },
+  {
+    "id": "B370UnsTrg00001X",
+    "name": "Unseasonable Squall — Prone",
+    "folder": "Spells",
+    "description": "Apply prone on a failed or critically failed Unseasonable Squall Fortitude save; forced movement, damage, flying-specific degree changes, area, and object effects remain native/manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "spell",
+      "unseasonable-squall"
+    ],
+    "variables": {
+      "B370UnsEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B370UnsEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B370UnsEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B370UnsEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B370UnsMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B370UnsMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:unseasonable-squall"
+          },
+          "list": {
+            "connection": "B370UnsEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B370UnsSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B370UnsSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B370UnsEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "failure": {
+            "connection": "B370UnsPrn00001X:ins:in"
+          },
+          "criticalFailure": {
+            "connection": "B370UnsPrn00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B370UnsPrn00001X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "prone"
+          },
+          "name": {
+            "value": "Effect: Unseasonable Squall"
+          },
+          "target": {
+            "connection": "B370UnsEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      }
+    ]
+  },
+  {
+    "id": "B370VolTrg00001X",
+    "name": "Volcanic Eruption — Clumsy",
+    "folder": "Spells",
+    "description": "Apply clumsy 1 on a failed or critically failed Volcanic Eruption save; encased state, escape, damage, area, and heightened handling remain native/manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "spell",
+      "volcanic-eruption"
+    ],
+    "variables": {
+      "B370VolEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B370VolEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B370VolEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B370VolEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B370VolMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B370VolMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:volcanic-eruption"
+          },
+          "list": {
+            "connection": "B370VolEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B370VolSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B370VolSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B370VolEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "failure": {
+            "connection": "B370VolClm00001X:ins:in"
+          },
+          "criticalFailure": {
+            "connection": "B370VolClm00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B370VolClm00001X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "clumsy"
+          },
+          "value": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Volcanic Eruption"
+          },
+          "target": {
+            "connection": "B370VolEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      }
+    ]
+  }
 ]

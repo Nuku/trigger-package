@@ -1,7 +1,376 @@
 [
-  {"id":"B352AlbTrg00001X","name":"Albatross Curse — Stupefied","folder":"Spells","description":"Apply stupefied 1 for 1 round on a successful Albatross Curse Will save; albatross destruction, misfortune, and curse durations remain native/manual.","priority":0,"tags":["pf2e","spell","albatross-curse"],"variables":{"B352AlbEvt00001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"B352AlbEvt00001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"},"B352AlbEvt00001X:outputs:outcome":{"type":"outcome","isArray":false,"label":"Outcome"}},"nodes":[{"id":"B352AlbEvt00001X","type":"check-roll-event","state":"check","inputs":{"for":{"value":"saving-throw"}},"outs":{"out":{"connection":"B352AlbMch00001X:ins:in"}},"position":{"x":0,"y":0}},{"id":"B352AlbMch00001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:albatross-curse"},"list":{"connection":"B352AlbEvt00001X:outputs:options"}},"outs":{"true":{"connection":"B352AlbSpl00001X:ins:in"}},"position":{"x":320,"y":0}},{"id":"B352AlbSpl00001X","type":"split-outcome","inputs":{"input":{"connection":"B352AlbEvt00001X:outputs:outcome"}},"outs":{"success":{"connection":"B352AlbStu00001X:ins:in"}},"position":{"x":640,"y":0}},{"id":"B352AlbStu00001X","type":"create-condition","state":"timed","inputs":{"condition":{"value":"stupefied"},"value":{"value":1},"duration":{"value":1},"unit":{"value":"rounds"},"name":{"value":"Effect: Albatross Curse"},"target":{"connection":"B352AlbEvt00001X:outputs:target"}},"position":{"x":960,"y":0}}]},
-  {"id":"B352CenTrg00001X","name":"Censure Falsehoods — Sickened","folder":"Spells","description":"Apply sickened 1 on a successful Censure Falsehoods Fortitude save and sickened 2 on failure or critical failure; speech flat checks and later escalation remain native/manual.","priority":0,"tags":["pf2e","spell","censure-falsehoods"],"variables":{"B352CenEvt00001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"B352CenEvt00001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"},"B352CenEvt00001X:outputs:outcome":{"type":"outcome","isArray":false,"label":"Outcome"}},"nodes":[{"id":"B352CenEvt00001X","type":"check-roll-event","state":"check","inputs":{"for":{"value":"saving-throw"}},"outs":{"out":{"connection":"B352CenMch00001X:ins:in"}},"position":{"x":0,"y":0}},{"id":"B352CenMch00001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:censure-falsehoods"},"list":{"connection":"B352CenEvt00001X:outputs:options"}},"outs":{"true":{"connection":"B352CenSpl00001X:ins:in"}},"position":{"x":320,"y":0}},{"id":"B352CenSpl00001X","type":"split-outcome","inputs":{"input":{"connection":"B352CenEvt00001X:outputs:outcome"}},"outs":{"success":{"connection":"B352CenSck00001X:ins:in"},"failure":{"connection":"B352CenSck00002X:ins:in"},"criticalFailure":{"connection":"B352CenSck00002X:ins:in"}},"position":{"x":640,"y":0}},{"id":"B352CenSck00001X","type":"create-condition","state":"fixed","inputs":{"condition":{"value":"sickened"},"value":{"value":1},"name":{"value":"Effect: Censure Falsehoods"},"target":{"connection":"B352CenEvt00001X:outputs:target"}},"position":{"x":960,"y":80}},{"id":"B352CenSck00002X","type":"create-condition","state":"fixed","inputs":{"condition":{"value":"sickened"},"value":{"value":2},"name":{"value":"Effect: Censure Falsehoods"},"target":{"connection":"B352CenEvt00001X:outputs:target"}},"position":{"x":960,"y":-80}}]},
-  {"id":"B352AncTrg00001X","name":"Anchoring Air — Immobilized","folder":"Spells","description":"Apply immobilized until the start of the next turn on a critical failure against Anchoring Air; triggering attack penalties remain native/manual.","priority":0,"tags":["pf2e","spell","anchoring-air"],"variables":{"B352AncEvt00001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"B352AncEvt00001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"},"B352AncEvt00001X:outputs:outcome":{"type":"outcome","isArray":false,"label":"Outcome"}},"nodes":[{"id":"B352AncEvt00001X","type":"check-roll-event","state":"check","inputs":{"for":{"value":"saving-throw"}},"outs":{"out":{"connection":"B352AncMch00001X:ins:in"}},"position":{"x":0,"y":0}},{"id":"B352AncMch00001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:anchoring-air"},"list":{"connection":"B352AncEvt00001X:outputs:options"}},"outs":{"true":{"connection":"B352AncSpl00001X:ins:in"}},"position":{"x":320,"y":0}},{"id":"B352AncSpl00001X","type":"split-outcome","inputs":{"input":{"connection":"B352AncEvt00001X:outputs:outcome"}},"outs":{"criticalFailure":{"connection":"B352AncImm00001X:ins:in"}},"position":{"x":640,"y":0}},{"id":"B352AncImm00001X","type":"create-condition","state":"timed","inputs":{"condition":{"value":"immobilized"},"duration":{"value":1},"unit":{"value":"rounds"},"name":{"value":"Effect: Anchoring Air"},"target":{"connection":"B352AncEvt00001X:outputs:target"}},"position":{"x":960,"y":0}}]},
-  {"id":"B352GriTrg00001X","name":"Grim Tendrils — Persistent Bleed","folder":"Spells","description":"Apply persistent bleed equal to the spell’s level on a critical failure against Grim Tendrils; void damage and line targeting remain native/manual.","priority":0,"tags":["pf2e","spell","grim-tendrils"],"variables":{"B352GriEvt00001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"B352GriEvt00001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"},"B352GriEvt00001X:outputs:outcome":{"type":"outcome","isArray":false,"label":"Outcome"}},"nodes":[{"id":"B352GriEvt00001X","type":"check-roll-event","state":"check","inputs":{"for":{"value":"saving-throw"}},"outs":{"out":{"connection":"B352GriMch00001X:ins:in"}},"position":{"x":0,"y":0}},{"id":"B352GriMch00001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:grim-tendrils"},"list":{"connection":"B352GriEvt00001X:outputs:options"}},"outs":{"true":{"connection":"B352GriSpl00001X:ins:in"}},"position":{"x":320,"y":0}},{"id":"B352GriSpl00001X","type":"split-outcome","inputs":{"input":{"connection":"B352GriEvt00001X:outputs:outcome"}},"outs":{"criticalFailure":{"connection":"B352GriPer00001X:ins:in"}},"position":{"x":640,"y":0}},{"id":"B352GriPer00001X","type":"persistent-damage","state":"fixed","inputs":{"formula":{"value":"@item.level[bleed]"},"target":{"connection":"B352GriEvt00001X:outputs:target"},"name":{"value":"Effect: Grim Tendrils"}},"position":{"x":960,"y":0}}]},
-  {"id":"B352ChaTrg00001X","name":"Charged Javelin — Persistent Electricity","folder":"Spells","description":"Apply 1 persistent electricity damage on a successful Charged Javelin spell attack and 2 on a critical success; initial damage and charged-field bonuses remain native/manual.","priority":0,"tags":["pf2e","spell","charged-javelin"],"variables":{"B352ChaEvt00001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"B352ChaEvt00001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"},"B352ChaEvt00001X:outputs:outcome":{"type":"outcome","isArray":false,"label":"Outcome"}},"nodes":[{"id":"B352ChaEvt00001X","type":"attack-roll-event","state":"attack","inputs":{},"outs":{"out":{"connection":"B352ChaMch00001X:ins:in"}},"position":{"x":0,"y":0}},{"id":"B352ChaMch00001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:charged-javelin"},"list":{"connection":"B352ChaEvt00001X:outputs:options"}},"outs":{"true":{"connection":"B352ChaSpl00001X:ins:in"}},"position":{"x":320,"y":0}},{"id":"B352ChaSpl00001X","type":"split-outcome","inputs":{"input":{"connection":"B352ChaEvt00001X:outputs:outcome"}},"outs":{"success":{"connection":"B352ChaPer00001X:ins:in"},"criticalSuccess":{"connection":"B352ChaPer00002X:ins:in"}},"position":{"x":640,"y":0}},{"id":"B352ChaPer00001X","type":"persistent-damage","state":"fixed","inputs":{"formula":{"value":"1[electricity]"},"target":{"connection":"B352ChaEvt00001X:outputs:target"},"name":{"value":"Effect: Charged Javelin"}},"position":{"x":960,"y":80}},{"id":"B352ChaPer00002X","type":"persistent-damage","state":"fixed","inputs":{"formula":{"value":"2[electricity]"},"target":{"connection":"B352ChaEvt00001X:outputs:target"},"name":{"value":"Effect: Charged Javelin"}},"position":{"x":960,"y":-80}}]}
+  {
+    "id": "B352AlbTrg00001X",
+    "name": "Albatross Curse — Stupefied",
+    "folder": "Spells",
+    "description": "Apply stupefied 1 for 1 round on a successful Albatross Curse Will save; albatross destruction, misfortune, and curse durations remain native/manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "spell",
+      "albatross-curse"
+    ],
+    "variables": {
+      "B352AlbEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B352AlbEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B352AlbEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B352AlbEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B352AlbMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B352AlbMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:albatross-curse"
+          },
+          "list": {
+            "connection": "B352AlbEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B352AlbSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B352AlbSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B352AlbEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "success": {
+            "connection": "B352AlbStu00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B352AlbStu00001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "stupefied"
+          },
+          "value": {
+            "value": 1
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "rounds"
+          },
+          "name": {
+            "value": "Effect: Albatross Curse"
+          },
+          "target": {
+            "connection": "B352AlbEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      }
+    ]
+  },
+  {
+    "id": "B352CenTrg00001X",
+    "name": "Censure Falsehoods — Sickened",
+    "folder": "Spells",
+    "description": "Apply sickened 1 on a successful Censure Falsehoods Fortitude save and sickened 2 on failure or critical failure; speech flat checks and later escalation remain native/manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "spell",
+      "censure-falsehoods"
+    ],
+    "variables": {
+      "B352CenEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B352CenEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B352CenEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B352CenEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B352CenMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B352CenMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:censure-falsehoods"
+          },
+          "list": {
+            "connection": "B352CenEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B352CenSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B352CenSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B352CenEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "success": {
+            "connection": "B352CenSck00001X:ins:in"
+          },
+          "failure": {
+            "connection": "B352CenSck00002X:ins:in"
+          },
+          "criticalFailure": {
+            "connection": "B352CenSck00002X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B352CenSck00001X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "sickened"
+          },
+          "value": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Censure Falsehoods"
+          },
+          "target": {
+            "connection": "B352CenEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 80
+        }
+      },
+      {
+        "id": "B352CenSck00002X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "sickened"
+          },
+          "value": {
+            "value": 2
+          },
+          "name": {
+            "value": "Effect: Censure Falsehoods"
+          },
+          "target": {
+            "connection": "B352CenEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": -80
+        }
+      }
+    ]
+  },
+  {
+    "id": "B352AncTrg00001X",
+    "name": "Anchoring Air — Immobilized",
+    "folder": "Spells",
+    "description": "Apply immobilized until the start of the next turn on a critical failure against Anchoring Air; triggering attack penalties remain native/manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "spell",
+      "anchoring-air"
+    ],
+    "variables": {
+      "B352AncEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B352AncEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B352AncEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B352AncEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B352AncMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B352AncMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:anchoring-air"
+          },
+          "list": {
+            "connection": "B352AncEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B352AncSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B352AncSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B352AncEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "criticalFailure": {
+            "connection": "B352AncImm00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B352AncImm00001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "immobilized"
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "rounds"
+          },
+          "name": {
+            "value": "Effect: Anchoring Air"
+          },
+          "target": {
+            "connection": "B352AncEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      }
+    ]
+  }
 ]

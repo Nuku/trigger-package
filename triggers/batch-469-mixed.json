@@ -5,29 +5,110 @@
     "folder": "Feats",
     "description": "Apply paralyzed on a failed Paralyzing Slash Fortitude save; living non-elf qualification, 24-hour immunity, and recovery saves remain native/manual.",
     "priority": 0,
-    "tags": ["pf2e", "feat", "paralyzing-slash"],
-    "variables": {"B469PslEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B469PslEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B469PslEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "tags": [
+      "pf2e",
+      "feat",
+      "paralyzing-slash"
+    ],
+    "variables": {
+      "B469PslEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B469PslEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B469PslEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
     "nodes": [
-      {"id": "B469PslEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B469PslMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
-      {"id": "B469PslMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:paralyzing-slash"}, "list": {"connection": "B469PslEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B469PslSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
-      {"id": "B469PslSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B469PslEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B469PslPar00001X:ins:in"}, "criticalFailure": {"connection": "B469PslPar00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
-      {"id": "B469PslPar00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "paralyzed"}, "name": {"value": "Effect: Paralyzing Slash"}, "target": {"connection": "B469PslEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
-    ]
-  },
-  {
-    "id": "B469AndTrg00001X",
-    "name": "Ancient Dust — Persistent Void",
-    "folder": "Spells",
-    "description": "Apply 1 persistent void damage on a failed Ancient Dust Fortitude save and 2 persistent void damage on a critical failure; area and initial damage remain native/manual.",
-    "priority": 0,
-    "tags": ["pf2e", "spell", "ancient-dust"],
-    "variables": {"B469AndEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B469AndEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B469AndEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
-    "nodes": [
-      {"id": "B469AndEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B469AndMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
-      {"id": "B469AndMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:ancient-dust"}, "list": {"connection": "B469AndEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B469AndSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
-      {"id": "B469AndSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B469AndEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B469AndP1n00001X:ins:in"}, "criticalFailure": {"connection": "B469AndP2n00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
-      {"id": "B469AndP1n00001X", "type": "persistent-damage", "state": "fixed", "inputs": {"formula": {"value": "1[void]"}, "target": {"connection": "B469AndEvt00001X:outputs:target"}, "name": {"value": "Effect: Ancient Dust"}}, "position": {"x": 960, "y": 0}},
-      {"id": "B469AndP2n00001X", "type": "persistent-damage", "state": "fixed", "inputs": {"formula": {"value": "2[void]"}, "target": {"connection": "B469AndEvt00001X:outputs:target"}, "name": {"value": "Effect: Ancient Dust"}}, "position": {"x": 960, "y": 200}}
+      {
+        "id": "B469PslEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B469PslMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B469PslMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:paralyzing-slash"
+          },
+          "list": {
+            "connection": "B469PslEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B469PslSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B469PslSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B469PslEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "failure": {
+            "connection": "B469PslPar00001X:ins:in"
+          },
+          "criticalFailure": {
+            "connection": "B469PslPar00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B469PslPar00001X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "paralyzed"
+          },
+          "name": {
+            "value": "Effect: Paralyzing Slash"
+          },
+          "target": {
+            "connection": "B469PslEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      }
     ]
   }
 ]

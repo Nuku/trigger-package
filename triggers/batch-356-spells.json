@@ -1,6 +1,425 @@
 [
-  {"id":"B356LigTrg00001X","name":"Lightning Lasso — Immobilized/Restrained","folder":"Spells","description":"Apply immobilized on a failed Lightning Lasso Reflex save and restrained on a critical failure; damage, Escape, Sustain, and heightening remain native/manual.","priority":0,"tags":["pf2e","spell","lightning-lasso"],"variables":{"B356LigEvt00001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"B356LigEvt00001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"},"B356LigEvt00001X:outputs:outcome":{"type":"outcome","isArray":false,"label":"Outcome"}},"nodes":[{"id":"B356LigEvt00001X","type":"check-roll-event","state":"check","inputs":{"for":{"value":"saving-throw"}},"outs":{"out":{"connection":"B356LigMch00001X:ins:in"}},"position":{"x":0,"y":0}},{"id":"B356LigMch00001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:lightning-lasso"},"list":{"connection":"B356LigEvt00001X:outputs:options"}},"outs":{"true":{"connection":"B356LigSpl00001X:ins:in"}},"position":{"x":320,"y":0}},{"id":"B356LigSpl00001X","type":"split-outcome","inputs":{"input":{"connection":"B356LigEvt00001X:outputs:outcome"}},"outs":{"failure":{"connection":"B356LigImm00001X:ins:in"},"criticalFailure":{"connection":"B356LigRst00001X:ins:in"}},"position":{"x":640,"y":0}},{"id":"B356LigImm00001X","type":"create-condition","state":"timed","inputs":{"condition":{"value":"immobilized"},"duration":{"value":1},"unit":{"value":"rounds"},"name":{"value":"Effect: Lightning Lasso"},"target":{"connection":"B356LigEvt00001X:outputs:target"}},"position":{"x":960,"y":80}},{"id":"B356LigRst00001X","type":"create-condition","state":"timed","inputs":{"condition":{"value":"restrained"},"duration":{"value":1},"unit":{"value":"rounds"},"name":{"value":"Effect: Lightning Lasso"},"target":{"connection":"B356LigEvt00001X:outputs:target"}},"position":{"x":960,"y":-80}}]},
-  {"id":"B356LivTrg00001X","name":"Live Wire — Persistent Electricity","folder":"Spells","description":"Apply rank-scaled persistent electricity damage on a critical Live Wire spell attack; initial damage and heightened scaling remain native/manual.","priority":0,"tags":["pf2e","spell","live-wire"],"variables":{"B356LivEvt00001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"B356LivEvt00001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"},"B356LivEvt00001X:outputs:outcome":{"type":"outcome","isArray":false,"label":"Outcome"}},"nodes":[{"id":"B356LivEvt00001X","type":"attack-roll-event","state":"attack","inputs":{},"outs":{"out":{"connection":"B356LivMch00001X:ins:in"}},"position":{"x":0,"y":0}},{"id":"B356LivMch00001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:live-wire"},"list":{"connection":"B356LivEvt00001X:outputs:options"}},"outs":{"true":{"connection":"B356LivSpl00001X:ins:in"}},"position":{"x":320,"y":0}},{"id":"B356LivSpl00001X","type":"split-outcome","inputs":{"input":{"connection":"B356LivEvt00001X:outputs:outcome"}},"outs":{"criticalSuccess":{"connection":"B356LivPer00001X:ins:in"}},"position":{"x":640,"y":0}},{"id":"B356LivPer00001X","type":"persistent-damage","state":"fixed","inputs":{"formula":{"value":"ceil(@item.rank / 2)d4[electricity]"},"target":{"connection":"B356LivEvt00001X:outputs:target"},"name":{"value":"Effect: Live Wire"}},"position":{"x":960,"y":0}}]},
-  {"id":"B356MisTrg00001X","name":"Missed Cue — Frightened","folder":"Spells","description":"Apply frightened 1/2/3 by Missed Cue Will-save outcome; the frightened-linked slowed effect and mental damage remain native/manual.","priority":0,"tags":["pf2e","spell","missed-cue"],"variables":{"B356MisEvt00001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"B356MisEvt00001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"},"B356MisEvt00001X:outputs:outcome":{"type":"outcome","isArray":false,"label":"Outcome"}},"nodes":[{"id":"B356MisEvt00001X","type":"check-roll-event","state":"check","inputs":{"for":{"value":"saving-throw"}},"outs":{"out":{"connection":"B356MisMch00001X:ins:in"}},"position":{"x":0,"y":0}},{"id":"B356MisMch00001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:missed-cue"},"list":{"connection":"B356MisEvt00001X:outputs:options"}},"outs":{"true":{"connection":"B356MisSpl00001X:ins:in"}},"position":{"x":320,"y":0}},{"id":"B356MisSpl00001X","type":"split-outcome","inputs":{"input":{"connection":"B356MisEvt00001X:outputs:outcome"}},"outs":{"success":{"connection":"B356MisFht00001X:ins:in"},"failure":{"connection":"B356MisFht00002X:ins:in"},"criticalFailure":{"connection":"B356MisFht00003X:ins:in"}},"position":{"x":640,"y":0}},{"id":"B356MisFht00001X","type":"create-condition","state":"fixed","inputs":{"condition":{"value":"frightened"},"value":{"value":1},"name":{"value":"Effect: Missed Cue"},"target":{"connection":"B356MisEvt00001X:outputs:target"}},"position":{"x":960,"y":100}},{"id":"B356MisFht00002X","type":"create-condition","state":"fixed","inputs":{"condition":{"value":"frightened"},"value":{"value":2},"name":{"value":"Effect: Missed Cue"},"target":{"connection":"B356MisEvt00001X:outputs:target"}},"position":{"x":960,"y":0}},{"id":"B356MisFht00003X","type":"create-condition","state":"fixed","inputs":{"condition":{"value":"frightened"},"value":{"value":3},"name":{"value":"Effect: Missed Cue"},"target":{"connection":"B356MisEvt00001X:outputs:target"}},"position":{"x":960,"y":-100}}]},
-  {"id":"B356FalTrg00001X","name":"Falling Sky — Prone/Stunned","folder":"Spells","description":"Apply prone on all non-critical-success Falling Sky saves; falling damage and flying-target handling remain native/manual.","priority":0,"tags":["pf2e","spell","falling-sky"],"variables":{"B356FalEvt00001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"B356FalEvt00001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"},"B356FalEvt00001X:outputs:outcome":{"type":"outcome","isArray":false,"label":"Outcome"}},"nodes":[{"id":"B356FalEvt00001X","type":"check-roll-event","state":"check","inputs":{"for":{"value":"saving-throw"}},"outs":{"out":{"connection":"B356FalMch00001X:ins:in"}},"position":{"x":0,"y":0}},{"id":"B356FalMch00001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:falling-sky"},"list":{"connection":"B356FalEvt00001X:outputs:options"}},"outs":{"true":{"connection":"B356FalSpl00001X:ins:in"}},"position":{"x":320,"y":0}},{"id":"B356FalSpl00001X","type":"split-outcome","inputs":{"input":{"connection":"B356FalEvt00001X:outputs:outcome"}},"outs":{"success":{"connection":"B356FalPrn00001X:ins:in"},"failure":{"connection":"B356FalPrn00001X:ins:in"},"criticalFailure":{"connection":"B356FalPrn00001X:ins:in"}},"position":{"x":640,"y":0}},{"id":"B356FalPrn00001X","type":"create-condition","state":"fixed","inputs":{"condition":{"value":"prone"},"name":{"value":"Effect: Falling Sky"},"target":{"connection":"B356FalEvt00001X:outputs:target"}},"position":{"x":960,"y":100}}]}
+  {
+    "id": "B356LigTrg00001X",
+    "name": "Lightning Lasso — Immobilized/Restrained",
+    "folder": "Spells",
+    "description": "Apply immobilized on a failed Lightning Lasso Reflex save and restrained on a critical failure; damage, Escape, Sustain, and heightening remain native/manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "spell",
+      "lightning-lasso"
+    ],
+    "variables": {
+      "B356LigEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B356LigEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B356LigEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B356LigEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B356LigMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B356LigMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:lightning-lasso"
+          },
+          "list": {
+            "connection": "B356LigEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B356LigSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B356LigSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B356LigEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "failure": {
+            "connection": "B356LigImm00001X:ins:in"
+          },
+          "criticalFailure": {
+            "connection": "B356LigRst00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B356LigImm00001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "immobilized"
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "rounds"
+          },
+          "name": {
+            "value": "Effect: Lightning Lasso"
+          },
+          "target": {
+            "connection": "B356LigEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 80
+        }
+      },
+      {
+        "id": "B356LigRst00001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "restrained"
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "rounds"
+          },
+          "name": {
+            "value": "Effect: Lightning Lasso"
+          },
+          "target": {
+            "connection": "B356LigEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": -80
+        }
+      }
+    ]
+  },
+  {
+    "id": "B356MisTrg00001X",
+    "name": "Missed Cue — Frightened",
+    "folder": "Spells",
+    "description": "Apply frightened 1/2/3 by Missed Cue Will-save outcome; the frightened-linked slowed effect and mental damage remain native/manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "spell",
+      "missed-cue"
+    ],
+    "variables": {
+      "B356MisEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B356MisEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B356MisEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B356MisEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B356MisMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B356MisMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:missed-cue"
+          },
+          "list": {
+            "connection": "B356MisEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B356MisSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B356MisSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B356MisEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "success": {
+            "connection": "B356MisFht00001X:ins:in"
+          },
+          "failure": {
+            "connection": "B356MisFht00002X:ins:in"
+          },
+          "criticalFailure": {
+            "connection": "B356MisFht00003X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B356MisFht00001X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "frightened"
+          },
+          "value": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Missed Cue"
+          },
+          "target": {
+            "connection": "B356MisEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 100
+        }
+      },
+      {
+        "id": "B356MisFht00002X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "frightened"
+          },
+          "value": {
+            "value": 2
+          },
+          "name": {
+            "value": "Effect: Missed Cue"
+          },
+          "target": {
+            "connection": "B356MisEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      },
+      {
+        "id": "B356MisFht00003X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "frightened"
+          },
+          "value": {
+            "value": 3
+          },
+          "name": {
+            "value": "Effect: Missed Cue"
+          },
+          "target": {
+            "connection": "B356MisEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": -100
+        }
+      }
+    ]
+  },
+  {
+    "id": "B356FalTrg00001X",
+    "name": "Falling Sky — Prone/Stunned",
+    "folder": "Spells",
+    "description": "Apply prone on all non-critical-success Falling Sky saves; falling damage and flying-target handling remain native/manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "spell",
+      "falling-sky"
+    ],
+    "variables": {
+      "B356FalEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B356FalEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B356FalEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B356FalEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B356FalMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B356FalMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:falling-sky"
+          },
+          "list": {
+            "connection": "B356FalEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B356FalSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B356FalSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B356FalEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "success": {
+            "connection": "B356FalPrn00001X:ins:in"
+          },
+          "failure": {
+            "connection": "B356FalPrn00001X:ins:in"
+          },
+          "criticalFailure": {
+            "connection": "B356FalPrn00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B356FalPrn00001X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "prone"
+          },
+          "name": {
+            "value": "Effect: Falling Sky"
+          },
+          "target": {
+            "connection": "B356FalEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 100
+        }
+      }
+    ]
+  }
 ]

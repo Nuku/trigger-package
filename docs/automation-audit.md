@@ -5970,3 +5970,7 @@ Added eight uncovered SF2e feat automations:
 - `Clinging Flare`: immobilized for 1 round on a hit and off-guard on a critical hit.
 
 `Flame Belch`, `Rip, Tear`, and `Bloody Wounds` were excluded because SF2e already supplies their damage through rule elements. `Fascinating Performance`, `Weakening Shot`, `Dirty Retort`, `Foul Fragrance`, and other candidates require selectable outcomes, combat-state checks, aura/repeated-save handling, poison staging, or cleanup that the available trigger context cannot safely reproduce. The package now contains 1,315 registered triggers across 972 registered JSON files.
+
+## Batch 490 invalid-trigger remediation
+
+The reported red invalid entries were traced to the unsupported `persistent-damage` node type in the installed Trigger Engine 1.29.0. Sixty-five registered triggers used that node. Fifty-four pure persistent-damage triggers were removed, including the invalid Flaming, Greater Flaming, Static Snare, persistent bleed/fire/acid/void spell and equipment entries, and other screenshot-reported persistent-only graphs. Eleven mixed triggers were retained with their valid condition branches while the unsupported damage branches were removed, including Ignite Fireworks, Cutting Insult, Wintershot, Whispers of the Void, Widow's Bite, Camel Spit, Spiritual Disruption, Crucible of Iron, and Scalding Gauntlets (True). No unsupported persistent-damage nodes remain in registered sources. The package now contains 1,261 registered triggers across 972 registered JSON files.

@@ -5,15 +5,158 @@
     "folder": "Spells",
     "description": "Apply prone on a failed Stormburst Reflex save and stunned 1 on a critical failure; damage and heightened scaling remain native/manual.",
     "priority": 0,
-    "tags": ["pf2e", "spell", "stormburst"],
-    "variables": {"B302SbrEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B302SbrEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B302SbrEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "tags": [
+      "pf2e",
+      "spell",
+      "stormburst"
+    ],
+    "variables": {
+      "B302SbrEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B302SbrEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B302SbrEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
     "nodes": [
-      {"id": "B302SbrEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B302SbrMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
-      {"id": "B302SbrMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:stormburst"}, "list": {"connection": "B302SbrEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B302SbrSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
-      {"id": "B302SbrSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B302SbrEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B302SbrPrn00001X:ins:in"}, "criticalFailure": {"connection": "B302SbrCfl00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
-      {"id": "B302SbrPrn00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "prone"}, "name": {"value": "Effect: Stormburst"}, "target": {"connection": "B302SbrEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
-      {"id": "B302SbrCfl00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "prone"}, "name": {"value": "Effect: Stormburst"}, "target": {"connection": "B302SbrEvt00001X:outputs:target"}}, "outs": {"out": {"connection": "B302SbrStn00001X:ins:in"}}, "position": {"x": 960, "y": -80}},
-      {"id": "B302SbrStn00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "value": {"value": 1}, "name": {"value": "Effect: Stormburst"}, "target": {"connection": "B302SbrEvt00001X:outputs:target"}}, "position": {"x": 1280, "y": -80}}
+      {
+        "id": "B302SbrEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B302SbrMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B302SbrMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:stormburst"
+          },
+          "list": {
+            "connection": "B302SbrEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B302SbrSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B302SbrSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B302SbrEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "failure": {
+            "connection": "B302SbrPrn00001X:ins:in"
+          },
+          "criticalFailure": {
+            "connection": "B302SbrCfl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B302SbrPrn00001X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "prone"
+          },
+          "name": {
+            "value": "Effect: Stormburst"
+          },
+          "target": {
+            "connection": "B302SbrEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 80
+        }
+      },
+      {
+        "id": "B302SbrCfl00001X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "prone"
+          },
+          "name": {
+            "value": "Effect: Stormburst"
+          },
+          "target": {
+            "connection": "B302SbrEvt00001X:outputs:target"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B302SbrStn00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": -80
+        }
+      },
+      {
+        "id": "B302SbrStn00001X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "stunned"
+          },
+          "value": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Stormburst"
+          },
+          "target": {
+            "connection": "B302SbrEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 1280,
+          "y": -80
+        }
+      }
     ]
   },
   {
@@ -22,33 +165,302 @@
     "folder": "Spells",
     "description": "Apply stunned 1 or 2 from Mind Games' failed or critically failed Will save; sustain timing and the caster's critical-success backlash remain native/manual.",
     "priority": 0,
-    "tags": ["pf2e", "spell", "mind-games"],
-    "variables": {"B302MgdEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B302MgdEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B302MgdEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "tags": [
+      "pf2e",
+      "spell",
+      "mind-games"
+    ],
+    "variables": {
+      "B302MgdEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B302MgdEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B302MgdEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
     "nodes": [
-      {"id": "B302MgdEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B302MgdMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
-      {"id": "B302MgdMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:mind-games"}, "list": {"connection": "B302MgdEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B302MgdSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
-      {"id": "B302MgdSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B302MgdEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B302MgdFai00001X:ins:in"}, "criticalFailure": {"connection": "B302MgdCfl00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
-      {"id": "B302MgdFai00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "value": {"value": 1}, "name": {"value": "Effect: Mind Games"}, "target": {"connection": "B302MgdEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
-      {"id": "B302MgdCfl00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "value": {"value": 2}, "name": {"value": "Effect: Mind Games"}, "target": {"connection": "B302MgdEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+      {
+        "id": "B302MgdEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B302MgdMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B302MgdMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:mind-games"
+          },
+          "list": {
+            "connection": "B302MgdEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B302MgdSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B302MgdSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B302MgdEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "failure": {
+            "connection": "B302MgdFai00001X:ins:in"
+          },
+          "criticalFailure": {
+            "connection": "B302MgdCfl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B302MgdFai00001X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "stunned"
+          },
+          "value": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Mind Games"
+          },
+          "target": {
+            "connection": "B302MgdEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 80
+        }
+      },
+      {
+        "id": "B302MgdCfl00001X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "stunned"
+          },
+          "value": {
+            "value": 2
+          },
+          "name": {
+            "value": "Effect: Mind Games"
+          },
+          "target": {
+            "connection": "B302MgdEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": -80
+        }
+      }
     ]
   },
   {
     "id": "B302CtiTrg00001X",
-    "name": "Cutting Insult — Frightened and Bleed",
+    "name": "Cutting Insult — Frightened",
     "folder": "Spells",
-    "description": "Apply frightened 1/2/3 and 1 or 2 persistent bleed from Cutting Insult's Will-save outcome; mental damage and heightened scaling remain native/manual.",
+    "description": "Apply frightened by save outcome; persistent bleed remains native/manual.",
     "priority": 0,
-    "tags": ["pf2e", "spell", "cutting-insult"],
-    "variables": {"B302CtiEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B302CtiEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B302CtiEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "tags": [
+      "pf2e",
+      "spell",
+      "cutting-insult"
+    ],
+    "variables": {
+      "B302CtiEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B302CtiEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B302CtiEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
     "nodes": [
-      {"id": "B302CtiEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B302CtiMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
-      {"id": "B302CtiMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:cutting-insult"}, "list": {"connection": "B302CtiEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B302CtiSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
-      {"id": "B302CtiSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B302CtiEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B302CtiSuc00001X:ins:in"}, "failure": {"connection": "B302CtiFai00001X:ins:in"}, "criticalFailure": {"connection": "B302CtiCfl00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
-      {"id": "B302CtiSuc00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 1}, "name": {"value": "Effect: Cutting Insult"}, "target": {"connection": "B302CtiEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
-      {"id": "B302CtiFai00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 2}, "name": {"value": "Effect: Cutting Insult"}, "target": {"connection": "B302CtiEvt00001X:outputs:target"}}, "outs": {"out": {"connection": "B302CtiPer00001X:ins:in"}}, "position": {"x": 960, "y": 0}},
-      {"id": "B302CtiPer00001X", "type": "persistent-damage", "state": "fixed", "inputs": {"formula": {"value": "1[bleed]"}, "target": {"connection": "B302CtiEvt00001X:outputs:target"}, "name": {"value": "Effect: Cutting Insult"}}, "position": {"x": 1280, "y": 0}},
-      {"id": "B302CtiCfl00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 3}, "name": {"value": "Effect: Cutting Insult"}, "target": {"connection": "B302CtiEvt00001X:outputs:target"}}, "outs": {"out": {"connection": "B302CtiCfp00001X:ins:in"}}, "position": {"x": 960, "y": -80}},
-      {"id": "B302CtiCfp00001X", "type": "persistent-damage", "state": "fixed", "inputs": {"formula": {"value": "2[bleed]"}, "target": {"connection": "B302CtiEvt00001X:outputs:target"}, "name": {"value": "Effect: Cutting Insult"}}, "position": {"x": 1280, "y": -80}}
+      {
+        "id": "B302CtiEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B302CtiMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B302CtiMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:cutting-insult"
+          },
+          "list": {
+            "connection": "B302CtiEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B302CtiSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B302CtiSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B302CtiEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "success": {
+            "connection": "B302CtiSuc00001X:ins:in"
+          },
+          "failure": {
+            "connection": "B302CtiFai00001X:ins:in"
+          },
+          "criticalFailure": {
+            "connection": "B302CtiCfl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B302CtiSuc00001X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "frightened"
+          },
+          "value": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Cutting Insult"
+          },
+          "target": {
+            "connection": "B302CtiEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 80
+        }
+      },
+      {
+        "id": "B302CtiFai00001X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "frightened"
+          },
+          "value": {
+            "value": 2
+          },
+          "name": {
+            "value": "Effect: Cutting Insult"
+          },
+          "target": {
+            "connection": "B302CtiEvt00001X:outputs:target"
+          }
+        },
+        "outs": {},
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      },
+      {
+        "id": "B302CtiCfl00001X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "frightened"
+          },
+          "value": {
+            "value": 3
+          },
+          "name": {
+            "value": "Effect: Cutting Insult"
+          },
+          "target": {
+            "connection": "B302CtiEvt00001X:outputs:target"
+          }
+        },
+        "outs": {},
+        "position": {
+          "x": 960,
+          "y": -80
+        }
+      }
     ]
   }
 ]

@@ -1,5 +1,258 @@
 [
-  {"id":"B354ResTrg00001X","name":"Restraining Chains — Clumsy","folder":"Spells","description":"Apply clumsy 1 on a failed Restraining Chains save and clumsy 2 on a critical failure; chain movement limits, chain durability, and Escape remain native/manual.","priority":0,"tags":["pf2e","spell","restraining-chains"],"variables":{"B354ResEvt00001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"B354ResEvt00001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"},"B354ResEvt00001X:outputs:outcome":{"type":"outcome","isArray":false,"label":"Outcome"}},"nodes":[{"id":"B354ResEvt00001X","type":"check-roll-event","state":"check","inputs":{"for":{"value":"saving-throw"}},"outs":{"out":{"connection":"B354ResMch00001X:ins:in"}},"position":{"x":0,"y":0}},{"id":"B354ResMch00001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:restraining-chains"},"list":{"connection":"B354ResEvt00001X:outputs:options"}},"outs":{"true":{"connection":"B354ResSpl00001X:ins:in"}},"position":{"x":320,"y":0}},{"id":"B354ResSpl00001X","type":"split-outcome","inputs":{"input":{"connection":"B354ResEvt00001X:outputs:outcome"}},"outs":{"failure":{"connection":"B354ResClm00001X:ins:in"},"criticalFailure":{"connection":"B354ResClm00002X:ins:in"}},"position":{"x":640,"y":0}},{"id":"B354ResClm00001X","type":"create-condition","state":"fixed","inputs":{"condition":{"value":"clumsy"},"value":{"value":1},"name":{"value":"Effect: Restraining Chains"},"target":{"connection":"B354ResEvt00001X:outputs:target"}},"position":{"x":960,"y":80}},{"id":"B354ResClm00002X","type":"create-condition","state":"fixed","inputs":{"condition":{"value":"clumsy"},"value":{"value":2},"name":{"value":"Effect: Restraining Chains"},"target":{"connection":"B354ResEvt00001X:outputs:target"}},"position":{"x":960,"y":-80}}]},
-  {"id":"B354LurTrg00001X","name":"Luring Wail — Slowed","folder":"Spells","description":"Apply slowed 1 for 1 round on a successful Luring Wail Will save; fascination, forced movement, emanation recurrence, and off-guard remain native/manual.","priority":0,"tags":["pf2e","spell","luring-wail"],"variables":{"B354LurEvt00001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"B354LurEvt00001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"},"B354LurEvt00001X:outputs:outcome":{"type":"outcome","isArray":false,"label":"Outcome"}},"nodes":[{"id":"B354LurEvt00001X","type":"check-roll-event","state":"check","inputs":{"for":{"value":"saving-throw"}},"outs":{"out":{"connection":"B354LurMch00001X:ins:in"}},"position":{"x":0,"y":0}},{"id":"B354LurMch00001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:luring-wail"},"list":{"connection":"B354LurEvt00001X:outputs:options"}},"outs":{"true":{"connection":"B354LurSpl00001X:ins:in"}},"position":{"x":320,"y":0}},{"id":"B354LurSpl00001X","type":"split-outcome","inputs":{"input":{"connection":"B354LurEvt00001X:outputs:outcome"}},"outs":{"success":{"connection":"B354LurSlo00001X:ins:in"}},"position":{"x":640,"y":0}},{"id":"B354LurSlo00001X","type":"create-condition","state":"timed","inputs":{"condition":{"value":"slowed"},"value":{"value":1},"duration":{"value":1},"unit":{"value":"rounds"},"name":{"value":"Effect: Luring Wail"},"target":{"connection":"B354LurEvt00001X:outputs:target"}},"position":{"x":960,"y":0}}]},
-  {"id":"B354IgnTrg00001X","name":"Ignition — Persistent Fire","folder":"Spells","description":"Apply rank-scaled persistent fire damage on a critical Ignition spell attack; initial damage, melee scaling, and heightened handling remain native/manual.","priority":0,"tags":["pf2e","spell","ignition"],"variables":{"B354IgnEvt00001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"B354IgnEvt00001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"},"B354IgnEvt00001X:outputs:outcome":{"type":"outcome","isArray":false,"label":"Outcome"}},"nodes":[{"id":"B354IgnEvt00001X","type":"attack-roll-event","state":"attack","inputs":{},"outs":{"out":{"connection":"B354IgnMch00001X:ins:in"}},"position":{"x":0,"y":0}},{"id":"B354IgnMch00001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:ignition"},"list":{"connection":"B354IgnEvt00001X:outputs:options"}},"outs":{"true":{"connection":"B354IgnSpl00001X:ins:in"}},"position":{"x":320,"y":0}},{"id":"B354IgnSpl00001X","type":"split-outcome","inputs":{"input":{"connection":"B354IgnEvt00001X:outputs:outcome"}},"outs":{"criticalSuccess":{"connection":"B354IgnPer00001X:ins:in"}},"position":{"x":640,"y":0}},{"id":"B354IgnPer00001X","type":"persistent-damage","state":"fixed","inputs":{"formula":{"value":"@item.rank[persistent,fire]"},"target":{"connection":"B354IgnEvt00001X:outputs:target"},"name":{"value":"Effect: Ignition"}},"position":{"x":960,"y":0}}]}
+  {
+    "id": "B354ResTrg00001X",
+    "name": "Restraining Chains — Clumsy",
+    "folder": "Spells",
+    "description": "Apply clumsy 1 on a failed Restraining Chains save and clumsy 2 on a critical failure; chain movement limits, chain durability, and Escape remain native/manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "spell",
+      "restraining-chains"
+    ],
+    "variables": {
+      "B354ResEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B354ResEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B354ResEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B354ResEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B354ResMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B354ResMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:restraining-chains"
+          },
+          "list": {
+            "connection": "B354ResEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B354ResSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B354ResSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B354ResEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "failure": {
+            "connection": "B354ResClm00001X:ins:in"
+          },
+          "criticalFailure": {
+            "connection": "B354ResClm00002X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B354ResClm00001X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "clumsy"
+          },
+          "value": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Restraining Chains"
+          },
+          "target": {
+            "connection": "B354ResEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 80
+        }
+      },
+      {
+        "id": "B354ResClm00002X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "clumsy"
+          },
+          "value": {
+            "value": 2
+          },
+          "name": {
+            "value": "Effect: Restraining Chains"
+          },
+          "target": {
+            "connection": "B354ResEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": -80
+        }
+      }
+    ]
+  },
+  {
+    "id": "B354LurTrg00001X",
+    "name": "Luring Wail — Slowed",
+    "folder": "Spells",
+    "description": "Apply slowed 1 for 1 round on a successful Luring Wail Will save; fascination, forced movement, emanation recurrence, and off-guard remain native/manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "spell",
+      "luring-wail"
+    ],
+    "variables": {
+      "B354LurEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B354LurEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B354LurEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B354LurEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B354LurMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B354LurMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:luring-wail"
+          },
+          "list": {
+            "connection": "B354LurEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B354LurSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B354LurSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B354LurEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "success": {
+            "connection": "B354LurSlo00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B354LurSlo00001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "slowed"
+          },
+          "value": {
+            "value": 1
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "rounds"
+          },
+          "name": {
+            "value": "Effect: Luring Wail"
+          },
+          "target": {
+            "connection": "B354LurEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      }
+    ]
+  }
 ]

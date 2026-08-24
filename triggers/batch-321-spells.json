@@ -1,17 +1,1 @@
-[
-  {
-    "id": "B321DrbTrg00001X",
-    "name": "Draw Blood — Persistent Bleed",
-    "folder": "Spells",
-    "description": "Apply 2 persistent bleed on a successful Draw Blood melee spell attack; healing from later bleed damage and heightened scaling remain native/manual.",
-    "priority": 0,
-    "tags": ["pf2e", "spell", "draw-blood"],
-    "variables": {"B321DrbEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B321DrbEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B321DrbEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
-    "nodes": [
-      {"id": "B321DrbEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B321DrbMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
-      {"id": "B321DrbMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:draw-blood"}, "list": {"connection": "B321DrbEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B321DrbSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
-      {"id": "B321DrbSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B321DrbEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B321DrbPer00001X:ins:in"}, "criticalSuccess": {"connection": "B321DrbPer00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
-      {"id": "B321DrbPer00001X", "type": "persistent-damage", "state": "fixed", "inputs": {"formula": {"value": "2[bleed]"}, "target": {"connection": "B321DrbEvt00001X:outputs:target"}, "name": {"value": "Effect: Draw Blood"}}, "position": {"x": 960, "y": 0}}
-    ]
-  }
-]
+[]

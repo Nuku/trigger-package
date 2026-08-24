@@ -1,6 +1,397 @@
 [
-  {"id":"B375StaTrg00001X","name":"Stagnate Time — Slowed","folder":"Spells","description":"Apply slowed 1 on a failed Stagnate Time Will save and slowed 2 on a critical failure; area timing, recurring saves, and spell duration remain native/manual.","priority":0,"tags":["pf2e","spell","stagnate-time"],"variables":{"B375StaEvt00001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"B375StaEvt00001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"},"B375StaEvt00001X:outputs:outcome":{"type":"outcome","isArray":false,"label":"Outcome"}},"nodes":[{"id":"B375StaEvt00001X","type":"check-roll-event","state":"check","inputs":{"for":{"value":"saving-throw"}},"outs":{"out":{"connection":"B375StaMch00001X:ins:in"}},"position":{"x":0,"y":0}},{"id":"B375StaMch00001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:stagnate-time"},"list":{"connection":"B375StaEvt00001X:outputs:options"}},"outs":{"true":{"connection":"B375StaSpl00001X:ins:in"}},"position":{"x":320,"y":0}},{"id":"B375StaSpl00001X","type":"split-outcome","inputs":{"input":{"connection":"B375StaEvt00001X:outputs:outcome"}},"outs":{"failure":{"connection":"B375StaSlo00001X:ins:in"},"criticalFailure":{"connection":"B375StaSlo00002X:ins:in"}},"position":{"x":640,"y":0}},{"id":"B375StaSlo00001X","type":"create-condition","state":"timed","inputs":{"condition":{"value":"slowed"},"value":{"value":1},"duration":{"value":1},"unit":{"value":"rounds"},"name":{"value":"Effect: Stagnate Time"},"target":{"connection":"B375StaEvt00001X:outputs:target"}},"position":{"x":960,"y":80}},{"id":"B375StaSlo00002X","type":"create-condition","state":"timed","inputs":{"condition":{"value":"slowed"},"value":{"value":2},"duration":{"value":1},"unit":{"value":"rounds"},"name":{"value":"Effect: Stagnate Time"},"target":{"connection":"B375StaEvt00001X:outputs:target"}},"position":{"x":960,"y":-80}}]},
-  {"id":"B375WidTrg00001X","name":"Widow's Bite — Persistent Poison and Enfeebled","folder":"Spells","description":"Apply 3d4 persistent poison damage and enfeebled 1 on a successful Widow's Bite spell attack, doubling the persistent poison on a critical success; heightened handling remains native/manual.","priority":0,"tags":["pf2e","spell","widows-bite"],"variables":{"B375WidEvt00001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"B375WidEvt00001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"},"B375WidEvt00001X:outputs:outcome":{"type":"outcome","isArray":false,"label":"Outcome"}},"nodes":[{"id":"B375WidEvt00001X","type":"attack-roll-event","state":"attack","inputs":{},"outs":{"out":{"connection":"B375WidMch00001X:ins:in"}},"position":{"x":0,"y":0}},{"id":"B375WidMch00001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:widows-bite"},"list":{"connection":"B375WidEvt00001X:outputs:options"}},"outs":{"true":{"connection":"B375WidSpl00001X:ins:in"}},"position":{"x":320,"y":0}},{"id":"B375WidSpl00001X","type":"split-outcome","inputs":{"input":{"connection":"B375WidEvt00001X:outputs:outcome"}},"outs":{"success":{"connection":"B375WidPer00001X:ins:in"},"criticalSuccess":{"connection":"B375WidPer00002X:ins:in"}},"position":{"x":640,"y":0}},{"id":"B375WidPer00001X","type":"persistent-damage","state":"fixed","outs":{"out":{"connection":"B375WidEnf00001X:ins:in"}},"inputs":{"formula":{"value":"3d4[poison]"},"target":{"connection":"B375WidEvt00001X:outputs:target"},"name":{"value":"Effect: Widow's Bite"}},"position":{"x":960,"y":80}},{"id":"B375WidPer00002X","type":"persistent-damage","state":"fixed","outs":{"out":{"connection":"B375WidEnf00002X:ins:in"}},"inputs":{"formula":{"value":"6d4[poison]"},"target":{"connection":"B375WidEvt00001X:outputs:target"},"name":{"value":"Effect: Widow's Bite"}},"position":{"x":960,"y":-80}},{"id":"B375WidEnf00001X","type":"create-condition","state":"fixed","inputs":{"condition":{"value":"enfeebled"},"value":{"value":1},"name":{"value":"Effect: Widow's Bite"},"target":{"connection":"B375WidEvt00001X:outputs:target"}},"position":{"x":1280,"y":80}},{"id":"B375WidEnf00002X","type":"create-condition","state":"fixed","inputs":{"condition":{"value":"enfeebled"},"value":{"value":1},"name":{"value":"Effect: Widow's Bite"},"target":{"connection":"B375WidEvt00001X:outputs:target"}},"position":{"x":1280,"y":-80}}]},
-  {"id":"B375PolTrg00001X","name":"Polar Ray — Drained","folder":"Spells","description":"Apply drained 2 on a successful or critically successful Polar Ray spell attack; cold damage and heightened handling remain native/manual.","priority":0,"tags":["pf2e","spell","polar-ray"],"variables":{"B375PolEvt00001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"B375PolEvt00001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"},"B375PolEvt00001X:outputs:outcome":{"type":"outcome","isArray":false,"label":"Outcome"}},"nodes":[{"id":"B375PolEvt00001X","type":"attack-roll-event","state":"attack","inputs":{},"outs":{"out":{"connection":"B375PolMch00001X:ins:in"}},"position":{"x":0,"y":0}},{"id":"B375PolMch00001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:polar-ray"},"list":{"connection":"B375PolEvt00001X:outputs:options"}},"outs":{"true":{"connection":"B375PolSpl00001X:ins:in"}},"position":{"x":320,"y":0}},{"id":"B375PolSpl00001X","type":"split-outcome","inputs":{"input":{"connection":"B375PolEvt00001X:outputs:outcome"}},"outs":{"success":{"connection":"B375PolDra00001X:ins:in"},"criticalSuccess":{"connection":"B375PolDra00001X:ins:in"}},"position":{"x":640,"y":0}},{"id":"B375PolDra00001X","type":"create-condition","state":"fixed","inputs":{"condition":{"value":"drained"},"value":{"value":2},"name":{"value":"Effect: Polar Ray"},"target":{"connection":"B375PolEvt00001X:outputs:target"}},"position":{"x":960,"y":0}}]},
-  {"id":"B375MutTrg00001X","name":"Mutilate — Persistent Bleed","folder":"Spells","description":"Apply rank-scaled persistent bleed on a critically failed Mutilate save; self-damage, initial damage, area variants, and heightened handling remain native/manual.","priority":0,"tags":["pf2e","spell","mutilate"],"variables":{"B375MutEvt00001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"B375MutEvt00001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"},"B375MutEvt00001X:outputs:outcome":{"type":"outcome","isArray":false,"label":"Outcome"}},"nodes":[{"id":"B375MutEvt00001X","type":"check-roll-event","state":"check","inputs":{"for":{"value":"saving-throw"}},"outs":{"out":{"connection":"B375MutMch00001X:ins:in"}},"position":{"x":0,"y":0}},{"id":"B375MutMch00001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:mutilate"},"list":{"connection":"B375MutEvt00001X:outputs:options"}},"outs":{"true":{"connection":"B375MutSpl00001X:ins:in"}},"position":{"x":320,"y":0}},{"id":"B375MutSpl00001X","type":"split-outcome","inputs":{"input":{"connection":"B375MutEvt00001X:outputs:outcome"}},"outs":{"criticalFailure":{"connection":"B375MutPer00001X:ins:in"}},"position":{"x":640,"y":0}},{"id":"B375MutPer00001X","type":"persistent-damage","state":"fixed","inputs":{"formula":{"value":"(1d8 + @item.level -4)[bleed]"},"target":{"connection":"B375MutEvt00001X:outputs:target"},"name":{"value":"Effect: Mutilate"}},"position":{"x":960,"y":0}}]}
+  {
+    "id": "B375StaTrg00001X",
+    "name": "Stagnate Time — Slowed",
+    "folder": "Spells",
+    "description": "Apply slowed 1 on a failed Stagnate Time Will save and slowed 2 on a critical failure; area timing, recurring saves, and spell duration remain native/manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "spell",
+      "stagnate-time"
+    ],
+    "variables": {
+      "B375StaEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B375StaEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B375StaEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B375StaEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B375StaMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B375StaMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:stagnate-time"
+          },
+          "list": {
+            "connection": "B375StaEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B375StaSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B375StaSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B375StaEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "failure": {
+            "connection": "B375StaSlo00001X:ins:in"
+          },
+          "criticalFailure": {
+            "connection": "B375StaSlo00002X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B375StaSlo00001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "slowed"
+          },
+          "value": {
+            "value": 1
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "rounds"
+          },
+          "name": {
+            "value": "Effect: Stagnate Time"
+          },
+          "target": {
+            "connection": "B375StaEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 80
+        }
+      },
+      {
+        "id": "B375StaSlo00002X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "slowed"
+          },
+          "value": {
+            "value": 2
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "rounds"
+          },
+          "name": {
+            "value": "Effect: Stagnate Time"
+          },
+          "target": {
+            "connection": "B375StaEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": -80
+        }
+      }
+    ]
+  },
+  {
+    "id": "B375WidTrg00001X",
+    "name": "Widow's Bite — Enfeebled",
+    "folder": "Spells",
+    "description": "Apply enfeebled by outcome; persistent poison remains native/manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "spell",
+      "widows-bite"
+    ],
+    "variables": {
+      "B375WidEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B375WidEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B375WidEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B375WidEvt00001X",
+        "type": "attack-roll-event",
+        "state": "attack",
+        "inputs": {},
+        "outs": {
+          "out": {
+            "connection": "B375WidMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B375WidMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:widows-bite"
+          },
+          "list": {
+            "connection": "B375WidEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B375WidSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B375WidSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B375WidEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "success": {
+            "connection": "B375WidEnf00001X:ins:in"
+          },
+          "criticalSuccess": {
+            "connection": "B375WidEnf00002X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B375WidEnf00001X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "enfeebled"
+          },
+          "value": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Widow's Bite"
+          },
+          "target": {
+            "connection": "B375WidEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 1280,
+          "y": 80
+        }
+      },
+      {
+        "id": "B375WidEnf00002X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "enfeebled"
+          },
+          "value": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Widow's Bite"
+          },
+          "target": {
+            "connection": "B375WidEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 1280,
+          "y": -80
+        }
+      }
+    ]
+  },
+  {
+    "id": "B375PolTrg00001X",
+    "name": "Polar Ray — Drained",
+    "folder": "Spells",
+    "description": "Apply drained 2 on a successful or critically successful Polar Ray spell attack; cold damage and heightened handling remain native/manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "spell",
+      "polar-ray"
+    ],
+    "variables": {
+      "B375PolEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B375PolEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B375PolEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B375PolEvt00001X",
+        "type": "attack-roll-event",
+        "state": "attack",
+        "inputs": {},
+        "outs": {
+          "out": {
+            "connection": "B375PolMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B375PolMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:polar-ray"
+          },
+          "list": {
+            "connection": "B375PolEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B375PolSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B375PolSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B375PolEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "success": {
+            "connection": "B375PolDra00001X:ins:in"
+          },
+          "criticalSuccess": {
+            "connection": "B375PolDra00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B375PolDra00001X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "drained"
+          },
+          "value": {
+            "value": 2
+          },
+          "name": {
+            "value": "Effect: Polar Ray"
+          },
+          "target": {
+            "connection": "B375PolEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      }
+    ]
+  }
 ]

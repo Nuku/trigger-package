@@ -1,7 +1,481 @@
 [
-  {"id":"B379ScoTrg00001X","name":"Scouring Sand — Dazzled","folder":"Spells","description":"Apply dazzled for 1 minute on a failed or critically failed Scouring Sand Reflex save; critical-failure blindness, Interact removal, area timing, counteract effects, and Sustain handling remain native/manual.","priority":0,"tags":["pf2e","spell","scouring-sand"],"variables":{"B379ScoEvt00001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"B379ScoEvt00001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"},"B379ScoEvt00001X:outputs:outcome":{"type":"outcome","isArray":false,"label":"Outcome"}},"nodes":[{"id":"B379ScoEvt00001X","type":"check-roll-event","state":"check","inputs":{"for":{"value":"saving-throw"}},"outs":{"out":{"connection":"B379ScoMch00001X:ins:in"}},"position":{"x":0,"y":0}},{"id":"B379ScoMch00001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:scouring-sand"},"list":{"connection":"B379ScoEvt00001X:outputs:options"}},"outs":{"true":{"connection":"B379ScoSpl00001X:ins:in"}},"position":{"x":320,"y":0}},{"id":"B379ScoSpl00001X","type":"split-outcome","inputs":{"input":{"connection":"B379ScoEvt00001X:outputs:outcome"}},"outs":{"failure":{"connection":"B379ScoDaz00001X:ins:in"},"criticalFailure":{"connection":"B379ScoDaz00001X:ins:in"}},"position":{"x":640,"y":0}},{"id":"B379ScoDaz00001X","type":"create-condition","state":"timed","inputs":{"condition":{"value":"dazzled"},"duration":{"value":1},"unit":{"value":"minutes"},"name":{"value":"Effect: Scouring Sand"},"target":{"connection":"B379ScoEvt00001X:outputs:target"}},"position":{"x":960,"y":0}}]},
-  {"id":"B379PaiTrg00001X","name":"Pain of Ages — Stunned","folder":"Spells","description":"Apply stunned 1 on a critically failed Pain of Ages save; spirit damage, area, and heightened handling remain native/manual.","priority":0,"tags":["pf2e","spell","pain-of-ages"],"variables":{"B379PaiEvt00001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"B379PaiEvt00001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"},"B379PaiEvt00001X:outputs:outcome":{"type":"outcome","isArray":false,"label":"Outcome"}},"nodes":[{"id":"B379PaiEvt00001X","type":"check-roll-event","state":"check","inputs":{"for":{"value":"saving-throw"}},"outs":{"out":{"connection":"B379PaiMch00001X:ins:in"}},"position":{"x":0,"y":0}},{"id":"B379PaiMch00001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:pain-of-ages"},"list":{"connection":"B379PaiEvt00001X:outputs:options"}},"outs":{"true":{"connection":"B379PaiSpl00001X:ins:in"}},"position":{"x":320,"y":0}},{"id":"B379PaiSpl00001X","type":"split-outcome","inputs":{"input":{"connection":"B379PaiEvt00001X:outputs:outcome"}},"outs":{"criticalFailure":{"connection":"B379PaiStn00001X:ins:in"}},"position":{"x":640,"y":0}},{"id":"B379PaiStn00001X","type":"create-condition","state":"fixed","inputs":{"condition":{"value":"stunned"},"value":{"value":1},"name":{"value":"Effect: Pain of Ages"},"target":{"connection":"B379PaiEvt00001X:outputs:target"}},"position":{"x":960,"y":0}}]},
-  {"id":"B379SpiTrg00001X","name":"Spirit Song — Stunned","folder":"Spells","description":"Apply stunned 1 on a failed Spirit Song Fortitude save and stunned 2 on a critical failure; spirit damage, reaction restriction, area, and heightened handling remain native/manual.","priority":0,"tags":["pf2e","spell","spirit-song"],"variables":{"B379SpiEvt00001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"B379SpiEvt00001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"},"B379SpiEvt00001X:outputs:outcome":{"type":"outcome","isArray":false,"label":"Outcome"}},"nodes":[{"id":"B379SpiEvt00001X","type":"check-roll-event","state":"check","inputs":{"for":{"value":"saving-throw"}},"outs":{"out":{"connection":"B379SpiMch00001X:ins:in"}},"position":{"x":0,"y":0}},{"id":"B379SpiMch00001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:spirit-song"},"list":{"connection":"B379SpiEvt00001X:outputs:options"}},"outs":{"true":{"connection":"B379SpiSpl00001X:ins:in"}},"position":{"x":320,"y":0}},{"id":"B379SpiSpl00001X","type":"split-outcome","inputs":{"input":{"connection":"B379SpiEvt00001X:outputs:outcome"}},"outs":{"failure":{"connection":"B379SpiStn00001X:ins:in"},"criticalFailure":{"connection":"B379SpiStn00002X:ins:in"}},"position":{"x":640,"y":0}},{"id":"B379SpiStn00001X","type":"create-condition","state":"fixed","inputs":{"condition":{"value":"stunned"},"value":{"value":1},"name":{"value":"Effect: Spirit Song"},"target":{"connection":"B379SpiEvt00001X:outputs:target"}},"position":{"x":960,"y":80}},{"id":"B379SpiStn00002X","type":"create-condition","state":"fixed","inputs":{"condition":{"value":"stunned"},"value":{"value":2},"name":{"value":"Effect: Spirit Song"},"target":{"connection":"B379SpiEvt00001X:outputs:target"}},"position":{"x":960,"y":-80}}]},
-  {"id":"B379CamTrg00001X","name":"Camel Spit — Dazzled and Persistent Acid","folder":"Spells","description":"Apply dazzled for 1 round on a successful Camel Spit spell attack and rank-scaled persistent acid on a critical success; repeat attacks, initial damage, and heightened handling remain native/manual.","priority":0,"tags":["pf2e","spell","camel-spit"],"variables":{"B379CamEvt00001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"B379CamEvt00001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"},"B379CamEvt00001X:outputs:outcome":{"type":"outcome","isArray":false,"label":"Outcome"}},"nodes":[{"id":"B379CamEvt00001X","type":"attack-roll-event","state":"attack","inputs":{},"outs":{"out":{"connection":"B379CamMch00001X:ins:in"}},"position":{"x":0,"y":0}},{"id":"B379CamMch00001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:camel-spit"},"list":{"connection":"B379CamEvt00001X:outputs:options"}},"outs":{"true":{"connection":"B379CamSpl00001X:ins:in"}},"position":{"x":320,"y":0}},{"id":"B379CamSpl00001X","type":"split-outcome","inputs":{"input":{"connection":"B379CamEvt00001X:outputs:outcome"}},"outs":{"success":{"connection":"B379CamDaz00001X:ins:in"},"criticalSuccess":{"connection":"B379CamPer00001X:ins:in"}},"position":{"x":640,"y":0}},{"id":"B379CamDaz00001X","type":"create-condition","state":"timed","inputs":{"condition":{"value":"dazzled"},"duration":{"value":1},"unit":{"value":"rounds"},"name":{"value":"Effect: Camel Spit"},"target":{"connection":"B379CamEvt00001X:outputs:target"}},"position":{"x":960,"y":80}},{"id":"B379CamPer00001X","type":"persistent-damage","state":"fixed","inputs":{"formula":{"value":"@item.level[acid]"},"target":{"connection":"B379CamEvt00001X:outputs:target"},"name":{"value":"Effect: Camel Spit"}},"position":{"x":960,"y":-80}}]},
-  {"id":"B379SawTrg00001X","name":"Sawtooth Terrain — Persistent Bleed","folder":"Spells","description":"Apply rank-scaled persistent bleed on a failed or critically failed Sawtooth Terrain Reflex save; area timing, speed penalties, terrain, and heightened handling remain native/manual.","priority":0,"tags":["pf2e","spell","sawtooth-terrain"],"variables":{"B379SawEvt00001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"B379SawEvt00001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"},"B379SawEvt00001X:outputs:outcome":{"type":"outcome","isArray":false,"label":"Outcome"}},"nodes":[{"id":"B379SawEvt00001X","type":"check-roll-event","state":"check","inputs":{"for":{"value":"saving-throw"}},"outs":{"out":{"connection":"B379SawMch00001X:ins:in"}},"position":{"x":0,"y":0}},{"id":"B379SawMch00001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:sawtooth-terrain"},"list":{"connection":"B379SawEvt00001X:outputs:options"}},"outs":{"true":{"connection":"B379SawSpl00001X:ins:in"}},"position":{"x":320,"y":0}},{"id":"B379SawSpl00001X","type":"split-outcome","inputs":{"input":{"connection":"B379SawEvt00001X:outputs:outcome"}},"outs":{"failure":{"connection":"B379SawPer00001X:ins:in"},"criticalFailure":{"connection":"B379SawPer00001X:ins:in"}},"position":{"x":640,"y":0}},{"id":"B379SawPer00001X","type":"persistent-damage","state":"fixed","inputs":{"formula":{"value":"floor((@item.level -1)/2)d6[bleed]"},"target":{"connection":"B379SawEvt00001X:outputs:target"},"name":{"value":"Effect: Sawtooth Terrain"}},"position":{"x":960,"y":0}}]}
+  {
+    "id": "B379ScoTrg00001X",
+    "name": "Scouring Sand — Dazzled",
+    "folder": "Spells",
+    "description": "Apply dazzled for 1 minute on a failed or critically failed Scouring Sand Reflex save; critical-failure blindness, Interact removal, area timing, counteract effects, and Sustain handling remain native/manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "spell",
+      "scouring-sand"
+    ],
+    "variables": {
+      "B379ScoEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B379ScoEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B379ScoEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B379ScoEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B379ScoMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B379ScoMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:scouring-sand"
+          },
+          "list": {
+            "connection": "B379ScoEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B379ScoSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B379ScoSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B379ScoEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "failure": {
+            "connection": "B379ScoDaz00001X:ins:in"
+          },
+          "criticalFailure": {
+            "connection": "B379ScoDaz00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B379ScoDaz00001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "dazzled"
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "minutes"
+          },
+          "name": {
+            "value": "Effect: Scouring Sand"
+          },
+          "target": {
+            "connection": "B379ScoEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      }
+    ]
+  },
+  {
+    "id": "B379PaiTrg00001X",
+    "name": "Pain of Ages — Stunned",
+    "folder": "Spells",
+    "description": "Apply stunned 1 on a critically failed Pain of Ages save; spirit damage, area, and heightened handling remain native/manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "spell",
+      "pain-of-ages"
+    ],
+    "variables": {
+      "B379PaiEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B379PaiEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B379PaiEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B379PaiEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B379PaiMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B379PaiMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:pain-of-ages"
+          },
+          "list": {
+            "connection": "B379PaiEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B379PaiSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B379PaiSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B379PaiEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "criticalFailure": {
+            "connection": "B379PaiStn00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B379PaiStn00001X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "stunned"
+          },
+          "value": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Pain of Ages"
+          },
+          "target": {
+            "connection": "B379PaiEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      }
+    ]
+  },
+  {
+    "id": "B379SpiTrg00001X",
+    "name": "Spirit Song — Stunned",
+    "folder": "Spells",
+    "description": "Apply stunned 1 on a failed Spirit Song Fortitude save and stunned 2 on a critical failure; spirit damage, reaction restriction, area, and heightened handling remain native/manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "spell",
+      "spirit-song"
+    ],
+    "variables": {
+      "B379SpiEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B379SpiEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B379SpiEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B379SpiEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B379SpiMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B379SpiMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:spirit-song"
+          },
+          "list": {
+            "connection": "B379SpiEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B379SpiSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B379SpiSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B379SpiEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "failure": {
+            "connection": "B379SpiStn00001X:ins:in"
+          },
+          "criticalFailure": {
+            "connection": "B379SpiStn00002X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B379SpiStn00001X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "stunned"
+          },
+          "value": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Spirit Song"
+          },
+          "target": {
+            "connection": "B379SpiEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 80
+        }
+      },
+      {
+        "id": "B379SpiStn00002X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "stunned"
+          },
+          "value": {
+            "value": 2
+          },
+          "name": {
+            "value": "Effect: Spirit Song"
+          },
+          "target": {
+            "connection": "B379SpiEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": -80
+        }
+      }
+    ]
+  },
+  {
+    "id": "B379CamTrg00001X",
+    "name": "Camel Spit — Dazzled",
+    "folder": "Spells",
+    "description": "Apply dazzled by outcome; persistent acid damage remains native/manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "spell",
+      "camel-spit"
+    ],
+    "variables": {
+      "B379CamEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B379CamEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B379CamEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B379CamEvt00001X",
+        "type": "attack-roll-event",
+        "state": "attack",
+        "inputs": {},
+        "outs": {
+          "out": {
+            "connection": "B379CamMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B379CamMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:camel-spit"
+          },
+          "list": {
+            "connection": "B379CamEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B379CamSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B379CamSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B379CamEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "success": {
+            "connection": "B379CamDaz00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B379CamDaz00001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "dazzled"
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "rounds"
+          },
+          "name": {
+            "value": "Effect: Camel Spit"
+          },
+          "target": {
+            "connection": "B379CamEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 80
+        }
+      }
+    ]
+  }
 ]

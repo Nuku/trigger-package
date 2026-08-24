@@ -5,32 +5,288 @@
     "folder": "Equipment",
     "description": "Apply dazzled until the end of the next turn on a failed Silver Crescent (Moderate) Reflex save; vitality damage, silver interactions, targeting, and one-use handling remain native/manual.",
     "priority": 0,
-    "tags": ["pf2e", "equipment", "silver-crescent-moderate"],
-    "variables": {"B336SilEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B336SilEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B336SilEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "tags": [
+      "pf2e",
+      "equipment",
+      "silver-crescent-moderate"
+    ],
+    "variables": {
+      "B336SilEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B336SilEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B336SilEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
     "nodes": [
-      {"id": "B336SilEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B336SilMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
-      {"id": "B336SilMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:silver-crescent-moderate"}, "list": {"connection": "B336SilEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B336SilSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
-      {"id": "B336SilSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B336SilEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B336SilDaz00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
-      {"id": "B336SilDaz00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Silver Crescent"}, "target": {"connection": "B336SilEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+      {
+        "id": "B336SilEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B336SilMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B336SilMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:silver-crescent-moderate"
+          },
+          "list": {
+            "connection": "B336SilEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B336SilSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B336SilSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B336SilEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "failure": {
+            "connection": "B336SilDaz00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B336SilDaz00001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "dazzled"
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "rounds"
+          },
+          "name": {
+            "value": "Effect: Silver Crescent"
+          },
+          "target": {
+            "connection": "B336SilEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      }
     ]
   },
   {
     "id": "B336WinTrg00001X",
     "name": "Wintershot — Auroral Shine",
     "folder": "Equipment",
-    "description": "Apply dazzled for 2 rounds on a successful Wintershot Auroral Shine save, 1 minute on failure, and 10 minutes on critical failure; persistent cold on failure/critical failure and concealment interactions remain native/manual.",
+    "description": "Apply the valid concealment rider; persistent cold damage remains native/manual.",
     "priority": 0,
-    "tags": ["pf2e", "equipment", "wintershot"],
-    "variables": {"B336WinEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B336WinEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B336WinEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "tags": [
+      "pf2e",
+      "equipment",
+      "wintershot"
+    ],
+    "variables": {
+      "B336WinEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B336WinEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B336WinEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
     "nodes": [
-      {"id": "B336WinEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B336WinMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
-      {"id": "B336WinMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:wintershot"}, "list": {"connection": "B336WinEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B336WinSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
-      {"id": "B336WinSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B336WinEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B336WinDaz00001X:ins:in"}, "failure": {"connection": "B336WinDaz00002X:ins:in"}, "criticalFailure": {"connection": "B336WinDaz00003X:ins:in"}}, "position": {"x": 640, "y": 0}},
-      {"id": "B336WinDaz00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 2}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Wintershot"}, "target": {"connection": "B336WinEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 160}},
-      {"id": "B336WinDaz00002X", "type": "create-condition", "state": "timed", "outs": {"out": {"connection": "B336WinPer00001X:ins:in"}}, "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Wintershot"}, "target": {"connection": "B336WinEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}},
-      {"id": "B336WinDaz00003X", "type": "create-condition", "state": "timed", "outs": {"out": {"connection": "B336WinPer00002X:ins:in"}}, "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 10}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Wintershot"}, "target": {"connection": "B336WinEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -160}},
-      {"id": "B336WinPer00001X", "type": "persistent-damage", "state": "fixed", "inputs": {"formula": {"value": "2d6[cold]"}, "target": {"connection": "B336WinEvt00001X:outputs:target"}, "name": {"value": "Effect: Wintershot"}}, "position": {"x": 1280, "y": 0}},
-      {"id": "B336WinPer00002X", "type": "persistent-damage", "state": "fixed", "inputs": {"formula": {"value": "4d6[cold]"}, "target": {"connection": "B336WinEvt00001X:outputs:target"}, "name": {"value": "Effect: Wintershot"}}, "position": {"x": 1280, "y": -160}}
+      {
+        "id": "B336WinEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B336WinMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B336WinMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:wintershot"
+          },
+          "list": {
+            "connection": "B336WinEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B336WinSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B336WinSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B336WinEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "success": {
+            "connection": "B336WinDaz00001X:ins:in"
+          },
+          "failure": {
+            "connection": "B336WinDaz00002X:ins:in"
+          },
+          "criticalFailure": {
+            "connection": "B336WinDaz00003X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B336WinDaz00001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "dazzled"
+          },
+          "duration": {
+            "value": 2
+          },
+          "unit": {
+            "value": "rounds"
+          },
+          "name": {
+            "value": "Effect: Wintershot"
+          },
+          "target": {
+            "connection": "B336WinEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 160
+        }
+      },
+      {
+        "id": "B336WinDaz00002X",
+        "type": "create-condition",
+        "state": "timed",
+        "outs": {},
+        "inputs": {
+          "condition": {
+            "value": "dazzled"
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "minutes"
+          },
+          "name": {
+            "value": "Effect: Wintershot"
+          },
+          "target": {
+            "connection": "B336WinEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      },
+      {
+        "id": "B336WinDaz00003X",
+        "type": "create-condition",
+        "state": "timed",
+        "outs": {},
+        "inputs": {
+          "condition": {
+            "value": "dazzled"
+          },
+          "duration": {
+            "value": 10
+          },
+          "unit": {
+            "value": "minutes"
+          },
+          "name": {
+            "value": "Effect: Wintershot"
+          },
+          "target": {
+            "connection": "B336WinEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": -160
+        }
+      }
     ]
   },
   {
@@ -39,13 +295,116 @@
     "folder": "Equipment",
     "description": "Apply enfeebled 2 for 1 round on a critical failure against Stonethroat Ammunition; attack prerequisite, jaw/fang restrictions, throat penalties, and Swallow Whole interaction remain native/manual.",
     "priority": 0,
-    "tags": ["pf2e", "equipment", "stonethroat-ammunition"],
-    "variables": {"B336StoEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B336StoEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B336StoEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "tags": [
+      "pf2e",
+      "equipment",
+      "stonethroat-ammunition"
+    ],
+    "variables": {
+      "B336StoEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B336StoEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B336StoEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
     "nodes": [
-      {"id": "B336StoEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B336StoMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
-      {"id": "B336StoMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:stonethroat-ammunition"}, "list": {"connection": "B336StoEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B336StoSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
-      {"id": "B336StoSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B336StoEvt00001X:outputs:outcome"}}, "outs": {"criticalFailure": {"connection": "B336StoEnf00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
-      {"id": "B336StoEnf00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "enfeebled"}, "value": {"value": 2}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Stonethroat Ammunition"}, "target": {"connection": "B336StoEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+      {
+        "id": "B336StoEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B336StoMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B336StoMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:stonethroat-ammunition"
+          },
+          "list": {
+            "connection": "B336StoEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B336StoSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B336StoSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B336StoEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "criticalFailure": {
+            "connection": "B336StoEnf00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B336StoEnf00001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "enfeebled"
+          },
+          "value": {
+            "value": 2
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "rounds"
+          },
+          "name": {
+            "value": "Effect: Stonethroat Ammunition"
+          },
+          "target": {
+            "connection": "B336StoEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      }
     ]
   },
   {
@@ -54,13 +413,113 @@
     "folder": "Equipment",
     "description": "Apply dazzled until the end of the next turn on a critical failure against Bristling Spines (Lesser); area targeting and piercing damage remain native/manual.",
     "priority": 0,
-    "tags": ["pf2e", "equipment", "bristling-spines-lesser"],
-    "variables": {"B336BriEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B336BriEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B336BriEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "tags": [
+      "pf2e",
+      "equipment",
+      "bristling-spines-lesser"
+    ],
+    "variables": {
+      "B336BriEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B336BriEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B336BriEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
     "nodes": [
-      {"id": "B336BriEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B336BriMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
-      {"id": "B336BriMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:bristling-spines-lesser"}, "list": {"connection": "B336BriEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B336BriSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
-      {"id": "B336BriSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B336BriEvt00001X:outputs:outcome"}}, "outs": {"criticalFailure": {"connection": "B336BriDaz00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
-      {"id": "B336BriDaz00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Bristling Spines"}, "target": {"connection": "B336BriEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+      {
+        "id": "B336BriEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B336BriMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B336BriMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:bristling-spines-lesser"
+          },
+          "list": {
+            "connection": "B336BriEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B336BriSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B336BriSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B336BriEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "criticalFailure": {
+            "connection": "B336BriDaz00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B336BriDaz00001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "dazzled"
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "rounds"
+          },
+          "name": {
+            "value": "Effect: Bristling Spines"
+          },
+          "target": {
+            "connection": "B336BriEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      }
     ]
   }
 ]

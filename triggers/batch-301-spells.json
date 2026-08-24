@@ -185,7 +185,7 @@
     "id": "B301IgwTrg00001X",
     "name": "Ignite Fireworks — Dazzled",
     "folder": "Spells",
-    "description": "Apply dazzled 1 round/3 rounds/1 minute from Ignite Fireworks' Reflex-save outcome and 1d4 persistent fire on a critical failure; area damage and heightening remain native/manual.",
+    "description": "Apply dazzled by save outcome; persistent fire damage remains native/manual.",
     "priority": 0,
     "tags": [
       "pf2e",
@@ -347,33 +347,9 @@
             "connection": "B301IgwEvt00001X:outputs:target"
           }
         },
-        "outs": {
-          "out": {
-            "connection": "B301IgwPer00001X:ins:in"
-          }
-        },
+        "outs": {},
         "position": {
           "x": 960,
-          "y": -80
-        }
-      },
-      {
-        "id": "B301IgwPer00001X",
-        "type": "persistent-damage",
-        "state": "fixed",
-        "inputs": {
-          "formula": {
-            "value": "1d4[fire]"
-          },
-          "target": {
-            "connection": "B301IgwEvt00001X:outputs:target"
-          },
-          "name": {
-            "value": "Effect: Ignite Fireworks"
-          }
-        },
-        "position": {
-          "x": 1280,
           "y": -80
         }
       }

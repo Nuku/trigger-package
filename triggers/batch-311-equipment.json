@@ -5,13 +5,106 @@
     "folder": "Equipment",
     "description": "Apply sickened 1 on a critical Sulfur Bomb (Moderate) hit; attack penalties, damage, immunity, and activation remain native/manual.",
     "priority": 0,
-    "tags": ["pf2e", "equipment", "sulfur-bomb-moderate"],
-    "variables": {"B311SulEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B311SulEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B311SulEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "tags": [
+      "pf2e",
+      "equipment",
+      "sulfur-bomb-moderate"
+    ],
+    "variables": {
+      "B311SulEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B311SulEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B311SulEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
     "nodes": [
-      {"id": "B311SulEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B311SulMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
-      {"id": "B311SulMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:sulfur-bomb-moderate"}, "list": {"connection": "B311SulEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B311SulSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
-      {"id": "B311SulSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B311SulEvt00001X:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "B311SulSic00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
-      {"id": "B311SulSic00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 1}, "name": {"value": "Effect: Sulfur Bomb (Moderate)"}, "target": {"connection": "B311SulEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+      {
+        "id": "B311SulEvt00001X",
+        "type": "attack-roll-event",
+        "state": "attack",
+        "inputs": {},
+        "outs": {
+          "out": {
+            "connection": "B311SulMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B311SulMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:sulfur-bomb-moderate"
+          },
+          "list": {
+            "connection": "B311SulEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B311SulSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B311SulSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B311SulEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "criticalSuccess": {
+            "connection": "B311SulSic00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B311SulSic00001X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "sickened"
+          },
+          "value": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Sulfur Bomb (Moderate)"
+          },
+          "target": {
+            "connection": "B311SulEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      }
     ]
   },
   {
@@ -20,58 +113,106 @@
     "folder": "Equipment",
     "description": "Apply sickened 1 on a critical Tallow Bomb (Moderate) hit; persistent fire, living-target qualification, and sickened cleanup remain native/manual.",
     "priority": 0,
-    "tags": ["pf2e", "equipment", "tallow-bomb-moderate"],
-    "variables": {"B311TalEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B311TalEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B311TalEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "tags": [
+      "pf2e",
+      "equipment",
+      "tallow-bomb-moderate"
+    ],
+    "variables": {
+      "B311TalEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B311TalEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B311TalEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
     "nodes": [
-      {"id": "B311TalEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B311TalMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
-      {"id": "B311TalMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:tallow-bomb-moderate"}, "list": {"connection": "B311TalEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B311TalSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
-      {"id": "B311TalSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B311TalEvt00001X:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "B311TalSic00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
-      {"id": "B311TalSic00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 1}, "name": {"value": "Effect: Tallow Bomb (Moderate)"}, "target": {"connection": "B311TalEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
-    ]
-  },
-  {
-    "id": "B311EaaTrg00001X",
-    "name": "Elemental Ammunition (Moderate, Acid) — Persistent Acid",
-    "folder": "Equipment",
-    "description": "Apply 2d4 persistent acid damage when Moderate Acid Elemental Ammunition hits; splash damage and activation remain native/manual.",
-    "priority": 0,
-    "tags": ["pf2e", "equipment", "elemental-ammunition-moderate-acid"],
-    "variables": {"B311EaaEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B311EaaEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B311EaaEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
-    "nodes": [
-      {"id": "B311EaaEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B311EaaMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
-      {"id": "B311EaaMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:elemental-ammunition-moderate-acid"}, "list": {"connection": "B311EaaEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B311EaaSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
-      {"id": "B311EaaSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B311EaaEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B311EaaPer00001X:ins:in"}, "criticalSuccess": {"connection": "B311EaaPer00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
-      {"id": "B311EaaPer00001X", "type": "persistent-damage", "state": "fixed", "inputs": {"formula": {"value": "2d4[acid]"}, "target": {"connection": "B311EaaEvt00001X:outputs:target"}, "name": {"value": "Effect: Elemental Ammunition (Moderate, Acid)"}}, "position": {"x": 960, "y": 0}}
-    ]
-  },
-  {
-    "id": "B311EaeTrg00001X",
-    "name": "Elemental Ammunition (Moderate, Electricity) — Persistent Electricity",
-    "folder": "Equipment",
-    "description": "Apply 2d4 persistent electricity damage when Moderate Electricity Elemental Ammunition hits; splash damage and activation remain native/manual.",
-    "priority": 0,
-    "tags": ["pf2e", "equipment", "elemental-ammunition-moderate-electricity"],
-    "variables": {"B311EaeEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B311EaeEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B311EaeEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
-    "nodes": [
-      {"id": "B311EaeEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B311EaeMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
-      {"id": "B311EaeMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:elemental-ammunition-moderate-electricity"}, "list": {"connection": "B311EaeEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B311EaeSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
-      {"id": "B311EaeSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B311EaeEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B311EaePer00001X:ins:in"}, "criticalSuccess": {"connection": "B311EaePer00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
-      {"id": "B311EaePer00001X", "type": "persistent-damage", "state": "fixed", "inputs": {"formula": {"value": "2d4[electricity]"}, "target": {"connection": "B311EaeEvt00001X:outputs:target"}, "name": {"value": "Effect: Elemental Ammunition (Moderate, Electricity)"}}, "position": {"x": 960, "y": 0}}
-    ]
-  },
-  {
-    "id": "B311EacTrg00001X",
-    "name": "Elemental Ammunition (Greater, Cold) — Persistent Cold",
-    "folder": "Equipment",
-    "description": "Apply 3d4 persistent cold damage when Greater Cold Elemental Ammunition hits; splash damage and activation remain native/manual.",
-    "priority": 0,
-    "tags": ["pf2e", "equipment", "elemental-ammunition-greater-cold"],
-    "variables": {"B311EacEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B311EacEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B311EacEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
-    "nodes": [
-      {"id": "B311EacEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B311EacMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
-      {"id": "B311EacMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:elemental-ammunition-greater-cold"}, "list": {"connection": "B311EacEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B311EacSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
-      {"id": "B311EacSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B311EacEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B311EacPer00001X:ins:in"}, "criticalSuccess": {"connection": "B311EacPer00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
-      {"id": "B311EacPer00001X", "type": "persistent-damage", "state": "fixed", "inputs": {"formula": {"value": "3d4[cold]"}, "target": {"connection": "B311EacEvt00001X:outputs:target"}, "name": {"value": "Effect: Elemental Ammunition (Greater, Cold)"}}, "position": {"x": 960, "y": 0}}
+      {
+        "id": "B311TalEvt00001X",
+        "type": "attack-roll-event",
+        "state": "attack",
+        "inputs": {},
+        "outs": {
+          "out": {
+            "connection": "B311TalMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B311TalMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:tallow-bomb-moderate"
+          },
+          "list": {
+            "connection": "B311TalEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B311TalSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B311TalSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B311TalEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "criticalSuccess": {
+            "connection": "B311TalSic00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B311TalSic00001X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "sickened"
+          },
+          "value": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Tallow Bomb (Moderate)"
+          },
+          "target": {
+            "connection": "B311TalEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      }
     ]
   }
 ]

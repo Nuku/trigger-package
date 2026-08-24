@@ -1,6 +1,120 @@
 [
-{"id":"B472SplTrg00001X","name":"Splintering Spear (Major) — Persistent Bleed","folder":"Equipment","description":"Apply 1d6 persistent bleed when a Splintering Spear (Major) Strike hits; Shatter's area damage and separate save remain native/manual.","priority":0,"tags":["pf2e","equipment","splintering-spear-major"],"variables":{"B472SplEvt00001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"B472SplEvt00001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"},"B472SplEvt00001X:outputs:outcome":{"type":"outcome","isArray":false,"label":"Outcome"}},"nodes":[{"id":"B472SplEvt00001X","type":"attack-roll-event","state":"attack","inputs":{},"outs":{"out":{"connection":"B472SplMch00001X:ins:in"}},"position":{"x":0,"y":0}},{"id":"B472SplMch00001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:splintering-spear-major"},"list":{"connection":"B472SplEvt00001X:outputs:options"}},"outs":{"true":{"connection":"B472SplSpl00001X:ins:in"}},"position":{"x":320,"y":0}},{"id":"B472SplSpl00001X","type":"split-outcome","inputs":{"input":{"connection":"B472SplEvt00001X:outputs:outcome"}},"outs":{"success":{"connection":"B472SplPer00001X:ins:in"},"criticalSuccess":{"connection":"B472SplPer00001X:ins:in"}},"position":{"x":640,"y":0}},{"id":"B472SplPer00001X","type":"persistent-damage","state":"fixed","inputs":{"formula":{"value":"1d6[bleed]"},"target":{"connection":"B472SplEvt00001X:outputs:target"},"name":{"value":"Effect: Splintering Spear (Major)"}},"position":{"x":960,"y":0}}]},
-{"id":"B472OurTrg00001X","name":"Ouroboros Flail (Major) — Grabbed","folder":"Equipment","description":"Apply grabbed for 1 round on a failed or critically failed Chained Grasp Fortitude save; activation, pull, movement, Escape, and attack-ending cleanup remain native/manual.","priority":0,"tags":["pf2e","equipment","ouroboros-flail-major"],"variables":{"B472OurEvt00001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"B472OurEvt00001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"},"B472OurEvt00001X:outputs:outcome":{"type":"outcome","isArray":false,"label":"Outcome"}},"nodes":[{"id":"B472OurEvt00001X","type":"check-roll-event","state":"check","inputs":{"for":{"value":"saving-throw"}},"outs":{"out":{"connection":"B472OurMch00001X:ins:in"}},"position":{"x":0,"y":0}},{"id":"B472OurMch00001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:ouroboros-flail-major"},"list":{"connection":"B472OurEvt00001X:outputs:options"}},"outs":{"true":{"connection":"B472OurSpl00001X:ins:in"}},"position":{"x":320,"y":0}},{"id":"B472OurSpl00001X","type":"split-outcome","inputs":{"input":{"connection":"B472OurEvt00001X:outputs:outcome"}},"outs":{"failure":{"connection":"B472OurGrb00001X:ins:in"},"criticalFailure":{"connection":"B472OurGrb00001X:ins:in"}},"position":{"x":640,"y":0}},{"id":"B472OurGrb00001X","type":"create-condition","state":"timed","inputs":{"condition":{"value":"grabbed"},"duration":{"value":1},"unit":{"value":"rounds"},"name":{"value":"Effect: Ouroboros Flail (Major)"},"target":{"connection":"B472OurEvt00001X:outputs:target"}},"position":{"x":960,"y":0}}]},
-{"id":"B472FirTrg00001X","name":"Firestarter Pellets (Major) — Persistent Fire","folder":"Equipment","description":"Apply 3d6 persistent fire on a failed Firestarter Pellets (Major) Fireball save and 6d6 on a critical failure; Fireball damage and activation remain native/manual.","priority":0,"tags":["pf2e","equipment","firestarter-pellets-major"],"variables":{"B472FirEvt00001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"B472FirEvt00001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"},"B472FirEvt00001X:outputs:outcome":{"type":"outcome","isArray":false,"label":"Outcome"}},"nodes":[{"id":"B472FirEvt00001X","type":"check-roll-event","state":"check","inputs":{"for":{"value":"saving-throw"}},"outs":{"out":{"connection":"B472FirMch00001X:ins:in"}},"position":{"x":0,"y":0}},{"id":"B472FirMch00001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:firestarter-pellets-major"},"list":{"connection":"B472FirEvt00001X:outputs:options"}},"outs":{"true":{"connection":"B472FirSpl00001X:ins:in"}},"position":{"x":320,"y":0}},{"id":"B472FirSpl00001X","type":"split-outcome","inputs":{"input":{"connection":"B472FirEvt00001X:outputs:outcome"}},"outs":{"failure":{"connection":"B472FirP3n00001X:ins:in"},"criticalFailure":{"connection":"B472FirP6n00001X:ins:in"}},"position":{"x":640,"y":0}},{"id":"B472FirP3n00001X","type":"persistent-damage","state":"fixed","inputs":{"formula":{"value":"3d6[fire]"},"target":{"connection":"B472FirEvt00001X:outputs:target"},"name":{"value":"Effect: Firestarter Pellets (Major)"}},"position":{"x":960,"y":0}},{"id":"B472FirP6n00001X","type":"persistent-damage","state":"fixed","inputs":{"formula":{"value":"6d6[fire]"},"target":{"connection":"B472FirEvt00001X:outputs:target"},"name":{"value":"Effect: Firestarter Pellets (Major)"}},"position":{"x":960,"y":160}}]},
-{"id":"B472DraTrg00001X","name":"Dragon Shield — Persistent Fire","folder":"Equipment","description":"Apply 1d8 persistent fire on a critical-failure Dragon Shield Burning Path Reflex save; movement and area damage remain native/manual.","priority":0,"tags":["pf2e","equipment","dragon-shield"],"variables":{"B472DraEvt00001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"B472DraEvt00001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"},"B472DraEvt00001X:outputs:outcome":{"type":"outcome","isArray":false,"label":"Outcome"}},"nodes":[{"id":"B472DraEvt00001X","type":"check-roll-event","state":"check","inputs":{"for":{"value":"saving-throw"}},"outs":{"out":{"connection":"B472DraMch00001X:ins:in"}},"position":{"x":0,"y":0}},{"id":"B472DraMch00001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:dragon-shield"},"list":{"connection":"B472DraEvt00001X:outputs:options"}},"outs":{"true":{"connection":"B472DraSpl00001X:ins:in"}},"position":{"x":320,"y":0}},{"id":"B472DraSpl00001X","type":"split-outcome","inputs":{"input":{"connection":"B472DraEvt00001X:outputs:outcome"}},"outs":{"criticalFailure":{"connection":"B472DraPer00001X:ins:in"}},"position":{"x":640,"y":0}},{"id":"B472DraPer00001X","type":"persistent-damage","state":"fixed","inputs":{"formula":{"value":"1d8[fire]"},"target":{"connection":"B472DraEvt00001X:outputs:target"},"name":{"value":"Effect: Dragon Shield"}},"position":{"x":960,"y":0}}]}
+  {
+    "id": "B472OurTrg00001X",
+    "name": "Ouroboros Flail (Major) — Grabbed",
+    "folder": "Equipment",
+    "description": "Apply grabbed for 1 round on a failed or critically failed Chained Grasp Fortitude save; activation, pull, movement, Escape, and attack-ending cleanup remain native/manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "equipment",
+      "ouroboros-flail-major"
+    ],
+    "variables": {
+      "B472OurEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B472OurEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B472OurEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B472OurEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B472OurMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B472OurMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:ouroboros-flail-major"
+          },
+          "list": {
+            "connection": "B472OurEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B472OurSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B472OurSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B472OurEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "failure": {
+            "connection": "B472OurGrb00001X:ins:in"
+          },
+          "criticalFailure": {
+            "connection": "B472OurGrb00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B472OurGrb00001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "grabbed"
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "rounds"
+          },
+          "name": {
+            "value": "Effect: Ouroboros Flail (Major)"
+          },
+          "target": {
+            "connection": "B472OurEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      }
+    ]
+  }
 ]

@@ -1,17 +1,1 @@
-[
-  {
-    "id": "B301PteTrg00001X",
-    "name": "Pierce the Eye — Persistent Bleed",
-    "folder": "Feats",
-    "description": "Apply 2d8 persistent bleed after a successful Pierce the Eye ranged Strike; the Fortitude save, blinding duration, and flat-check penalty remain manual.",
-    "priority": 0,
-    "tags": ["pf2e", "feat", "pierce-the-eye"],
-    "variables": {"B301PteEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B301PteEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B301PteEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
-    "nodes": [
-      {"id": "B301PteEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B301PteMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
-      {"id": "B301PteMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:pierce-the-eye"}, "list": {"connection": "B301PteEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B301PteSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
-      {"id": "B301PteSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B301PteEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B301PtePer00001X:ins:in"}, "criticalSuccess": {"connection": "B301PtePer00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
-      {"id": "B301PtePer00001X", "type": "persistent-damage", "state": "fixed", "inputs": {"formula": {"value": "2d8[bleed]"}, "target": {"connection": "B301PteEvt00001X:outputs:target"}, "name": {"value": "Effect: Pierce the Eye"}}, "position": {"x": 960, "y": 0}}
-    ]
-  }
-]
+[]

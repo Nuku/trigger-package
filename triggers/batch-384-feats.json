@@ -1,4 +1,140 @@
 [
-  {"id":"B384LinTrg00001X","name":"Lingering Flames — Persistent Fire","folder":"Feats","description":"Apply 2 persistent fire damage on a failed Fireball save and 4 persistent fire damage on a critical failure when Lingering Flames modifies the spell; heightened scaling and the Fireball modification remain native/manual.","priority":0,"tags":["pf2e","feat","lingering-flames"],"variables":{"B384LinEvt00001X:outputs:roller":{"type":"target","isArray":false,"label":"Target"},"B384LinEvt00001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"},"B384LinEvt00001X:outputs:outcome":{"type":"outcome","isArray":false,"label":"Outcome"}},"nodes":[{"id":"B384LinEvt00001X","type":"check-roll-event","state":"check","inputs":{"for":{"value":"saving-throw"}},"outs":{"out":{"connection":"B384LinMch00001X:ins:in"}},"position":{"x":0,"y":0}},{"id":"B384LinMch00001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:lingering-flames"},"list":{"connection":"B384LinEvt00001X:outputs:options"}},"outs":{"true":{"connection":"B384LinSpl00001X:ins:in"}},"position":{"x":320,"y":0}},{"id":"B384LinSpl00001X","type":"split-outcome","inputs":{"input":{"connection":"B384LinEvt00001X:outputs:outcome"}},"outs":{"failure":{"connection":"B384LinPer00001X:ins:in"},"criticalFailure":{"connection":"B384LinPer00002X:ins:in"}},"position":{"x":640,"y":0}},{"id":"B384LinPer00001X","type":"persistent-damage","state":"fixed","inputs":{"formula":{"value":"2[fire]"},"target":{"connection":"B384LinEvt00001X:outputs:roller"},"name":{"value":"Effect: Lingering Flames"}},"position":{"x":960,"y":80}},{"id":"B384LinPer00002X","type":"persistent-damage","state":"fixed","inputs":{"formula":{"value":"4[fire]"},"target":{"connection":"B384LinEvt00001X:outputs:roller"},"name":{"value":"Effect: Lingering Flames"}},"position":{"x":960,"y":-80}}]},
-  {"id":"B384ThoTrg00001X","name":"Thorn in Hell's Side — Stunned","folder":"Feats","description":"Apply stunned 1 on a failed and stunned 2 on a critically failed Fortitude save from Thorn in Hell's Side; Hellbreaker Strike qualification and incapacitation handling remain native/manual.","priority":0,"tags":["pf2e","feat","thorn-in-hells-side"],"variables":{"B384ThoEvt00001X:outputs:roller":{"type":"target","isArray":false,"label":"Target"},"B384ThoEvt00001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"},"B384ThoEvt00001X:outputs:outcome":{"type":"outcome","isArray":false,"label":"Outcome"}},"nodes":[{"id":"B384ThoEvt00001X","type":"check-roll-event","state":"check","inputs":{"for":{"value":"saving-throw"}},"outs":{"out":{"connection":"B384ThoMch00001X:ins:in"}},"position":{"x":0,"y":0}},{"id":"B384ThoMch00001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:thorn-in-hells-side"},"list":{"connection":"B384ThoEvt00001X:outputs:options"}},"outs":{"true":{"connection":"B384ThoSpl00001X:ins:in"}},"position":{"x":320,"y":0}},{"id":"B384ThoSpl00001X","type":"split-outcome","inputs":{"input":{"connection":"B384ThoEvt00001X:outputs:outcome"}},"outs":{"failure":{"connection":"B384ThoStn00001X:ins:in"},"criticalFailure":{"connection":"B384ThoStn00002X:ins:in"}},"position":{"x":640,"y":0}},{"id":"B384ThoStn00001X","type":"create-condition","state":"fixed","inputs":{"condition":{"value":"stunned"},"value":{"value":1},"name":{"value":"Effect: Thorn in Hell's Side"},"target":{"connection":"B384ThoEvt00001X:outputs:roller"}},"position":{"x":960,"y":80}},{"id":"B384ThoStn00002X","type":"create-condition","state":"fixed","inputs":{"condition":{"value":"stunned"},"value":{"value":2},"name":{"value":"Effect: Thorn in Hell's Side"},"target":{"connection":"B384ThoEvt00001X:outputs:roller"}},"position":{"x":960,"y":-80}}]}
+  {
+    "id": "B384ThoTrg00001X",
+    "name": "Thorn in Hell's Side — Stunned",
+    "folder": "Feats",
+    "description": "Apply stunned 1 on a failed and stunned 2 on a critically failed Fortitude save from Thorn in Hell's Side; Hellbreaker Strike qualification and incapacitation handling remain native/manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "feat",
+      "thorn-in-hells-side"
+    ],
+    "variables": {
+      "B384ThoEvt00001X:outputs:roller": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B384ThoEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B384ThoEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B384ThoEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B384ThoMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B384ThoMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:thorn-in-hells-side"
+          },
+          "list": {
+            "connection": "B384ThoEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B384ThoSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B384ThoSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B384ThoEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "failure": {
+            "connection": "B384ThoStn00001X:ins:in"
+          },
+          "criticalFailure": {
+            "connection": "B384ThoStn00002X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B384ThoStn00001X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "stunned"
+          },
+          "value": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Thorn in Hell's Side"
+          },
+          "target": {
+            "connection": "B384ThoEvt00001X:outputs:roller"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 80
+        }
+      },
+      {
+        "id": "B384ThoStn00002X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "stunned"
+          },
+          "value": {
+            "value": 2
+          },
+          "name": {
+            "value": "Effect: Thorn in Hell's Side"
+          },
+          "target": {
+            "connection": "B384ThoEvt00001X:outputs:roller"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": -80
+        }
+      }
+    ]
+  }
 ]

@@ -1,7 +1,476 @@
 [
-  {"id":"B353ConTrg00001X","name":"Confusing Cry — Stunned/Confused","folder":"Spells","description":"Apply stunned 1 on a successful Confusing Cry Will save and confused for 1 minute on failure or critical failure; recurring saves, self-attack, and area hearing remain native/manual.","priority":0,"tags":["pf2e","spell","confusing-cry"],"variables":{"B353ConEvt00001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"B353ConEvt00001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"},"B353ConEvt00001X:outputs:outcome":{"type":"outcome","isArray":false,"label":"Outcome"}},"nodes":[{"id":"B353ConEvt00001X","type":"check-roll-event","state":"check","inputs":{"for":{"value":"saving-throw"}},"outs":{"out":{"connection":"B353ConMch00001X:ins:in"}},"position":{"x":0,"y":0}},{"id":"B353ConMch00001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:confusing-cry"},"list":{"connection":"B353ConEvt00001X:outputs:options"}},"outs":{"true":{"connection":"B353ConSpl00001X:ins:in"}},"position":{"x":320,"y":0}},{"id":"B353ConSpl00001X","type":"split-outcome","inputs":{"input":{"connection":"B353ConEvt00001X:outputs:outcome"}},"outs":{"success":{"connection":"B353ConStn00001X:ins:in"},"failure":{"connection":"B353ConCnf00001X:ins:in"},"criticalFailure":{"connection":"B353ConCnf00001X:ins:in"}},"position":{"x":640,"y":0}},{"id":"B353ConStn00001X","type":"create-condition","state":"fixed","inputs":{"condition":{"value":"stunned"},"value":{"value":1},"name":{"value":"Effect: Confusing Cry"},"target":{"connection":"B353ConEvt00001X:outputs:target"}},"position":{"x":960,"y":80}},{"id":"B353ConCnf00001X","type":"create-condition","state":"timed","inputs":{"condition":{"value":"confused"},"duration":{"value":1},"unit":{"value":"minutes"},"name":{"value":"Effect: Confusing Cry"},"target":{"connection":"B353ConEvt00001X:outputs:target"}},"position":{"x":960,"y":-80}}]},
-  {"id":"B353ChaTrg00001X","name":"Charitable Urge — Stunned","folder":"Spells","description":"Apply stunned 1 on a successful Charitable Urge Will save; item transfer, action sequencing, repeat saves, and no-item handling remain native/manual.","priority":0,"tags":["pf2e","spell","charitable-urge"],"variables":{"B353ChaEvt00001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"B353ChaEvt00001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"},"B353ChaEvt00001X:outputs:outcome":{"type":"outcome","isArray":false,"label":"Outcome"}},"nodes":[{"id":"B353ChaEvt00001X","type":"check-roll-event","state":"check","inputs":{"for":{"value":"saving-throw"}},"outs":{"out":{"connection":"B353ChaMch00001X:ins:in"}},"position":{"x":0,"y":0}},{"id":"B353ChaMch00001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:charitable-urge"},"list":{"connection":"B353ChaEvt00001X:outputs:options"}},"outs":{"true":{"connection":"B353ChaSpl00001X:ins:in"}},"position":{"x":320,"y":0}},{"id":"B353ChaSpl00001X","type":"split-outcome","inputs":{"input":{"connection":"B353ChaEvt00001X:outputs:outcome"}},"outs":{"success":{"connection":"B353ChaStn00001X:ins:in"}},"position":{"x":640,"y":0}},{"id":"B353ChaStn00001X","type":"create-condition","state":"fixed","inputs":{"condition":{"value":"stunned"},"value":{"value":1},"name":{"value":"Effect: Charitable Urge"},"target":{"connection":"B353ChaEvt00001X:outputs:target"}},"position":{"x":960,"y":0}}]},
-  {"id":"B353MooTrg00001X","name":"Moonburst — Blinded","folder":"Spells","description":"Apply blinded on a critical failure against Moonburst; cold/vitality damage, permanent duration, counteract, and area remain native/manual.","priority":0,"tags":["pf2e","spell","moonburst"],"variables":{"B353MooEvt00001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"B353MooEvt00001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"},"B353MooEvt00001X:outputs:outcome":{"type":"outcome","isArray":false,"label":"Outcome"}},"nodes":[{"id":"B353MooEvt00001X","type":"check-roll-event","state":"check","inputs":{"for":{"value":"saving-throw"}},"outs":{"out":{"connection":"B353MooMch00001X:ins:in"}},"position":{"x":0,"y":0}},{"id":"B353MooMch00001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:moonburst"},"list":{"connection":"B353MooEvt00001X:outputs:options"}},"outs":{"true":{"connection":"B353MooSpl00001X:ins:in"}},"position":{"x":320,"y":0}},{"id":"B353MooSpl00001X","type":"split-outcome","inputs":{"input":{"connection":"B353MooEvt00001X:outputs:outcome"}},"outs":{"criticalFailure":{"connection":"B353MooBli00001X:ins:in"}},"position":{"x":640,"y":0}},{"id":"B353MooBli00001X","type":"create-condition","state":"fixed","inputs":{"condition":{"value":"blinded"},"name":{"value":"Effect: Moonburst"},"target":{"connection":"B353MooEvt00001X:outputs:target"}},"position":{"x":960,"y":0}}]},
-  {"id":"B353PusTrg00001X","name":"Pushing Gust — Prone","folder":"Spells","description":"Apply prone on a critical failure against Pushing Gust; forced movement remains native/manual.","priority":0,"tags":["pf2e","spell","pushing-gust"],"variables":{"B353PusEvt00001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"B353PusEvt00001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"},"B353PusEvt00001X:outputs:outcome":{"type":"outcome","isArray":false,"label":"Outcome"}},"nodes":[{"id":"B353PusEvt00001X","type":"check-roll-event","state":"check","inputs":{"for":{"value":"saving-throw"}},"outs":{"out":{"connection":"B353PusMch00001X:ins:in"}},"position":{"x":0,"y":0}},{"id":"B353PusMch00001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:pushing-gust"},"list":{"connection":"B353PusEvt00001X:outputs:options"}},"outs":{"true":{"connection":"B353PusSpl00001X:ins:in"}},"position":{"x":320,"y":0}},{"id":"B353PusSpl00001X","type":"split-outcome","inputs":{"input":{"connection":"B353PusEvt00001X:outputs:outcome"}},"outs":{"criticalFailure":{"connection":"B353PusPrn00001X:ins:in"}},"position":{"x":640,"y":0}},{"id":"B353PusPrn00001X","type":"create-condition","state":"fixed","inputs":{"condition":{"value":"prone"},"name":{"value":"Effect: Pushing Gust"},"target":{"connection":"B353PusEvt00001X:outputs:target"}},"position":{"x":960,"y":0}}]},
-  {"id":"B353BurTrg00001X","name":"Bursting Bloom — Persistent Bleed","folder":"Spells","description":"Apply 1d6 persistent bleed on failed or critically failed Bursting Bloom Fortitude saves; damage, encumbered duration, and bloom cleanup remain native/manual.","priority":0,"tags":["pf2e","spell","bursting-bloom"],"variables":{"B353BurEvt00001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"B353BurEvt00001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"},"B353BurEvt00001X:outputs:outcome":{"type":"outcome","isArray":false,"label":"Outcome"}},"nodes":[{"id":"B353BurEvt00001X","type":"check-roll-event","state":"check","inputs":{"for":{"value":"saving-throw"}},"outs":{"out":{"connection":"B353BurMch00001X:ins:in"}},"position":{"x":0,"y":0}},{"id":"B353BurMch00001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:bursting-bloom"},"list":{"connection":"B353BurEvt00001X:outputs:options"}},"outs":{"true":{"connection":"B353BurSpl00001X:ins:in"}},"position":{"x":320,"y":0}},{"id":"B353BurSpl00001X","type":"split-outcome","inputs":{"input":{"connection":"B353BurEvt00001X:outputs:outcome"}},"outs":{"failure":{"connection":"B353BurPer00001X:ins:in"},"criticalFailure":{"connection":"B353BurPer00001X:ins:in"}},"position":{"x":640,"y":0}},{"id":"B353BurPer00001X","type":"persistent-damage","state":"fixed","inputs":{"formula":{"value":"1d6[bleed]"},"target":{"connection":"B353BurEvt00001X:outputs:target"},"name":{"value":"Effect: Bursting Bloom"}},"position":{"x":960,"y":0}}]}
+  {
+    "id": "B353ConTrg00001X",
+    "name": "Confusing Cry — Stunned/Confused",
+    "folder": "Spells",
+    "description": "Apply stunned 1 on a successful Confusing Cry Will save and confused for 1 minute on failure or critical failure; recurring saves, self-attack, and area hearing remain native/manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "spell",
+      "confusing-cry"
+    ],
+    "variables": {
+      "B353ConEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B353ConEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B353ConEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B353ConEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B353ConMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B353ConMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:confusing-cry"
+          },
+          "list": {
+            "connection": "B353ConEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B353ConSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B353ConSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B353ConEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "success": {
+            "connection": "B353ConStn00001X:ins:in"
+          },
+          "failure": {
+            "connection": "B353ConCnf00001X:ins:in"
+          },
+          "criticalFailure": {
+            "connection": "B353ConCnf00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B353ConStn00001X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "stunned"
+          },
+          "value": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Confusing Cry"
+          },
+          "target": {
+            "connection": "B353ConEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 80
+        }
+      },
+      {
+        "id": "B353ConCnf00001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "confused"
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "minutes"
+          },
+          "name": {
+            "value": "Effect: Confusing Cry"
+          },
+          "target": {
+            "connection": "B353ConEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": -80
+        }
+      }
+    ]
+  },
+  {
+    "id": "B353ChaTrg00001X",
+    "name": "Charitable Urge — Stunned",
+    "folder": "Spells",
+    "description": "Apply stunned 1 on a successful Charitable Urge Will save; item transfer, action sequencing, repeat saves, and no-item handling remain native/manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "spell",
+      "charitable-urge"
+    ],
+    "variables": {
+      "B353ChaEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B353ChaEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B353ChaEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B353ChaEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B353ChaMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B353ChaMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:charitable-urge"
+          },
+          "list": {
+            "connection": "B353ChaEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B353ChaSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B353ChaSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B353ChaEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "success": {
+            "connection": "B353ChaStn00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B353ChaStn00001X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "stunned"
+          },
+          "value": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Charitable Urge"
+          },
+          "target": {
+            "connection": "B353ChaEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      }
+    ]
+  },
+  {
+    "id": "B353MooTrg00001X",
+    "name": "Moonburst — Blinded",
+    "folder": "Spells",
+    "description": "Apply blinded on a critical failure against Moonburst; cold/vitality damage, permanent duration, counteract, and area remain native/manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "spell",
+      "moonburst"
+    ],
+    "variables": {
+      "B353MooEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B353MooEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B353MooEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B353MooEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B353MooMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B353MooMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:moonburst"
+          },
+          "list": {
+            "connection": "B353MooEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B353MooSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B353MooSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B353MooEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "criticalFailure": {
+            "connection": "B353MooBli00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B353MooBli00001X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "blinded"
+          },
+          "name": {
+            "value": "Effect: Moonburst"
+          },
+          "target": {
+            "connection": "B353MooEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      }
+    ]
+  },
+  {
+    "id": "B353PusTrg00001X",
+    "name": "Pushing Gust — Prone",
+    "folder": "Spells",
+    "description": "Apply prone on a critical failure against Pushing Gust; forced movement remains native/manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "spell",
+      "pushing-gust"
+    ],
+    "variables": {
+      "B353PusEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B353PusEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B353PusEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B353PusEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B353PusMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B353PusMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:pushing-gust"
+          },
+          "list": {
+            "connection": "B353PusEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B353PusSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B353PusSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B353PusEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "criticalFailure": {
+            "connection": "B353PusPrn00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B353PusPrn00001X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "prone"
+          },
+          "name": {
+            "value": "Effect: Pushing Gust"
+          },
+          "target": {
+            "connection": "B353PusEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      }
+    ]
+  }
 ]

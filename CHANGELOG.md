@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.1
+
+- Removed invalid `persistent-damage` Trigger Engine nodes and preserved valid condition branches where possible.
+- Published the canonical `v0.1.1` release package.
+
 ## 0.1.0
 
 - Added Trigger Engine registration for the module's PF2e trigger source.

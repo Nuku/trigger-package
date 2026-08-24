@@ -5,19 +5,180 @@
     "folder": "Spells",
     "description": "On a Curse of Lost Time Fortitude save, apply clumsy 1 for 1 round on a success, clumsy 1 for 1 minute on a failure, or clumsy 2 for 1 minute on a critical failure; object targeting, damage, counteracting, and heightened duration remain manual.",
     "priority": 0,
-    "tags": ["pf2e", "spell", "curse-of-lost-time"],
+    "tags": [
+      "pf2e",
+      "spell",
+      "curse-of-lost-time"
+    ],
     "variables": {
-      "B28CurEvt0000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
-      "B28CurEvt0000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
-      "B28CurEvt0000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+      "B28CurEvt0000001:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B28CurEvt0000001:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B28CurEvt0000001:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
     },
     "nodes": [
-      {"id": "B28CurEvt0000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B28CurMch0000001:ins:in"}}, "position": {"x": 0, "y": 0}},
-      {"id": "B28CurMch0000001", "type": "match-predicate", "inputs": {"options": {"connection": "B28CurEvt0000001:outputs:options"}, "predicate": {"value": "[\n  \"item:slug:curse-of-lost-time\"\n]"}}, "outs": {"true": {"connection": "B28CurSpl0000001:ins:input"}}, "position": {"x": 320, "y": 0}},
-      {"id": "B28CurSpl0000001", "type": "split-outcome", "inputs": {"input": {"connection": "B28CurEvt0000001:outputs:outcome"}}, "outs": {"success": {"connection": "B28CurClm0000001:ins:in"}, "failure": {"connection": "B28CurClm0000002:ins:in"}, "criticalFailure": {"connection": "B28CurClm0000003:ins:in"}}, "position": {"x": 640, "y": 0}},
-      {"id": "B28CurClm0000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "clumsy"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Curse of Lost Time"}, "target": {"connection": "B28CurEvt0000001:outputs:target"}}, "position": {"x": 960, "y": 120}},
-      {"id": "B28CurClm0000002", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "clumsy"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Curse of Lost Time"}, "target": {"connection": "B28CurEvt0000001:outputs:target"}}, "position": {"x": 960, "y": 0}},
-      {"id": "B28CurClm0000003", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "clumsy"}, "value": {"value": 2}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Curse of Lost Time"}, "target": {"connection": "B28CurEvt0000001:outputs:target"}}, "position": {"x": 960, "y": -120}}
+      {
+        "id": "B28CurEvt0000001",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B28CurMch0000001:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B28CurMch0000001",
+        "type": "match-predicate",
+        "inputs": {
+          "options": {
+            "connection": "B28CurEvt0000001:outputs:options"
+          },
+          "predicate": {
+            "value": "[\n  \"item:slug:curse-of-lost-time\"\n]"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B28CurSpl0000001:ins:input"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B28CurSpl0000001",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B28CurEvt0000001:outputs:outcome"
+          }
+        },
+        "outs": {
+          "success": {
+            "connection": "B28CurClm0000001:ins:in"
+          },
+          "failure": {
+            "connection": "B28CurClm0000002:ins:in"
+          },
+          "criticalFailure": {
+            "connection": "B28CurClm0000003:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B28CurClm0000001",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "clumsy"
+          },
+          "value": {
+            "value": 1
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "rounds"
+          },
+          "name": {
+            "value": "Effect: Curse of Lost Time"
+          },
+          "target": {
+            "connection": "B28CurEvt0000001:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 120
+        }
+      },
+      {
+        "id": "B28CurClm0000002",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "clumsy"
+          },
+          "value": {
+            "value": 1
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "minutes"
+          },
+          "name": {
+            "value": "Effect: Curse of Lost Time"
+          },
+          "target": {
+            "connection": "B28CurEvt0000001:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      },
+      {
+        "id": "B28CurClm0000003",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "clumsy"
+          },
+          "value": {
+            "value": 2
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "minutes"
+          },
+          "name": {
+            "value": "Effect: Curse of Lost Time"
+          },
+          "target": {
+            "connection": "B28CurEvt0000001:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": -120
+        }
+      }
     ]
   },
   {
@@ -26,36 +187,113 @@
     "folder": "Spells",
     "description": "On a Noxious Vapors Fortitude critical failure, apply sickened 1; poison damage, concealment, emanation placement, sustained duration, and dispersal by wind remain manual.",
     "priority": 0,
-    "tags": ["pf2e", "spell", "noxious-vapors"],
+    "tags": [
+      "pf2e",
+      "spell",
+      "noxious-vapors"
+    ],
     "variables": {
-      "B28NoxEvt0000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
-      "B28NoxEvt0000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
-      "B28NoxEvt0000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+      "B28NoxEvt0000001:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B28NoxEvt0000001:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B28NoxEvt0000001:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
     },
     "nodes": [
-      {"id": "B28NoxEvt0000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B28NoxMch0000001:ins:in"}}, "position": {"x": 0, "y": 0}},
-      {"id": "B28NoxMch0000001", "type": "match-predicate", "inputs": {"options": {"connection": "B28NoxEvt0000001:outputs:options"}, "predicate": {"value": "[\n  \"item:slug:noxious-vapors\"\n]"}}, "outs": {"true": {"connection": "B28NoxCmp0000001:ins:in"}}, "position": {"x": 320, "y": 0}},
-      {"id": "B28NoxCmp0000001", "type": "compare-outcomes", "inputs": {"a": {"connection": "B28NoxEvt0000001:outputs:outcome"}, "b": {"value": "criticalFailure"}}, "outs": {"true": {"connection": "B28NoxSic0000001:ins:in"}}, "position": {"x": 640, "y": 0}},
-      {"id": "B28NoxSic0000001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 1}, "name": {"value": "Effect: Noxious Vapors"}, "target": {"connection": "B28NoxEvt0000001:outputs:target"}}, "position": {"x": 960, "y": 0}}
-    ]
-  },
-  {
-    "id": "B28BloTrg0000001",
-    "name": "Blood Feast — Persistent Bleed",
-    "folder": "Spells",
-    "description": "On a Blood Feast critical attack hit, apply 1d8 persistent bleed; attack damage, temporary Hit Points, creature-specific bonus damage, and recovery remain manual.",
-    "priority": 0,
-    "tags": ["pf2e", "spell", "blood-feast"],
-    "variables": {
-      "B28BloEvt0000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
-      "B28BloEvt0000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
-      "B28BloEvt0000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
-    },
-    "nodes": [
-      {"id": "B28BloEvt0000001", "type": "attack-roll-event", "state": "check", "inputs": {}, "outs": {"out": {"connection": "B28BloMch0000001:ins:in"}}, "position": {"x": 0, "y": 0}},
-      {"id": "B28BloMch0000001", "type": "match-predicate", "inputs": {"options": {"connection": "B28BloEvt0000001:outputs:options"}, "predicate": {"value": "[\n  \"item:slug:blood-feast\"\n]"}}, "outs": {"true": {"connection": "B28BloCmp0000001:ins:in"}}, "position": {"x": 320, "y": 0}},
-      {"id": "B28BloCmp0000001", "type": "compare-outcomes", "inputs": {"a": {"connection": "B28BloEvt0000001:outputs:outcome"}, "b": {"value": "criticalSuccess"}}, "outs": {"true": {"connection": "B28BloPer0000001:ins:in"}}, "position": {"x": 640, "y": 0}},
-      {"id": "B28BloPer0000001", "type": "persistent-damage", "state": "fixed", "inputs": {"formula": {"value": "1d8[bleed]"}, "target": {"connection": "B28BloEvt0000001:outputs:target"}, "name": {"value": "Effect: Blood Feast"}}, "position": {"x": 960, "y": 0}}
+      {
+        "id": "B28NoxEvt0000001",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B28NoxMch0000001:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B28NoxMch0000001",
+        "type": "match-predicate",
+        "inputs": {
+          "options": {
+            "connection": "B28NoxEvt0000001:outputs:options"
+          },
+          "predicate": {
+            "value": "[\n  \"item:slug:noxious-vapors\"\n]"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B28NoxCmp0000001:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B28NoxCmp0000001",
+        "type": "compare-outcomes",
+        "inputs": {
+          "a": {
+            "connection": "B28NoxEvt0000001:outputs:outcome"
+          },
+          "b": {
+            "value": "criticalFailure"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B28NoxSic0000001:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B28NoxSic0000001",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "sickened"
+          },
+          "value": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Noxious Vapors"
+          },
+          "target": {
+            "connection": "B28NoxEvt0000001:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      }
     ]
   },
   {
@@ -64,18 +302,142 @@
     "folder": "Spells",
     "description": "On a Grasping Earth Fortitude failure, apply grabbed for 1 round, or restrained for 1 round on a critical failure; area timing, bludgeoning damage, Sustain actions, Escape, and repeated-round effects remain manual.",
     "priority": 0,
-    "tags": ["pf2e", "spell", "grasping-earth"],
+    "tags": [
+      "pf2e",
+      "spell",
+      "grasping-earth"
+    ],
     "variables": {
-      "B28GraEvt0000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
-      "B28GraEvt0000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
-      "B28GraEvt0000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+      "B28GraEvt0000001:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B28GraEvt0000001:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B28GraEvt0000001:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
     },
     "nodes": [
-      {"id": "B28GraEvt0000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B28GraMch0000001:ins:in"}}, "position": {"x": 0, "y": 0}},
-      {"id": "B28GraMch0000001", "type": "match-predicate", "inputs": {"options": {"connection": "B28GraEvt0000001:outputs:options"}, "predicate": {"value": "[\n  \"item:slug:grasping-earth\"\n]"}}, "outs": {"true": {"connection": "B28GraSpl0000001:ins:input"}}, "position": {"x": 320, "y": 0}},
-      {"id": "B28GraSpl0000001", "type": "split-outcome", "inputs": {"input": {"connection": "B28GraEvt0000001:outputs:outcome"}}, "outs": {"failure": {"connection": "B28GraGrb0000001:ins:in"}, "criticalFailure": {"connection": "B28GraRst0000001:ins:in"}}, "position": {"x": 640, "y": 0}},
-      {"id": "B28GraGrb0000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "grabbed"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Grasping Earth"}, "target": {"connection": "B28GraEvt0000001:outputs:target"}}, "position": {"x": 960, "y": 80}},
-      {"id": "B28GraRst0000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "restrained"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Grasping Earth"}, "target": {"connection": "B28GraEvt0000001:outputs:target"}}, "position": {"x": 960, "y": -80}}
+      {
+        "id": "B28GraEvt0000001",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B28GraMch0000001:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B28GraMch0000001",
+        "type": "match-predicate",
+        "inputs": {
+          "options": {
+            "connection": "B28GraEvt0000001:outputs:options"
+          },
+          "predicate": {
+            "value": "[\n  \"item:slug:grasping-earth\"\n]"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B28GraSpl0000001:ins:input"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B28GraSpl0000001",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B28GraEvt0000001:outputs:outcome"
+          }
+        },
+        "outs": {
+          "failure": {
+            "connection": "B28GraGrb0000001:ins:in"
+          },
+          "criticalFailure": {
+            "connection": "B28GraRst0000001:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B28GraGrb0000001",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "grabbed"
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "rounds"
+          },
+          "name": {
+            "value": "Effect: Grasping Earth"
+          },
+          "target": {
+            "connection": "B28GraEvt0000001:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 80
+        }
+      },
+      {
+        "id": "B28GraRst0000001",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "restrained"
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "rounds"
+          },
+          "name": {
+            "value": "Effect: Grasping Earth"
+          },
+          "target": {
+            "connection": "B28GraEvt0000001:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": -80
+        }
+      }
     ]
   }
 ]

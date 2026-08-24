@@ -1,17 +1,1 @@
-[
-  {
-    "id": "B331StlTrg00001X",
-    "name": "Steelscour — Persistent Acid",
-    "folder": "Equipment",
-    "description": "Apply 1d8 persistent acid after a successful Steelscour (Lesser) bomb Strike; metal targeting, hardness interaction, alternate Interact use, and damage remain native/manual.",
-    "priority": 0,
-    "tags": ["pf2e", "equipment", "steelscour-lesser"],
-    "variables": {"B331StlEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B331StlEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B331StlEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
-    "nodes": [
-      {"id": "B331StlEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B331StlMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
-      {"id": "B331StlMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:steelscour-lesser"}, "list": {"connection": "B331StlEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B331StlSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
-      {"id": "B331StlSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B331StlEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B331StlPer00001X:ins:in"}, "criticalSuccess": {"connection": "B331StlPer00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
-      {"id": "B331StlPer00001X", "type": "persistent-damage", "state": "fixed", "inputs": {"formula": {"value": "1d8[acid]"}, "target": {"connection": "B331StlEvt00001X:outputs:target"}, "name": {"value": "Effect: Steelscour"}}, "position": {"x": 960, "y": 0}}
-    ]
-  }
-]
+[]
