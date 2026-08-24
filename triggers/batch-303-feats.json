@@ -1,0 +1,36 @@
+[
+  {
+    "id": "B303FshTrg00001X",
+    "name": "Forceful Shot — Off-Guard",
+    "folder": "Feats",
+    "description": "Apply off-guard for 1 round after a Forceful Shot failure; the push distances on success and critical success remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "forceful-shot"],
+    "variables": {"B303FshEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B303FshEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B303FshEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B303FshEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B303FshMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B303FshMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:forceful-shot"}, "list": {"connection": "B303FshEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B303FshSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B303FshSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B303FshEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B303FshOff00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B303FshOff00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Forceful Shot"}, "target": {"connection": "B303FshEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B303RabTrg00001X",
+    "name": "Radiant Burst — Dazzled and Blinded",
+    "folder": "Feats",
+    "description": "Apply Radiant Burst's dazzled/blinded save outcomes; area visibility, once-per-day frequency, and targeting remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "radiant-burst"],
+    "variables": {"B303RabEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B303RabEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B303RabEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B303RabEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B303RabMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B303RabMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:radiant-burst"}, "list": {"connection": "B303RabEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B303RabSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B303RabSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B303RabEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B303RabSuc00001X:ins:in"}, "failure": {"connection": "B303RabFai00001X:ins:in"}, "criticalFailure": {"connection": "B303RabCfl00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B303RabSuc00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Radiant Burst"}, "target": {"connection": "B303RabEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B303RabFai00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "blinded"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Radiant Burst"}, "target": {"connection": "B303RabEvt00001X:outputs:target"}}, "outs": {"out": {"connection": "B303RabFdz00001X:ins:in"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B303RabFdz00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 4}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Radiant Burst"}, "target": {"connection": "B303RabEvt00001X:outputs:target"}}, "position": {"x": 1280, "y": 0}},
+      {"id": "B303RabCfl00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "blinded"}, "duration": {"value": 4}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Radiant Burst"}, "target": {"connection": "B303RabEvt00001X:outputs:target"}}, "outs": {"out": {"connection": "B303RabCdz00001X:ins:in"}}, "position": {"x": 960, "y": -80}},
+      {"id": "B303RabCdz00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 10}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Radiant Burst"}, "target": {"connection": "B303RabEvt00001X:outputs:target"}}, "position": {"x": 1280, "y": -80}}
+    ]
+  }
+]

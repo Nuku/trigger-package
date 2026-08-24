@@ -1,0 +1,75 @@
+[
+  {
+    "id": "B11HypTrig0001AX",
+    "name": "Hypnotize — Fascinated",
+    "folder": "Spells",
+    "description": "On a Hypnotize Will save, apply fascinated for the spell's duration on a failure or critical failure; area entry, repeat saves, visual targeting, and the critical-failure reaction restriction remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "hypnotize"],
+    "variables": {
+      "B11HypEvt00001AX:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "B11HypEvt00001AX:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "B11HypEvt00001AX", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B11HypMch00001AX:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B11HypMch00001AX", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:hypnotize"}, "list": {"connection": "B11HypEvt00001AX:outputs:options"}}, "outs": {"true": {"connection": "B11HypSpl00001AX:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B11HypSpl00001AX", "type": "split-outcome", "inputs": {"input": {"connection": "B11HypEvt00001AX:outputs:outcome"}}, "outs": {"failure": {"connection": "B11HypFas00001AX:ins:in"}, "criticalFailure": {"connection": "B11HypFas00001AX:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B11HypFas00001AX", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "fascinated"}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Hypnotize"}, "target": {"connection": "B11HypEvt00001AX:outputs:roller"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B11DncTrig0001AX",
+    "name": "Hypnotic Pattern — Fascinated",
+    "folder": "Spells",
+    "description": "On a Hypnotic Pattern Will save, apply fascinated for up to 1 minute on a failure or critical failure; area entry, dazzling, sustained checks, and the critical-failure reaction restriction remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "hypnotic-pattern"],
+    "variables": {
+      "B11DncEvt00001AX:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "B11DncEvt00001AX:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "B11DncEvt00001AX", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B11DncMch00001AX:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B11DncMch00001AX", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:hypnotic-pattern"}, "list": {"connection": "B11DncEvt00001AX:outputs:options"}}, "outs": {"true": {"connection": "B11DncSpl00001AX:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B11DncSpl00001AX", "type": "split-outcome", "inputs": {"input": {"connection": "B11DncEvt00001AX:outputs:outcome"}}, "outs": {"failure": {"connection": "B11DncFas00001AX:ins:in"}, "criticalFailure": {"connection": "B11DncFas00001AX:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B11DncFas00001AX", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "fascinated"}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Hypnotic Pattern"}, "target": {"connection": "B11DncEvt00001AX:outputs:roller"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B11ChrTrig0001AX",
+    "name": "Charm — Friendly/Helpful",
+    "folder": "Spells",
+    "description": "On a Charm Will save, make the target friendly on a failure or helpful on a critical failure; hostile-action dismissal, attitude scope, and the spell's one-hour duration remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "charm"],
+    "variables": {
+      "B11ChrEvt00001AX:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "B11ChrEvt00001AX:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "B11ChrEvt00001AX", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B11ChrMch00001AX:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B11ChrMch00001AX", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:charm"}, "list": {"connection": "B11ChrEvt00001AX:outputs:options"}}, "outs": {"true": {"connection": "B11ChrSpl00001AX:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B11ChrSpl00001AX", "type": "split-outcome", "inputs": {"input": {"connection": "B11ChrEvt00001AX:outputs:outcome"}}, "outs": {"failure": {"connection": "B11ChrFri00001AX:ins:in"}, "criticalFailure": {"connection": "B11ChrHel00001AX:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B11ChrFri00001AX", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "friendly"}, "name": {"value": "Effect: Charm"}, "target": {"connection": "B11ChrEvt00001AX:outputs:roller"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B11ChrHel00001AX", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "helpful"}, "name": {"value": "Effect: Charm"}, "target": {"connection": "B11ChrEvt00001AX:outputs:roller"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "B11VibTrig0001AX",
+    "name": "Vibrant Pattern — Blinded",
+    "folder": "Spells",
+    "description": "On a Vibrant Pattern Will save, apply blinded for 1 minute on a critical failure or until a qualifying recovery save on a failure; the visual area, dazzling aura, sustained checks, and recovery timing remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "vibrant-pattern"],
+    "variables": {
+      "B11VibEvt00001AX:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "B11VibEvt00001AX:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "B11VibEvt00001AX", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B11VibMch00001AX:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B11VibMch00001AX", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:vibrant-pattern"}, "list": {"connection": "B11VibEvt00001AX:outputs:options"}}, "outs": {"true": {"connection": "B11VibSpl00001AX:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B11VibSpl00001AX", "type": "split-outcome", "inputs": {"input": {"connection": "B11VibEvt00001AX:outputs:outcome"}}, "outs": {"failure": {"connection": "B11VibBli00001AX:ins:in"}, "criticalFailure": {"connection": "B11VibBli00001AX:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B11VibBli00001AX", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "blinded"}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Vibrant Pattern"}, "target": {"connection": "B11VibEvt00001AX:outputs:roller"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

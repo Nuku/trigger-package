@@ -1,0 +1,81 @@
+[
+  {
+    "id": "B21IntS001Trg01X",
+    "name": "Intimidating Strike",
+    "folder": "Feats & Features",
+    "description": "After an Intimidating Strike hits and deals damage, apply frightened 1; on a critical hit, apply frightened 2. Melee Strike qualification, damage, weapon requirements, and the feat action remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "intimidating-strike"],
+    "variables": {
+      "B21IntS001Evt01X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B21IntS001Evt01X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B21IntS001Evt01X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B21IntS001Evt01X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B21IntS001Mch01X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B21IntS001Mch01X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:intimidating-strike"}, "list": {"connection": "B21IntS001Evt01X:outputs:options"}}, "outs": {"true": {"connection": "B21IntS001Spl01X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B21IntS001Spl01X", "type": "split-outcome", "inputs": {"input": {"connection": "B21IntS001Evt01X:outputs:outcome"}}, "outs": {"success": {"connection": "B21IntS001Frt01X:ins:in"}, "criticalSuccess": {"connection": "B21IntS001Frt02X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B21IntS001Frt01X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 1}, "name": {"value": "Effect: Intimidating Strike"}, "target": {"connection": "B21IntS001Evt01X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B21IntS001Frt02X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 2}, "name": {"value": "Effect: Intimidating Strike"}, "target": {"connection": "B21IntS001Evt01X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "B21Shd0001Trg01X",
+    "name": "Shatter Defenses",
+    "folder": "Feats & Features",
+    "description": "After a Shatter Defenses Strike hits and deals damage, apply off-guard until the target's frightened condition ends. The frightened prerequisite, existing off-guard check, condition-based cleanup, and feat action remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "shatter-defenses"],
+    "variables": {
+      "B21Shd0001Evt01X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B21Shd0001Evt01X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B21Shd0001Evt01X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B21Shd0001Evt01X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B21Shd0001Mch01X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B21Shd0001Mch01X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:shatter-defenses"}, "list": {"connection": "B21Shd0001Evt01X:outputs:options"}}, "outs": {"true": {"connection": "B21Shd0001Spl01X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B21Shd0001Spl01X", "type": "split-outcome", "inputs": {"input": {"connection": "B21Shd0001Evt01X:outputs:outcome"}}, "outs": {"success": {"connection": "B21Shd0001Off01X:ins:in"}, "criticalSuccess": {"connection": "B21Shd0001Off01X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B21Shd0001Off01X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "off-guard"}, "name": {"value": "Effect: Shatter Defenses"}, "target": {"connection": "B21Shd0001Evt01X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B21Fri0001Trg01X",
+    "name": "Frightening Indignation",
+    "folder": "Feats & Features",
+    "description": "On a Frightening Indignation Will save, apply frightened 1 on a success, frightened 2 on a failure, or frightened 3 on a critical failure. Aura entry timing, range, temporary immunity, frequency, and the failure-state frightened floor remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "frightening-indignation"],
+    "variables": {
+      "B21Fri0001Evt01X:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "B21Fri0001Evt01X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B21Fri0001Evt01X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B21Fri0001Evt01X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B21Fri0001Mch01X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B21Fri0001Mch01X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:frightening-indignation"}, "list": {"connection": "B21Fri0001Evt01X:outputs:options"}}, "outs": {"true": {"connection": "B21Fri0001Spl01X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B21Fri0001Spl01X", "type": "split-outcome", "inputs": {"input": {"connection": "B21Fri0001Evt01X:outputs:outcome"}}, "outs": {"success": {"connection": "B21Fri0001Frt01X:ins:in"}, "failure": {"connection": "B21Fri0001Frt02X:ins:in"}, "criticalFailure": {"connection": "B21Fri0001Frt03X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B21Fri0001Frt01X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 1}, "name": {"value": "Effect: Frightening Indignation"}, "target": {"connection": "B21Fri0001Evt01X:outputs:roller"}}, "position": {"x": 960, "y": 120}},
+      {"id": "B21Fri0001Frt02X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 2}, "name": {"value": "Effect: Frightening Indignation"}, "target": {"connection": "B21Fri0001Evt01X:outputs:roller"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B21Fri0001Frt03X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 3}, "name": {"value": "Effect: Frightening Indignation"}, "target": {"connection": "B21Fri0001Evt01X:outputs:roller"}}, "position": {"x": 960, "y": -120}}
+    ]
+  },
+  {
+    "id": "B21Tut0001Trg01X",
+    "name": "Tut-Tut",
+    "folder": "Feats & Features",
+    "description": "On a Tut-Tut Demoralize check critical success, apply frightened 2 to the target. The triggering Strike substitution, enemy area selection, attitude change, and once-per-use timing remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "tut-tut"],
+    "variables": {
+      "B21Tut0001Evt01X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B21Tut0001Evt01X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B21Tut0001Evt01X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B21Tut0001Evt01X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "skill-check"}}, "outs": {"out": {"connection": "B21Tut0001Mch01X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B21Tut0001Mch01X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:tut-tut"}, "list": {"connection": "B21Tut0001Evt01X:outputs:options"}}, "outs": {"true": {"connection": "B21Tut0001Spl01X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B21Tut0001Spl01X", "type": "split-outcome", "inputs": {"input": {"connection": "B21Tut0001Evt01X:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "B21Tut0001Frt01X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B21Tut0001Frt01X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 2}, "name": {"value": "Effect: Tut-Tut"}, "target": {"connection": "B21Tut0001Evt01X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

@@ -1,0 +1,80 @@
+[
+  {
+    "id": "B07DRAGSEVT00001",
+    "name": "Dragging Strike",
+    "folder": "Feats & Features",
+    "description": "On a successful Dragging Strike attack, apply off-guard to the target until the end of the current turn. Size eligibility, movement, and press-action prerequisites remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "dragging-strike"],
+    "variables": {
+      "B07DRAGSEVT00001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B07DRAGSEVT00001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B07DRAGSEVT00001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B07DRAGSMCH00001", "type": "attack-roll-event", "outs": {"out": {"connection": "B07DRAGSMCH00002:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B07DRAGSMCH00002", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:dragging-strike"}, "list": {"connection": "B07DRAGSMCH00001:outputs:options"}}, "outs": {"true": {"connection": "B07DRAGSSPL00001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B07DRAGSSPL00001", "type": "split-outcome", "inputs": {"input": {"connection": "B07DRAGSMCH00001:outputs:outcome"}}, "outs": {"success": {"connection": "B07DRAGSOFF00001:ins:in"}, "criticalSuccess": {"connection": "B07DRAGSOFF00001:ins:in"}, "failure": {"connection": "B07DRAGSOFF00001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B07DRAGSOFF00001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "name": {"value": "Effect: Dragging Strike"}, "target": {"connection": "B07DRAGSMCH00001:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B07STARTLEVT0001",
+    "name": "Startling Appearance",
+    "folder": "Feats & Features",
+    "description": "On a successful Startling Appearance Strike, apply off-guard for the rest of the turn and frightened 1; a critical success increases frightened to 2. Unnoticed and emotion-immunity prerequisites remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "startling-appearance"],
+    "variables": {
+      "B07STARTLEVT0001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B07STARTLEVT0001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B07STARTLEVT0001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B07STARTMCH00001", "type": "attack-roll-event", "outs": {"out": {"connection": "B07STARTMCH00002:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B07STARTMCH00002", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:startling-appearance"}, "list": {"connection": "B07STARTMCH00001:outputs:options"}}, "outs": {"true": {"connection": "B07STARTSPL00001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B07STARTSPL00001", "type": "split-outcome", "inputs": {"input": {"connection": "B07STARTMCH00001:outputs:outcome"}}, "outs": {"success": {"connection": "B07STARTOFF00001:ins:in"}, "criticalSuccess": {"connection": "B07STARTCRT00001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B07STARTOFF00001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "name": {"value": "Effect: Startling Appearance"}, "target": {"connection": "B07STARTMCH00001:outputs:target"}}, "outs": {"out": {"connection": "B07STARTFRG00001:ins:in"}}, "position": {"x": 960, "y": 120}},
+      {"id": "B07STARTCRT00001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "name": {"value": "Effect: Startling Appearance"}, "target": {"connection": "B07STARTMCH00001:outputs:target"}}, "outs": {"out": {"connection": "B07STARTFRG00002:ins:in"}}, "position": {"x": 960, "y": -120}},
+      {"id": "B07STARTFRG00001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 1}, "duration": {"value": 1}, "name": {"value": "Effect: Startling Appearance"}, "target": {"connection": "B07STARTMCH00001:outputs:target"}}, "position": {"x": 1280, "y": 120}},
+      {"id": "B07STARTFRG00002", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 2}, "duration": {"value": 1}, "name": {"value": "Effect: Startling Appearance"}, "target": {"connection": "B07STARTMCH00001:outputs:target"}}, "position": {"x": 1280, "y": -120}}
+    ]
+  },
+  {
+    "id": "B07PARTSEVT00001",
+    "name": "Parting Shot",
+    "folder": "Feats & Features",
+    "description": "On a Parting Shot ranged Strike, apply off-guard to the target for the attack. The required loaded/reload-0 ranged weapon and Step are handled manually.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "parting-shot"],
+    "variables": {
+      "B07PARTSEVT00001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B07PARTSEVT00001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B07PARTSEVT00001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B07PARTSMCH00001", "type": "attack-roll-event", "outs": {"out": {"connection": "B07PARTSMCH00002:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B07PARTSMCH00002", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:parting-shot"}, "list": {"connection": "B07PARTSMCH00001:outputs:options"}}, "outs": {"true": {"connection": "B07PARTSSPL00001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B07PARTSSPL00001", "type": "split-outcome", "inputs": {"input": {"connection": "B07PARTSMCH00001:outputs:outcome"}}, "outs": {"success": {"connection": "B07PARTSOFF00001:ins:in"}, "criticalSuccess": {"connection": "B07PARTSOFF00001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B07PARTSOFF00001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "name": {"value": "Effect: Parting Shot"}, "target": {"connection": "B07PARTSMCH00001:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B07OVRWLEVT00001",
+    "name": "Overwhelming Blow",
+    "folder": "Feats & Features",
+    "description": "When Overwhelming Blow is used, apply stunned 1 and off-guard to the attacker until the start of its next turn, whether or not the Strike hits. The three-action activity and deadly-d12 critical-hit rider remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "overwhelming-blow"],
+    "variables": {
+      "B07OVRWLEVT00001:outputs:origin": {"type": "target", "isArray": false, "label": "Attacker"},
+      "B07OVRWLEVT00001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "B07OVRWLMCH00001", "type": "attack-roll-event", "outs": {"out": {"connection": "B07OVRWLMCH00002:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B07OVRWLMCH00002", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:overwhelming-blow"}, "list": {"connection": "B07OVRWLMCH00001:outputs:options"}}, "outs": {"true": {"connection": "B07OVRWLOFF00001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B07OVRWLOFF00001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "name": {"value": "Effect: Overwhelming Blow"}, "target": {"connection": "B07OVRWLMCH00001:outputs:origin"}}, "outs": {"out": {"connection": "B07OVRWLBSN00001:ins:in"}}, "position": {"x": 640, "y": 80}},
+      {"id": "B07OVRWLBSN00001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "value": {"value": 1}, "duration": {"value": 1}, "name": {"value": "Effect: Overwhelming Blow"}, "target": {"connection": "B07OVRWLMCH00001:outputs:origin"}}, "position": {"x": 960, "y": 80}}
+    ]
+  }
+]

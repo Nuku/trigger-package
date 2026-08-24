@@ -1,0 +1,87 @@
+[
+  {
+    "id":"B489LegTrg00001X","name":"Legendary Troll — Off-Guard/Confused","folder":"SF2e Feats","description":"Apply off-guard on a successful Legendary Troll Deception check and confused for 1 round on a critical success.","priority":0,"tags":["sf2e","feat","legendary-troll"],
+    "variables":{"B489LegEvt00001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"B489LegEvt00001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"},"B489LegEvt00001X:outputs:outcome":{"type":"outcome","isArray":false,"label":"Outcome"}},
+    "nodes":[
+      {"id":"B489LegEvt00001X","type":"check-roll-event","state":"check","inputs":{"for":{"value":"skill-check"}},"outs":{"out":{"connection":"B489LegMch00001X:ins:in"}},"position":{"x":0,"y":0}},
+      {"id":"B489LegMch00001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:legendary-troll"},"list":{"connection":"B489LegEvt00001X:outputs:options"}},"outs":{"true":{"connection":"B489LegSpl00001X:ins:in"}},"position":{"x":320,"y":0}},
+      {"id":"B489LegSpl00001X","type":"split-outcome","inputs":{"input":{"connection":"B489LegEvt00001X:outputs:outcome"}},"outs":{"success":{"connection":"B489LegOff00001X:ins:in"},"criticalSuccess":{"connection":"B489LegCnf00001X:ins:in"}},"position":{"x":640,"y":0}},
+      {"id":"B489LegOff00001X","type":"create-condition","state":"timed","inputs":{"condition":{"value":"off-guard"},"duration":{"value":1},"unit":{"value":"rounds"},"name":{"value":"Effect: Legendary Troll"},"target":{"connection":"B489LegEvt00001X:outputs:target"}},"position":{"x":960,"y":80}},
+      {"id":"B489LegCnf00001X","type":"create-condition","state":"timed","inputs":{"condition":{"value":"confused"},"duration":{"value":1},"unit":{"value":"rounds"},"name":{"value":"Effect: Legendary Troll"},"target":{"connection":"B489LegEvt00001X:outputs:target"}},"position":{"x":960,"y":-80}}
+    ]
+  },
+  {
+    "id":"B489SqrTrg00001X","name":"Squirt Blood — Sickened/Dazzled","folder":"SF2e Feats","description":"Apply sickened or dazzled from Squirt Blood's Fortitude save outcome; cleaning the blood remains manual.","priority":0,"tags":["sf2e","feat","squirt-blood"],
+    "variables":{"B489SqrEvt00001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"B489SqrEvt00001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"},"B489SqrEvt00001X:outputs:outcome":{"type":"outcome","isArray":false,"label":"Outcome"}},
+    "nodes":[
+      {"id":"B489SqrEvt00001X","type":"check-roll-event","state":"check","inputs":{"for":{"value":"saving-throw"}},"outs":{"out":{"connection":"B489SqrMch00001X:ins:in"}},"position":{"x":0,"y":0}},
+      {"id":"B489SqrMch00001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:squirt-blood"},"list":{"connection":"B489SqrEvt00001X:outputs:options"}},"outs":{"true":{"connection":"B489SqrSpl00001X:ins:in"}},"position":{"x":320,"y":0}},
+      {"id":"B489SqrSpl00001X","type":"split-outcome","inputs":{"input":{"connection":"B489SqrEvt00001X:outputs:outcome"}},"outs":{"success":{"connection":"B489SqrSck00001X:ins:in"},"failure":{"connection":"B489SqrDaz00001X:ins:in"},"criticalFailure":{"connection":"B489SqrDaz00002X:ins:in"}},"position":{"x":640,"y":0}},
+      {"id":"B489SqrSck00001X","type":"create-condition","state":"fixed","inputs":{"condition":{"value":"sickened"},"value":{"value":1},"name":{"value":"Effect: Squirt Blood"},"target":{"connection":"B489SqrEvt00001X:outputs:target"}},"position":{"x":960,"y":-120}},
+      {"id":"B489SqrDaz00001X","type":"create-condition","state":"timed","inputs":{"condition":{"value":"dazzled"},"duration":{"value":1},"unit":{"value":"rounds"},"name":{"value":"Effect: Squirt Blood"},"target":{"connection":"B489SqrEvt00001X:outputs:target"}},"position":{"x":960,"y":0}},
+      {"id":"B489SqrDaz00002X","type":"create-condition","state":"timed","inputs":{"condition":{"value":"dazzled"},"duration":{"value":2},"unit":{"value":"rounds"},"name":{"value":"Effect: Squirt Blood"},"target":{"connection":"B489SqrEvt00001X:outputs:target"}},"position":{"x":960,"y":120}}
+    ]
+  },
+  {
+    "id":"B489MuzTrg00001X","name":"Muzzle Flash — Dazzled","folder":"SF2e Feats","description":"Apply dazzled for 1 round after a successful Muzzle Flash Strike.","priority":0,"tags":["sf2e","feat","muzzle-flash"],
+    "variables":{"B489MuzEvt00001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"B489MuzEvt00001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"},"B489MuzEvt00001X:outputs:outcome":{"type":"outcome","isArray":false,"label":"Outcome"}},
+    "nodes":[
+      {"id":"B489MuzEvt00001X","type":"attack-roll-event","outs":{"out":{"connection":"B489MuzMch00001X:ins:in"}},"position":{"x":0,"y":0}},
+      {"id":"B489MuzMch00001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:muzzle-flash"},"list":{"connection":"B489MuzEvt00001X:outputs:options"}},"outs":{"true":{"connection":"B489MuzSpl00001X:ins:in"}},"position":{"x":320,"y":0}},
+      {"id":"B489MuzSpl00001X","type":"split-outcome","inputs":{"input":{"connection":"B489MuzEvt00001X:outputs:outcome"}},"outs":{"success":{"connection":"B489MuzDaz00001X:ins:in"},"criticalSuccess":{"connection":"B489MuzDaz00001X:ins:in"}},"position":{"x":640,"y":0}},
+      {"id":"B489MuzDaz00001X","type":"create-condition","state":"timed","inputs":{"condition":{"value":"dazzled"},"duration":{"value":1},"unit":{"value":"rounds"},"name":{"value":"Effect: Muzzle Flash"},"target":{"connection":"B489MuzEvt00001X:outputs:target"}},"position":{"x":960,"y":0}}
+    ]
+  },
+  {
+    "id":"B489HamTrg00001X","name":"Hampering Flare — Off-Guard","folder":"SF2e Feats","description":"Apply off-guard for 1 round after a successful Hampering Flare solar flare Strike.","priority":0,"tags":["sf2e","feat","hampering-flare"],
+    "variables":{"B489HamEvt00001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"B489HamEvt00001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"},"B489HamEvt00001X:outputs:outcome":{"type":"outcome","isArray":false,"label":"Outcome"}},
+    "nodes":[
+      {"id":"B489HamEvt00001X","type":"attack-roll-event","outs":{"out":{"connection":"B489HamMch00001X:ins:in"}},"position":{"x":0,"y":0}},
+      {"id":"B489HamMch00001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:hampering-flare"},"list":{"connection":"B489HamEvt00001X:outputs:options"}},"outs":{"true":{"connection":"B489HamSpl00001X:ins:in"}},"position":{"x":320,"y":0}},
+      {"id":"B489HamSpl00001X","type":"split-outcome","inputs":{"input":{"connection":"B489HamEvt00001X:outputs:outcome"}},"outs":{"success":{"connection":"B489HamOff00001X:ins:in"},"criticalSuccess":{"connection":"B489HamOff00001X:ins:in"}},"position":{"x":640,"y":0}},
+      {"id":"B489HamOff00001X","type":"create-condition","state":"timed","inputs":{"condition":{"value":"off-guard"},"duration":{"value":1},"unit":{"value":"rounds"},"name":{"value":"Effect: Hampering Flare"},"target":{"connection":"B489HamEvt00001X:outputs:target"}},"position":{"x":960,"y":0}}
+    ]
+  },
+  {
+    "id":"B489ImpTrg00001X","name":"Impeding Shot — Slowed","folder":"SF2e Feats","description":"Apply slowed 1 for 1 round after a successful Impeding Shot Strike; falling remains manual.","priority":0,"tags":["sf2e","feat","impeding-shot"],
+    "variables":{"B489ImpEvt00001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"B489ImpEvt00001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"},"B489ImpEvt00001X:outputs:outcome":{"type":"outcome","isArray":false,"label":"Outcome"}},
+    "nodes":[
+      {"id":"B489ImpEvt00001X","type":"attack-roll-event","outs":{"out":{"connection":"B489ImpMch00001X:ins:in"}},"position":{"x":0,"y":0}},
+      {"id":"B489ImpMch00001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:impeding-shot"},"list":{"connection":"B489ImpEvt00001X:outputs:options"}},"outs":{"true":{"connection":"B489ImpSpl00001X:ins:in"}},"position":{"x":320,"y":0}},
+      {"id":"B489ImpSpl00001X","type":"split-outcome","inputs":{"input":{"connection":"B489ImpEvt00001X:outputs:outcome"}},"outs":{"success":{"connection":"B489ImpSlo00001X:ins:in"},"criticalSuccess":{"connection":"B489ImpSlo00001X:ins:in"}},"position":{"x":640,"y":0}},
+      {"id":"B489ImpSlo00001X","type":"create-condition","state":"timed","inputs":{"condition":{"value":"slowed"},"value":{"value":1},"duration":{"value":1},"unit":{"value":"rounds"},"name":{"value":"Effect: Impeding Shot"},"target":{"connection":"B489ImpEvt00001X:outputs:target"}},"position":{"x":960,"y":0}}
+    ]
+  },
+  {
+    "id":"B489ThoTrg00001X","name":"Thought-Piercing Horns — Stupefied","folder":"SF2e Feats","description":"Apply stupefied 2 until the beginning of the next turn after a critical Thought-Piercing Horns Strike.","priority":0,"tags":["sf2e","feat","thought-piercing-horns"],
+    "variables":{"B489ThoEvt00001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"B489ThoEvt00001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"},"B489ThoEvt00001X:outputs:outcome":{"type":"outcome","isArray":false,"label":"Outcome"}},
+    "nodes":[
+      {"id":"B489ThoEvt00001X","type":"attack-roll-event","outs":{"out":{"connection":"B489ThoMch00001X:ins:in"}},"position":{"x":0,"y":0}},
+      {"id":"B489ThoMch00001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:thought-piercing-horns"},"list":{"connection":"B489ThoEvt00001X:outputs:options"}},"outs":{"true":{"connection":"B489ThoSpl00001X:ins:in"}},"position":{"x":320,"y":0}},
+      {"id":"B489ThoSpl00001X","type":"split-outcome","inputs":{"input":{"connection":"B489ThoEvt00001X:outputs:outcome"}},"outs":{"criticalSuccess":{"connection":"B489ThoStp00001X:ins:in"}},"position":{"x":640,"y":0}},
+      {"id":"B489ThoStp00001X","type":"create-condition","state":"timed","inputs":{"condition":{"value":"stupefied"},"value":{"value":2},"duration":{"value":1},"unit":{"value":"rounds"},"name":{"value":"Effect: Thought-Piercing Horns"},"target":{"connection":"B489ThoEvt00001X:outputs:target"}},"position":{"x":960,"y":0}}
+    ]
+  },
+  {
+    "id":"B489GuiTrg00001X","name":"Guilt Trip — Sickened","folder":"SF2e Feats","description":"Apply sickened 1 after a failed or critically failed Guilt Trip Will save; critical-failure damage reduction remains manual.","priority":0,"tags":["sf2e","feat","guilt-trip"],
+    "variables":{"B489GuiEvt00001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"B489GuiEvt00001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"},"B489GuiEvt00001X:outputs:outcome":{"type":"outcome","isArray":false,"label":"Outcome"}},
+    "nodes":[
+      {"id":"B489GuiEvt00001X","type":"check-roll-event","state":"check","inputs":{"for":{"value":"saving-throw"}},"outs":{"out":{"connection":"B489GuiMch00001X:ins:in"}},"position":{"x":0,"y":0}},
+      {"id":"B489GuiMch00001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:guilt-trip"},"list":{"connection":"B489GuiEvt00001X:outputs:options"}},"outs":{"true":{"connection":"B489GuiSpl00001X:ins:in"}},"position":{"x":320,"y":0}},
+      {"id":"B489GuiSpl00001X","type":"split-outcome","inputs":{"input":{"connection":"B489GuiEvt00001X:outputs:outcome"}},"outs":{"failure":{"connection":"B489GuiSck00001X:ins:in"},"criticalFailure":{"connection":"B489GuiSck00001X:ins:in"}},"position":{"x":640,"y":0}},
+      {"id":"B489GuiSck00001X","type":"create-condition","state":"fixed","inputs":{"condition":{"value":"sickened"},"value":{"value":1},"name":{"value":"Effect: Guilt Trip"},"target":{"connection":"B489GuiEvt00001X:outputs:target"}},"position":{"x":960,"y":0}}
+    ]
+  },
+  {
+    "id":"B489CliTrg00001X","name":"Clinging Flare — Immobilized/Off-Guard","folder":"SF2e Feats","description":"Apply immobilized after a successful Clinging Flare Strike and off-guard on a critical success; Escape and early cleanup remain manual.","priority":0,"tags":["sf2e","feat","clinging-flare"],
+    "variables":{"B489CliEvt00001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"B489CliEvt00001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"},"B489CliEvt00001X:outputs:outcome":{"type":"outcome","isArray":false,"label":"Outcome"}},
+    "nodes":[
+      {"id":"B489CliEvt00001X","type":"attack-roll-event","outs":{"out":{"connection":"B489CliMch00001X:ins:in"}},"position":{"x":0,"y":0}},
+      {"id":"B489CliMch00001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:clinging-flare"},"list":{"connection":"B489CliEvt00001X:outputs:options"}},"outs":{"true":{"connection":"B489CliSpl00001X:ins:in"}},"position":{"x":320,"y":0}},
+      {"id":"B489CliSpl00001X","type":"split-outcome","inputs":{"input":{"connection":"B489CliEvt00001X:outputs:outcome"}},"outs":{"success":{"connection":"B489CliImm00001X:ins:in"},"criticalSuccess":{"connection":"B489CliImm00002X:ins:in"}},"position":{"x":640,"y":0}},
+      {"id":"B489CliImm00001X","type":"create-condition","state":"timed","inputs":{"condition":{"value":"immobilized"},"duration":{"value":1},"unit":{"value":"rounds"},"name":{"value":"Effect: Clinging Flare"},"target":{"connection":"B489CliEvt00001X:outputs:target"}},"position":{"x":960,"y":80}},
+      {"id":"B489CliImm00002X","type":"create-condition","state":"timed","outs":{"out":{"connection":"B489CliOff00001X:ins:in"}},"inputs":{"condition":{"value":"immobilized"},"duration":{"value":1},"unit":{"value":"rounds"},"name":{"value":"Effect: Clinging Flare"},"target":{"connection":"B489CliEvt00001X:outputs:target"}},"position":{"x":960,"y":-80}},
+      {"id":"B489CliOff00001X","type":"create-condition","state":"timed","inputs":{"condition":{"value":"off-guard"},"duration":{"value":1},"unit":{"value":"rounds"},"name":{"value":"Effect: Clinging Flare"},"target":{"connection":"B489CliEvt00001X:outputs:target"}},"position":{"x":1280,"y":-80}}
+    ]
+  }
+]

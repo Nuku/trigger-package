@@ -1,0 +1,40 @@
+[
+  {
+    "id": "B296DprTrg00001X",
+    "name": "Dooming Proclamation",
+    "folder": "Monster Abilities",
+    "description": "After a Dooming Proclamation Will save, apply frightened 1 on a failure and frightened 2 on a critical failure; damage and immunity remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "dooming-proclamation"],
+    "variables": {
+      "B296DprEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B296DprEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "B296DprEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B296DprMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B296DprMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:dooming-proclamation"}, "list": {"connection": "B296DprEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B296DprSpl00001X:ins:input"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B296DprSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B296DprEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B296DprF1n00001X:ins:in"}, "criticalFailure": {"connection": "B296DprF2n00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B296DprF1n00001X", "type": "increase-condition", "inputs": {"condition": {"value": "frightened"}, "max": {"value": 2}, "target": {"connection": "B296DprEvt00001X:outputs:target"}, "value": {"value": 1}}, "position": {"x": 960, "y": 80}},
+      {"id": "B296DprF2n00001X", "type": "increase-condition", "inputs": {"condition": {"value": "frightened"}, "max": {"value": 2}, "target": {"connection": "B296DprEvt00001X:outputs:target"}, "value": {"value": 2}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "B296FrtTrg00001X",
+    "name": "Frightening Rant",
+    "folder": "Monster Abilities",
+    "description": "After a Frightening Rant Will save, apply frightened 2 on a failure and frightened 3 on a critical failure.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "frightening-rant"],
+    "variables": {
+      "B296FrtEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B296FrtEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "B296FrtEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B296FrtMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B296FrtMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:frightening-rant"}, "list": {"connection": "B296FrtEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B296FrtSpl00001X:ins:input"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B296FrtSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B296FrtEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B296FrtF2n00001X:ins:in"}, "criticalFailure": {"connection": "B296FrtF3n00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B296FrtF2n00001X", "type": "increase-condition", "inputs": {"condition": {"value": "frightened"}, "max": {"value": 3}, "target": {"connection": "B296FrtEvt00001X:outputs:target"}, "value": {"value": 2}}, "position": {"x": 960, "y": 80}},
+      {"id": "B296FrtF3n00001X", "type": "increase-condition", "inputs": {"condition": {"value": "frightened"}, "max": {"value": 3}, "target": {"connection": "B296FrtEvt00001X:outputs:target"}, "value": {"value": 3}}, "position": {"x": 960, "y": -80}}
+    ]
+  }
+]

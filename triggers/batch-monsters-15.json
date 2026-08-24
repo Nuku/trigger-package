@@ -1,0 +1,66 @@
+[
+  {
+    "id": "M15A001000000001",
+    "name": "Air of Sickness",
+    "folder": "Monster Abilities",
+    "description": "Apply sickened 1 when Air of Sickness produces a failed Fortitude save; aura entry, disease resistance penalties, duration, and immunity remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "air-of-sickness"],
+    "variables": {
+      "M15A002000000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M15A002000000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M15A002000000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M15A002000000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M15A003000000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M15A003000000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:air-of-sickness"}, "list": {"connection": "M15A002000000001:outputs:options"}}, "outs": {"true": {"connection": "M15A004000000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M15A004000000001", "type": "split-outcome", "inputs": {"input": {"connection": "M15A002000000001:outputs:outcome"}}, "outs": {"failure": {"connection": "M15A005000000001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M15A005000000001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 1}, "name": {"value": "Effect: Air of Sickness"}, "target": {"connection": "M15A002000000001:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "M15B001000000001",
+    "name": "Cloud of Ashes",
+    "folder": "Monster Abilities",
+    "description": "Apply concealed to creatures affected by Cloud of Ashes; area placement, duration, movement, and the cloud's other effects remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "cloud-of-ashes"],
+    "variables": {"M15B002000000001:outputs:targets": {"type": "target", "isArray": true, "label": "Affected Creatures"}},
+    "nodes": [
+      {"id": "M15B002000000001", "type": "action-chat-event", "inputs": {"slug": {"value": "cloud-of-ashes"}}, "outs": {"out": {"connection": "M15B003000000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M15B003000000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "concealed"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "expiry": {"value": "turn-end"}, "name": {"value": "Effect: Cloud of Ashes"}, "target": {"connection": "M15B002000000001:outputs:targets"}}, "position": {"x": 480, "y": 0}}
+    ]
+  },
+  {
+    "id": "M15C001000000001",
+    "name": "Consume Souls",
+    "folder": "Monster Abilities",
+    "description": "Increase doomed by 1 on a failed or critically failed Consume Souls save; the critical-failure death effect, aura, damage, and recharge remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "consume-souls"],
+    "variables": {
+      "M15C002000000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M15C002000000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M15C002000000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M15C002000000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M15C003000000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M15C003000000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:consume-souls"}, "list": {"connection": "M15C002000000001:outputs:options"}}, "outs": {"true": {"connection": "M15C004000000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M15C004000000001", "type": "split-outcome", "inputs": {"input": {"connection": "M15C002000000001:outputs:outcome"}}, "outs": {"failure": {"connection": "M15C005000000001:ins:in"}, "criticalFailure": {"connection": "M15C005000000001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M15C005000000001", "type": "increase-condition", "state": "fixed", "inputs": {"condition": {"value": "doomed"}, "max": {"value": 4}, "value": {"value": 1}, "name": {"value": "Effect: Consume Souls"}, "target": {"connection": "M15C002000000001:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "M15D001000000001",
+    "name": "Corpse Bomb",
+    "folder": "Monster Abilities",
+    "description": "Roll the Corpse Bomb's 2d8 fire damage when its detonation action is used; priming, detection, disarm, burst placement, poison damage, and lingering cloud remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "corpse-bomb"],
+    "variables": {"M15D002000000001:outputs:targets": {"type": "target", "isArray": true, "label": "Explosion Targets"}},
+    "nodes": [
+      {"id": "M15D002000000001", "type": "action-chat-event", "inputs": {"slug": {"value": "corpse-bomb"}}, "outs": {"out": {"connection": "M15D003000000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M15D003000000001", "type": "roll-damage", "state": "none", "inputs": {"formula": {"value": "2d8[fire]"}, "origin": {"connection": "M15D002000000001:outputs:targets"}, "targets": {"connection": "M15D002000000001:outputs:targets"}, "private": {"value": false}}, "position": {"x": 480, "y": 0}}
+    ]
+  }
+]

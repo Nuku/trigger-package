@@ -1,0 +1,787 @@
+[
+  {
+    "id": "B301StpTrg00001X",
+    "name": "Stupefy — Stupefied",
+    "folder": "Spells",
+    "description": "Apply stupefied 1/2/3 from Stupefy's Will-save outcome; targeting and the spell's normal duration remain native/manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "spell",
+      "stupefy"
+    ],
+    "variables": {
+      "B301StpEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B301StpEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B301StpEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B301StpEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B301StpMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B301StpMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:stupefy"
+          },
+          "list": {
+            "connection": "B301StpEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B301StpSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B301StpSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B301StpEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "success": {
+            "connection": "B301StpSuc00001X:ins:in"
+          },
+          "failure": {
+            "connection": "B301StpFai00001X:ins:in"
+          },
+          "criticalFailure": {
+            "connection": "B301StpCfl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B301StpSuc00001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "stupefied"
+          },
+          "value": {
+            "value": 1
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "rounds"
+          },
+          "name": {
+            "value": "Effect: Stupefy"
+          },
+          "target": {
+            "connection": "B301StpEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 80
+        }
+      },
+      {
+        "id": "B301StpFai00001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "stupefied"
+          },
+          "value": {
+            "value": 2
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "minutes"
+          },
+          "name": {
+            "value": "Effect: Stupefy"
+          },
+          "target": {
+            "connection": "B301StpEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      },
+      {
+        "id": "B301StpCfl00001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "stupefied"
+          },
+          "value": {
+            "value": 3
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "minutes"
+          },
+          "name": {
+            "value": "Effect: Stupefy"
+          },
+          "target": {
+            "connection": "B301StpEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": -80
+        }
+      }
+    ]
+  },
+  {
+    "id": "B301IgwTrg00001X",
+    "name": "Ignite Fireworks — Dazzled",
+    "folder": "Spells",
+    "description": "Apply dazzled 1 round/3 rounds/1 minute from Ignite Fireworks' Reflex-save outcome and 1d4 persistent fire on a critical failure; area damage and heightening remain native/manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "spell",
+      "ignite-fireworks"
+    ],
+    "variables": {
+      "B301IgwEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B301IgwEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B301IgwEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B301IgwEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B301IgwMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B301IgwMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:ignite-fireworks"
+          },
+          "list": {
+            "connection": "B301IgwEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B301IgwSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B301IgwSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B301IgwEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "success": {
+            "connection": "B301IgwScc00001X:ins:in"
+          },
+          "failure": {
+            "connection": "B301IgwFai00001X:ins:in"
+          },
+          "criticalFailure": {
+            "connection": "B301IgwCfl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B301IgwScc00001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "dazzled"
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "rounds"
+          },
+          "name": {
+            "value": "Effect: Ignite Fireworks"
+          },
+          "target": {
+            "connection": "B301IgwEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 80
+        }
+      },
+      {
+        "id": "B301IgwFai00001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "dazzled"
+          },
+          "duration": {
+            "value": 3
+          },
+          "unit": {
+            "value": "rounds"
+          },
+          "name": {
+            "value": "Effect: Ignite Fireworks"
+          },
+          "target": {
+            "connection": "B301IgwEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      },
+      {
+        "id": "B301IgwCfl00001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "dazzled"
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "minutes"
+          },
+          "name": {
+            "value": "Effect: Ignite Fireworks"
+          },
+          "target": {
+            "connection": "B301IgwEvt00001X:outputs:target"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B301IgwPer00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": -80
+        }
+      },
+      {
+        "id": "B301IgwPer00001X",
+        "type": "persistent-damage",
+        "state": "fixed",
+        "inputs": {
+          "formula": {
+            "value": "1d4[fire]"
+          },
+          "target": {
+            "connection": "B301IgwEvt00001X:outputs:target"
+          },
+          "name": {
+            "value": "Effect: Ignite Fireworks"
+          }
+        },
+        "position": {
+          "x": 1280,
+          "y": -80
+        }
+      }
+    ]
+  },
+  {
+    "id": "B301WknTrg00001X",
+    "name": "Waking Nightmare — Frightened",
+    "folder": "Spells",
+    "description": "Apply frightened 1/2/3 from Waking Nightmare's Will-save outcome; the asleep-only paralysis rider and extra mental damage remain native/manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "spell",
+      "waking-nightmare"
+    ],
+    "variables": {
+      "B301WknEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B301WknEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B301WknEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B301WknEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B301WknMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B301WknMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:waking-nightmare"
+          },
+          "list": {
+            "connection": "B301WknEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B301WknSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B301WknSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B301WknEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "success": {
+            "connection": "B301WknSuc00001X:ins:in"
+          },
+          "failure": {
+            "connection": "B301WknFai00001X:ins:in"
+          },
+          "criticalFailure": {
+            "connection": "B301WknCfl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B301WknSuc00001X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "frightened"
+          },
+          "value": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Waking Nightmare"
+          },
+          "target": {
+            "connection": "B301WknEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 80
+        }
+      },
+      {
+        "id": "B301WknFai00001X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "frightened"
+          },
+          "value": {
+            "value": 2
+          },
+          "name": {
+            "value": "Effect: Waking Nightmare"
+          },
+          "target": {
+            "connection": "B301WknEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      },
+      {
+        "id": "B301WknCfl00001X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "frightened"
+          },
+          "value": {
+            "value": 3
+          },
+          "name": {
+            "value": "Effect: Waking Nightmare"
+          },
+          "target": {
+            "connection": "B301WknEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": -80
+        }
+      }
+    ]
+  },
+  {
+    "id": "B301ChlTrg00001X",
+    "name": "Chroma Leach — Enfeebled and Drained",
+    "folder": "Spells",
+    "description": "Apply Chroma Leach's enfeebled and drained save riders; the movement-action Will save and gnome-specific penalty remain native/manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "spell",
+      "chroma-leach"
+    ],
+    "variables": {
+      "B301ChlEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B301ChlEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B301ChlEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B301ChlEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B301ChlMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B301ChlMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:chroma-leach"
+          },
+          "list": {
+            "connection": "B301ChlEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B301ChlSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B301ChlSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B301ChlEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "success": {
+            "connection": "B301ChlSuc00001X:ins:in"
+          },
+          "failure": {
+            "connection": "B301ChlFai00001X:ins:in"
+          },
+          "criticalFailure": {
+            "connection": "B301ChlCfl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B301ChlSuc00001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "enfeebled"
+          },
+          "value": {
+            "value": 2
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "rounds"
+          },
+          "name": {
+            "value": "Effect: Chroma Leach"
+          },
+          "target": {
+            "connection": "B301ChlEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 80
+        }
+      },
+      {
+        "id": "B301ChlFai00001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "enfeebled"
+          },
+          "value": {
+            "value": 2
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "minutes"
+          },
+          "name": {
+            "value": "Effect: Chroma Leach"
+          },
+          "target": {
+            "connection": "B301ChlEvt00001X:outputs:target"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B301ChlDra00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      },
+      {
+        "id": "B301ChlDra00001X",
+        "type": "increase-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "drained"
+          },
+          "max": {
+            "value": 4
+          },
+          "value": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Chroma Leach"
+          },
+          "target": {
+            "connection": "B301ChlEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 1280,
+          "y": 0
+        }
+      },
+      {
+        "id": "B301ChlCfl00001X",
+        "type": "increase-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "enfeebled"
+          },
+          "max": {
+            "value": 2
+          },
+          "value": {
+            "value": 2
+          },
+          "name": {
+            "value": "Effect: Chroma Leach"
+          },
+          "target": {
+            "connection": "B301ChlEvt00001X:outputs:target"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B301ChlCflDra01X:ins:in"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": -80
+        }
+      },
+      {
+        "id": "B301ChlCflDra01X",
+        "type": "increase-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "drained"
+          },
+          "max": {
+            "value": 4
+          },
+          "value": {
+            "value": 2
+          },
+          "name": {
+            "value": "Effect: Chroma Leach"
+          },
+          "target": {
+            "connection": "B301ChlEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 1280,
+          "y": -80
+        }
+      }
+    ]
+  }
+]

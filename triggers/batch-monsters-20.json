@@ -1,0 +1,81 @@
+[
+  {
+    "id": "M20A001000000001",
+    "name": "Aerial Feint",
+    "folder": "Monster Abilities",
+    "description": "Apply off-guard for 1 round after a successful Aerial Feint Acrobatics check; range, target eligibility, and the exact target's Perception DC remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "aerial-feint"],
+    "variables": {
+      "M20A002000000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M20A002000000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M20A002000000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M20A002000000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "skill-check"}}, "outs": {"out": {"connection": "M20A003000000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M20A003000000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:aerial-feint"}, "list": {"connection": "M20A002000000001:outputs:options"}}, "outs": {"true": {"connection": "M20A004000000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M20A004000000001", "type": "split-outcome", "inputs": {"input": {"connection": "M20A002000000001:outputs:outcome"}}, "outs": {"success": {"connection": "M20A005000000001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M20A005000000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "expiry": {"value": "turn-end"}, "name": {"value": "Effect: Aerial Feint"}, "target": {"connection": "M20A002000000001:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "M20B001000000001",
+    "name": "Appetizing Aroma",
+    "folder": "Monster Abilities",
+    "description": "Apply off-guard and fascinated for 1 round after a failed Appetizing Aroma Will save; aura entry, non-eating creature immunity, and the 1-hour temporary immunity remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "appetizing-aroma"],
+    "variables": {
+      "M20B002000000001:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "M20B002000000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M20B002000000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M20B002000000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M20B003000000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M20B003000000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:appetizing-aroma"}, "list": {"connection": "M20B002000000001:outputs:options"}}, "outs": {"true": {"connection": "M20B004000000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M20B004000000001", "type": "split-outcome", "inputs": {"input": {"connection": "M20B002000000001:outputs:outcome"}}, "outs": {"failure": {"connection": "M20B005000000001:ins:in"}, "criticalFailure": {"connection": "M20B005000000001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M20B005000000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "expiry": {"value": "turn-end"}, "name": {"value": "Effect: Appetizing Aroma"}, "target": {"connection": "M20B002000000001:outputs:roller"}}, "outs": {"out": {"connection": "M20B006000000001:ins:in"}}, "position": {"x": 960, "y": 0}},
+      {"id": "M20B006000000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "fascinated"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "expiry": {"value": "turn-end"}, "name": {"value": "Effect: Appetizing Aroma"}, "target": {"connection": "M20B002000000001:outputs:roller"}}, "position": {"x": 1280, "y": 0}}
+    ]
+  },
+  {
+    "id": "M20C001000000001",
+    "name": "Incite Violence",
+    "folder": "Monster Abilities",
+    "description": "Apply off-guard and fascinated for 1 round after a failed Incite Violence Will save; area targeting, once-per-day frequency, the critical-success forced Strike, and target selection remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "incite-violence"],
+    "variables": {
+      "M20C002000000001:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "M20C002000000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M20C002000000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M20C002000000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M20C003000000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M20C003000000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:incite-violence"}, "list": {"connection": "M20C002000000001:outputs:options"}}, "outs": {"true": {"connection": "M20C004000000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M20C004000000001", "type": "split-outcome", "inputs": {"input": {"connection": "M20C002000000001:outputs:outcome"}}, "outs": {"failure": {"connection": "M20C005000000001:ins:in"}, "criticalFailure": {"connection": "M20C005000000001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M20C005000000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "expiry": {"value": "turn-end"}, "name": {"value": "Effect: Incite Violence"}, "target": {"connection": "M20C002000000001:outputs:roller"}}, "outs": {"out": {"connection": "M20C006000000001:ins:in"}}, "position": {"x": 960, "y": 0}},
+      {"id": "M20C006000000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "fascinated"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "expiry": {"value": "turn-end"}, "name": {"value": "Effect: Incite Violence"}, "target": {"connection": "M20C002000000001:outputs:roller"}}, "position": {"x": 1280, "y": 0}}
+    ]
+  },
+  {
+    "id": "M20D001000000001",
+    "name": "Tattered Soul",
+    "folder": "Monster Abilities",
+    "description": "Increase drained by 1 on a failed Tattered Soul Fortitude save and by 2 on a critical failure; the preceding blade-leg Strike, already-drained immunity, and damage remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "tattered-soul"],
+    "variables": {
+      "M20D002000000001:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "M20D002000000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M20D002000000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M20D002000000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M20D003000000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M20D003000000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:tattered-soul"}, "list": {"connection": "M20D002000000001:outputs:options"}}, "outs": {"true": {"connection": "M20D004000000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M20D004000000001", "type": "split-outcome", "inputs": {"input": {"connection": "M20D002000000001:outputs:outcome"}}, "outs": {"failure": {"connection": "M20D005000000001:ins:in"}, "criticalFailure": {"connection": "M20D006000000001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M20D005000000001", "type": "increase-condition", "state": "fixed", "inputs": {"condition": {"value": "drained"}, "value": {"value": 1}, "name": {"value": "Effect: Tattered Soul"}, "target": {"connection": "M20D002000000001:outputs:roller"}}, "position": {"x": 960, "y": 80}},
+      {"id": "M20D006000000001", "type": "increase-condition", "state": "fixed", "inputs": {"condition": {"value": "drained"}, "value": {"value": 2}, "name": {"value": "Effect: Tattered Soul"}, "target": {"connection": "M20D002000000001:outputs:roller"}}, "position": {"x": 960, "y": -80}}
+    ]
+  }
+]

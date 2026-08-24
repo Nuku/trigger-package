@@ -1,0 +1,78 @@
+[
+  {
+    "id": "F04WHLREVT0001XX",
+    "name": "Whirling Throw",
+    "folder": "Feats & Features",
+    "description": "When a qualifying Whirling Throw Athletics check critically succeeds, apply prone to the thrown target; grabbing requirements, distance, damage, and release handling remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "whirling-throw"],
+    "variables": {
+      "F04WHLREVT0001XX:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "F04WHLREVT0001XX:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "F04WHLREVT0001XX:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "F04WHLREVT0001XX", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "skill-check"}}, "outs": {"out": {"connection": "F04WHLRMCH0001XX:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "F04WHLRMCH0001XX", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:whirling-throw"}, "list": {"connection": "F04WHLREVT0001XX:outputs:options"}}, "outs": {"true": {"connection": "F04WHLRSPL0001XX:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "F04WHLRSPL0001XX", "type": "split-outcome", "inputs": {"input": {"connection": "F04WHLREVT0001XX:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "F04WHLRPRN0001XX:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "F04WHLRPRN0001XX", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "prone"}, "duration": {"value": 1}, "name": {"value": "Effect: Whirling Throw"}, "target": {"connection": "F04WHLREVT0001XX:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "F04CRSLEVT0001XX",
+    "name": "Crashing Slam",
+    "folder": "Feats & Features",
+    "description": "When a qualifying Crashing Slam Strike succeeds, apply prone to the target from the feat's automatic critical Trip effect; weapon prerequisites, damage, and exact MAP handling remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "crashing-slam"],
+    "variables": {
+      "F04CRSLEVT0001XX:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "F04CRSLEVT0001XX:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "F04CRSLEVT0001XX:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "F04CRSLEVT0001XX", "type": "attack-roll-event", "outs": {"out": {"connection": "F04CRSLMCH0001XX:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "F04CRSLMCH0001XX", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:crashing-slam"}, "list": {"connection": "F04CRSLEVT0001XX:outputs:options"}}, "outs": {"true": {"connection": "F04CRSLSPL0001XX:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "F04CRSLSPL0001XX", "type": "split-outcome", "inputs": {"input": {"connection": "F04CRSLEVT0001XX:outputs:outcome"}}, "outs": {"success": {"connection": "F04CRSLPRN0001XX:ins:in"}, "criticalSuccess": {"connection": "F04CRSLPRN0001XX:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "F04CRSLPRN0001XX", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "prone"}, "duration": {"value": 1}, "name": {"value": "Effect: Crashing Slam"}, "target": {"connection": "F04CRSLEVT0001XX:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "F04HDSTEVT0001XX",
+    "name": "Head Stomp",
+    "folder": "Feats & Features",
+    "description": "When a qualifying Head Stomp unarmed attack succeeds, apply off-guard to the prone target through the end of the feat user's next turn; prone targeting and exact cleanup timing remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "head-stomp"],
+    "variables": {
+      "F04HDSTEVT0001XX:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "F04HDSTEVT0001XX:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "F04HDSTEVT0001XX:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "F04HDSTEVT0001XX", "type": "attack-roll-event", "outs": {"out": {"connection": "F04HDSTMCH0001XX:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "F04HDSTMCH0001XX", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:head-stomp"}, "list": {"connection": "F04HDSTEVT0001XX:outputs:options"}}, "outs": {"true": {"connection": "F04HDSTSPL0001XX:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "F04HDSTSPL0001XX", "type": "split-outcome", "inputs": {"input": {"connection": "F04HDSTEVT0001XX:outputs:outcome"}}, "outs": {"success": {"connection": "F04HDSTOFF0001XX:ins:in"}, "criticalSuccess": {"connection": "F04HDSTOFF0001XX:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "F04HDSTOFF0001XX", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 2}, "name": {"value": "Effect: Head Stomp"}, "target": {"connection": "F04HDSTEVT0001XX:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "F04FGRBEVT0001XX",
+    "name": "Furious Grab",
+    "folder": "Feats & Features",
+    "description": "When a qualifying Furious Grab Strike succeeds, apply grabbed to the foe as the feat's automatic Grapple success; rage, free-hand, and Escape handling remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "furious-grab"],
+    "variables": {
+      "F04FGRBEVT0001XX:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "F04FGRBEVT0001XX:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "F04FGRBEVT0001XX:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "F04FGRBEVT0001XX", "type": "attack-roll-event", "outs": {"out": {"connection": "F04FGRBMCH0001XX:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "F04FGRBMCH0001XX", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:furious-grab"}, "list": {"connection": "F04FGRBEVT0001XX:outputs:options"}}, "outs": {"true": {"connection": "F04FGRBSPL0001XX:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "F04FGRBSPL0001XX", "type": "split-outcome", "inputs": {"input": {"connection": "F04FGRBEVT0001XX:outputs:outcome"}}, "outs": {"success": {"connection": "F04FGRBGRB0001XX:ins:in"}, "criticalSuccess": {"connection": "F04FGRBGRB0001XX:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "F04FGRBGRB0001XX", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "grabbed"}, "duration": {"value": 1}, "name": {"value": "Effect: Furious Grab"}, "target": {"connection": "F04FGRBEVT0001XX:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

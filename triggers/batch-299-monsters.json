@@ -1,0 +1,20 @@
+[
+  {
+    "id": "B299EfsTrg00001X",
+    "name": "Enfeebling Strike",
+    "folder": "Monster Abilities",
+    "description": "After a successful damaging Enfeebling Strike against an off-guard target, apply enfeebled 1 until the start of the attacker's next turn.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "enfeebling-strike"],
+    "variables": {
+      "B299EfsEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B299EfsEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "B299EfsEvt00001X", "type": "attack-roll-event", "outs": {"out": {"connection": "B299EfsMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B299EfsMch00001X", "type": "match-predicate", "inputs": {"options": {"connection": "B299EfsEvt00001X:outputs:options"}, "predicate": {"value": "[\n  \"item:slug:enfeebling-strike\",\n  \"target:condition:off-guard\"\n]"}}, "outs": {"true": {"connection": "B299EfsSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B299EfsSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B299EfsEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B299EfsCon00001X:ins:in"}, "criticalSuccess": {"connection": "B299EfsCon00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B299EfsCon00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "enfeebled"}, "duration": {"value": 1}, "name": {"value": "Effect: Enfeebling Strike"}, "target": {"connection": "B299EfsEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

@@ -1,0 +1,79 @@
+[
+  {
+    "id": "B05STNFITEVT0001",
+    "name": "Stunning Fist",
+    "folder": "Feats & Features",
+    "description": "On a Stunning Fist Fortitude save failure, apply stunned 1; on a critical failure, apply stunned 3. The Flurry of Blows two-Strike requirement, incapacitation adjustment, and damage gate remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "stunning-fist"],
+    "variables": {
+      "B05STNFITEVT0001:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "B05STNFITEVT0001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B05STNFITEVT0001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B05STNFITEVT0001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B05STNFITMCH0001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B05STNFITMCH0001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:stunning-fist"}, "list": {"connection": "B05STNFITEVT0001:outputs:options"}}, "outs": {"true": {"connection": "B05STNFITSPL0001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B05STNFITSPL0001", "type": "split-outcome", "inputs": {"input": {"connection": "B05STNFITEVT0001:outputs:outcome"}}, "outs": {"failure": {"connection": "B05STNFITSTN0001:ins:in"}, "criticalFailure": {"connection": "B05STNFITST30001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B05STNFITSTN0001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "value": {"value": 1}, "duration": {"value": 1}, "name": {"value": "Effect: Stunning Fist"}, "target": {"connection": "B05STNFITEVT0001:outputs:roller"}}, "position": {"x": 960, "y": 120}},
+      {"id": "B05STNFITST30001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "value": {"value": 3}, "duration": {"value": 1}, "name": {"value": "Effect: Stunning Fist"}, "target": {"connection": "B05STNFITEVT0001:outputs:roller"}}, "position": {"x": 960, "y": -120}}
+    ]
+  },
+  {
+    "id": "B05VICDEBEVT0001",
+    "name": "Vicious Debilitations",
+    "folder": "Feats & Features",
+    "description": "After a qualifying Vicious Debilitations attack, apply clumsy 1 to the target when the clumsy debilitation is selected. The required Debilitating Strike, ruffian racket, debilitation choice, and alternate physical weakness option remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "vicious-debilitations"],
+    "variables": {
+      "B05VICDEBEVT0001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B05VICDEBEVT0001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B05VICDEBEVT0001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B05VICDEBEVT0001", "type": "attack-roll-event", "outs": {"out": {"connection": "B05VICDEBMCH0001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B05VICDEBMCH0001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:vicious-debilitations"}, "list": {"connection": "B05VICDEBEVT0001:outputs:options"}}, "outs": {"true": {"connection": "B05VICDEBSPL0001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B05VICDEBSPL0001", "type": "split-outcome", "inputs": {"input": {"connection": "B05VICDEBEVT0001:outputs:outcome"}}, "outs": {"success": {"connection": "B05VICDEBCLM0001:ins:in"}, "criticalSuccess": {"connection": "B05VICDEBCLM0001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B05VICDEBCLM0001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "clumsy"}, "value": {"value": 1}, "duration": {"value": 1}, "name": {"value": "Effect: Vicious Debilitations"}, "target": {"connection": "B05VICDEBEVT0001:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B05UNBALBEVT0001",
+    "name": "Unbalancing Blow",
+    "folder": "Feats & Features",
+    "description": "On a damaging critical hit with Unbalancing Blow, apply off-guard to the target until the end of the attacker's next turn. The thief racket, damage requirement, and immunity/size riders remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "unbalancing-blow"],
+    "variables": {
+      "B05UNBALBEVT0001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B05UNBALBEVT0001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B05UNBALBEVT0001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B05UNBALBEVT0001", "type": "attack-roll-event", "outs": {"out": {"connection": "B05UNBALBMCH0001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B05UNBALBMCH0001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:unbalancing-blow"}, "list": {"connection": "B05UNBALBEVT0001:outputs:options"}}, "outs": {"true": {"connection": "B05UNBALBSPL0001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B05UNBALBSPL0001", "type": "split-outcome", "inputs": {"input": {"connection": "B05UNBALBEVT0001:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "B05UNBALBOFF0001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B05UNBALBOFF0001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "name": {"value": "Effect: Unbalancing Blow"}, "target": {"connection": "B05UNBALBEVT0001:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B05WOLDRGEVT0001",
+    "name": "Wolf Drag",
+    "folder": "Feats & Features",
+    "description": "On a successful Wolf Drag Strike, apply prone to the target. The Wolf Stance prerequisite, fatal d12 upgrade, damage, and exact weapon qualification remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "wolf-drag"],
+    "variables": {
+      "B05WOLDRGEVT0001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B05WOLDRGEVT0001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B05WOLDRGEVT0001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B05WOLDRGEVT0001", "type": "attack-roll-event", "outs": {"out": {"connection": "B05WOLDRGMCH0001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B05WOLDRGMCH0001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:wolf-drag"}, "list": {"connection": "B05WOLDRGEVT0001:outputs:options"}}, "outs": {"true": {"connection": "B05WOLDRGSPL0001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B05WOLDRGSPL0001", "type": "split-outcome", "inputs": {"input": {"connection": "B05WOLDRGEVT0001:outputs:outcome"}}, "outs": {"success": {"connection": "B05WOLDRGPRN0001:ins:in"}, "criticalSuccess": {"connection": "B05WOLDRGPRN0001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B05WOLDRGPRN0001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "prone"}, "duration": {"value": 1}, "name": {"value": "Effect: Wolf Drag"}, "target": {"connection": "B05WOLDRGEVT0001:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

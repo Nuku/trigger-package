@@ -1,0 +1,74 @@
+[
+  {
+    "id": "B12ALURSCFTRG001",
+    "name": "Alluring Scarf",
+    "folder": "Equipment",
+    "description": "On an Alluring Scarf Will-save failure, apply fascinated for 1 round. The Stride area, movement toward the scarf, Sustain, repeat saves, and fascination cleanup remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "alluring-scarf"],
+    "variables": {
+      "B12ALURSCFEVT001:outputs:roller": {"type": "target", "isArray": false, "label": "Roller"},
+      "B12ALURSCFEVT001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"},
+      "B12ALURSCFEVT001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "B12ALURSCFEVT001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B12ALURSCFMCH001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B12ALURSCFMCH001", "type": "match-predicate", "inputs": {"options": {"connection": "B12ALURSCFEVT001:outputs:options"}, "predicate": {"value": "[\n  \"item:slug:alluring-scarf\"\n]"}}, "outs": {"true": {"connection": "B12ALURSCFSPL001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B12ALURSCFSPL001", "type": "split-outcome", "inputs": {"input": {"connection": "B12ALURSCFEVT001:outputs:outcome"}}, "outs": {"failure": {"connection": "B12ALURSCFFAS001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B12ALURSCFFAS001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "fascinated"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "expiry": {"value": "turn-end"}, "name": {"value": "Effect: Alluring Scarf"}, "target": {"connection": "B12ALURSCFEVT001:outputs:roller"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B12GROWGUNTRG001",
+    "name": "Growth Gun",
+    "folder": "Equipment",
+    "description": "On a Growth Gun attack hit, apply slowed 1 for 1 round. The activation, once-per-minute frequency, ranged Strike, damage, and growth removal remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "growth-gun"],
+    "variables": {
+      "B12GROWGUNEVT001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B12GROWGUNEVT001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "B12GROWGUNEVT001", "type": "attack-roll-event", "outs": {"out": {"connection": "B12GROWGUNMCH001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B12GROWGUNMCH001", "type": "match-predicate", "inputs": {"options": {"connection": "B12GROWGUNEVT001:outputs:options"}, "predicate": {"value": "[\n  \"item:slug:growth-gun\",\n  \"check:outcome:success\"\n]"}}, "outs": {"true": {"connection": "B12GROWGUNSLO001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B12GROWGUNSLO001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "slowed"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "expiry": {"value": "turn-end"}, "name": {"value": "Effect: Growth Gun"}, "target": {"connection": "B12GROWGUNEVT001:outputs:target"}}, "position": {"x": 640, "y": 0}}
+    ]
+  },
+  {
+    "id": "B12INJIGOEMBR001",
+    "name": "Injigo's Loving Embrace",
+    "folder": "Equipment",
+    "description": "On an Injigo's Loving Embrace Reflex-save failure, apply immobilized for 1 round. Incorporeal targeting, activation, Sustain, Escape, and net handling remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "injigos-loving-embrace"],
+    "variables": {
+      "B12INJIGOEMBE001:outputs:roller": {"type": "target", "isArray": false, "label": "Roller"},
+      "B12INJIGOEMBE001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"},
+      "B12INJIGOEMBE001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "B12INJIGOEMBE001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B12INJIGOMCH001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B12INJIGOMCH001X", "type": "match-predicate", "inputs": {"options": {"connection": "B12INJIGOEMBE001:outputs:options"}, "predicate": {"value": "[\n  \"item:slug:injigos-loving-embrace\"\n]"}}, "outs": {"true": {"connection": "B12INJIGOSPL001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B12INJIGOSPL001X", "type": "split-outcome", "inputs": {"input": {"connection": "B12INJIGOEMBE001:outputs:outcome"}}, "outs": {"failure": {"connection": "B12INJIGOIMB001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B12INJIGOIMB001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "immobilized"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "expiry": {"value": "turn-end"}, "name": {"value": "Effect: Injigo's Loving Embrace"}, "target": {"connection": "B12INJIGOEMBE001:outputs:roller"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B12MURDKNOTTRG01",
+    "name": "Murderer's Knot",
+    "folder": "Equipment",
+    "description": "On a Murderer's Knot qualifying Strike hit, apply off-guard for 1 round. The off-guard prerequisite, persistent bleed amount, bleed-based duration, activation, and Twist the Knife interaction remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "murderers-knot"],
+    "variables": {
+      "B12MURDKNOTEVT01:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B12MURDKNOTEVT01:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "B12MURDKNOTEVT01", "type": "attack-roll-event", "outs": {"out": {"connection": "B12MURDKNOTMCH01:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B12MURDKNOTMCH01", "type": "match-predicate", "inputs": {"options": {"connection": "B12MURDKNOTEVT01:outputs:options"}, "predicate": {"value": "[\n  \"item:slug:murderers-knot\",\n  \"check:outcome:success\"\n]"}}, "outs": {"true": {"connection": "B12MURDKNOTOFF1X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B12MURDKNOTOFF1X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "expiry": {"value": "turn-end"}, "name": {"value": "Effect: Murderer's Knot"}, "target": {"connection": "B12MURDKNOTEVT01:outputs:target"}}, "position": {"x": 640, "y": 0}}
+    ]
+  }
+]

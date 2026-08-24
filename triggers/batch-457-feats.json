@@ -1,0 +1,81 @@
+[
+  {
+    "id": "B457MagTrg00001X",
+    "name": "Mage Hunter — Stupefied",
+    "folder": "Feats",
+    "description": "Apply stupefied 1 on a successful Mage Hunter Strike and stupefied 2 on a critical success; the spellcaster requirement and damage remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "mage-hunter"],
+    "variables": {
+      "B457MagEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B457MagEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B457MagEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B457MagEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B457MagMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B457MagMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:mage-hunter"}, "list": {"connection": "B457MagEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B457MagSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B457MagSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B457MagEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B457MagS1n00001X:ins:in"}, "criticalSuccess": {"connection": "B457MagS2n00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B457MagS1n00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "stupefied"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Mage Hunter"}, "target": {"connection": "B457MagEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B457MagS2n00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "stupefied"}, "value": {"value": 2}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Mage Hunter"}, "target": {"connection": "B457MagEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 200}}
+    ]
+  },
+  {
+    "id": "B457StaTrg00001X",
+    "name": "Startling Appearance (Vigilante) — Frightened",
+    "folder": "Feats",
+    "description": "Apply frightened 1 on a successful Startling Appearance (Vigilante) Strike and frightened 2 on a critical success; unnoticed qualification and off-guard timing remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "startling-appearance-vigilante"],
+    "variables": {
+      "B457StaEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B457StaEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B457StaEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B457StaEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B457StaMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B457StaMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:startling-appearance-vigilante"}, "list": {"connection": "B457StaEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B457StaSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B457StaSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B457StaEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B457StaF1n00001X:ins:in"}, "criticalSuccess": {"connection": "B457StaF2n00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B457StaF1n00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 1}, "name": {"value": "Effect: Startling Appearance (Vigilante)"}, "target": {"connection": "B457StaEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B457StaF2n00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 2}, "name": {"value": "Effect: Startling Appearance (Vigilante)"}, "target": {"connection": "B457StaEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 200}}
+    ]
+  },
+  {
+    "id": "B457WarTrg00001X",
+    "name": "Warped Reflection — Frightened",
+    "folder": "Feats",
+    "description": "Apply frightened 1 on a failed Will save and frightened 2 on a critically failed save against Warped Reflection; linked stupefied duration and immunity remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "warped-reflection"],
+    "variables": {
+      "B457WarEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B457WarEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B457WarEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B457WarEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B457WarMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B457WarMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:warped-reflection"}, "list": {"connection": "B457WarEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B457WarSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B457WarSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B457WarEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B457WarF1n00001X:ins:in"}, "criticalFailure": {"connection": "B457WarF2n00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B457WarF1n00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 1}, "name": {"value": "Effect: Warped Reflection"}, "target": {"connection": "B457WarEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B457WarF2n00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 2}, "name": {"value": "Effect: Warped Reflection"}, "target": {"connection": "B457WarEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 200}}
+    ]
+  },
+  {
+    "id": "B457MghTrg00001X",
+    "name": "Might of the Realm — Enfeebled",
+    "folder": "Feats",
+    "description": "Apply enfeebled 1 for 1 round on a critical Might of the Realm Strike; designated-knight damage remains native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "might-of-the-realm"],
+    "variables": {
+      "B457MghEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B457MghEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B457MghEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B457MghEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B457MghMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B457MghMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:might-of-the-realm"}, "list": {"connection": "B457MghEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B457MghSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B457MghSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B457MghEvt00001X:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "B457MghEnf00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B457MghEnf00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "enfeebled"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Might of the Realm"}, "target": {"connection": "B457MghEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

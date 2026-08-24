@@ -1,0 +1,81 @@
+[
+  {
+    "id": "B22DazS001Trg01X",
+    "name": "Dazing Blow",
+    "folder": "Feats & Features",
+    "description": "After Dazing Blow's Fortitude save, apply stunned 1 on a success, stunned 2 on a failure, or stunned 3 on a critical failure. The grabbed prerequisite, melee Strike, bludgeoning damage, incapacitation adjustment, and hit-to-save sequencing remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "dazing-blow"],
+    "variables": {
+      "B22DazS001Evt01X:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "B22DazS001Evt01X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B22DazS001Evt01X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B22DazS001Evt01X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B22DazS001Mch01X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B22DazS001Mch01X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:dazing-blow"}, "list": {"connection": "B22DazS001Evt01X:outputs:options"}}, "outs": {"true": {"connection": "B22DazS001Spl01X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B22DazS001Spl01X", "type": "split-outcome", "inputs": {"input": {"connection": "B22DazS001Evt01X:outputs:outcome"}}, "outs": {"success": {"connection": "B22DazS001Stn01X:ins:in"}, "failure": {"connection": "B22DazS001Stn02X:ins:in"}, "criticalFailure": {"connection": "B22DazS001Stn03X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B22DazS001Stn01X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "value": {"value": 1}, "name": {"value": "Effect: Dazing Blow"}, "target": {"connection": "B22DazS001Evt01X:outputs:roller"}}, "position": {"x": 960, "y": 120}},
+      {"id": "B22DazS001Stn02X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "value": {"value": 2}, "name": {"value": "Effect: Dazing Blow"}, "target": {"connection": "B22DazS001Evt01X:outputs:roller"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B22DazS001Stn03X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "value": {"value": 3}, "name": {"value": "Effect: Dazing Blow"}, "target": {"connection": "B22DazS001Evt01X:outputs:roller"}}, "position": {"x": 960, "y": -120}}
+    ]
+  },
+  {
+    "id": "B22DebS001Trg01X",
+    "name": "Debilitating Shot",
+    "folder": "Feats & Features",
+    "description": "After a Debilitating Shot hits and deals damage, apply slowed 1 until the end of the attacker's next turn. The ranged Strike, extra weapon damage, weapon requirements, and two-action feat use remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "debilitating-shot"],
+    "variables": {
+      "B22DebS001Evt01X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B22DebS001Evt01X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B22DebS001Evt01X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B22DebS001Evt01X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B22DebS001Mch01X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B22DebS001Mch01X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:debilitating-shot"}, "list": {"connection": "B22DebS001Evt01X:outputs:options"}}, "outs": {"true": {"connection": "B22DebS001Spl01X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B22DebS001Spl01X", "type": "split-outcome", "inputs": {"input": {"connection": "B22DebS001Evt01X:outputs:outcome"}}, "outs": {"success": {"connection": "B22DebS001Slo01X:ins:in"}, "criticalSuccess": {"connection": "B22DebS001Slo01X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B22DebS001Slo01X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "slowed"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Debilitating Shot"}, "target": {"connection": "B22DebS001Evt01X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B22VicS001Trg01X",
+    "name": "Vicious Evisceration",
+    "folder": "Feats & Features",
+    "description": "After a Vicious Evisceration Strike hits and deals damage, apply drained 1; on a critical hit, apply drained 2. Rage, Strike damage, weapon requirements, and the two-action feat use remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "vicious-evisceration"],
+    "variables": {
+      "B22VicS001Evt01X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B22VicS001Evt01X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B22VicS001Evt01X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B22VicS001Evt01X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B22VicS001Mch01X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B22VicS001Mch01X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:vicious-evisceration"}, "list": {"connection": "B22VicS001Evt01X:outputs:options"}}, "outs": {"true": {"connection": "B22VicS001Spl01X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B22VicS001Spl01X", "type": "split-outcome", "inputs": {"input": {"connection": "B22VicS001Evt01X:outputs:outcome"}}, "outs": {"success": {"connection": "B22VicS001Drn01X:ins:in"}, "criticalSuccess": {"connection": "B22VicS001Drn02X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B22VicS001Drn01X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "drained"}, "value": {"value": 1}, "name": {"value": "Effect: Vicious Evisceration"}, "target": {"connection": "B22VicS001Evt01X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B22VicS001Drn02X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "drained"}, "value": {"value": 2}, "name": {"value": "Effect: Vicious Evisceration"}, "target": {"connection": "B22VicS001Evt01X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "B22StaS001Trg01X",
+    "name": "Staggering Blow",
+    "folder": "Feats & Features",
+    "description": "After a Staggering Blow megafauna Strike hits and deals damage, apply slowed 1 until the end of the target's next turn. The mounted companion, Command an Animal, extra weapon damage, and two-action use remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "staggering-blow"],
+    "variables": {
+      "B22StaS001Evt01X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B22StaS001Evt01X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B22StaS001Evt01X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B22StaS001Evt01X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B22StaS001Mch01X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B22StaS001Mch01X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:staggering-blow"}, "list": {"connection": "B22StaS001Evt01X:outputs:options"}}, "outs": {"true": {"connection": "B22StaS001Spl01X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B22StaS001Spl01X", "type": "split-outcome", "inputs": {"input": {"connection": "B22StaS001Evt01X:outputs:outcome"}}, "outs": {"success": {"connection": "B22StaS001Slo01X:ins:in"}, "criticalSuccess": {"connection": "B22StaS001Slo01X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B22StaS001Slo01X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "slowed"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Staggering Blow"}, "target": {"connection": "B22StaS001Evt01X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

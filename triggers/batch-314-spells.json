@@ -1,0 +1,55 @@
+[
+  {
+    "id": "B314BriTrg00001X",
+    "name": "Briny Bolt — Blinded",
+    "folder": "Spells",
+    "description": "Apply blinded for 1 round on a successful Briny Bolt spell attack and blinded/dazzled on a critical success; Interact cleanup and damage remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "briny-bolt"],
+    "variables": {"B314BriEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B314BriEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B314BriEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B314BriEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B314BriMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B314BriMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:briny-bolt"}, "list": {"connection": "B314BriEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B314BriSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B314BriSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B314BriEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B314BriBli00001X:ins:in"}, "criticalSuccess": {"connection": "B314BriBli00002X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B314BriBli00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "blinded"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Briny Bolt"}, "target": {"connection": "B314BriEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B314BriBli00002X", "type": "create-condition", "state": "timed", "outs": {"out": {"connection": "B314BriDaz00001X:ins:in"}}, "inputs": {"condition": {"value": "blinded"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Briny Bolt"}, "target": {"connection": "B314BriEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}},
+      {"id": "B314BriDaz00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Briny Bolt"}, "target": {"connection": "B314BriEvt00001X:outputs:target"}}, "position": {"x": 1280, "y": -80}}
+    ]
+  },
+  {
+    "id": "B314EagTrg00001X",
+    "name": "Eagle's Cry — Frightened",
+    "folder": "Spells",
+    "description": "Apply frightened 1/2 from Eagle's Cry save outcomes and fleeing on a critical failure; area damage and fleeing context remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "eagles-cry"],
+    "variables": {"B314EagEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B314EagEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B314EagEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B314EagEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B314EagMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B314EagMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:eagles-cry"}, "list": {"connection": "B314EagEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B314EagSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B314EagSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B314EagEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B314EagF1c00001X:ins:in"}, "failure": {"connection": "B314EagF2c00001X:ins:in"}, "criticalFailure": {"connection": "B314EagF2c00002X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B314EagF1c00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 1}, "name": {"value": "Effect: Eagle's Cry"}, "target": {"connection": "B314EagEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 100}},
+      {"id": "B314EagF2c00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 2}, "name": {"value": "Effect: Eagle's Cry"}, "target": {"connection": "B314EagEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B314EagF2c00002X", "type": "create-condition", "state": "fixed", "outs": {"out": {"connection": "B314EagFle00001X:ins:in"}}, "inputs": {"condition": {"value": "frightened"}, "value": {"value": 2}, "name": {"value": "Effect: Eagle's Cry"}, "target": {"connection": "B314EagEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -100}},
+      {"id": "B314EagFle00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "fleeing"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Eagle's Cry"}, "target": {"connection": "B314EagEvt00001X:outputs:target"}}, "position": {"x": 1280, "y": -100}}
+    ]
+  },
+  {
+    "id": "B314FtfTrg00001X",
+    "name": "Friends to Foes — Fear",
+    "folder": "Spells",
+    "description": "Apply frightened 1/2 from Friends to Foes save outcomes and confused on a critical failure; ally proximity and movement restrictions remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "friends-to-foes"],
+    "variables": {"B314FtfEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B314FtfEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B314FtfEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B314FtfEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B314FtfMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B314FtfMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:friends-to-foes"}, "list": {"connection": "B314FtfEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B314FtfSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B314FtfSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B314FtfEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B314FtfF1c00001X:ins:in"}, "failure": {"connection": "B314FtfF2c00001X:ins:in"}, "criticalFailure": {"connection": "B314FtfF2c00002X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B314FtfF1c00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 1}, "name": {"value": "Effect: Friends to Foes"}, "target": {"connection": "B314FtfEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 100}},
+      {"id": "B314FtfF2c00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 2}, "name": {"value": "Effect: Friends to Foes"}, "target": {"connection": "B314FtfEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B314FtfF2c00002X", "type": "create-condition", "state": "fixed", "outs": {"out": {"connection": "B314FtfCnf00001X:ins:in"}}, "inputs": {"condition": {"value": "frightened"}, "value": {"value": 2}, "name": {"value": "Effect: Friends to Foes"}, "target": {"connection": "B314FtfEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -100}},
+      {"id": "B314FtfCnf00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "confused"}, "name": {"value": "Effect: Friends to Foes"}, "target": {"connection": "B314FtfEvt00001X:outputs:target"}}, "position": {"x": 1280, "y": -100}}
+    ]
+  }
+]

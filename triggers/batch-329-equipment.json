@@ -1,0 +1,48 @@
+[
+  {
+    "id": "B329WssTrg00001X",
+    "name": "Wet Shock Snare — Stunned",
+    "folder": "Equipment",
+    "description": "Apply stunned 2 on a critical failure against a Wet Shock Snare Reflex save; snare placement, electricity damage, and one-use handling remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "wet-shock-snare"],
+    "variables": {"B329WssEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B329WssEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B329WssEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B329WssEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B329WssMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B329WssMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:wet-shock-snare"}, "list": {"connection": "B329WssEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B329WssSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B329WssSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B329WssEvt00001X:outputs:outcome"}}, "outs": {"criticalFailure": {"connection": "B329WssStn00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B329WssStn00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "value": {"value": 2}, "name": {"value": "Effect: Wet Shock Snare"}, "target": {"connection": "B329WssEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B329GdaTrg00001X",
+    "name": "Godrending Ammunition — Sickened",
+    "folder": "Equipment",
+    "description": "Apply sickened 1 on a failed Godrending Ammunition Fortitude save and sickened 2 on a critical failure; ammunition damage, critical-hit penalty, and instant-death rider remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "godrending-ammunition"],
+    "variables": {"B329GdaEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B329GdaEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B329GdaEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B329GdaEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B329GdaMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B329GdaMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:godrending-ammunition"}, "list": {"connection": "B329GdaEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B329GdaSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B329GdaSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B329GdaEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B329GdaSck00001X:ins:in"}, "criticalFailure": {"connection": "B329GdaSck00002X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B329GdaSck00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 1}, "name": {"value": "Effect: Godrending Ammunition"}, "target": {"connection": "B329GdaEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B329GdaSck00002X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 2}, "name": {"value": "Effect: Godrending Ammunition"}, "target": {"connection": "B329GdaEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "B329GcgTrg00001X",
+    "name": "Ghost Charge — Enfeebled",
+    "folder": "Equipment",
+    "description": "Apply enfeebled 2 after a Ghost Charge attack hits; undead/void-healing qualification, vitality damage, splash, and attack bonus remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "ghost-charge-greater"],
+    "variables": {"B329GcgEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B329GcgEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B329GcgEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B329GcgEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B329GcgMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B329GcgMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:ghost-charge-greater"}, "list": {"connection": "B329GcgEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B329GcgSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B329GcgSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B329GcgEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B329GcgEnf00001X:ins:in"}, "criticalSuccess": {"connection": "B329GcgEnf00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B329GcgEnf00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "enfeebled"}, "value": {"value": 2}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Ghost Charge"}, "target": {"connection": "B329GcgEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "id": "B307BsyTrg00001X",
+    "name": "Blood Siphon — Drained",
+    "folder": "Monster Abilities",
+    "description": "Apply drained 1 on a failed Blood Siphon Fortitude save and drained 2 on a critical failure; critical-hit degree adjustment and temporary Hit Points remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "blood-siphon"],
+    "variables": {"B307BsyEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B307BsyEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B307BsyEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B307BsyEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B307BsyMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B307BsyMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:blood-siphon"}, "list": {"connection": "B307BsyEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B307BsySpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B307BsySpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B307BsyEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B307BsyFai00001X:ins:in"}, "criticalFailure": {"connection": "B307BsyCfl00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B307BsyFai00001X", "type": "increase-condition", "state": "fixed", "inputs": {"condition": {"value": "drained"}, "max": {"value": 4}, "value": {"value": 1}, "name": {"value": "Effect: Blood Siphon"}, "target": {"connection": "B307BsyEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B307BsyCfl00001X", "type": "increase-condition", "state": "fixed", "inputs": {"condition": {"value": "drained"}, "max": {"value": 4}, "value": {"value": 2}, "name": {"value": "Effect: Blood Siphon"}, "target": {"connection": "B307BsyEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  }
+]

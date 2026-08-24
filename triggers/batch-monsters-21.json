@@ -1,0 +1,74 @@
+[
+  {
+    "id": "M21A001000000001",
+    "name": "Drowning Touch",
+    "folder": "Monster Abilities",
+    "description": "Apply sickened 3 on a failed Drowning Touch Fortitude save; touch delivery, the no-breath prerequisite, temporary immunity, and the critical-failure unconsciousness remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "drowning-touch"],
+    "variables": {
+      "M21A002000000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M21A002000000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M21A002000000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M21A002000000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M21A003000000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M21A003000000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:drowning-touch"}, "list": {"connection": "M21A002000000001:outputs:options"}}, "outs": {"true": {"connection": "M21A004000000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M21A004000000001", "type": "split-outcome", "inputs": {"input": {"connection": "M21A002000000001:outputs:outcome"}}, "outs": {"failure": {"connection": "M21A005000000001:ins:in"}, "criticalFailure": {"connection": "M21A005000000001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M21A005000000001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 3}, "name": {"value": "Effect: Drowning Touch"}, "target": {"connection": "M21A002000000001:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "M21B001000000001",
+    "name": "Blackfrost Breath",
+    "folder": "Monster Abilities",
+    "description": "Apply concealed for 1 minute to creatures affected by Blackfrost Breath; emanation placement, exposure at turn end, recharge, and the breath's damage remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "blackfrost-breath"],
+    "variables": {
+      "M21B002000000001:outputs:targets": {"type": "target", "isArray": true, "label": "Affected Creatures"}
+    },
+    "nodes": [
+      {"id": "M21B002000000001", "type": "action-chat-event", "inputs": {"slug": {"value": "blackfrost-breath"}}, "outs": {"out": {"connection": "M21B003000000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M21B003000000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "concealed"}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Blackfrost Breath"}, "target": {"connection": "M21B002000000001:outputs:targets"}}, "position": {"x": 480, "y": 0}}
+    ]
+  },
+  {
+    "id": "M21C001000000001",
+    "name": "Competitive Taunt",
+    "folder": "Monster Abilities",
+    "description": "Apply off-guard until the end of the target's next turn after a successful Competitive Taunt check; demoralize range, language, target eligibility, and the damage bonus remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "competitive-taunt"],
+    "variables": {
+      "M21C002000000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M21C002000000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M21C002000000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M21C002000000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "skill-check"}}, "outs": {"out": {"connection": "M21C003000000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M21C003000000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:competitive-taunt"}, "list": {"connection": "M21C002000000001:outputs:options"}}, "outs": {"true": {"connection": "M21C004000000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M21C004000000001", "type": "split-outcome", "inputs": {"input": {"connection": "M21C002000000001:outputs:outcome"}}, "outs": {"success": {"connection": "M21C005000000001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M21C005000000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "expiry": {"value": "turn-end"}, "name": {"value": "Effect: Competitive Taunt"}, "target": {"connection": "M21C002000000001:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "M21D001000000001",
+    "name": "Empty Save for Dust",
+    "folder": "Monster Abilities",
+    "description": "Apply stupefied 1 on a failed or critically failed Empty Save for Dust Reflex save; trigger conditions, damage, weakness, and the 1-minute duration remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "empty-save-for-dust"],
+    "variables": {
+      "M21D002000000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M21D002000000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M21D002000000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M21D002000000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M21D003000000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M21D003000000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:empty-save-for-dust"}, "list": {"connection": "M21D002000000001:outputs:options"}}, "outs": {"true": {"connection": "M21D004000000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M21D004000000001", "type": "split-outcome", "inputs": {"input": {"connection": "M21D002000000001:outputs:outcome"}}, "outs": {"failure": {"connection": "M21D005000000001:ins:in"}, "criticalFailure": {"connection": "M21D005000000001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M21D005000000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "stupefied"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Empty Save for Dust"}, "target": {"connection": "M21D002000000001:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

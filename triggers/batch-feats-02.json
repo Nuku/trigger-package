@@ -1,0 +1,78 @@
+[
+  {
+    "id": "SngStrkFeat0001X",
+    "name": "Snagging Strike",
+    "folder": "Feats & Features",
+    "description": "When Snagging Strike hits, apply off-guard to the target for 1 round.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "snagging-strike"],
+    "variables": {
+      "SngStrkEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "SngStrkEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"},
+      "SngStrkEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "SngStrkEvt00001X", "type": "attack-roll-event", "outs": {"out": {"connection": "SngStrkMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "SngStrkMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:snagging-strike"}, "list": {"connection": "SngStrkEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "SngStrkSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "SngStrkSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "SngStrkEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "SngStrkOff00001X:ins:in"}, "criticalSuccess": {"connection": "SngStrkOff00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "SngStrkOff00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "name": {"value": "Effect: Snagging Strike"}, "target": {"connection": "SngStrkEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "TmbBhdFeat00001X",
+    "name": "Tumble Behind",
+    "folder": "Feats & Features",
+    "description": "After a successful Tumble Behind Acrobatics check, apply off-guard to the target for 1 round.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "tumble-behind"],
+    "variables": {
+      "TmbBhdEvt000001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "TmbBhdEvt000001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"},
+      "TmbBhdEvt000001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "TmbBhdEvt000001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "skill-check"}}, "outs": {"out": {"connection": "TmbBhdMch000001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "TmbBhdMch000001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:tumble-behind"}, "list": {"connection": "TmbBhdEvt000001X:outputs:options"}}, "outs": {"true": {"connection": "TmbBhdSpl000001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "TmbBhdSpl000001X", "type": "split-outcome", "inputs": {"input": {"connection": "TmbBhdEvt000001X:outputs:outcome"}}, "outs": {"success": {"connection": "TmbBhdOff000001X:ins:in"}, "criticalSuccess": {"connection": "TmbBhdOff000001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "TmbBhdOff000001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "name": {"value": "Effect: Tumble Behind"}, "target": {"connection": "TmbBhdEvt000001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "KndwnFeat000001X",
+    "name": "Knockdown",
+    "folder": "Feats & Features",
+    "description": "When Knockdown's Trip check succeeds, apply prone to the target for 1 round.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "knockdown"],
+    "variables": {
+      "KndwnEvt0000001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "KndwnEvt0000001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"},
+      "KndwnEvt0000001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "KndwnEvt0000001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "skill-check"}}, "outs": {"out": {"connection": "KndwnMch0000001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "KndwnMch0000001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:knockdown"}, "list": {"connection": "KndwnEvt0000001X:outputs:options"}}, "outs": {"true": {"connection": "KndwnSpl0000001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "KndwnSpl0000001X", "type": "split-outcome", "inputs": {"input": {"connection": "KndwnEvt0000001X:outputs:outcome"}}, "outs": {"success": {"connection": "KndwnPrn0000001X:ins:in"}, "criticalSuccess": {"connection": "KndwnPrn0000001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "KndwnPrn0000001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "prone"}, "duration": {"value": 1}, "name": {"value": "Effect: Knockdown"}, "target": {"connection": "KndwnEvt0000001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "SlmDwnFeat00001X",
+    "name": "Slam Down",
+    "folder": "Feats & Features",
+    "description": "When Slam Down's Trip check succeeds, apply prone to the target for 1 round.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "slam-down"],
+    "variables": {
+      "SlmDwnEvt000001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "SlmDwnEvt000001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"},
+      "SlmDwnEvt000001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "SlmDwnEvt000001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "skill-check"}}, "outs": {"out": {"connection": "SlmDwnMch000001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "SlmDwnMch000001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:slam-down"}, "list": {"connection": "SlmDwnEvt000001X:outputs:options"}}, "outs": {"true": {"connection": "SlmDwnSpl000001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "SlmDwnSpl000001X", "type": "split-outcome", "inputs": {"input": {"connection": "SlmDwnEvt000001X:outputs:outcome"}}, "outs": {"success": {"connection": "SlmDwnPrn000001X:ins:in"}, "criticalSuccess": {"connection": "SlmDwnPrn000001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "SlmDwnPrn000001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "prone"}, "duration": {"value": 1}, "name": {"value": "Effect: Slam Down"}, "target": {"connection": "SlmDwnEvt000001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

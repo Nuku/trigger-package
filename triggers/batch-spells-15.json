@@ -1,0 +1,80 @@
+[
+  {
+    "id": "B15CrusT000001AX",
+    "name": "Crushing Despair — Frightened",
+    "folder": "Spells",
+    "description": "On a Crushing Despair Will save, apply frightened 1 on a success, frightened 2 on a failure, or frightened 3 on a critical failure; cone targeting, mental damage, and duration remain with the spell.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "crushing-despair"],
+    "variables": {
+      "B15CrusE000001AX:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "B15CrusE000001AX:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "B15CrusE000001AX", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B15CrusM000001AX:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B15CrusM000001AX", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:crushing-despair"}, "list": {"connection": "B15CrusE000001AX:outputs:options"}}, "outs": {"true": {"connection": "B15CrusS000001AX:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B15CrusS000001AX", "type": "split-outcome", "inputs": {"input": {"connection": "B15CrusE000001AX:outputs:outcome"}}, "outs": {"success": {"connection": "B15CrusC000001AX:ins:in"}, "failure": {"connection": "B15CrusC000002AX:ins:in"}, "criticalFailure": {"connection": "B15CrusC000003AX:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B15CrusC000001AX", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened", "value2": 1}, "name": {"value": "Effect: Crushing Despair"}, "target": {"connection": "B15CrusE000001AX:outputs:roller"}}, "position": {"x": 960, "y": -120}},
+      {"id": "B15CrusC000002AX", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened", "value2": 2}, "name": {"value": "Effect: Crushing Despair"}, "target": {"connection": "B15CrusE000001AX:outputs:roller"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B15CrusC000003AX", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened", "value2": 3}, "name": {"value": "Effect: Crushing Despair"}, "target": {"connection": "B15CrusE000001AX:outputs:roller"}}, "position": {"x": 960, "y": 120}}
+    ]
+  },
+  {
+    "id": "B15ImpeT000001AX",
+    "name": "Impending Doom — Doomed",
+    "folder": "Spells",
+    "description": "On an Impending Doom Fortitude save, apply doomed 1 on a failure or doomed 2 on a critical failure; the spell's curse progression, damage, and duration remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "impending-doom"],
+    "variables": {
+      "B15ImpeE000001AX:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "B15ImpeE000001AX:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "B15ImpeE000001AX", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B15ImpeM000001AX:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B15ImpeM000001AX", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:impending-doom"}, "list": {"connection": "B15ImpeE000001AX:outputs:options"}}, "outs": {"true": {"connection": "B15ImpeS000001AX:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B15ImpeS000001AX", "type": "split-outcome", "inputs": {"input": {"connection": "B15ImpeE000001AX:outputs:outcome"}}, "outs": {"failure": {"connection": "B15ImpeC000001AX:ins:in"}, "criticalFailure": {"connection": "B15ImpeC000002AX:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B15ImpeC000001AX", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "doomed", "value2": 1}, "name": {"value": "Effect: Impending Doom"}, "target": {"connection": "B15ImpeE000001AX:outputs:roller"}}, "position": {"x": 960, "y": -80}},
+      {"id": "B15ImpeC000002AX", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "doomed", "value2": 2}, "name": {"value": "Effect: Impending Doom"}, "target": {"connection": "B15ImpeE000001AX:outputs:roller"}}, "position": {"x": 960, "y": 80}}
+    ]
+  },
+  {
+    "id": "B15SleeT000001AX",
+    "name": "Agonizing Despair — Frightened",
+    "folder": "Spells",
+    "description": "On an Agonizing Despair Will save, apply frightened 1 on a success, frightened 2 on a failure, or frightened 3 on a critical failure; mental damage and heightened scaling remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "agonizing-despair"],
+    "variables": {
+      "B15SleeE000001AX:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "B15SleeE000001AX:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "B15SleeE000001AX", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B15SleeM000001AX:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B15SleeM000001AX", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:agonizing-despair"}, "list": {"connection": "B15SleeE000001AX:outputs:options"}}, "outs": {"true": {"connection": "B15SleeS000001AX:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B15SleeS000001AX", "type": "split-outcome", "inputs": {"input": {"connection": "B15SleeE000001AX:outputs:outcome"}}, "outs": {"success": {"connection": "B15SleeC000003AX:ins:in"}, "failure": {"connection": "B15SleeC000001AX:ins:in"}, "criticalFailure": {"connection": "B15SleeC000002AX:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B15SleeC000001AX", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened", "value2": 2}, "name": {"value": "Effect: Agonizing Despair"}, "target": {"connection": "B15SleeE000001AX:outputs:roller"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B15SleeC000002AX", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened", "value2": 3}, "name": {"value": "Effect: Agonizing Despair"}, "target": {"connection": "B15SleeE000001AX:outputs:roller"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B15SleeC000003AX", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened", "value2": 1}, "name": {"value": "Effect: Agonizing Despair"}, "target": {"connection": "B15SleeE000001AX:outputs:roller"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "B15VampT000001AX",
+    "name": "Vampiric Exsanguination — Drained",
+    "folder": "Spells",
+    "description": "On a Vampiric Exsanguination Fortitude save, apply drained 1 on a failure or drained 2 on a critical failure; void damage, temporary Hit Points, and heightened scaling remain with the spell.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "vampiric-exsanguination"],
+    "variables": {
+      "B15VampE000001AX:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "B15VampE000001AX:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "B15VampE000001AX", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B15VampM000001AX:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B15VampM000001AX", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:vampiric-exsanguination"}, "list": {"connection": "B15VampE000001AX:outputs:options"}}, "outs": {"true": {"connection": "B15VampS000001AX:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B15VampS000001AX", "type": "split-outcome", "inputs": {"input": {"connection": "B15VampE000001AX:outputs:outcome"}}, "outs": {"failure": {"connection": "B15VampC000001AX:ins:in"}, "criticalFailure": {"connection": "B15VampC000002AX:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B15VampC000001AX", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "drained", "value2": 1}, "name": {"value": "Effect: Vampiric Exsanguination"}, "target": {"connection": "B15VampE000001AX:outputs:roller"}}, "position": {"x": 960, "y": -80}},
+      {"id": "B15VampC000002AX", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "drained", "value2": 2}, "name": {"value": "Effect: Vampiric Exsanguination"}, "target": {"connection": "B15VampE000001AX:outputs:roller"}}, "position": {"x": 960, "y": 80}}
+    ]
+  }
+]

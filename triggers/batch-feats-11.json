@@ -1,0 +1,78 @@
+[
+  {
+    "id": "B11TwinFntTrig01",
+    "name": "Twin Feint",
+    "folder": "Feats & Features",
+    "description": "After a successful Twin Feint Strike, apply off-guard to the target for the follow-up Strike. The two-weapon requirement and exact first/second Strike sequencing remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "twin-feint"],
+    "variables": {
+      "B11TwinFntEvt001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B11TwinFntEvt001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B11TwinFntEvt001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B11TwinFntEvt001", "type": "attack-roll-event", "outs": {"out": {"connection": "B11TwinFntMch001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B11TwinFntMch001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:twin-feint"}, "list": {"connection": "B11TwinFntEvt001:outputs:options"}}, "outs": {"true": {"connection": "B11TwinFntSpl001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B11TwinFntSpl001", "type": "split-outcome", "inputs": {"input": {"connection": "B11TwinFntEvt001:outputs:outcome"}}, "outs": {"success": {"connection": "B11TwinFntOff001:ins:in"}, "criticalSuccess": {"connection": "B11TwinFntOff001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B11TwinFntOff001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "name": {"value": "Effect: Twin Feint"}, "target": {"connection": "B11TwinFntEvt001:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B11TwinDstTrig01",
+    "name": "Twin Distraction",
+    "folder": "Feats & Features",
+    "description": "On a failed Twin Distraction Will save, apply stupefied 1 until the end of the user's next turn. The requirement that both Twin Feint Strikes deal damage and the exact duration timing remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "twin-distraction"],
+    "variables": {
+      "B11TwinDstEvt001:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "B11TwinDstEvt001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B11TwinDstEvt001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B11TwinDstEvt001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B11TwinDstMch001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B11TwinDstMch001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:twin-distraction"}, "list": {"connection": "B11TwinDstEvt001:outputs:options"}}, "outs": {"true": {"connection": "B11TwinDstSpl001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B11TwinDstSpl001", "type": "split-outcome", "inputs": {"input": {"connection": "B11TwinDstEvt001:outputs:outcome"}}, "outs": {"failure": {"connection": "B11TwinDstStu001:ins:in"}, "criticalFailure": {"connection": "B11TwinDstStu001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B11TwinDstStu001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stupefied"}, "value": {"value": 1}, "duration": {"value": 1}, "name": {"value": "Effect: Twin Distraction"}, "target": {"connection": "B11TwinDstEvt001:outputs:roller"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B11DisTwstTrig01",
+    "name": "Disarming Twist",
+    "folder": "Feats & Features",
+    "description": "On a failed Disarming Twist Strike, apply off-guard to the target until the end of the current turn. The one-handed weapon requirement, disarm success effects, and exact end-of-turn cleanup remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "disarming-twist"],
+    "variables": {
+      "B11DisTwstEvt001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B11DisTwstEvt001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B11DisTwstEvt001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B11DisTwstEvt001", "type": "attack-roll-event", "outs": {"out": {"connection": "B11DisTwstMch001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B11DisTwstMch001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:disarming-twist"}, "list": {"connection": "B11DisTwstEvt001:outputs:options"}}, "outs": {"true": {"connection": "B11DisTwstSpl001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B11DisTwstSpl001", "type": "split-outcome", "inputs": {"input": {"connection": "B11DisTwstEvt001:outputs:outcome"}}, "outs": {"failure": {"connection": "B11DisTwstOff001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B11DisTwstOff001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "name": {"value": "Effect: Disarming Twist"}, "target": {"connection": "B11DisTwstEvt001:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B11BrutShvTrig01",
+    "name": "Brutish Shove",
+    "folder": "Feats & Features",
+    "description": "After a successful Brutish Shove Strike, apply off-guard to the target until the end of the current turn. The size qualification and automatic Shove movement remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "brutish-shove"],
+    "variables": {
+      "B11BrutShvEvt001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B11BrutShvEvt001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B11BrutShvEvt001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B11BrutShvEvt001", "type": "attack-roll-event", "outs": {"out": {"connection": "B11BrutShvMch001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B11BrutShvMch001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:brutish-shove"}, "list": {"connection": "B11BrutShvEvt001:outputs:options"}}, "outs": {"true": {"connection": "B11BrutShvSpl001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B11BrutShvSpl001", "type": "split-outcome", "inputs": {"input": {"connection": "B11BrutShvEvt001:outputs:outcome"}}, "outs": {"success": {"connection": "B11BrutShvOff001:ins:in"}, "criticalSuccess": {"connection": "B11BrutShvOff001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B11BrutShvOff001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "name": {"value": "Effect: Brutish Shove"}, "target": {"connection": "B11BrutShvEvt001:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

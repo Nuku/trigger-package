@@ -1,0 +1,65 @@
+[
+  {
+    "id": "B320EntTrg00001X",
+    "name": "Entangle Fate — Off-Guard",
+    "folder": "Spells",
+    "description": "Apply off-guard on a successful, failed, or critically failed Entangle Fate Will save; multi-target stupefied/escalation logic and spell-duration cleanup remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "entangle-fate"],
+    "variables": {"B320EntEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B320EntEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B320EntEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B320EntEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B320EntMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B320EntMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:entangle-fate"}, "list": {"connection": "B320EntEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B320EntSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B320EntSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B320EntEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B320EntOfg00001X:ins:in"}, "failure": {"connection": "B320EntOfg00001X:ins:in"}, "criticalFailure": {"connection": "B320EntOfg00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B320EntOfg00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "off-guard"}, "name": {"value": "Effect: Entangle Fate"}, "target": {"connection": "B320EntEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B320UnwTrg00001X",
+    "name": "Unbreaking Wave Containment — Immobilized",
+    "folder": "Spells",
+    "description": "Apply immobilized on a successful Unbreaking Wave Containment spell attack and restrained on a critical success; sustain, repeated attacks, damage, and Escape remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "unbreaking-wave-containment"],
+    "variables": {"B320UnwEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B320UnwEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B320UnwEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B320UnwEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B320UnwMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B320UnwMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:unbreaking-wave-containment"}, "list": {"connection": "B320UnwEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B320UnwSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B320UnwSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B320UnwEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B320UnwImm00001X:ins:in"}, "criticalSuccess": {"connection": "B320UnwImm00002X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B320UnwImm00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "immobilized"}, "name": {"value": "Effect: Unbreaking Wave Containment"}, "target": {"connection": "B320UnwEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B320UnwImm00002X", "type": "create-condition", "state": "fixed", "outs": {"out": {"connection": "B320UnwRes00001X:ins:in"}}, "inputs": {"condition": {"value": "immobilized"}, "name": {"value": "Effect: Unbreaking Wave Containment"}, "target": {"connection": "B320UnwEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}},
+      {"id": "B320UnwRes00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "restrained"}, "name": {"value": "Effect: Unbreaking Wave Containment"}, "target": {"connection": "B320UnwEvt00001X:outputs:target"}}, "position": {"x": 1280, "y": -80}}
+    ]
+  },
+  {
+    "id": "B320ThuTrg00001X",
+    "name": "Thunderburst — Deafened",
+    "folder": "Spells",
+    "description": "Apply deafened for 1 minute on a failed Thunderburst Fortitude save and 1 hour on a critical failure; area damage and heightened scaling remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "thunderburst"],
+    "variables": {"B320ThuEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B320ThuEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B320ThuEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B320ThuEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B320ThuMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B320ThuMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:thunderburst"}, "list": {"connection": "B320ThuEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B320ThuSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B320ThuSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B320ThuEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B320ThuDea00001X:ins:in"}, "criticalFailure": {"connection": "B320ThuDea00002X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B320ThuDea00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "deafened"}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Thunderburst"}, "target": {"connection": "B320ThuEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B320ThuDea00002X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "deafened"}, "duration": {"value": 1}, "unit": {"value": "hours"}, "name": {"value": "Effect: Thunderburst"}, "target": {"connection": "B320ThuEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "B320DisTrg00001X",
+    "name": "Disorienting Flash — Dazzled",
+    "folder": "Spells",
+    "description": "Apply dazzled until the end of the next turn on a failed Disorienting Flash Fortitude save; action-count-specific deafening remains native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "disorienting-flash"],
+    "variables": {"B320DisEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B320DisEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B320DisEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B320DisEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B320DisMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B320DisMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:disorienting-flash"}, "list": {"connection": "B320DisEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B320DisSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B320DisSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B320DisEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B320DisDaz00001X:ins:in"}, "criticalFailure": {"connection": "B320DisDaz00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B320DisDaz00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Disorienting Flash"}, "target": {"connection": "B320DisEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

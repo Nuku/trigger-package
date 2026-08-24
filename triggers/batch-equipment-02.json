@@ -1,0 +1,84 @@
+[
+  {
+    "id": "EQ2AcidTrig00001",
+    "name": "Acid Flask",
+    "folder": "Equipment",
+    "description": "On a successful Acid Flask attack, apply persistent acid damage to the primary target; critical hits double the represented persistent damage.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "acid-flask"],
+    "variables": {
+      "EQ2AcidEvt000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "EQ2AcidEvt000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"},
+      "EQ2AcidEvt000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "EQ2AcidEvt000001", "type": "attack-roll-event", "outs": {"out": {"connection": "EQ2AcidMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "EQ2AcidMch00001X", "type": "match-predicate", "inputs": {"options": {"connection": "EQ2AcidEvt000001:outputs:options"}, "predicate": {"value": "[\n  \"item:slug:acid-flask\"\n]"}}, "outs": {"true": {"connection": "EQ2AcidSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "EQ2AcidSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "EQ2AcidEvt000001:outputs:outcome"}}, "outs": {"success": {"connection": "EQ2AcidTxt00001X:ins:in"}, "criticalSuccess": {"connection": "EQ2AcidTxt00002X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "EQ2AcidTxt00001X", "type": "format-text", "inputs": {"plain": {"value": "1"}}, "outs": {"out": {"connection": "EQ2AcidPer00001X:ins:in"}}, "position": {"x": 800, "y": 80}},
+      {"id": "EQ2AcidTxt00002X", "type": "format-text", "inputs": {"plain": {"value": "2"}}, "outs": {"out": {"connection": "EQ2AcidPer00002X:ins:in"}}, "position": {"x": 800, "y": -80}},
+      {"id": "EQ2AcidPer00001X", "type": "create-persistent", "inputs": {"die": {"connection": "EQ2AcidTxt00001X:outputs:result"}, "target": {"connection": "EQ2AcidEvt000001:outputs:target"}, "type": {"value": "acid"}}, "position": {"x": 1040, "y": 80}},
+      {"id": "EQ2AcidPer00002X", "type": "create-persistent", "inputs": {"die": {"connection": "EQ2AcidTxt00002X:outputs:result"}, "target": {"connection": "EQ2AcidEvt000001:outputs:target"}, "type": {"value": "acid"}}, "position": {"x": 1040, "y": -80}}
+    ]
+  },
+  {
+    "id": "EQ2GhostTrig0001",
+    "name": "Ghost Charge",
+    "folder": "Equipment",
+    "description": "When a Ghost Charge damages its primary target, apply enfeebled 1 until the start of the attacker's next turn.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "ghost-charge"],
+    "variables": {
+      "EQ2GhostEvt00001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "EQ2GhostEvt00001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "EQ2GhostEvt00001", "type": "attack-roll-event", "outs": {"out": {"connection": "EQ2GhostMch0001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "EQ2GhostMch0001X", "type": "match-predicate", "inputs": {"options": {"connection": "EQ2GhostEvt00001:outputs:options"}, "predicate": {"value": "[\n  \"item:slug:ghost-charge\"\n]"}}, "outs": {"true": {"connection": "EQ2GhostSpl0001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "EQ2GhostSpl0001X", "type": "split-outcome", "inputs": {"input": {"connection": "EQ2GhostEvt00001:outputs:outcome"}}, "outs": {"success": {"connection": "EQ2GhostEnf0001X:ins:in"}, "criticalSuccess": {"connection": "EQ2GhostEnf0001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "EQ2GhostEnf0001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "enfeebled"}, "duration": {"value": 1}, "name": {"value": "Effect: Ghost Charge"}, "target": {"connection": "EQ2GhostEvt00001:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "EQ2NausTrig00001",
+    "name": "Nauseating Snare",
+    "folder": "Equipment",
+    "description": "Apply sickened 1/2/3 after a Nauseating Snare Fortitude save succeeds, fails, or critically fails.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "nauseating-snare"],
+    "variables": {
+      "EQ2NausEvt000001:outputs:roller": {"type": "target", "isArray": false, "label": "Roller"},
+      "EQ2NausEvt000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"},
+      "EQ2NausEvt000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "EQ2NausEvt000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "EQ2NausMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "EQ2NausMch00001X", "type": "match-predicate", "inputs": {"options": {"connection": "EQ2NausEvt000001:outputs:options"}, "predicate": {"value": "[\n  \"item:slug:nauseating-snare\"\n]"}}, "outs": {"true": {"connection": "EQ2NausSpl00001X:ins:input"}}, "position": {"x": 320, "y": 0}},
+      {"id": "EQ2NausSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "EQ2NausEvt000001:outputs:outcome"}}, "outs": {"success": {"connection": "EQ2NausSick0001X:ins:in"}, "failure": {"connection": "EQ2NausSick0002X:ins:in"}, "criticalFailure": {"connection": "EQ2NausSick0003X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "EQ2NausSick0001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "duration": {"value": 1}, "name": {"value": "Effect: Nauseating Snare"}, "target": {"connection": "EQ2NausEvt000001:outputs:roller"}}, "position": {"x": 960, "y": 120}},
+      {"id": "EQ2NausSick0002X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "duration": {"value": 1}, "name": {"value": "Effect: Nauseating Snare"}, "target": {"connection": "EQ2NausEvt000001:outputs:roller"}}, "position": {"x": 960, "y": 0}},
+      {"id": "EQ2NausSick0003X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "duration": {"value": 1}, "name": {"value": "Effect: Nauseating Snare"}, "target": {"connection": "EQ2NausEvt000001:outputs:roller"}}, "position": {"x": 960, "y": -120}}
+    ]
+  },
+  {
+    "id": "EQ2StunTrig00001",
+    "name": "Stunning Snare",
+    "folder": "Equipment",
+    "description": "Apply stunned 1/2/4 from a Stunning Snare Reflex save outcome; the snare's concurrent off-guard rider remains manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "stunning-snare"],
+    "variables": {
+      "EQ2StunEvt000001:outputs:roller": {"type": "target", "isArray": false, "label": "Roller"},
+      "EQ2StunEvt000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"},
+      "EQ2StunEvt000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "EQ2StunEvt000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "EQ2StunMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "EQ2StunMch00001X", "type": "match-predicate", "inputs": {"options": {"connection": "EQ2StunEvt000001:outputs:options"}, "predicate": {"value": "[\n  \"item:slug:stunning-snare\"\n]"}}, "outs": {"true": {"connection": "EQ2StunSpl00001X:ins:input"}}, "position": {"x": 320, "y": 0}},
+      {"id": "EQ2StunSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "EQ2StunEvt000001:outputs:outcome"}}, "outs": {"success": {"connection": "EQ2StunS0000001X:ins:in"}, "failure": {"connection": "EQ2StunS0000002X:ins:in"}, "criticalFailure": {"connection": "EQ2StunS0000004X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "EQ2StunS0000001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "duration": {"value": 1}, "name": {"value": "Effect: Stunning Snare"}, "target": {"connection": "EQ2StunEvt000001:outputs:roller"}}, "position": {"x": 960, "y": 120}},
+      {"id": "EQ2StunS0000002X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "duration": {"value": 2}, "name": {"value": "Effect: Stunning Snare"}, "target": {"connection": "EQ2StunEvt000001:outputs:roller"}}, "position": {"x": 960, "y": 0}},
+      {"id": "EQ2StunS0000004X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "duration": {"value": 4}, "name": {"value": "Effect: Stunning Snare"}, "target": {"connection": "EQ2StunEvt000001:outputs:roller"}}, "position": {"x": 960, "y": -120}}
+    ]
+  }
+]

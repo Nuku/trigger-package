@@ -1,0 +1,174 @@
+[
+  {
+    "id": "DazeSpellTrig001",
+    "name": "Daze — Stunned",
+    "folder": "Spells",
+    "description": "On a critical failure against Daze, apply stunned 1; the spell's mental damage remains with the originating cantrip.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "daze"],
+    "variables": {
+      "DazeSpellEvt0001:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "DazeSpellEvt0001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {
+        "id": "DazeSpellEvt0001",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {"for": {"value": "saving-throw"}},
+        "outs": {"out": {"connection": "DazeSpellOpt0001:ins:in"}},
+        "position": {"x": 0, "y": 0}
+      },
+      {
+        "id": "DazeSpellOpt0001",
+        "type": "list-contains",
+        "inputs": {"entry": {"value": "item:slug:daze"}, "list": {"connection": "DazeSpellEvt0001:outputs:options"}},
+        "outs": {"true": {"connection": "DazeSpellOut0001:ins:in"}},
+        "position": {"x": 320, "y": 0}
+      },
+      {
+        "id": "DazeSpellOut0001",
+        "type": "compare-outcomes",
+        "inputs": {"a": {"connection": "DazeSpellEvt0001:outputs:outcome"}, "b": {"value": "criticalFailure"}},
+        "outs": {"true": {"connection": "DazeSpellStn0001:ins:in"}},
+        "position": {"x": 640, "y": 0}
+      },
+      {
+        "id": "DazeSpellStn0001",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {"condition": {"value": "stunned"}, "duration": {"value": 1}, "name": {"value": "Effect: Daze"}, "target": {"connection": "DazeSpellEvt0001:outputs:roller"}},
+        "position": {"x": 960, "y": 0}
+      }
+    ]
+  },
+  {
+    "id": "CmdSpellTrig0001",
+    "name": "Command — Stunned",
+    "folder": "Spells",
+    "description": "On a successful Will save against Command, apply stunned 1; the spell's failure and critical-failure command behavior remains manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "command"],
+    "variables": {
+      "CmdSpellEvt00001:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "CmdSpellEvt00001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {
+        "id": "CmdSpellEvt00001",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {"for": {"value": "saving-throw"}},
+        "outs": {"out": {"connection": "CmdSpellOpt00001:ins:in"}},
+        "position": {"x": 0, "y": 0}
+      },
+      {
+        "id": "CmdSpellOpt00001",
+        "type": "list-contains",
+        "inputs": {"entry": {"value": "item:slug:command"}, "list": {"connection": "CmdSpellEvt00001:outputs:options"}},
+        "outs": {"true": {"connection": "CmdSpellOut00001:ins:in"}},
+        "position": {"x": 320, "y": 0}
+      },
+      {
+        "id": "CmdSpellOut00001",
+        "type": "compare-outcomes",
+        "inputs": {"a": {"connection": "CmdSpellEvt00001:outputs:outcome"}, "b": {"value": "success"}},
+        "outs": {"true": {"connection": "CmdSpellStn00001:ins:in"}},
+        "position": {"x": 640, "y": 0}
+      },
+      {
+        "id": "CmdSpellStn00001",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {"condition": {"value": "stunned"}, "duration": {"value": 1}, "name": {"value": "Effect: Command"}, "target": {"connection": "CmdSpellEvt00001:outputs:roller"}},
+        "position": {"x": 960, "y": 0}
+      }
+    ]
+  },
+  {
+    "id": "EntFloraTrig0001",
+    "name": "Entangling Flora — Immobilized",
+    "folder": "Spells",
+    "description": "On a critical failure against Entangling Flora, apply immobilized for 1 round; the Speed penalty, difficult terrain, and Escape checks remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "entangling-flora"],
+    "variables": {
+      "EntFloraEvt00001:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "EntFloraEvt00001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {
+        "id": "EntFloraEvt00001",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {"for": {"value": "saving-throw"}},
+        "outs": {"out": {"connection": "EntFloraOpt00001:ins:in"}},
+        "position": {"x": 0, "y": 0}
+      },
+      {
+        "id": "EntFloraOpt00001",
+        "type": "list-contains",
+        "inputs": {"entry": {"value": "item:slug:entangling-flora"}, "list": {"connection": "EntFloraEvt00001:outputs:options"}},
+        "outs": {"true": {"connection": "EntFloraOut00001:ins:in"}},
+        "position": {"x": 320, "y": 0}
+      },
+      {
+        "id": "EntFloraOut00001",
+        "type": "compare-outcomes",
+        "inputs": {"a": {"connection": "EntFloraEvt00001:outputs:outcome"}, "b": {"value": "criticalFailure"}},
+        "outs": {"true": {"connection": "EntFloraImm00001:ins:in"}},
+        "position": {"x": 640, "y": 0}
+      },
+      {
+        "id": "EntFloraImm00001",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {"condition": {"value": "immobilized"}, "duration": {"value": 1}, "name": {"value": "Effect: Entangling Flora"}, "target": {"connection": "EntFloraEvt00001:outputs:roller"}},
+        "position": {"x": 960, "y": 0}
+      }
+    ]
+  },
+  {
+    "id": "GustWindTrig0001",
+    "name": "Gust of Wind — Prone",
+    "folder": "Spells",
+    "description": "On a failed or critically failed Fortitude save against Gust of Wind, apply prone for 1 round; push distance, flying-target escalation, and wind movement restrictions remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "gust-of-wind"],
+    "variables": {
+      "GustWindEvt00001:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "GustWindEvt00001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {
+        "id": "GustWindEvt00001",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {"for": {"value": "saving-throw"}},
+        "outs": {"out": {"connection": "GustWindOpt00001:ins:in"}},
+        "position": {"x": 0, "y": 0}
+      },
+      {
+        "id": "GustWindOpt00001",
+        "type": "list-contains",
+        "inputs": {"entry": {"value": "item:slug:gust-of-wind"}, "list": {"connection": "GustWindEvt00001:outputs:options"}},
+        "outs": {"true": {"connection": "GustWindOut00001:ins:in"}},
+        "position": {"x": 320, "y": 0}
+      },
+      {
+        "id": "GustWindOut00001",
+        "type": "split-outcome",
+        "inputs": {"input": {"connection": "GustWindEvt00001:outputs:outcome"}},
+        "outs": {"failure": {"connection": "GustWindPrn00001:ins:in"}, "criticalFailure": {"connection": "GustWindPrn00001:ins:in"}},
+        "position": {"x": 640, "y": 0}
+      },
+      {
+        "id": "GustWindPrn00001",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {"condition": {"value": "prone"}, "duration": {"value": 1}, "name": {"value": "Effect: Gust of Wind"}, "target": {"connection": "GustWindEvt00001:outputs:roller"}},
+        "position": {"x": 960, "y": 0}
+      }
+    ]
+  }
+]

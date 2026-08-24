@@ -1,0 +1,80 @@
+[
+  {
+    "id": "B19TectStpTrg01X",
+    "name": "Tectonic Stomp",
+    "folder": "Feats & Features",
+    "description": "After a Tectonic Stomp Reflex save fails, apply prone for 1 round. Emanation, ground-based targeting, bludgeoning damage, falling, stone placement, and the heightened version remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "tectonic-stomp"],
+    "variables": {
+      "B19TectStpEvt01X:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "B19TectStpEvt01X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B19TectStpEvt01X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B19TectStpEvt01X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B19TectStpMch01X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B19TectStpMch01X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:tectonic-stomp"}, "list": {"connection": "B19TectStpEvt01X:outputs:options"}}, "outs": {"true": {"connection": "B19TectStpSpl01X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B19TectStpSpl01X", "type": "split-outcome", "inputs": {"input": {"connection": "B19TectStpEvt01X:outputs:outcome"}}, "outs": {"failure": {"connection": "B19TectStpPrn01X:ins:in"}, "criticalFailure": {"connection": "B19TectStpPrn01X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B19TectStpPrn01X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "prone"}, "duration": {"value": 1}, "name": {"value": "Effect: Tectonic Stomp"}, "target": {"connection": "B19TectStpEvt01X:outputs:roller"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B19DragRorTrg01X",
+    "name": "Dragon Roar",
+    "folder": "Feats & Features",
+    "description": "After a Dragon Roar Will save fails, apply frightened 1; on a critical failure, apply frightened 2. Kaiju Stance, emanation targeting, self-immunity, temporary attack bonus, recharge, and language limitations remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "dragon-roar"],
+    "variables": {
+      "B19DragRorEvt01X:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "B19DragRorEvt01X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B19DragRorEvt01X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B19DragRorEvt01X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B19DragRorMch01X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B19DragRorMch01X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:dragon-roar"}, "list": {"connection": "B19DragRorEvt01X:outputs:options"}}, "outs": {"true": {"connection": "B19DragRorSpl01X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B19DragRorSpl01X", "type": "split-outcome", "inputs": {"input": {"connection": "B19DragRorEvt01X:outputs:outcome"}}, "outs": {"failure": {"connection": "B19DragRorFrt01X:ins:in"}, "criticalFailure": {"connection": "B19DragRorFrt02X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B19DragRorFrt01X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 1}, "duration": {"value": 1}, "name": {"value": "Effect: Dragon Roar"}, "target": {"connection": "B19DragRorEvt01X:outputs:roller"}}, "position": {"x": 960, "y": 60}},
+      {"id": "B19DragRorFrt02X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 2}, "duration": {"value": 1}, "name": {"value": "Effect: Dragon Roar"}, "target": {"connection": "B19DragRorEvt01X:outputs:roller"}}, "position": {"x": 960, "y": -60}}
+    ]
+  },
+  {
+    "id": "B19LogRollTrg01X",
+    "name": "Log Roll",
+    "folder": "Feats & Features",
+    "description": "After a Log Roll Acrobatics check succeeds, apply prone for 1 round. Narrow-surface or uneven-ground requirements, adjacency, off-guard setup, and the critical-failure result remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "log-roll"],
+    "variables": {
+      "B19LogRollEvt01X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B19LogRollEvt01X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B19LogRollEvt01X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B19LogRollEvt01X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "skill-check"}}, "outs": {"out": {"connection": "B19LogRollMch01X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B19LogRollMch01X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:log-roll"}, "list": {"connection": "B19LogRollEvt01X:outputs:options"}}, "outs": {"true": {"connection": "B19LogRollSpl01X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B19LogRollSpl01X", "type": "split-outcome", "inputs": {"input": {"connection": "B19LogRollEvt01X:outputs:outcome"}}, "outs": {"success": {"connection": "B19LogRollPrn01X:ins:in"}, "criticalSuccess": {"connection": "B19LogRollPrn01X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B19LogRollPrn01X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "prone"}, "duration": {"value": 1}, "name": {"value": "Effect: Log Roll"}, "target": {"connection": "B19LogRollEvt01X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B19ThrnHlsTrg01X",
+    "name": "Thorn in Hell's Side",
+    "folder": "Feats & Features",
+    "description": "After a Thorn in Hell's Side Fortitude save fails, apply stunned 1; on a critical failure, apply stunned 2. Breaker Strike qualification, save DC, incapacitation, and duration remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "thorn-in-hells-side"],
+    "variables": {
+      "B19ThrnHlsEvt01X:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "B19ThrnHlsEvt01X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B19ThrnHlsEvt01X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B19ThrnHlsEvt01X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B19ThrnHlsMch01X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B19ThrnHlsMch01X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:thorn-in-hells-side"}, "list": {"connection": "B19ThrnHlsEvt01X:outputs:options"}}, "outs": {"true": {"connection": "B19ThrnHlsSpl01X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B19ThrnHlsSpl01X", "type": "split-outcome", "inputs": {"input": {"connection": "B19ThrnHlsEvt01X:outputs:outcome"}}, "outs": {"failure": {"connection": "B19ThrnHlsStn01X:ins:in"}, "criticalFailure": {"connection": "B19ThrnHlsStn02X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B19ThrnHlsStn01X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "value": {"value": 1}, "duration": {"value": 1}, "name": {"value": "Effect: Thorn in Hell's Side"}, "target": {"connection": "B19ThrnHlsEvt01X:outputs:roller"}}, "position": {"x": 960, "y": 60}},
+      {"id": "B19ThrnHlsStn02X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "value": {"value": 2}, "duration": {"value": 1}, "name": {"value": "Effect: Thorn in Hell's Side"}, "target": {"connection": "B19ThrnHlsEvt01X:outputs:roller"}}, "position": {"x": 960, "y": -60}}
+    ]
+  }
+]

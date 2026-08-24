@@ -1,0 +1,77 @@
+[
+  {
+    "id": "B316MudTrg00001X",
+    "name": "Mud Bomb (Moderate) — Dazzled",
+    "folder": "Equipment",
+    "description": "Apply dazzled until the start of the next turn on a critical Mud Bomb (Moderate) hit; bomb damage and activation remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "mud-bomb-moderate"],
+    "variables": {"B316MudEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B316MudEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B316MudEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B316MudEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B316MudMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B316MudMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:mud-bomb-moderate"}, "list": {"connection": "B316MudEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B316MudSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B316MudSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B316MudEvt00001X:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "B316MudDaz00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B316MudDaz00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Mud Bomb (Moderate)"}, "target": {"connection": "B316MudEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B316SbgTrg00001X",
+    "name": "Sulfur Bomb (Greater) — Sickened",
+    "folder": "Equipment",
+    "description": "Apply sickened 1 on a critical Sulfur Bomb (Greater) hit; attack penalties, damage, immunity, and activation remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "sulfur-bomb-greater"],
+    "variables": {"B316SbgEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B316SbgEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B316SbgEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B316SbgEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B316SbgMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B316SbgMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:sulfur-bomb-greater"}, "list": {"connection": "B316SbgEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B316SbgSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B316SbgSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B316SbgEvt00001X:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "B316SbgSic00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B316SbgSic00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 1}, "name": {"value": "Effect: Sulfur Bomb (Greater)"}, "target": {"connection": "B316SbgEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B316BldTrg00001X",
+    "name": "Blood Bomb (Major) — Persistent Bleed",
+    "folder": "Equipment",
+    "description": "Apply 6d6 persistent bleed on a Blood Bomb (Major) hit; bomb damage, splash, and activation remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "blood-bomb-major"],
+    "variables": {"B316BldEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B316BldEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B316BldEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B316BldEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B316BldMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B316BldMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:blood-bomb-major"}, "list": {"connection": "B316BldEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B316BldSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B316BldSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B316BldEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B316BldPer00001X:ins:in"}, "criticalSuccess": {"connection": "B316BldPer00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B316BldPer00001X", "type": "persistent-damage", "state": "fixed", "inputs": {"formula": {"value": "6d6[bleed]"}, "target": {"connection": "B316BldEvt00001X:outputs:target"}, "name": {"value": "Effect: Blood Bomb (Major)"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B316CorTrg00001X",
+    "name": "Corrosive Ammunition — Persistent Acid",
+    "folder": "Equipment",
+    "description": "Apply 1d8 persistent acid damage when Corrosive Ammunition hits; armor targeting, Hardness, Interact cleanup, and activation remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "corrosive-ammunition"],
+    "variables": {"B316CorEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B316CorEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B316CorEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B316CorEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B316CorMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B316CorMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:corrosive-ammunition"}, "list": {"connection": "B316CorEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B316CorSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B316CorSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B316CorEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B316CorPer00001X:ins:in"}, "criticalSuccess": {"connection": "B316CorPer00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B316CorPer00001X", "type": "persistent-damage", "state": "fixed", "inputs": {"formula": {"value": "1d8[acid]"}, "target": {"connection": "B316CorEvt00001X:outputs:target"}, "name": {"value": "Effect: Corrosive Ammunition"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B316BotTrg00001X",
+    "name": "Bottled Lightning (Moderate) — Off-Guard",
+    "folder": "Equipment",
+    "description": "Apply off-guard until the start of the next turn on a Bottled Lightning (Moderate) hit; electricity damage, splash, and activation remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "bottled-lightning-moderate"],
+    "variables": {"B316BotEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B316BotEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B316BotEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B316BotEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B316BotMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B316BotMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:bottled-lightning-moderate"}, "list": {"connection": "B316BotEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B316BotSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B316BotSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B316BotEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B316BotOfg00001X:ins:in"}, "criticalSuccess": {"connection": "B316BotOfg00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B316BotOfg00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Bottled Lightning (Moderate)"}, "target": {"connection": "B316BotEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

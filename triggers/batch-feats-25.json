@@ -1,0 +1,79 @@
+[
+  {
+    "id": "B25DisOriTrg001X",
+    "name": "Disorienting Opening",
+    "folder": "Feats & Features",
+    "description": "After Disorienting Opening's qualifying Reactive Strike hits, apply off-guard until the start of the target's next turn. The Reactive Strike prerequisite and weapon or reaction eligibility remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "disorienting-opening"],
+    "variables": {
+      "B25DisOriEvt001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B25DisOriEvt001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B25DisOriEvt001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B25DisOriEvt001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B25DisOriMch001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B25DisOriMch001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:disorienting-opening"}, "list": {"connection": "B25DisOriEvt001X:outputs:options"}}, "outs": {"true": {"connection": "B25DisOriSpl001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B25DisOriSpl001X", "type": "split-outcome", "inputs": {"input": {"connection": "B25DisOriEvt001X:outputs:outcome"}}, "outs": {"success": {"connection": "B25DisOriOff001X:ins:in"}, "criticalSuccess": {"connection": "B25DisOriOff001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B25DisOriOff001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "expiry": {"value": "turn-start"}, "name": {"value": "Effect: Disorienting Opening"}, "target": {"connection": "B25DisOriEvt001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B25CauWrdTrg001X",
+    "name": "Cautious Word",
+    "folder": "Feats & Features",
+    "description": "After Cautious Word's qualifying enemy Strike hits, apply slowed 1 to the defender for 1 round. The Shield Block prerequisite, reaction frequency, AC benefit, and identifying the eligible defender remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "cautious-word"],
+    "variables": {
+      "B25CauWrdEvt001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B25CauWrdEvt001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B25CauWrdEvt001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B25CauWrdEvt001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B25CauWrdMch001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B25CauWrdMch001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:cautious-word"}, "list": {"connection": "B25CauWrdEvt001X:outputs:options"}}, "outs": {"true": {"connection": "B25CauWrdSpl001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B25CauWrdSpl001X", "type": "split-outcome", "inputs": {"input": {"connection": "B25CauWrdEvt001X:outputs:outcome"}}, "outs": {"success": {"connection": "B25CauWrdSlo001X:ins:in"}, "criticalSuccess": {"connection": "B25CauWrdSlo001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B25CauWrdSlo001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "slowed"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Cautious Word"}, "target": {"connection": "B25CauWrdEvt001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B25FriAurTrg001X",
+    "name": "Frightful Aura",
+    "folder": "Feats & Features",
+    "description": "After Frightful Aura's qualifying Will save, apply frightened 1 on a failure or frightened 2 on a critical failure. Aura entry or turn-end timing, the higher-DC selection, and the 1-minute immunity remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "frightful-aura"],
+    "variables": {
+      "B25FriAurEvt001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B25FriAurEvt001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B25FriAurEvt001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B25FriAurEvt001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B25FriAurMch001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B25FriAurMch001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:frightful-aura"}, "list": {"connection": "B25FriAurEvt001X:outputs:options"}}, "outs": {"true": {"connection": "B25FriAurSpl001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B25FriAurSpl001X", "type": "split-outcome", "inputs": {"input": {"connection": "B25FriAurEvt001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B25FriAurFgt001X:ins:in"}, "criticalFailure": {"connection": "B25FriAurFgt002X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B25FriAurFgt001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 1}, "name": {"value": "Effect: Frightful Aura"}, "target": {"connection": "B25FriAurEvt001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B25FriAurFgt002X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 2}, "name": {"value": "Effect: Frightful Aura"}, "target": {"connection": "B25FriAurEvt001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "B25AntTrg000001X",
+    "name": "Antagonize",
+    "folder": "Feats & Features",
+    "description": "After Antagonize's qualifying Demoralize succeeds, maintain frightened 1 on the target for 1 round. The frightened 2 floor, hostile-action release, line of sight, and observation state remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "antagonize"],
+    "variables": {
+      "B25AntEvt000001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B25AntEvt000001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B25AntEvt000001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B25AntEvt000001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "skill-check"}}, "outs": {"out": {"connection": "B25AntMch000001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B25AntMch000001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:antagonize"}, "list": {"connection": "B25AntEvt000001X:outputs:options"}}, "outs": {"true": {"connection": "B25AntSpl000001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B25AntSpl000001X", "type": "split-outcome", "inputs": {"input": {"connection": "B25AntEvt000001X:outputs:outcome"}}, "outs": {"success": {"connection": "B25AntFgt000001X:ins:in"}, "criticalSuccess": {"connection": "B25AntFgt000001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B25AntFgt000001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "expiry": {"value": "turn-end"}, "name": {"value": "Effect: Antagonize"}, "target": {"connection": "B25AntEvt000001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

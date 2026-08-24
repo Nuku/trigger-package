@@ -1,0 +1,82 @@
+[
+  {
+    "id": "M05COWTRG00001XX",
+    "name": "Cowering Fear — Frightened",
+    "folder": "Monster Abilities",
+    "description": "When a creature fails a Cowering Fear Will save, apply frightened 1; on a critical failure apply frightened 2. Aura range, visual targeting, and temporary immunity remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "cowering-fear"],
+    "variables": {
+      "M05COWEVT00001XX:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M05COWEVT00001XX:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"},
+      "M05COWEVT00001XX:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "M05COWEVT00001XX", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M05COWMCH00001XX:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M05COWMCH00001XX", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:cowering-fear"}, "list": {"connection": "M05COWEVT00001XX:outputs:options"}}, "outs": {"true": {"connection": "M05COWSPL00001XX:ins:input"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M05COWSPL00001XX", "type": "split-outcome", "inputs": {"input": {"connection": "M05COWEVT00001XX:outputs:outcome"}}, "outs": {"failure": {"connection": "M05COWF0100001XX:ins:in"}, "criticalFailure": {"connection": "M05COWF0200001XX:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M05COWF0100001XX", "type": "increase-condition", "inputs": {"condition": {"value": "frightened"}, "max": {"value": 1}, "target": {"connection": "M05COWEVT00001XX:outputs:target"}, "value": {"value": 1}}, "position": {"x": 960, "y": 60}},
+      {"id": "M05COWF0200001XX", "type": "increase-condition", "inputs": {"condition": {"value": "frightened"}, "max": {"value": 2}, "target": {"connection": "M05COWEVT00001XX:outputs:target"}, "value": {"value": 2}}, "position": {"x": 960, "y": -60}}
+    ]
+  },
+  {
+    "id": "M05GHOTRG00001XX",
+    "name": "Ghoul Fever — Sickened",
+    "folder": "Monster Abilities",
+    "description": "When a creature fails a Ghoul Fever Fortitude save, apply sickened 1; on a critical failure apply sickened 2. Disease onset, stage progression, and recovery remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "ghoul-fever"],
+    "variables": {
+      "M05GHOEVT00001XX:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M05GHOEVT00001XX:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"},
+      "M05GHOEVT00001XX:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "M05GHOEVT00001XX", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M05GHOMCH00001XX:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M05GHOMCH00001XX", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:ghoul-fever"}, "list": {"connection": "M05GHOEVT00001XX:outputs:options"}}, "outs": {"true": {"connection": "M05GHOSPL00001XX:ins:input"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M05GHOSPL00001XX", "type": "split-outcome", "inputs": {"input": {"connection": "M05GHOEVT00001XX:outputs:outcome"}}, "outs": {"failure": {"connection": "M05GHOS0100001XX:ins:in"}, "criticalFailure": {"connection": "M05GHOS0200001XX:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M05GHOS0100001XX", "type": "increase-condition", "inputs": {"condition": {"value": "sickened"}, "max": {"value": 1}, "target": {"connection": "M05GHOEVT00001XX:outputs:target"}, "value": {"value": 1}}, "position": {"x": 960, "y": 60}},
+      {"id": "M05GHOS0200001XX", "type": "increase-condition", "inputs": {"condition": {"value": "sickened"}, "max": {"value": 2}, "target": {"connection": "M05GHOEVT00001XX:outputs:target"}, "value": {"value": 2}}, "position": {"x": 960, "y": -60}}
+    ]
+  },
+  {
+    "id": "M05GASTRG00001XX",
+    "name": "Ghast Fever — Sickened",
+    "folder": "Monster Abilities",
+    "description": "When a creature fails a Ghast Fever Fortitude save, apply sickened 1; on a critical failure apply sickened 2. Disease onset, stage progression, and recovery remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "ghast-fever"],
+    "variables": {
+      "M05GASEVT00001XX:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M05GASEVT00001XX:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"},
+      "M05GASEVT00001XX:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "M05GASEVT00001XX", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M05GASMCH00001XX:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M05GASMCH00001XX", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:ghast-fever"}, "list": {"connection": "M05GASEVT00001XX:outputs:options"}}, "outs": {"true": {"connection": "M05GASSPL00001XX:ins:input"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M05GASSPL00001XX", "type": "split-outcome", "inputs": {"input": {"connection": "M05GASEVT00001XX:outputs:outcome"}}, "outs": {"failure": {"connection": "M05GAS01000001XX:ins:in"}, "criticalFailure": {"connection": "M05GAS02000002XX:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M05GAS01000001XX", "type": "increase-condition", "inputs": {"condition": {"value": "sickened"}, "max": {"value": 1}, "target": {"connection": "M05GASEVT00001XX:outputs:target"}, "value": {"value": 1}}, "position": {"x": 960, "y": 60}},
+      {"id": "M05GAS02000002XX", "type": "increase-condition", "inputs": {"condition": {"value": "sickened"}, "max": {"value": 2}, "target": {"connection": "M05GASEVT00001XX:outputs:target"}, "value": {"value": 2}}, "position": {"x": 960, "y": -60}}
+    ]
+  },
+  {
+    "id": "M05CAUTRG00001XX",
+    "name": "Caustic Pustules — Persistent Acid",
+    "folder": "Monster Abilities",
+    "description": "On a successful Caustic Pustules attack, apply 1 persistent acid damage to the primary target; a critical success applies 2 persistent acid damage. Pustule creation, splash, and damage scaling remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "caustic-pustules"],
+    "variables": {
+      "M05CAUEVT00001XX:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M05CAUEVT00001XX:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"},
+      "M05CAUEVT00001XX:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "M05CAUEVT00001XX", "type": "attack-roll-event", "outs": {"out": {"connection": "M05CAUMCH00001XX:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M05CAUMCH00001XX", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:caustic-pustules"}, "list": {"connection": "M05CAUEVT00001XX:outputs:options"}}, "outs": {"true": {"connection": "M05CAUSPL00001XX:ins:input"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M05CAUSPL00001XX", "type": "split-outcome", "inputs": {"input": {"connection": "M05CAUEVT00001XX:outputs:outcome"}}, "outs": {"success": {"connection": "M05CAUPER00001XX:ins:in"}, "criticalSuccess": {"connection": "M05CAUPER00002XX:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M05CAUPER00001XX", "type": "create-persistent", "inputs": {"die": {"value": "1"}, "target": {"connection": "M05CAUEVT00001XX:outputs:target"}, "type": {"value": "acid"}}, "position": {"x": 960, "y": 60}},
+      {"id": "M05CAUPER00002XX", "type": "create-persistent", "inputs": {"die": {"value": "2"}, "target": {"connection": "M05CAUEVT00001XX:outputs:target"}, "type": {"value": "acid"}}, "position": {"x": 960, "y": -60}}
+    ]
+  }
+]

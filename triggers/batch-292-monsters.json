@@ -1,0 +1,21 @@
+[
+  {
+    "id": "B292YebTrg00001X",
+    "name": "Yellow Eye Beam",
+    "folder": "Monster Abilities",
+    "description": "After a Yellow Eye Beam basic Reflex save, apply dazzled for 1 hour on a failure and blinded for 1 hour on a critical failure.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "yellow-eye-beam"],
+    "variables": {
+      "B292YebEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B292YebEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "B292YebEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B292YebMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B292YebMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:yellow-eye-beam"}, "list": {"connection": "B292YebEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B292YebSpl00001X:ins:input"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B292YebSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B292YebEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B292YebDaz00001X:ins:in"}, "criticalFailure": {"connection": "B292YebBli00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B292YebDaz00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 60}, "name": {"value": "Effect: Yellow Eye Beam"}, "target": {"connection": "B292YebEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B292YebBli00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "blinded"}, "duration": {"value": 60}, "name": {"value": "Effect: Yellow Eye Beam"}, "target": {"connection": "B292YebEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  }
+]

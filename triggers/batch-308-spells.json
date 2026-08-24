@@ -1,0 +1,95 @@
+[
+  {
+    "id": "B308SlsTrg00001X",
+    "name": "Slashing Gust — Persistent Bleed",
+    "folder": "Spells",
+    "description": "Apply 1d4 persistent bleed after a Slashing Gust critical spell attack; two-target handling and heightened scaling remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "slashing-gust"],
+    "variables": {"B308SlsEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B308SlsEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B308SlsEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B308SlsEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B308SlsMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B308SlsMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:slashing-gust"}, "list": {"connection": "B308SlsEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B308SlsSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B308SlsSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B308SlsEvt00001X:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "B308SlsPer00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B308SlsPer00001X", "type": "persistent-damage", "state": "fixed", "inputs": {"formula": {"value": "1d4[bleed]"}, "target": {"connection": "B308SlsEvt00001X:outputs:target"}, "name": {"value": "Effect: Slashing Gust"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B308ScbTrg00001X",
+    "name": "Scorching Blast — Persistent Fire",
+    "folder": "Spells",
+    "description": "Apply 1d6 persistent fire after a Scorching Blast critical spell attack; rank scaling and repeated blast actions remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "scorching-blast"],
+    "variables": {"B308ScbEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B308ScbEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B308ScbEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B308ScbEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B308ScbMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B308ScbMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:scorching-blast"}, "list": {"connection": "B308ScbEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B308ScbSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B308ScbSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B308ScbEvt00001X:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "B308ScbPer00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B308ScbPer00001X", "type": "persistent-damage", "state": "fixed", "inputs": {"formula": {"value": "1d6[fire]"}, "target": {"connection": "B308ScbEvt00001X:outputs:target"}, "name": {"value": "Effect: Scorching Blast"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B308ArrTrg00001X",
+    "name": "Arrow Salvo — Prone",
+    "folder": "Spells",
+    "description": "Apply prone on a critical failure against Arrow Salvo's basic Reflex save; area damage and heightened scaling remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "arrow-salvo"],
+    "variables": {"B308ArrEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B308ArrEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B308ArrEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B308ArrEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B308ArrMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B308ArrMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:arrow-salvo"}, "list": {"connection": "B308ArrEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B308ArrSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B308ArrSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B308ArrEvt00001X:outputs:outcome"}}, "outs": {"criticalFailure": {"connection": "B308ArrPrn00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B308ArrPrn00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "prone"}, "name": {"value": "Effect: Arrow Salvo"}, "target": {"connection": "B308ArrEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B308HtsTrg00001X",
+    "name": "Horizon Thunder Sphere — Dazzled",
+    "folder": "Spells",
+    "description": "Apply dazzled for 1 round after a Horizon Thunder Sphere critical spell attack; multi-round casting and burst effects remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "horizon-thunder-sphere"],
+    "variables": {"B308HtsEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B308HtsEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B308HtsEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B308HtsEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B308HtsMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B308HtsMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:horizon-thunder-sphere"}, "list": {"connection": "B308HtsEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B308HtsSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B308HtsSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B308HtsEvt00001X:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "B308HtsDaz00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B308HtsDaz00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Horizon Thunder Sphere"}, "target": {"connection": "B308HtsEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B308MocTrg00001X",
+    "name": "Murder of Crows — Dazzled and Blinded",
+    "folder": "Spells",
+    "description": "Apply dazzled for 1 round on a successful Murder of Crows spell attack and blinded for 1 round on a critical success; damage and heightened scaling remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "murder-of-crows"],
+    "variables": {"B308MocEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B308MocEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B308MocEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B308MocEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B308MocMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B308MocMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:murder-of-crows"}, "list": {"connection": "B308MocEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B308MocSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B308MocSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B308MocEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B308MocDaz00001X:ins:in"}, "criticalSuccess": {"connection": "B308MocBli00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B308MocDaz00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Murder of Crows"}, "target": {"connection": "B308MocEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B308MocBli00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "blinded"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Murder of Crows"}, "target": {"connection": "B308MocEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "B308VodTrg00001X",
+    "name": "Vision of Death — Frightened",
+    "folder": "Spells",
+    "description": "Apply frightened 1/2/4 from Vision of Death's Will-save outcome; lethal damage and fleeing cleanup remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "vision-of-death"],
+    "variables": {"B308VodEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B308VodEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B308VodEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B308VodEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B308VodMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B308VodMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:vision-of-death"}, "list": {"connection": "B308VodEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B308VodSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B308VodSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B308VodEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B308VodSuc00001X:ins:in"}, "failure": {"connection": "B308VodFai00001X:ins:in"}, "criticalFailure": {"connection": "B308VodCfl00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B308VodSuc00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 1}, "name": {"value": "Effect: Vision of Death"}, "target": {"connection": "B308VodEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B308VodFai00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 2}, "name": {"value": "Effect: Vision of Death"}, "target": {"connection": "B308VodEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B308VodCfl00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 4}, "name": {"value": "Effect: Vision of Death"}, "target": {"connection": "B308VodEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  }
+]

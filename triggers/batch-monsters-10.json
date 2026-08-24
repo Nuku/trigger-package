@@ -1,0 +1,83 @@
+[
+  {
+    "id": "M10BWS000000001X",
+    "name": "Bloodcurdling Screech",
+    "folder": "Monster Abilities",
+    "description": "On a successful Bloodcurdling Screech Will save, apply frightened 1; on a failed or critically failed save, apply frightened 2. The emanation, temporary immunity, and fleeing critical-failure rider remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "bloodcurdling-screech"],
+    "variables": {
+      "M10BWSEVT000001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M10BWSEVT000001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M10BWSEVT000001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M10BWSEVT000001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M10BWSMCH000001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M10BWSMCH000001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:bloodcurdling-screech"}, "list": {"connection": "M10BWSEVT000001X:outputs:options"}}, "outs": {"true": {"connection": "M10BWSSPL000001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M10BWSSPL000001X", "type": "split-outcome", "inputs": {"input": {"connection": "M10BWSEVT000001X:outputs:outcome"}}, "outs": {"success": {"connection": "M10BWSFRT000001X:ins:in"}, "failure": {"connection": "M10BWSFR2000001X:ins:in"}, "criticalFailure": {"connection": "M10BWSFR2000001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M10BWSFRT000001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 1}, "name": {"value": "Effect: Bloodcurdling Screech"}, "target": {"connection": "M10BWSEVT000001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "M10BWSFR2000001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 2}, "name": {"value": "Effect: Bloodcurdling Screech"}, "target": {"connection": "M10BWSEVT000001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "M10AGW000000001X",
+    "name": "Agonized Wail",
+    "folder": "Monster Abilities",
+    "description": "On a failed Agonized Wail Will save, apply frightened 1; on a critically failed save, apply frightened 2. The 60-foot area, temporary immunity, and fleeing critical-failure rider remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "agonized-wail"],
+    "variables": {
+      "M10AGWEVT000001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M10AGWEVT000001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M10AGWEVT000001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M10AGWEVT000001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M10AGWMCH000001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M10AGWMCH000001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:agonized-wail"}, "list": {"connection": "M10AGWEVT000001X:outputs:options"}}, "outs": {"true": {"connection": "M10AGWSPL000001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M10AGWSPL000001X", "type": "split-outcome", "inputs": {"input": {"connection": "M10AGWEVT000001X:outputs:outcome"}}, "outs": {"failure": {"connection": "M10AGWFR1000001X:ins:in"}, "criticalFailure": {"connection": "M10AGWFR2000001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M10AGWFR1000001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 1}, "name": {"value": "Effect: Agonized Wail"}, "target": {"connection": "M10AGWEVT000001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "M10AGWFR2000001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 2}, "name": {"value": "Effect: Agonized Wail"}, "target": {"connection": "M10AGWEVT000001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "M10AUA000000001X",
+    "name": "Aura of Authority",
+    "folder": "Monster Abilities",
+    "description": "Apply stupefied 1 on a successful Aura of Authority Will save, stupefied 2 on a failure, or stupefied 3 on a critical failure. Aura timing, temporary immunity, and target filtering remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "aura-of-authority"],
+    "variables": {
+      "M10AUAEVT000001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M10AUAEVT000001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M10AUAEVT000001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M10AUAEVT000001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M10AUAMCH000001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M10AUAMCH000001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:aura-of-authority"}, "list": {"connection": "M10AUAEVT000001X:outputs:options"}}, "outs": {"true": {"connection": "M10AUASPL000001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M10AUASPL000001X", "type": "split-outcome", "inputs": {"input": {"connection": "M10AUAEVT000001X:outputs:outcome"}}, "outs": {"success": {"connection": "M10AUSTU1000001X:ins:in"}, "failure": {"connection": "M10AUSTU2000001X:ins:in"}, "criticalFailure": {"connection": "M10AUSTU3000001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M10AUSTU1000001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stupefied"}, "value": {"value": 1}, "name": {"value": "Effect: Aura of Authority"}, "target": {"connection": "M10AUAEVT000001X:outputs:target"}}, "position": {"x": 960, "y": 160}},
+      {"id": "M10AUSTU2000001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stupefied"}, "value": {"value": 2}, "name": {"value": "Effect: Aura of Authority"}, "target": {"connection": "M10AUAEVT000001X:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "M10AUSTU3000001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stupefied"}, "value": {"value": 3}, "name": {"value": "Effect: Aura of Authority"}, "target": {"connection": "M10AUAEVT000001X:outputs:target"}}, "position": {"x": 960, "y": -160}}
+    ]
+  },
+  {
+    "id": "M10ASC000000001X",
+    "name": "Ashen Curse",
+    "folder": "Monster Abilities",
+    "description": "On a critical-success Ashen Curse save, apply slowed 1 for 1 round; on a failed save, apply frightened 1. The curse's long-term fear, frequency, target restrictions, and recovery remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "ashen-curse"],
+    "variables": {
+      "M10ASCEVT000001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M10ASCEVT000001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M10ASCEVT000001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M10ASCEVT000001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M10ASCMCH000001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M10ASCMCH000001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:ashen-curse"}, "list": {"connection": "M10ASCEVT000001X:outputs:options"}}, "outs": {"true": {"connection": "M10ASCSPL000001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M10ASCSPL000001X", "type": "split-outcome", "inputs": {"input": {"connection": "M10ASCEVT000001X:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "M10ASCSLO000001X:ins:in"}, "failure": {"connection": "M10ASCFR0100001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M10ASCSLO000001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "slowed"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "expiry": {"value": "turn-end"}, "name": {"value": "Effect: Ashen Curse"}, "target": {"connection": "M10ASCEVT000001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "M10ASCFR0100001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 1}, "name": {"value": "Effect: Ashen Curse"}, "target": {"connection": "M10ASCEVT000001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  }
+]

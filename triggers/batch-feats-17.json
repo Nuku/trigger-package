@@ -1,0 +1,80 @@
+[
+  {
+    "id": "F17AwsBlwTrg0001",
+    "name": "Awesome Blow",
+    "folder": "Feats & Features",
+    "description": "After an Awesome Blow qualifying Athletics check, apply prone on a critical success. Knockback, size, target, and the underlying Shove/Trip sequencing remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "awesome-blow"],
+    "variables": {
+      "F17AwsBlwEvt0001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "F17AwsBlwEvt0001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "F17AwsBlwEvt0001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "F17AwsBlwEvt0001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "skill-check"}}, "outs": {"out": {"connection": "F17AwsBlwMch0001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "F17AwsBlwMch0001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:awesome-blow"}, "list": {"connection": "F17AwsBlwEvt0001:outputs:options"}}, "outs": {"true": {"connection": "F17AwsBlwSpl0001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "F17AwsBlwSpl0001", "type": "split-outcome", "inputs": {"input": {"connection": "F17AwsBlwEvt0001:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "F17AwsBlwPrn0001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "F17AwsBlwPrn0001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "prone"}, "duration": {"value": 1}, "name": {"value": "Effect: Awesome Blow"}, "target": {"connection": "F17AwsBlwEvt0001:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "F17FrtAppTrg0001",
+    "name": "Frightening Appearance",
+    "folder": "Feats & Features",
+    "description": "After Frightening Appearance causes a Demoralize check, apply frightened 1 on success and frightened 2 on a critical success. Unnoticed-target selection, area targeting, immunity, and Demoralize timing remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "frightening-appearance"],
+    "variables": {
+      "F17FrtAppEvt0001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "F17FrtAppEvt0001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "F17FrtAppEvt0001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "F17FrtAppEvt0001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "skill-check"}}, "outs": {"out": {"connection": "F17FrtAppMch0001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "F17FrtAppMch0001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:frightening-appearance"}, "list": {"connection": "F17FrtAppEvt0001:outputs:options"}}, "outs": {"true": {"connection": "F17FrtAppSpl0001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "F17FrtAppSpl0001", "type": "split-outcome", "inputs": {"input": {"connection": "F17FrtAppEvt0001:outputs:outcome"}}, "outs": {"success": {"connection": "F17FrtAppFtn0001:ins:in"}, "criticalSuccess": {"connection": "F17FrtAppFtc0001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "F17FrtAppFtn0001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 1}, "duration": {"value": 1}, "name": {"value": "Effect: Frightening Appearance"}, "target": {"connection": "F17FrtAppEvt0001:outputs:target"}}, "position": {"x": 960, "y": -60}},
+      {"id": "F17FrtAppFtc0001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 2}, "duration": {"value": 1}, "name": {"value": "Effect: Frightening Appearance"}, "target": {"connection": "F17FrtAppEvt0001:outputs:target"}}, "position": {"x": 960, "y": 60}}
+    ]
+  },
+  {
+    "id": "F17WrnShtTrg0001",
+    "name": "Warning Shot",
+    "folder": "Feats & Features",
+    "description": "After a Warning Shot Demoralize check, apply frightened 1 on success and frightened 2 on a critical success. Loaded-firearm, range, language, immunity, and target requirements remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "warning-shot"],
+    "variables": {
+      "F17WrnShtEvt0001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "F17WrnShtEvt0001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "F17WrnShtEvt0001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "F17WrnShtEvt0001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "skill-check"}}, "outs": {"out": {"connection": "F17WrnShtMch0001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "F17WrnShtMch0001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:warning-shot"}, "list": {"connection": "F17WrnShtEvt0001:outputs:options"}}, "outs": {"true": {"connection": "F17WrnShtSpl0001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "F17WrnShtSpl0001", "type": "split-outcome", "inputs": {"input": {"connection": "F17WrnShtEvt0001:outputs:outcome"}}, "outs": {"success": {"connection": "F17WrnShtFtn0001:ins:in"}, "criticalSuccess": {"connection": "F17WrnShtFtc0001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "F17WrnShtFtn0001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 1}, "duration": {"value": 1}, "name": {"value": "Effect: Warning Shot"}, "target": {"connection": "F17WrnShtEvt0001:outputs:target"}}, "position": {"x": 960, "y": -60}},
+      {"id": "F17WrnShtFtc0001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 2}, "duration": {"value": 1}, "name": {"value": "Effect: Warning Shot"}, "target": {"connection": "F17WrnShtEvt0001:outputs:target"}}, "position": {"x": 960, "y": 60}}
+    ]
+  },
+  {
+    "id": "F17WhGrabTrg0001",
+    "name": "Wheeling Grab",
+    "folder": "Feats & Features",
+    "description": "After a successful Wheeling Grab grapple, apply grabbed for 1 round. Tumble Through movement, claw requirements, target selection, Escape, and exact duration cleanup remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "wheeling-grab"],
+    "variables": {
+      "F17WhGrabEvt0001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "F17WhGrabEvt0001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "F17WhGrabEvt0001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "F17WhGrabEvt0001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "skill-check"}}, "outs": {"out": {"connection": "F17WhGrabMch0001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "F17WhGrabMch0001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:wheeling-grab"}, "list": {"connection": "F17WhGrabEvt0001:outputs:options"}}, "outs": {"true": {"connection": "F17WhGrabSpl0001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "F17WhGrabSpl0001", "type": "split-outcome", "inputs": {"input": {"connection": "F17WhGrabEvt0001:outputs:outcome"}}, "outs": {"success": {"connection": "F17WhGrabGrb0001:ins:in"}, "criticalSuccess": {"connection": "F17WhGrabGrb0001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "F17WhGrabGrb0001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "grabbed"}, "duration": {"value": 1}, "name": {"value": "Effect: Wheeling Grab"}, "target": {"connection": "F17WhGrabEvt0001:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

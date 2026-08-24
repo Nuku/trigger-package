@@ -1,0 +1,80 @@
+[
+  {
+    "id": "B27CaustTrg0001X",
+    "name": "Caustic Nectar",
+    "folder": "Feats & Features",
+    "description": "After a qualifying Caustic Nectar Strike critically succeeds, apply sickened 1 to the target. The plant or wood ancestry qualification and confirming the Strike is the Caustic Nectar attack remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "caustic-nectar"],
+    "variables": {
+      "B27CaustEvt0001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B27CaustEvt0001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B27CaustEvt0001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B27CaustEvt0001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B27CaustMch0001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B27CaustMch0001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:caustic-nectar"}, "list": {"connection": "B27CaustEvt0001X:outputs:options"}}, "outs": {"true": {"connection": "B27CaustSpl0001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B27CaustSpl0001X", "type": "split-outcome", "inputs": {"input": {"connection": "B27CaustEvt0001X:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "B27CaustSic0001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B27CaustSic0001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 1}, "name": {"value": "Effect: Caustic Nectar"}, "target": {"connection": "B27CaustEvt0001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B27EmpyrTrg0001X",
+    "name": "Empyreal Aura",
+    "folder": "Feats & Features",
+    "description": "After a qualifying Empyreal Aura Will save, apply slowed 1 on a failure or slowed 2 on a critical failure. Aura range, turn-end timing, higher-DC selection, success handling, and 10-minute immunity remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "empyreal-aura"],
+    "variables": {
+      "B27EmpyrEvt0001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B27EmpyrEvt0001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B27EmpyrEvt0001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B27EmpyrEvt0001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B27EmpyrMch0001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B27EmpyrMch0001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:empyreal-aura"}, "list": {"connection": "B27EmpyrEvt0001X:outputs:options"}}, "outs": {"true": {"connection": "B27EmpyrSpl0001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B27EmpyrSpl0001X", "type": "split-outcome", "inputs": {"input": {"connection": "B27EmpyrEvt0001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B27EmpyrSlo0001X:ins:in"}, "criticalFailure": {"connection": "B27EmpyrSlo0002X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B27EmpyrSlo0001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "slowed"}, "value": {"value": 1}, "name": {"value": "Effect: Empyreal Aura"}, "target": {"connection": "B27EmpyrEvt0001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B27EmpyrSlo0002X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "slowed"}, "value": {"value": 2}, "name": {"value": "Effect: Empyreal Aura"}, "target": {"connection": "B27EmpyrEvt0001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "B27FirstTrg0001X",
+    "name": "First to Strike, Fall",
+    "folder": "Feats & Features",
+    "description": "After a qualifying First to Strike, Fall Strike succeeds, apply off-guard to a target that has not acted in the first round until the end of the attacker's next turn. The first-round timing, target activity check, and quickened follow-up remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "first-to-strike-fall"],
+    "variables": {
+      "B27FirstEvt0001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B27FirstEvt0001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B27FirstEvt0001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B27FirstEvt0001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B27FirstMch0001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B27FirstMch0001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:first-to-strike-fall"}, "list": {"connection": "B27FirstEvt0001X:outputs:options"}}, "outs": {"true": {"connection": "B27FirstSpl0001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B27FirstSpl0001X", "type": "split-outcome", "inputs": {"input": {"connection": "B27FirstEvt0001X:outputs:outcome"}}, "outs": {"success": {"connection": "B27FirstOff0001X:ins:in"}, "criticalSuccess": {"connection": "B27FirstOff0001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B27FirstOff0001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "expiry": {"value": "turn-end"}, "name": {"value": "Effect: First to Strike, Fall"}, "target": {"connection": "B27FirstEvt0001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B27TowerTrg0001X",
+    "name": "Towering Transformation",
+    "folder": "Feats & Features",
+    "description": "After a qualifying Towering Transformation Will save, apply frightened 1 on a failure or frightened 2 on a critical failure. The polymorph size increase, 30-foot area, smaller-target qualification, higher-DC selection, and push remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "towering-transformation"],
+    "variables": {
+      "B27TowerEvt0001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B27TowerEvt0001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B27TowerEvt0001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B27TowerEvt0001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B27TowerMch0001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B27TowerMch0001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:towering-transformation"}, "list": {"connection": "B27TowerEvt0001X:outputs:options"}}, "outs": {"true": {"connection": "B27TowerSpl0001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B27TowerSpl0001X", "type": "split-outcome", "inputs": {"input": {"connection": "B27TowerEvt0001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B27TowerFrt0001X:ins:in"}, "criticalFailure": {"connection": "B27TowerFrt0002X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B27TowerFrt0001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 1}, "name": {"value": "Effect: Towering Transformation"}, "target": {"connection": "B27TowerEvt0001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B27TowerFrt0002X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 2}, "name": {"value": "Effect: Towering Transformation"}, "target": {"connection": "B27TowerEvt0001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  }
+]

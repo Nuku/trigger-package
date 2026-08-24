@@ -1,0 +1,59 @@
+[
+  {
+    "id": "B445GldTrg00001X",
+    "name": "Golden Erinys Stance — Sickened",
+    "folder": "Feats",
+    "description": "Apply sickened 1 on a critical piercing melee Strike while Golden Erinys Stance is active; stance and attack qualification remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "golden-erinys-stance"],
+    "variables": {
+      "B445GldEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B445GldEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B445GldEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B445GldEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B445GldMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B445GldMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:golden-erinys-stance"}, "list": {"connection": "B445GldEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B445GldSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B445GldSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B445GldEvt00001X:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "B445GldSck00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B445GldSck00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 1}, "name": {"value": "Effect: Golden Erinys Stance"}, "target": {"connection": "B445GldEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B445BlzTrg00001X",
+    "name": "Blazing Wave — Prone",
+    "folder": "Feats",
+    "description": "Apply prone on a critical failure against Blazing Wave; area, fire damage, and impulse targeting remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "blazing-wave"],
+    "variables": {
+      "B445BlzEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B445BlzEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B445BlzEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B445BlzEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B445BlzMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B445BlzMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:blazing-wave"}, "list": {"connection": "B445BlzEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B445BlzSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B445BlzSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B445BlzEvt00001X:outputs:outcome"}}, "outs": {"criticalFailure": {"connection": "B445BlzPrn00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B445BlzPrn00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "prone"}, "name": {"value": "Effect: Blazing Wave"}, "target": {"connection": "B445BlzEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B445AmbTrg00001X",
+    "name": "Ambush Bladderwort — Immobilized",
+    "folder": "Feats",
+    "description": "Apply immobilized on a failed or critically failed Ambush Bladderwort Reflex save; plant placement, drowning, and Escape remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "ambush-bladderwort"],
+    "variables": {
+      "B445AmbEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B445AmbEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B445AmbEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B445AmbEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B445AmbMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B445AmbMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:ambush-bladderwort"}, "list": {"connection": "B445AmbEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B445AmbSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B445AmbSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B445AmbEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B445AmbImm00001X:ins:in"}, "criticalFailure": {"connection": "B445AmbImm00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B445AmbImm00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "immobilized"}, "name": {"value": "Effect: Ambush Bladderwort"}, "target": {"connection": "B445AmbEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

@@ -1,0 +1,20 @@
+[
+  {
+    "id": "B300FviTrg00001X",
+    "name": "Frightening Visage",
+    "folder": "Monster Abilities",
+    "description": "After a Frightening Visage Will save failure, apply frightened 2; the critical-failure fleeing rider remains manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "frightening-visage"],
+    "variables": {
+      "B300FviEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B300FviEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "B300FviEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B300FviMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B300FviMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:frightening-visage"}, "list": {"connection": "B300FviEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B300FviSpl00001X:ins:input"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B300FviSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B300FviEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B300FviF2n00001X:ins:in"}, "criticalFailure": {"connection": "B300FviF2n00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B300FviF2n00001X", "type": "increase-condition", "inputs": {"condition": {"value": "frightened"}, "max": {"value": 2}, "target": {"connection": "B300FviEvt00001X:outputs:target"}, "value": {"value": 2}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

@@ -1,0 +1,19 @@
+[
+  {
+    "id": "B337StsTrg00001X",
+    "name": "Steal Shadow — Enfeebled",
+    "folder": "Spells",
+    "description": "Apply enfeebled 1 for 1 round on a successful Steal Shadow save, enfeebled 1 for 1 minute on failure, and enfeebled 2 for 1 minute on critical failure; void damage, sustain, and shadow recovery remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "steal-shadow"],
+    "variables": {"B337StsEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B337StsEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B337StsEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B337StsEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B337StsMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B337StsMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:steal-shadow"}, "list": {"connection": "B337StsEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B337StsSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B337StsSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B337StsEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B337StsEnf00001X:ins:in"}, "failure": {"connection": "B337StsEnf00002X:ins:in"}, "criticalFailure": {"connection": "B337StsEnf00003X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B337StsEnf00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "enfeebled"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Steal Shadow"}, "target": {"connection": "B337StsEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 160}},
+      {"id": "B337StsEnf00002X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "enfeebled"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Steal Shadow"}, "target": {"connection": "B337StsEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B337StsEnf00003X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "enfeebled"}, "value": {"value": 2}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Steal Shadow"}, "target": {"connection": "B337StsEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -160}}
+    ]
+  }
+]

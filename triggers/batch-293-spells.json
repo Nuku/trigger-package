@@ -1,0 +1,21 @@
+[
+  {
+    "id": "B293BdoTrg00001X",
+    "name": "Bandit's Doom",
+    "folder": "Spells",
+    "description": "After a Bandit's Doom Will save, apply doomed 1 on a failure and doomed 2 on a critical failure.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "bandits-doom"],
+    "variables": {
+      "B293BdoEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B293BdoEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "B293BdoEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B293BdoMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B293BdoMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:bandits-doom"}, "list": {"connection": "B293BdoEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B293BdoSpl00001X:ins:input"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B293BdoSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B293BdoEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B293BdoD1n00001X:ins:in"}, "criticalFailure": {"connection": "B293BdoD2n00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B293BdoD1n00001X", "type": "increase-condition", "inputs": {"condition": {"value": "doomed"}, "max": {"value": 4}, "target": {"connection": "B293BdoEvt00001X:outputs:target"}, "value": {"value": 1}}, "position": {"x": 960, "y": 80}},
+      {"id": "B293BdoD2n00001X", "type": "increase-condition", "inputs": {"condition": {"value": "doomed"}, "max": {"value": 4}, "target": {"connection": "B293BdoEvt00001X:outputs:target"}, "value": {"value": 2}}, "position": {"x": 960, "y": -80}}
+    ]
+  }
+]

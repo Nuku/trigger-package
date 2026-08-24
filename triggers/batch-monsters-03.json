@@ -1,0 +1,81 @@
+[
+  {
+    "id": "M03PUNTAIL0001XX",
+    "name": "Punishing Tail",
+    "folder": "Monster Abilities",
+    "description": "Apply stunned 1 on a failed Punishing Tail Fortitude save or stunned 3 on a critical failure; the triggering tail Strike remains native.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "punishing-tail"],
+    "variables": {
+      "N03PTLEVT0001XXX:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "N03PTLEVT0001XXX:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "N03PTLEVT0001XXX:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "N03PTLEVT0001XXX", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "N03PTLMCH0001XXX:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "N03PTLMCH0001XXX", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:punishing-tail"}, "list": {"connection": "N03PTLEVT0001XXX:outputs:options"}}, "outs": {"true": {"connection": "N03PTLMSP0001XXX:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "N03PTLMSP0001XXX", "type": "split-outcome", "inputs": {"input": {"connection": "N03PTLEVT0001XXX:outputs:outcome"}}, "outs": {"failure": {"connection": "N03PTSTN10001XXX:ins:in"}, "criticalFailure": {"connection": "N03PTSTN30001XXX:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "N03PTSTN10001XXX", "type": "increase-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "max": {"value": 1}, "value": {"value": 1}, "name": {"value": "Effect: Punishing Tail"}, "target": {"connection": "N03PTLEVT0001XXX:outputs:roller"}}, "position": {"x": 960, "y": 120}},
+      {"id": "N03PTSTN30001XXX", "type": "increase-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "max": {"value": 3}, "value": {"value": 3}, "name": {"value": "Effect: Punishing Tail"}, "target": {"connection": "N03PTLEVT0001XXX:outputs:roller"}}, "position": {"x": 960, "y": -120}}
+    ]
+  },
+  {
+    "id": "M03SINFUL0001XXX",
+    "name": "Sinful Bite",
+    "folder": "Monster Abilities",
+    "description": "Apply sickened 1 on a successful Sinful Bite Will save, sickened 2 on a failure, and sickened 2 on a critical failure; variant-specific critical-failure riders remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "sinful-bite"],
+    "variables": {
+      "N03SBEVT0001XXXX:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "N03SBEVT0001XXXX:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "N03SBEVT0001XXXX:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "N03SBEVT0001XXXX", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "N03SBMCH0001XXXX:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "N03SBMCH0001XXXX", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:sinful-bite"}, "list": {"connection": "N03SBEVT0001XXXX:outputs:options"}}, "outs": {"true": {"connection": "N03SBMSP0001XXXX:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "N03SBMSP0001XXXX", "type": "split-outcome", "inputs": {"input": {"connection": "N03SBEVT0001XXXX:outputs:outcome"}}, "outs": {"success": {"connection": "N03SBSK10001XXXX:ins:in"}, "failure": {"connection": "N03SBSK20001XXXX:ins:in"}, "criticalFailure": {"connection": "N03SBSK20001XXXX:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "N03SBSK10001XXXX", "type": "increase-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "max": {"value": 1}, "value": {"value": 1}, "name": {"value": "Effect: Sinful Bite"}, "target": {"connection": "N03SBEVT0001XXXX:outputs:roller"}}, "position": {"x": 960, "y": 120}},
+      {"id": "N03SBSK20001XXXX", "type": "increase-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "max": {"value": 2}, "value": {"value": 2}, "name": {"value": "Effect: Sinful Bite"}, "target": {"connection": "N03SBEVT0001XXXX:outputs:roller"}}, "position": {"x": 960, "y": -120}}
+    ]
+  },
+  {
+    "id": "M03MINDLASH0001X",
+    "name": "Mind Lash",
+    "folder": "Monster Abilities",
+    "description": "Apply stunned 2 on a failed Mind Lash Will save or stunned 4 on a critical failure; the triggering tentacle hit and 24-hour temporary immunity remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "mind-lash"],
+    "variables": {
+      "N03MLEVT0001XXXX:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "N03MLEVT0001XXXX:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "N03MLEVT0001XXXX:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "N03MLEVT0001XXXX", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "N03MLMCH0001XXXX:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "N03MLMCH0001XXXX", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:mind-lash"}, "list": {"connection": "N03MLEVT0001XXXX:outputs:options"}}, "outs": {"true": {"connection": "N03MLMSP0001XXXX:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "N03MLMSP0001XXXX", "type": "split-outcome", "inputs": {"input": {"connection": "N03MLEVT0001XXXX:outputs:outcome"}}, "outs": {"failure": {"connection": "N03MLSTN20001XXX:ins:in"}, "criticalFailure": {"connection": "N03MLSTN40001XXX:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "N03MLSTN20001XXX", "type": "increase-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "max": {"value": 2}, "value": {"value": 2}, "name": {"value": "Effect: Mind Lash"}, "target": {"connection": "N03MLEVT0001XXXX:outputs:roller"}}, "position": {"x": 960, "y": 120}},
+      {"id": "N03MLSTN40001XXX", "type": "increase-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "max": {"value": 4}, "value": {"value": 4}, "name": {"value": "Effect: Mind Lash"}, "target": {"connection": "N03MLEVT0001XXXX:outputs:roller"}}, "position": {"x": 960, "y": -120}}
+    ]
+  },
+  {
+    "id": "M03TONGRAB0001XX",
+    "name": "Tongue Grab",
+    "folder": "Monster Abilities",
+    "description": "When a qualifying Tongue Grab Strike succeeds, apply grabbed to the target; the special reach limitation, severing, and Escape cleanup remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "tongue-grab"],
+    "variables": {
+      "N03TGEVT0001XXXX:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "N03TGEVT0001XXXX:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "N03TGEVT0001XXXX:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "N03TGEVT0001XXXX", "type": "attack-roll-event", "outs": {"out": {"connection": "N03TGMCH0001XXXX:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "N03TGMCH0001XXXX", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:tongue-grab"}, "list": {"connection": "N03TGEVT0001XXXX:outputs:options"}}, "outs": {"true": {"connection": "N03TGMSP0001XXXX:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "N03TGMSP0001XXXX", "type": "split-outcome", "inputs": {"input": {"connection": "N03TGEVT0001XXXX:outputs:outcome"}}, "outs": {"success": {"connection": "N03TGGRB0001XXXX:ins:in"}, "criticalSuccess": {"connection": "N03TGGRB0001XXXX:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "N03TGGRB0001XXXX", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "grabbed"}, "name": {"value": "Effect: Tongue Grab"}, "target": {"connection": "N03TGEVT0001XXXX:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

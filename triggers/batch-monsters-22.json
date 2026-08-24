@@ -1,0 +1,74 @@
+[
+  {
+    "id": "M22BUCKTRG00001X",
+    "name": "Buck",
+    "folder": "Monster Abilities",
+    "description": "Apply prone on a failed or critically failed Buck Reflex save; the mount/Command an Animal trigger, fall damage, and reach/targeting remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "buck"],
+    "variables": {
+      "M22BUCKEVT00001X:outputs:roller": {"type": "target", "isArray": false, "label": "Triggering Creature"},
+      "M22BUCKEVT00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M22BUCKEVT00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M22BUCKEVT00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M22BUCKMCH00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M22BUCKMCH00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:buck"}, "list": {"connection": "M22BUCKEVT00001X:outputs:options"}}, "outs": {"true": {"connection": "M22BUCKSPL00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M22BUCKSPL00001X", "type": "split-outcome", "inputs": {"input": {"connection": "M22BUCKEVT00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "M22BUCKPRN00001X:ins:in"}, "criticalFailure": {"connection": "M22BUCKPRN00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M22BUCKPRN00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "prone"}, "name": {"value": "Effect: Buck"}, "target": {"connection": "M22BUCKEVT00001X:outputs:roller"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "M22FEROTRG00001X",
+    "name": "Ferocity",
+    "folder": "Monster Abilities",
+    "description": "Increase wounded by 1 when Ferocity is used; the reduction to 0 HP, remaining at 1 HP, and Wounded 3 limit remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "ferocity"],
+    "variables": {
+      "M22FEROEVT00001X:outputs:targets": {"type": "target", "isArray": true, "label": "Monster"}
+    },
+    "nodes": [
+      {"id": "M22FEROEVT00001X", "type": "action-chat-event", "inputs": {"slug": {"value": "ferocity"}}, "outs": {"out": {"connection": "M22FEROWND00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M22FEROWND00001X", "type": "increase-condition", "inputs": {"condition": {"value": "wounded"}, "max": {"value": 3}, "value": {"value": 1}, "name": {"value": "Effect: Ferocity"}, "target": {"connection": "M22FEROEVT00001X:outputs:targets"}}, "position": {"x": 480, "y": 0}}
+    ]
+  },
+  {
+    "id": "M22IKDXTRG00001X",
+    "name": "Improved Knockdown",
+    "folder": "Monster Abilities",
+    "description": "Apply prone after a successful or critically successful Strike carrying Improved Knockdown; the free-action timing, Strike eligibility, and follow-up Trip check remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "improved-knockdown"],
+    "variables": {
+      "M22IKDXEVT00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M22IKDXEVT00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M22IKDXEVT00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M22IKDXEVT00001X", "type": "attack-roll-event", "outs": {"out": {"connection": "M22IKDXMCH00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M22IKDXMCH00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:improved-knockdown"}, "list": {"connection": "M22IKDXEVT00001X:outputs:options"}}, "outs": {"true": {"connection": "M22IKDXSPL00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M22IKDXSPL00001X", "type": "split-outcome", "inputs": {"input": {"connection": "M22IKDXEVT00001X:outputs:outcome"}}, "outs": {"success": {"connection": "M22IKDXPRN00001X:ins:in"}, "criticalSuccess": {"connection": "M22IKDXPRN00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M22IKDXPRN00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "prone"}, "name": {"value": "Effect: Improved Knockdown"}, "target": {"connection": "M22IKDXEVT00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "M22AQTXTRG00001X",
+    "name": "Aquatic Ambush",
+    "folder": "Monster Abilities",
+    "description": "Apply off-guard for 1 round to the target of a successful Aquatic Ambush Strike; hiding, water/land movement, surprise eligibility, and exact duration of the attacker's benefit remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "aquatic-ambush"],
+    "variables": {
+      "M22AQTXEVT00001X:outputs:target": {"type": "target", "isArray": false, "label": "Triggering Creature"},
+      "M22AQTXEVT00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M22AQTXEVT00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M22AQTXEVT00001X", "type": "attack-roll-event", "outs": {"out": {"connection": "M22AQTXMCH00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M22AQTXMCH00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:aquatic-ambush"}, "list": {"connection": "M22AQTXEVT00001X:outputs:options"}}, "outs": {"true": {"connection": "M22AQTXSPL00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M22AQTXSPL00001X", "type": "split-outcome", "inputs": {"input": {"connection": "M22AQTXEVT00001X:outputs:outcome"}}, "outs": {"success": {"connection": "M22AQTXOFF00001X:ins:in"}, "criticalSuccess": {"connection": "M22AQTXOFF00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M22AQTXOFF00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "expiry": {"value": "turn-end"}, "name": {"value": "Effect: Aquatic Ambush"}, "target": {"connection": "M22AQTXEVT00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

@@ -1,0 +1,324 @@
+[
+  {
+    "id": "B22BloodBaneTrgX",
+    "name": "Bloodbane",
+    "folder": "Equipment",
+    "description": "On a successful Bloodbane attack against its appropriate ancestral enemy, apply 1d6 persistent bleed; creature qualification, weapon damage, and the follow-up sickened save remain manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "equipment",
+      "bloodbane"
+    ],
+    "variables": {
+      "B22BloodBaneEvtX:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B22BloodBaneEvtX:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B22BloodBaneEvtX:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B22BloodBaneEvtX",
+        "type": "attack-roll-event",
+        "outs": {
+          "out": {
+            "connection": "B22BloodBaneMchX:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B22BloodBaneMchX",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:bloodbane"
+          },
+          "list": {
+            "connection": "B22BloodBaneEvtX:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B22BloodBaneSplX:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B22BloodBaneSplX",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B22BloodBaneEvtX:outputs:outcome"
+          }
+        },
+        "outs": {
+          "success": {
+            "connection": "B22BloodBaneBleX:ins:in"
+          },
+          "criticalSuccess": {
+            "connection": "B22BloodBaneBleX:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B22BloodBaneBleX",
+        "type": "create-persistent",
+        "inputs": {
+          "formula": {
+            "value": "1d6[bleed]"
+          },
+          "target": {
+            "connection": "B22BloodBaneEvtX:outputs:target"
+          },
+          "name": {
+            "value": "Effect: Bloodbane"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      }
+    ]
+  },
+  {
+    "id": "B22BloodyFangTrg",
+    "name": "Bloody Fang",
+    "folder": "Equipment",
+    "description": "On a failed or critically failed Bloody Fang Sweeping Slash Reflex save, apply 1d6 persistent bleed; activation, cone targeting, slashing damage, and the successful-save branch remain manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "equipment",
+      "bloody-fang"
+    ],
+    "variables": {
+      "B22BloodyFangEvt:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B22BloodyFangEvt:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B22BloodyFangEvt:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B22BloodyFangEvt",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B22BloodyFangMch:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B22BloodyFangMch",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:bloody-fang"
+          },
+          "list": {
+            "connection": "B22BloodyFangEvt:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B22BloodyFangSpl:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B22BloodyFangSpl",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B22BloodyFangEvt:outputs:outcome"
+          }
+        },
+        "outs": {
+          "failure": {
+            "connection": "B22BloodyFangBle:ins:in"
+          },
+          "criticalFailure": {
+            "connection": "B22BloodyFangBle:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B22BloodyFangBle",
+        "type": "create-persistent",
+        "inputs": {
+          "formula": {
+            "value": "1d6[bleed]"
+          },
+          "target": {
+            "connection": "B22BloodyFangEvt:outputs:target"
+          },
+          "name": {
+            "value": "Effect: Bloody Fang"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      }
+    ]
+  },
+  {
+    "id": "B22UnholyPltTrgX",
+    "name": "Unholy Plate",
+    "folder": "Equipment",
+    "description": "On a critical Unholy Plate helmet Strike, flag drained 1; the helmet activation, target Fortitude save, critical-failure increase to drained 2, and attack details remain manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "equipment",
+      "unholy-plate"
+    ],
+    "variables": {
+      "B22UnholyPltEvtX:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B22UnholyPltEvtX:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B22UnholyPltEvtX:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B22UnholyPltEvtX",
+        "type": "attack-roll-event",
+        "outs": {
+          "out": {
+            "connection": "B22UnholyPltMchX:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B22UnholyPltMchX",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:unholy-plate"
+          },
+          "list": {
+            "connection": "B22UnholyPltEvtX:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B22UnholyPltSplX:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B22UnholyPltSplX",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B22UnholyPltEvtX:outputs:outcome"
+          }
+        },
+        "outs": {
+          "criticalSuccess": {
+            "connection": "B22UnholyPltDrnX:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B22UnholyPltDrnX",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "drained"
+          },
+          "value": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Unholy Plate"
+          },
+          "target": {
+            "connection": "B22UnholyPltEvtX:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      }
+    ]
+  }
+]

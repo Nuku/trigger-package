@@ -1,0 +1,33 @@
+[
+  {
+    "id": "B467ChrTrg00001X",
+    "name": "Chromatic Armor — Dazzled",
+    "folder": "Spells",
+    "description": "Apply dazzled for 1 round on a failed or critically failed Chromatic Armor Will save; adjacency, attack timing, immunity, and color resistances remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "chromatic-armor"],
+    "variables": {"B467ChrEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B467ChrEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B467ChrEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B467ChrEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B467ChrMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B467ChrMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:chromatic-armor"}, "list": {"connection": "B467ChrEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B467ChrSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B467ChrSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B467ChrEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B467ChrDaz00001X:ins:in"}, "criticalFailure": {"connection": "B467ChrDaz00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B467ChrDaz00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Chromatic Armor"}, "target": {"connection": "B467ChrEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B467PriTrg00001X",
+    "name": "Prismatic Armor — Dazzled and Blinded",
+    "folder": "Spells",
+    "description": "Apply dazzled for 1 round on a failed Prismatic Armor Will save and blinded for 1 round on a critical failure; adjacency, immunity, resistance, and timing remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "prismatic-armor"],
+    "variables": {"B467PriEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B467PriEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B467PriEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B467PriEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B467PriMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B467PriMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:prismatic-armor"}, "list": {"connection": "B467PriEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B467PriSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B467PriSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B467PriEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B467PriDaz00001X:ins:in"}, "criticalFailure": {"connection": "B467PriBli00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B467PriDaz00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Prismatic Armor"}, "target": {"connection": "B467PriEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B467PriBli00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "blinded"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Prismatic Armor"}, "target": {"connection": "B467PriEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 200}}
+    ]
+  }
+]

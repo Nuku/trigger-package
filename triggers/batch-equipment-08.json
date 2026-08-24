@@ -1,0 +1,199 @@
+[
+  {
+    "id": "B08THORNTRG00001",
+    "name": "Thorn Triad (Greater)",
+    "folder": "Equipment",
+    "description": "After a plant spell is activated through a Greater Thorn Triad, apply 1d6 persistent bleed to qualifying Strikes until the end of the next turn; activation and duration cleanup remain manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "equipment",
+      "thorn-triad-greater"
+    ],
+    "variables": {
+      "B08THORNEVT00001:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B08THORNEVT00001:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B08THORNEVT00001",
+        "type": "attack-roll-event",
+        "outs": {
+          "out": {
+            "connection": "B08THORNMCH00001:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B08THORNMCH00001",
+        "type": "match-predicate",
+        "inputs": {
+          "options": {
+            "connection": "B08THORNEVT00001:outputs:options"
+          },
+          "predicate": {
+            "value": "[\n  \"item:slug:thorn-triad-greater\"\n]"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B08THORNPER00001:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B08THORNPER00001",
+        "type": "create-persistent",
+        "inputs": {
+          "die": {
+            "value": "1d6"
+          },
+          "target": {
+            "connection": "B08THORNEVT00001:outputs:target"
+          },
+          "type": {
+            "value": "bleed"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      }
+    ]
+  },
+  {
+    "id": "B08WANDTRG000001",
+    "name": "Wand of Wearying Dance",
+    "folder": "Equipment",
+    "description": "When the wand's Uncontrollable Dance spell produces a successful, failed, or critically failed save, apply off-guard; the spell's reaction restriction, Speed reduction, sustain, and activation remain manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "equipment",
+      "wand-of-wearying-dance"
+    ],
+    "variables": {
+      "B08WANDEVT000001:outputs:roller": {
+        "type": "target",
+        "isArray": false,
+        "label": "Roller"
+      },
+      "B08WANDEVT000001:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      },
+      "B08WANDEVT000001:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B08WANDEVT000001",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B08WANDMCH000001:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B08WANDMCH000001",
+        "type": "match-predicate",
+        "inputs": {
+          "options": {
+            "connection": "B08WANDEVT000001:outputs:options"
+          },
+          "predicate": {
+            "value": "[\n  \"item:slug:uncontrollable-dance\"\n]"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B08WANDSPL000001:ins:input"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B08WANDSPL000001",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B08WANDEVT000001:outputs:outcome"
+          }
+        },
+        "outs": {
+          "success": {
+            "connection": "B08WANDOFF000001:ins:in"
+          },
+          "failure": {
+            "connection": "B08WANDOFF000001:ins:in"
+          },
+          "criticalFailure": {
+            "connection": "B08WANDOFF000001:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B08WANDOFF000001",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "off-guard"
+          },
+          "duration": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Wand of Wearying Dance"
+          },
+          "target": {
+            "connection": "B08WANDEVT000001:outputs:roller"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      }
+    ]
+  }
+]

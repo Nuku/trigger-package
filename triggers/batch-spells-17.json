@@ -1,0 +1,62 @@
+[
+  {
+    "id": "S17HasteTrig001X",
+    "name": "Haste — Quickened",
+    "folder": "Spells",
+    "description": "When Haste is cast, apply quickened 1 for 1 minute to the spell's target; the target's chosen extra action and sustained/heightened variants remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "haste"],
+    "variables": {
+      "S17HasteEvt0001X:outputs:targets": {"type": "target", "isArray": true, "label": "Targets"}
+    },
+    "nodes": [
+      {"id": "S17HasteEvt0001X", "type": "action-chat-event", "inputs": {"slug": {"value": "haste"}}, "outs": {"out": {"connection": "S17HasteCon0001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "S17HasteCon0001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "quickened", "value2": 1}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Haste"}, "target": {"connection": "S17HasteEvt0001X:outputs:targets"}}, "position": {"x": 480, "y": 0}}
+    ]
+  },
+  {
+    "id": "S17BlurTrig001XX",
+    "name": "Blur — Concealed",
+    "folder": "Spells",
+    "description": "When Blur is cast, apply concealed for 1 minute to the spell's target; the flat check, visual targeting, and heightened duration remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "blur"],
+    "variables": {
+      "S17BlurEvt0001XX:outputs:targets": {"type": "target", "isArray": true, "label": "Targets"}
+    },
+    "nodes": [
+      {"id": "S17BlurEvt0001XX", "type": "action-chat-event", "inputs": {"slug": {"value": "blur"}}, "outs": {"out": {"connection": "S17BlurCon0001XX:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "S17BlurCon0001XX", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "concealed"}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Blur"}, "target": {"connection": "S17BlurEvt0001XX:outputs:targets"}}, "position": {"x": 480, "y": 0}}
+    ]
+  },
+  {
+    "id": "S17EnlgTrig001XX",
+    "name": "Enlarge — Clumsy",
+    "folder": "Spells",
+    "description": "When Enlarge is cast, apply clumsy 1 for 5 minutes to the spell's target; size, reach, damage, and heightened effects remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "enlarge"],
+    "variables": {
+      "S17EnlgEvt0001XX:outputs:targets": {"type": "target", "isArray": true, "label": "Targets"}
+    },
+    "nodes": [
+      {"id": "S17EnlgEvt0001XX", "type": "action-chat-event", "inputs": {"slug": {"value": "enlarge"}}, "outs": {"out": {"connection": "S17EnlgCon0001XX:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "S17EnlgCon0001XX", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "clumsy", "value2": 1}, "duration": {"value": 5}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Enlarge"}, "target": {"connection": "S17EnlgEvt0001XX:outputs:targets"}}, "position": {"x": 480, "y": 0}}
+    ]
+  },
+  {
+    "id": "S17RmFrTrig001XX",
+    "name": "Remove Fear — Reduce Frightened",
+    "folder": "Spells",
+    "description": "When Remove Fear is cast, reduce the frightened condition on the spell's target by 1; heightened scaling, target choice, and conditions other than frightened remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "remove-fear"],
+    "variables": {
+      "S17RmFrEvt00001X:outputs:targets": {"type": "target", "isArray": true, "label": "Targets"}
+    },
+    "nodes": [
+      {"id": "S17RmFrEvt00001X", "type": "action-chat-event", "inputs": {"slug": {"value": "remove-fear"}}, "outs": {"out": {"connection": "S17RmFrDec00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "S17RmFrDec00001X", "type": "decrease-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 1}, "name": {"value": "Effect: Remove Fear"}, "target": {"connection": "S17RmFrEvt00001X:outputs:targets"}}, "position": {"x": 480, "y": 0}}
+    ]
+  }
+]

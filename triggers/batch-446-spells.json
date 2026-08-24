@@ -1,0 +1,59 @@
+[
+  {
+    "id": "B446TanTrg00001X",
+    "name": "Tangling Creepers — Immobilized",
+    "folder": "Spells",
+    "description": "Apply immobilized for 1 round after a successful Tangling Creepers vine spell attack; area, sustain, movement penalty, and Escape remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "tangling-creepers"],
+    "variables": {
+      "B446TanEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B446TanEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B446TanEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B446TanEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B446TanMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B446TanMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:tangling-creepers"}, "list": {"connection": "B446TanEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B446TanSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B446TanSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B446TanEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B446TanImm00001X:ins:in"}, "criticalSuccess": {"connection": "B446TanImm00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B446TanImm00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "immobilized"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Tangling Creepers"}, "target": {"connection": "B446TanEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B446MasTrg00001X",
+    "name": "Mask of Terror — Frightened",
+    "folder": "Spells",
+    "description": "Apply frightened 2 for 1 minute on a failed or critically failed Mask of Terror Will save; hostile-action timing and temporary immunity remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "mask-of-terror"],
+    "variables": {
+      "B446MasEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B446MasEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B446MasEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B446MasEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B446MasMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B446MasMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:mask-of-terror"}, "list": {"connection": "B446MasEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B446MasSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B446MasSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B446MasEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B446MasFht00001X:ins:in"}, "criticalFailure": {"connection": "B446MasFht00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B446MasFht00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 2}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Mask of Terror"}, "target": {"connection": "B446MasEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B446OneTrg00001X",
+    "name": "Oneiric Mire — Immobilized",
+    "folder": "Spells",
+    "description": "Apply immobilized on a critical failure against Oneiric Mire; illusion disbelief, repeated saves, Speed penalty, and recovery remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "oneiric-mire"],
+    "variables": {
+      "B446OneEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B446OneEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B446OneEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B446OneEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B446OneMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B446OneMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:oneiric-mire"}, "list": {"connection": "B446OneEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B446OneSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B446OneSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B446OneEvt00001X:outputs:outcome"}}, "outs": {"criticalFailure": {"connection": "B446OneImm00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B446OneImm00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "immobilized"}, "name": {"value": "Effect: Oneiric Mire"}, "target": {"connection": "B446OneEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

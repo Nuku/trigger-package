@@ -1,0 +1,44 @@
+[
+  {
+    "id": "B455HerTrg00001X",
+    "name": "Herald’s Strike — Dazzled, Blinded, and Drained",
+    "folder": "Feats",
+    "description": "Apply Herald’s Strike’s save-outcome conditions: dazzled on success/failure, drained 1 on failure, blinded and drained 2 on critical failure; damage, critical-hit degree adjustment, and immunity remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "heralds-strike"],
+    "variables": {
+      "B455HerEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B455HerEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B455HerEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B455HerEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B455HerMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B455HerMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:heralds-strike"}, "list": {"connection": "B455HerEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B455HerSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B455HerSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B455HerEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B455HerDaz00001X:ins:in"}, "failure": {"connection": "B455HerDaz00001X:ins:in"}, "criticalFailure": {"connection": "B455HerBli00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B455HerDaz00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Herald’s Strike"}, "target": {"connection": "B455HerEvt00001X:outputs:target"}}, "outs": {"out": {"connection": "B455HerFai00001X:ins:in"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B455HerFai00001X", "type": "match-predicate", "inputs": {"options": {"connection": "B455HerEvt00001X:outputs:options"}, "predicate": {"value": "[\n  \"item:slug:heralds-strike\",\n  \"check:outcome:failure\"\n]"}}, "outs": {"true": {"connection": "B455HerDr100001X:ins:in"}}, "position": {"x": 1280, "y": 0}},
+      {"id": "B455HerDr100001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "drained"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Herald’s Strike"}, "target": {"connection": "B455HerEvt00001X:outputs:target"}}, "position": {"x": 1600, "y": 0}},
+      {"id": "B455HerBli00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "blinded"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Herald’s Strike"}, "target": {"connection": "B455HerEvt00001X:outputs:target"}}, "outs": {"out": {"connection": "B455HerCfs00001X:ins:in"}}, "position": {"x": 960, "y": 240}},
+      {"id": "B455HerCfs00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "drained"}, "value": {"value": 2}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Herald’s Strike"}, "target": {"connection": "B455HerEvt00001X:outputs:target"}}, "position": {"x": 1280, "y": 240}}
+    ]
+  },
+  {
+    "id": "B455UnbTrg00001X",
+    "name": "Unbalancing Finisher — Off-Guard",
+    "folder": "Feats",
+    "description": "Apply off-guard for 1 round after a successful Unbalancing Finisher Strike; Strike and damage remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "unbalancing-finisher"],
+    "variables": {
+      "B455UnbEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B455UnbEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B455UnbEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B455UnbEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B455UnbMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B455UnbMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:unbalancing-finisher"}, "list": {"connection": "B455UnbEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B455UnbSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B455UnbSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B455UnbEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B455UnbOff00001X:ins:in"}, "criticalSuccess": {"connection": "B455UnbOff00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B455UnbOff00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Unbalancing Finisher"}, "target": {"connection": "B455UnbEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

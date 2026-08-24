@@ -1,0 +1,143 @@
+[
+  {
+    "id": "B458RgrTrg00001X",
+    "name": "Rooting (Greater) — Immobilized and Clumsy",
+    "folder": "Equipment",
+    "description": "Apply immobilized and clumsy 1 for 1 round on a critical Rooting (Greater) weapon hit; Escape remains native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "rooting-greater"],
+    "variables": {"B458RgrEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B458RgrEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B458RgrEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B458RgrEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B458RgrMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B458RgrMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:rooting-greater"}, "list": {"connection": "B458RgrEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B458RgrSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B458RgrSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B458RgrEvt00001X:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "B458RgrImm00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B458RgrImm00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "immobilized"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Rooting (Greater)"}, "target": {"connection": "B458RgrEvt00001X:outputs:target"}}, "outs": {"out": {"connection": "B458RgrClm00001X:ins:in"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B458RgrClm00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "clumsy"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Rooting (Greater)"}, "target": {"connection": "B458RgrEvt00001X:outputs:target"}}, "position": {"x": 1280, "y": 0}}
+    ]
+  },
+  {
+    "id": "B458RtrTrg00001X",
+    "name": "Rooting (True) — Immobilized and Clumsy",
+    "folder": "Equipment",
+    "description": "Apply immobilized and clumsy 1 for 1 round on a critical Rooting (True) weapon hit; Escape remains native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "rooting-true"],
+    "variables": {"B458RtrEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B458RtrEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B458RtrEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B458RtrEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B458RtrMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B458RtrMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:rooting-true"}, "list": {"connection": "B458RtrEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B458RtrSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B458RtrSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B458RtrEvt00001X:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "B458RtrImm00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B458RtrImm00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "immobilized"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Rooting (True)"}, "target": {"connection": "B458RtrEvt00001X:outputs:target"}}, "outs": {"out": {"connection": "B458RtrClm00001X:ins:in"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B458RtrClm00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "clumsy"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Rooting (True)"}, "target": {"connection": "B458RtrEvt00001X:outputs:target"}}, "position": {"x": 1280, "y": 0}}
+    ]
+  },
+  {
+    "id": "B458RmaTrg00001X",
+    "name": "Rooting (Major) — Immobilized and Clumsy",
+    "folder": "Equipment",
+    "description": "Apply immobilized and clumsy 1 for 1 round on a critical Rooting (Major) weapon hit; Escape remains native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "rooting-major"],
+    "variables": {"B458RmaEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B458RmaEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B458RmaEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B458RmaEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B458RmaMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B458RmaMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:rooting-major"}, "list": {"connection": "B458RmaEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B458RmaSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B458RmaSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B458RmaEvt00001X:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "B458RmaImm00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B458RmaImm00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "immobilized"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Rooting (Major)"}, "target": {"connection": "B458RmaEvt00001X:outputs:target"}}, "outs": {"out": {"connection": "B458RmaClm00001X:ins:in"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B458RmaClm00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "clumsy"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Rooting (Major)"}, "target": {"connection": "B458RmaEvt00001X:outputs:target"}}, "position": {"x": 1280, "y": 0}}
+    ]
+  },
+  {
+    "id": "B458CgrTrg00001X",
+    "name": "Crushing (Greater) — Clumsy and Enfeebled",
+    "folder": "Equipment",
+    "description": "Apply clumsy 2 and enfeebled 2 until the end of the next turn on a critical Crushing (Greater) weapon hit.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "crushing-greater"],
+    "variables": {"B458CgrEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B458CgrEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B458CgrEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B458CgrEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B458CgrMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B458CgrMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:crushing-greater"}, "list": {"connection": "B458CgrEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B458CgrSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B458CgrSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B458CgrEvt00001X:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "B458CgrClm00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B458CgrClm00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "clumsy"}, "value": {"value": 2}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Crushing (Greater)"}, "target": {"connection": "B458CgrEvt00001X:outputs:target"}}, "outs": {"out": {"connection": "B458CgrEnf00001X:ins:in"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B458CgrEnf00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "enfeebled"}, "value": {"value": 2}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Crushing (Greater)"}, "target": {"connection": "B458CgrEvt00001X:outputs:target"}}, "position": {"x": 1280, "y": 0}}
+    ]
+  },
+  {
+    "id": "B458FgrTrg00001X",
+    "name": "Fearsome (Greater) — Frightened",
+    "folder": "Equipment",
+    "description": "Apply frightened 2 on a critical Fearsome (Greater) weapon hit.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "fearsome-greater"],
+    "variables": {"B458FgrEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B458FgrEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B458FgrEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B458FgrEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B458FgrMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B458FgrMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:fearsome-greater"}, "list": {"connection": "B458FgrEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B458FgrSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B458FgrSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B458FgrEvt00001X:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "B458FgrFht00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B458FgrFht00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 2}, "name": {"value": "Effect: Fearsome (Greater)"}, "target": {"connection": "B458FgrEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B458TsnTrg00001X",
+    "name": "Torrent Snare — Prone",
+    "folder": "Equipment",
+    "description": "Apply prone on a failed or critically failed Torrent Snare Reflex save; forced movement and difficult terrain remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "torrent-snare"],
+    "variables": {"B458TsnEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B458TsnEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B458TsnEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B458TsnEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B458TsnMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B458TsnMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:torrent-snare"}, "list": {"connection": "B458TsnEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B458TsnSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B458TsnSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B458TsnEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B458TsnPrn00001X:ins:in"}, "criticalFailure": {"connection": "B458TsnPrn00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B458TsnPrn00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "prone"}, "name": {"value": "Effect: Torrent Snare"}, "target": {"connection": "B458TsnEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B458HsnTrg00001X",
+    "name": "Thunder Snare — Deafened",
+    "folder": "Equipment",
+    "description": "Apply deafened for 1 round on a successful, failed, or critically failed Thunder Snare Fortitude save; damage remains native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "thunder-snare"],
+    "variables": {"B458HsnEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B458HsnEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B458HsnEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B458HsnEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B458HsnMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B458HsnMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:thunder-snare"}, "list": {"connection": "B458HsnEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B458HsnSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B458HsnSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B458HsnEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B458HsnDfn00001X:ins:in"}, "failure": {"connection": "B458HsnDfn00001X:ins:in"}, "criticalFailure": {"connection": "B458HsnDfn00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B458HsnDfn00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "deafened"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Thunder Snare"}, "target": {"connection": "B458HsnEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B458PwsTrg00001X",
+    "name": "Piercing Whistle Snare — Deafened",
+    "folder": "Equipment",
+    "description": "Apply deafened for 1 round on a failed Piercing Whistle Snare save and 1 hour on a critical failure; area damage remains native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "piercing-whistle-snare"],
+    "variables": {"B458PwsEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B458PwsEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B458PwsEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B458PwsEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B458PwsMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B458PwsMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:piercing-whistle-snare"}, "list": {"connection": "B458PwsEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B458PwsSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B458PwsSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B458PwsEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B458PwsD1n00001X:ins:in"}, "criticalFailure": {"connection": "B458PwsDhr00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B458PwsD1n00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "deafened"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Piercing Whistle Snare"}, "target": {"connection": "B458PwsEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B458PwsDhr00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "deafened"}, "duration": {"value": 1}, "unit": {"value": "hours"}, "name": {"value": "Effect: Piercing Whistle Snare"}, "target": {"connection": "B458PwsEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 200}}
+    ]
+  },
+  {
+    "id": "B458SsnTrg00001X",
+    "name": "Spirit Snare — Immobilized",
+    "folder": "Equipment",
+    "description": "Apply immobilized for 1 round on a failed Spirit Snare Reflex save and 1 minute on a critical failure; incorporeal qualification and Escape remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "spirit-snare"],
+    "variables": {"B458SsnEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B458SsnEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B458SsnEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B458SsnEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B458SsnMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B458SsnMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:spirit-snare"}, "list": {"connection": "B458SsnEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B458SsnSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B458SsnSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B458SsnEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B458SsnI1n00001X:ins:in"}, "criticalFailure": {"connection": "B458SsnImn00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B458SsnI1n00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "immobilized"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Spirit Snare"}, "target": {"connection": "B458SsnEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B458SsnImn00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "immobilized"}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Spirit Snare"}, "target": {"connection": "B458SsnEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 200}}
+    ]
+  }
+]

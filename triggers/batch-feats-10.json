@@ -1,0 +1,78 @@
+[
+  {
+    "id": "DazBullTrig00001",
+    "name": "Dazzling Bullet",
+    "folder": "Feats & Features",
+    "description": "After a Dazzling Bullet Performance check succeeds, apply dazzled for 1 round to the target. The required damaging firearm Strike and Pistol Phenom prerequisites remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "dazzling-bullet"],
+    "variables": {
+      "DazBullEvt000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "DazBullEvt000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "DazBullEvt000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "DazBullEvt000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "skill-check"}}, "outs": {"out": {"connection": "DazBullMch000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "DazBullMch000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:dazzling-bullet"}, "list": {"connection": "DazBullEvt000001:outputs:options"}}, "outs": {"true": {"connection": "DazBullSpl000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "DazBullSpl000001", "type": "split-outcome", "inputs": {"input": {"connection": "DazBullEvt000001:outputs:outcome"}}, "outs": {"success": {"connection": "DazBullDaz000001:ins:in"}, "criticalSuccess": {"connection": "DazBullDaz000001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "DazBullDaz000001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "name": {"value": "Effect: Dazzling Bullet"}, "target": {"connection": "DazBullEvt000001:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "TgrStanceTrig000",
+    "name": "Tiger Stance",
+    "folder": "Feats & Features",
+    "description": "On a critical Tiger Stance tiger-claw Strike that deals damage, apply 1d4 persistent bleed. The stance, attack qualification, and damage confirmation remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "tiger-stance"],
+    "variables": {
+      "TgrTigEvt0000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "TgrTigEvt0000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "TgrTigEvt0000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "TgrTigEvt0000001", "type": "attack-roll-event", "outs": {"out": {"connection": "TgrTigMch0000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "TgrTigMch0000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:tiger-stance"}, "list": {"connection": "TgrTigEvt0000001:outputs:options"}}, "outs": {"true": {"connection": "TgrTigSpl0000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "TgrTigSpl0000001", "type": "split-outcome", "inputs": {"input": {"connection": "TgrTigEvt0000001:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "TgrTigBle0000001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "TgrTigBle0000001", "type": "create-persistent", "inputs": {"die": {"value": "1d4"}, "target": {"connection": "TgrTigEvt0000001:outputs:target"}, "type": {"value": "bleed"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "FllStrikeTrig001",
+    "name": "Felling Strike",
+    "folder": "Feats & Features",
+    "description": "On a critical Felling Strike, apply immobilized for 1 round to the target to represent the target being unable to fly, levitate, or otherwise leave the ground. Falling movement and airborne-target qualification remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "felling-strike"],
+    "variables": {
+      "FllStrikeEvt0001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "FllStrikeEvt0001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "FllStrikeEvt0001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "FllStrikeEvt0001", "type": "attack-roll-event", "outs": {"out": {"connection": "FllStrikeMch0001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "FllStrikeMch0001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:felling-strike"}, "list": {"connection": "FllStrikeEvt0001:outputs:options"}}, "outs": {"true": {"connection": "FllStrikeSpl0001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "FllStrikeSpl0001", "type": "split-outcome", "inputs": {"input": {"connection": "FllStrikeEvt0001:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "FllStrikeImm0001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "FllStrikeImm0001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "immobilized"}, "duration": {"value": 1}, "name": {"value": "Effect: Felling Strike"}, "target": {"connection": "FllStrikeEvt0001:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "StmStanceTrig001",
+    "name": "Stumbling Stance",
+    "folder": "Feats & Features",
+    "description": "After an enemy hits the Stumbling Stance user with a melee Strike, apply off-guard to that attacker for 1 round. The stance requirement and restriction to the user's next stumbling swing remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "stumbling-stance"],
+    "variables": {
+      "StmStnEvt0000001:outputs:origin": {"type": "target", "isArray": false, "label": "Attacker"},
+      "StmStnEvt0000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "StmStnEvt0000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "StmStnEvt0000001", "type": "attack-roll-event", "outs": {"out": {"connection": "StmStnMch0000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "StmStnMch0000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:stumbling-stance"}, "list": {"connection": "StmStnEvt0000001:outputs:options"}}, "outs": {"true": {"connection": "StmStnSpl0000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "StmStnSpl0000001", "type": "split-outcome", "inputs": {"input": {"connection": "StmStnEvt0000001:outputs:outcome"}}, "outs": {"success": {"connection": "StmStnOfg0000001:ins:in"}, "criticalSuccess": {"connection": "StmStnOfg0000001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "StmStnOfg0000001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "name": {"value": "Effect: Stumbling Stance"}, "target": {"connection": "StmStnEvt0000001:outputs:origin"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

@@ -1,0 +1,85 @@
+[
+  {
+    "id": "B22SynTrg0000001",
+    "name": "Synaptic Pulse — Stunned",
+    "folder": "Spells",
+    "description": "On a Synaptic Pulse Will save, apply stunned 1 on a success, stunned 2 on a failure, or stunned for 1 round on a critical failure; area placement, mental damage, incapacitation, and targeting remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "synaptic-pulse"],
+    "variables": {
+      "B22SynEvt0000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B22SynEvt0000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B22SynEvt0000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B22SynEvt0000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B22SynMch0000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B22SynMch0000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:synaptic-pulse"}, "list": {"connection": "B22SynEvt0000001:outputs:options"}}, "outs": {"true": {"connection": "B22SynSpl0000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B22SynSpl0000001", "type": "split-outcome", "inputs": {"input": {"connection": "B22SynEvt0000001:outputs:outcome"}}, "outs": {"success": {"connection": "B22SynStn0000001:ins:in"}, "failure": {"connection": "B22SynStn0000002:ins:in"}, "criticalFailure": {"connection": "B22SynStn0000003:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B22SynStn0000001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "value": {"value": 1}, "name": {"value": "Effect: Synaptic Pulse"}, "target": {"connection": "B22SynEvt0000001:outputs:target"}}, "position": {"x": 960, "y": 120}},
+      {"id": "B22SynStn0000002", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "value": {"value": 2}, "name": {"value": "Effect: Synaptic Pulse"}, "target": {"connection": "B22SynEvt0000001:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B22SynStn0000003", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "stunned"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Synaptic Pulse"}, "target": {"connection": "B22SynEvt0000001:outputs:target"}}, "position": {"x": 960, "y": -120}}
+    ]
+  },
+  {
+    "id": "B22EviTrg0000001",
+    "name": "Evil Eye — Sickened",
+    "folder": "Spells",
+    "description": "On an Evil Eye Will save, apply sickened 1 on a failure or sickened 2 on a critical failure; the sustained curse and minimum sickened value while the spell is active remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "evil-eye"],
+    "variables": {
+      "B22EviEvt0000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B22EviEvt0000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B22EviEvt0000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B22EviEvt0000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B22EviMch0000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B22EviMch0000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:evil-eye"}, "list": {"connection": "B22EviEvt0000001:outputs:options"}}, "outs": {"true": {"connection": "B22EviSpl0000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B22EviSpl0000001", "type": "split-outcome", "inputs": {"input": {"connection": "B22EviEvt0000001:outputs:outcome"}}, "outs": {"failure": {"connection": "B22EviSic0000001:ins:in"}, "criticalFailure": {"connection": "B22EviSic0000002:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B22EviSic0000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Evil Eye"}, "target": {"connection": "B22EviEvt0000001:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B22EviSic0000002", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 2}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Evil Eye"}, "target": {"connection": "B22EviEvt0000001:outputs:target"}}, "position": {"x": 960, "y": -120}}
+    ]
+  },
+  {
+    "id": "B22TorTrg0000001",
+    "name": "Tortoise and the Hare — Slowed",
+    "folder": "Spells",
+    "description": "On a Tortoise and the Hare Fortitude save, apply slowed 1 for 1 round on a success, 3 rounds on a failure, or 3 minutes on a critical failure; the ally's quickened benefit and restricted extra actions remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "tortoise-and-the-hare"],
+    "variables": {
+      "B22TorEvt0000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B22TorEvt0000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B22TorEvt0000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B22TorEvt0000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B22TorMch0000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B22TorMch0000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:tortoise-and-the-hare"}, "list": {"connection": "B22TorEvt0000001:outputs:options"}}, "outs": {"true": {"connection": "B22TorSpl0000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B22TorSpl0000001", "type": "split-outcome", "inputs": {"input": {"connection": "B22TorEvt0000001:outputs:outcome"}}, "outs": {"success": {"connection": "B22TorSlw0000001:ins:in"}, "failure": {"connection": "B22TorSlw0000002:ins:in"}, "criticalFailure": {"connection": "B22TorSlw0000003:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B22TorSlw0000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "slowed"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Tortoise and the Hare"}, "target": {"connection": "B22TorEvt0000001:outputs:target"}}, "position": {"x": 960, "y": 120}},
+      {"id": "B22TorSlw0000002", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "slowed"}, "value": {"value": 1}, "duration": {"value": 3}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Tortoise and the Hare"}, "target": {"connection": "B22TorEvt0000001:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B22TorSlw0000003", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "slowed"}, "value": {"value": 1}, "duration": {"value": 3}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Tortoise and the Hare"}, "target": {"connection": "B22TorEvt0000001:outputs:target"}}, "position": {"x": 960, "y": -120}}
+    ]
+  },
+  {
+    "id": "B22WakTrg0000001",
+    "name": "Waking Nightmare — Frightened",
+    "folder": "Spells",
+    "description": "On a Waking Nightmare Will save, apply frightened 1 on a success, frightened 2 on a failure, or frightened 3 on a critical failure; the additional mental damage, sleep interaction, and paralysis rider remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "waking-nightmare"],
+    "variables": {
+      "B22WakEvt0000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B22WakEvt0000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B22WakEvt0000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B22WakEvt0000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B22WakMch0000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B22WakMch0000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:waking-nightmare"}, "list": {"connection": "B22WakEvt0000001:outputs:options"}}, "outs": {"true": {"connection": "B22WakSpl0000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B22WakSpl0000001", "type": "split-outcome", "inputs": {"input": {"connection": "B22WakEvt0000001:outputs:outcome"}}, "outs": {"success": {"connection": "B22WakFgt0000001:ins:in"}, "failure": {"connection": "B22WakFgt0000002:ins:in"}, "criticalFailure": {"connection": "B22WakFgt0000003:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B22WakFgt0000001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 1}, "name": {"value": "Effect: Waking Nightmare"}, "target": {"connection": "B22WakEvt0000001:outputs:target"}}, "position": {"x": 960, "y": 120}},
+      {"id": "B22WakFgt0000002", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 2}, "name": {"value": "Effect: Waking Nightmare"}, "target": {"connection": "B22WakEvt0000001:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B22WakFgt0000003", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 3}, "name": {"value": "Effect: Waking Nightmare"}, "target": {"connection": "B22WakEvt0000001:outputs:target"}}, "position": {"x": 960, "y": -120}}
+    ]
+  }
+]

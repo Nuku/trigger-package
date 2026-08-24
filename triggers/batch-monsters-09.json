@@ -1,0 +1,81 @@
+[
+  {
+    "id": "M09BNDTRG000001X",
+    "name": "Bonds of Iron",
+    "folder": "Monster Abilities",
+    "description": "When Bonds of Iron's Athletics check succeeds or critically succeeds, apply grabbed to the target; the cold-iron cage, range, frequency, Escape DC, and cage destruction remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "bonds-of-iron"],
+    "variables": {
+      "M09BNEVT0000001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M09BNEVT0000001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M09BNEVT0000001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M09BNEVT0000001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "skill-check"}}, "outs": {"out": {"connection": "M09BNMCH0000001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M09BNMCH0000001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:bonds-of-iron"}, "list": {"connection": "M09BNEVT0000001X:outputs:options"}}, "outs": {"true": {"connection": "M09BNSPL0000001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M09BNSPL0000001X", "type": "split-outcome", "inputs": {"input": {"connection": "M09BNEVT0000001X:outputs:outcome"}}, "outs": {"success": {"connection": "M09BNGRB0000001X:ins:in"}, "criticalSuccess": {"connection": "M09BNGRB0000001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M09BNGRB0000001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "grabbed"}, "name": {"value": "Effect: Bonds of Iron"}, "target": {"connection": "M09BNEVT0000001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "M09CSTRG0000001X",
+    "name": "Captivating Song",
+    "folder": "Monster Abilities",
+    "description": "On a failed or critically failed Captivating Song Will save, apply fascinated for 1 round; the aura, compelled movement, incapacitation, temporary immunity, and attack-based release remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "captivating-song"],
+    "variables": {
+      "M09CSEVT0000001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M09CSEVT0000001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M09CSEVT0000001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M09CSEVT0000001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M09CSMCH0000001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M09CSMCH0000001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:captivating-song"}, "list": {"connection": "M09CSEVT0000001X:outputs:options"}}, "outs": {"true": {"connection": "M09CSSPL0000001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M09CSSPL0000001X", "type": "split-outcome", "inputs": {"input": {"connection": "M09CSEVT0000001X:outputs:outcome"}}, "outs": {"failure": {"connection": "M09CSFAS0000001X:ins:in"}, "criticalFailure": {"connection": "M09CSFAS0000001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M09CSFAS0000001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "fascinated"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "expiry": {"value": "turn-end"}, "name": {"value": "Effect: Captivating Song"}, "target": {"connection": "M09CSEVT0000001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "M09DGTRG0000001X",
+    "name": "Death Gaze",
+    "folder": "Monster Abilities",
+    "description": "Apply drained and doomed from Death Gaze's Fortitude outcome: drained 1 on success, doomed 1 and drained 2 on failure, or doomed 1 and drained 4 on critical failure; lifesense targeting, temporary Hit Points, and removal on the monster's destruction remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "death-gaze"],
+    "variables": {
+      "M09DGEVT0000001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M09DGEVT0000001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M09DGEVT0000001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M09DGEVT0000001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M09DGMCH0000001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M09DGMCH0000001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:death-gaze"}, "list": {"connection": "M09DGEVT0000001X:outputs:options"}}, "outs": {"true": {"connection": "M09DGSPL0000001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M09DGSPL0000001X", "type": "split-outcome", "inputs": {"input": {"connection": "M09DGEVT0000001X:outputs:outcome"}}, "outs": {"success": {"connection": "M09DGDRN0000001X:ins:in"}, "failure": {"connection": "M09DGDOO0000001X:ins:in"}, "criticalFailure": {"connection": "M09DGDOO0000001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M09DGDRN0000001X", "type": "increase-condition", "state": "fixed", "inputs": {"condition": {"value": "drained"}, "max": {"value": 4}, "value": {"value": 1}, "name": {"value": "Effect: Death Gaze"}, "target": {"connection": "M09DGEVT0000001X:outputs:target"}}, "position": {"x": 960, "y": 100}},
+      {"id": "M09DGDOO0000001X", "type": "increase-condition", "state": "fixed", "inputs": {"condition": {"value": "doomed"}, "max": {"value": 1}, "value": {"value": 1}, "name": {"value": "Effect: Death Gaze"}, "target": {"connection": "M09DGEVT0000001X:outputs:target"}}, "outs": {"out": {"connection": "M09DGDR20000001X:ins:in"}}, "position": {"x": 960, "y": -80}},
+      {"id": "M09DGDR20000001X", "type": "increase-condition", "state": "fixed", "inputs": {"condition": {"value": "drained"}, "max": {"value": 4}, "value": {"value": 2}, "name": {"value": "Effect: Death Gaze"}, "target": {"connection": "M09DGEVT0000001X:outputs:target"}}, "position": {"x": 1280, "y": -80}}
+    ]
+  },
+  {
+    "id": "M09PGTRG0000001X",
+    "name": "Aura of Malaise",
+    "folder": "Monster Abilities",
+    "description": "When a living creature fails Aura of Malaise's Will save, apply slowed 1; on a critical failure, apply slowed 2. Aura timing, living-target filtering, and duration remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "aura-of-malaise"],
+    "variables": {
+      "M09PGEVT0000001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M09PGEVT0000001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M09PGEVT0000001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M09PGEVT0000001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M09PGMCH0000001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M09PGMCH0000001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:aura-of-malaise"}, "list": {"connection": "M09PGEVT0000001X:outputs:options"}}, "outs": {"true": {"connection": "M09PGSPL0000001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M09PGSPL0000001X", "type": "split-outcome", "inputs": {"input": {"connection": "M09PGEVT0000001X:outputs:outcome"}}, "outs": {"failure": {"connection": "M09PGSLO0000001X:ins:in"}, "criticalFailure": {"connection": "M09PGSLO0000002X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M09PGSLO0000001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "slowed"}, "value": {"value": 1}, "name": {"value": "Effect: Aura of Malaise"}, "target": {"connection": "M09PGEVT0000001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "M09PGSLO0000002X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "slowed"}, "value": {"value": 2}, "name": {"value": "Effect: Aura of Malaise"}, "target": {"connection": "M09PGEVT0000001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  }
+]

@@ -1,0 +1,508 @@
+[
+  {
+    "id": "B350FreTrg00001X",
+    "name": "Freezing Touch — Immobilized",
+    "folder": "Spells",
+    "description": "Apply immobilized on a failed or critically failed Freezing Touch Fortitude save; persistent cold damage, Escape, and fire interaction remain native/manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "spell",
+      "freezing-touch"
+    ],
+    "variables": {
+      "B350FreEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B350FreEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B350FreEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B350FreEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B350FreMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B350FreMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:freezing-touch"
+          },
+          "list": {
+            "connection": "B350FreEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B350FreSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B350FreSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B350FreEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "failure": {
+            "connection": "B350FreImm00001X:ins:in"
+          },
+          "criticalFailure": {
+            "connection": "B350FreImm00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B350FreImm00001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "immobilized"
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "minutes"
+          },
+          "name": {
+            "value": "Effect: Freezing Touch"
+          },
+          "target": {
+            "connection": "B350FreEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 80
+        }
+      }
+    ]
+  },
+  {
+    "id": "B350ImpTrg00001X",
+    "name": "Impaling Spike — Immobilized",
+    "folder": "Spells",
+    "description": "Apply immobilized on a failed or critically failed Impaling Spike Reflex save; impalement damage, cold-iron weakness, Escape, and terrain remain native/manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "spell",
+      "impaling-spike"
+    ],
+    "variables": {
+      "B350ImpEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B350ImpEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B350ImpEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B350ImpEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B350ImpMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B350ImpMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:impaling-spike"
+          },
+          "list": {
+            "connection": "B350ImpEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B350ImpSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B350ImpSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B350ImpEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "failure": {
+            "connection": "B350ImpImm00001X:ins:in"
+          },
+          "criticalFailure": {
+            "connection": "B350ImpImm00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B350ImpImm00001X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "immobilized"
+          },
+          "name": {
+            "value": "Effect: Impaling Spike"
+          },
+          "target": {
+            "connection": "B350ImpEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 80
+        }
+      }
+    ]
+  },
+  {
+    "id": "B350GriTrg00001X",
+    "name": "Gritty Wheeze — Dazzled",
+    "folder": "Spells",
+    "description": "Apply dazzled for 1 round on a failed Gritty Wheeze Fortitude save and dazzled for 1 minute on a critical failure; area, damage, and creature-type adjustments remain native/manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "spell",
+      "gritty-wheeze"
+    ],
+    "variables": {
+      "B350GriEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B350GriEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B350GriEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B350GriEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B350GriMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B350GriMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:gritty-wheeze"
+          },
+          "list": {
+            "connection": "B350GriEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B350GriSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B350GriSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B350GriEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "failure": {
+            "connection": "B350GriDaz00001X:ins:in"
+          },
+          "criticalFailure": {
+            "connection": "B350GriDaz00002X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B350GriDaz00001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "dazzled"
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "rounds"
+          },
+          "name": {
+            "value": "Effect: Gritty Wheeze"
+          },
+          "target": {
+            "connection": "B350GriEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 80
+        }
+      },
+      {
+        "id": "B350GriDaz00002X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "dazzled"
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "minutes"
+          },
+          "name": {
+            "value": "Effect: Gritty Wheeze"
+          },
+          "target": {
+            "connection": "B350GriEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": -80
+        }
+      }
+    ]
+  },
+  {
+    "id": "B350GlaTrg00001X",
+    "name": "Glass Sand — Persistent Bleed",
+    "folder": "Spells",
+    "description": "Apply 1 persistent bleed on a failed Glass Sand Reflex save and 2 persistent bleed on a critical failure; area and slashing damage remain native/manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "spell",
+      "glass-sand"
+    ],
+    "variables": {
+      "B350GlaEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B350GlaEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B350GlaEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B350GlaEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B350GlaMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B350GlaMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:glass-sand"
+          },
+          "list": {
+            "connection": "B350GlaEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B350GlaSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B350GlaSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B350GlaEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "failure": {
+            "connection": "B350GlaPer00001X:ins:in"
+          },
+          "criticalFailure": {
+            "connection": "B350GlaPer00002X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B350GlaPer00001X",
+        "type": "persistent-damage",
+        "state": "fixed",
+        "inputs": {
+          "formula": {
+            "value": "1[bleed]"
+          },
+          "target": {
+            "connection": "B350GlaEvt00001X:outputs:target"
+          },
+          "name": {
+            "value": "Effect: Glass Sand"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 80
+        }
+      },
+      {
+        "id": "B350GlaPer00002X",
+        "type": "persistent-damage",
+        "state": "fixed",
+        "inputs": {
+          "formula": {
+            "value": "2[bleed]"
+          },
+          "target": {
+            "connection": "B350GlaEvt00001X:outputs:target"
+          },
+          "name": {
+            "value": "Effect: Glass Sand"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": -80
+        }
+      }
+    ]
+  }
+]

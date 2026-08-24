@@ -1,0 +1,78 @@
+[
+  {
+    "id": "B448AllTrg00001X",
+    "name": "Alluring Lantern — Fascinated",
+    "folder": "Equipment",
+    "description": "Apply fascinated for 1 round after a failed Alluring Lantern Will save; lure activation, movement requirement, and end-of-turn cleanup remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "alluring-lantern"],
+    "variables": {
+      "B448AllEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B448AllEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B448AllEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B448AllEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B448AllMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B448AllMch00001X", "type": "match-predicate", "inputs": {"options": {"connection": "B448AllEvt00001X:outputs:options"}, "predicate": {"value": "[\n  \"item:slug:alluring-lantern\",\n  \"check:statistic:will\"\n]"}}, "outs": {"true": {"connection": "B448AllSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B448AllSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B448AllEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B448AllFas00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B448AllFas00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "fascinated"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Alluring Lantern"}, "target": {"connection": "B448AllEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B448WsmTrg00001X",
+    "name": "Wisp Chain (Major) — Deafened",
+    "folder": "Equipment",
+    "description": "Apply deafened after a failed Wisp Chain (Major) Fortitude save; adjacency and removal when the creature moves away remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "wisp-chain-major"],
+    "variables": {
+      "B448WsmEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B448WsmEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B448WsmEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B448WsmEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B448WsmMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B448WsmMch00001X", "type": "match-predicate", "inputs": {"options": {"connection": "B448WsmEvt00001X:outputs:options"}, "predicate": {"value": "[\n  \"item:slug:wisp-chain-major\",\n  \"check:statistic:fortitude\"\n]"}}, "outs": {"true": {"connection": "B448WsmSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B448WsmSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B448WsmEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B448WsmDef00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B448WsmDef00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "deafened"}, "name": {"value": "Effect: Wisp Chain (Major)"}, "target": {"connection": "B448WsmEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B448RedTrg00001X",
+    "name": "Redpitch Bomb (Greater) — Clumsy",
+    "folder": "Equipment",
+    "description": "Apply clumsy 2 until the start of the next turn on a critical Redpitch Bomb (Greater) hit; bomb damage and splash remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "redpitch-bomb-greater"],
+    "variables": {
+      "B448RedEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B448RedEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B448RedEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B448RedEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B448RedMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B448RedMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:redpitch-bomb-greater"}, "list": {"connection": "B448RedEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B448RedSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B448RedSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B448RedEvt00001X:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "B448RedClm00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B448RedClm00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "clumsy"}, "value": {"value": 2}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Redpitch Bomb (Greater)"}, "target": {"connection": "B448RedEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B448AraTrg00001X",
+    "name": "Arachnolute — Immobilized",
+    "folder": "Equipment",
+    "description": "Apply immobilized on a failed or critically failed Arachnolute Web Chord Reflex save; cone placement and Escape remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "arachnolute"],
+    "variables": {
+      "B448AraEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B448AraEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B448AraEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B448AraEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B448AraMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B448AraMch00001X", "type": "match-predicate", "inputs": {"options": {"connection": "B448AraEvt00001X:outputs:options"}, "predicate": {"value": "[\n  \"item:slug:arachnolute\",\n  \"check:statistic:reflex\"\n]"}}, "outs": {"true": {"connection": "B448AraSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B448AraSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B448AraEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B448AraImm00001X:ins:in"}, "criticalFailure": {"connection": "B448AraImm00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B448AraImm00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "immobilized"}, "name": {"value": "Effect: Arachnolute"}, "target": {"connection": "B448AraEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

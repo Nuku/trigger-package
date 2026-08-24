@@ -1,0 +1,10 @@
+# OS and editor files
+.DS_Store
+Thumbs.db
+.vscode/
+
+# Foundry and local development data
+logs/
+packs/
+*.ldb
+*.log

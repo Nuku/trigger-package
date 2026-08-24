@@ -1,0 +1,79 @@
+[
+  {
+    "id": "E20DspTrg000001X",
+    "name": "Disrupting",
+    "folder": "Equipment",
+    "description": "On a critical hit with a Disrupting weapon against an undead or negative-healing target, apply enfeebled 1 for 1 round; undead qualification, vitality persistent damage, and exact end-of-turn timing remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "disrupting"],
+    "variables": {
+      "E20DspEvt000001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "E20DspEvt000001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "E20DspEvt000001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "E20DspEvt000001X", "type": "attack-roll-event", "outs": {"out": {"connection": "E20DspMch000001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "E20DspMch000001X", "type": "match-predicate", "inputs": {"options": {"connection": "E20DspEvt000001X:outputs:options"}, "predicate": {"value": "[\n  \"item:slug:disrupting\",\n  \"target:negative-healing\"\n]"}}, "outs": {"true": {"connection": "E20DspSpl000001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "E20DspSpl000001X", "type": "split-outcome", "inputs": {"input": {"connection": "E20DspEvt000001X:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "E20DspEbf000001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "E20DspEbf000001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "enfeebled"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Disrupting"}, "target": {"connection": "E20DspEvt000001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "E20GDsTrg000001X",
+    "name": "Greater Disrupting",
+    "folder": "Equipment",
+    "description": "On a critical hit with a Greater Disrupting weapon against an undead or negative-healing target, apply enfeebled 1 and stupefied 1 for 1 round; target qualification, vitality persistent damage, and exact persistence duration remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "greater-disrupting"],
+    "variables": {
+      "E20GDsEvt000001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "E20GDsEvt000001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "E20GDsEvt000001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "E20GDsEvt000001X", "type": "attack-roll-event", "outs": {"out": {"connection": "E20GDsMch000001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "E20GDsMch000001X", "type": "match-predicate", "inputs": {"options": {"connection": "E20GDsEvt000001X:outputs:options"}, "predicate": {"value": "[\n  \"item:slug:greater-disrupting\",\n  \"target:negative-healing\"\n]"}}, "outs": {"true": {"connection": "E20GDsSpl000001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "E20GDsSpl000001X", "type": "split-outcome", "inputs": {"input": {"connection": "E20GDsEvt000001X:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "E20GDsEbf000001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "E20GDsEbf000001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "enfeebled"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Greater Disrupting"}, "target": {"connection": "E20GDsEvt000001X:outputs:target"}}, "outs": {"out": {"connection": "E20GDsStp000001X:ins:in"}}, "position": {"x": 960, "y": -80}},
+      {"id": "E20GDsStp000001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "stupefied"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Greater Disrupting"}, "target": {"connection": "E20GDsEvt000001X:outputs:target"}}, "position": {"x": 1280, "y": -80}}
+    ]
+  },
+  {
+    "id": "E20FroTrg000001X",
+    "name": "Frost",
+    "folder": "Equipment",
+    "description": "On a Frost weapon's qualifying Fortitude save, apply slowed 1 on a failure or critical failure for 1 round; critical-hit setup, save DC, cold damage, and the target's successful-save exception remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "frost"],
+    "variables": {
+      "E20FroEvt000001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "E20FroEvt000001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "E20FroEvt000001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "E20FroEvt000001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "E20FroMch000001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "E20FroMch000001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:frost"}, "list": {"connection": "E20FroEvt000001X:outputs:options"}}, "outs": {"true": {"connection": "E20FroSpl000001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "E20FroSpl000001X", "type": "split-outcome", "inputs": {"input": {"connection": "E20FroEvt000001X:outputs:outcome"}}, "outs": {"failure": {"connection": "E20FroSlo000001X:ins:in"}, "criticalFailure": {"connection": "E20FroSlo000001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "E20FroSlo000001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "slowed"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Frost"}, "target": {"connection": "E20FroEvt000001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "E20WndTrg000001X",
+    "name": "Wounding",
+    "folder": "Equipment",
+    "description": "After a successful Wounding weapon attack, apply 1d6 persistent bleed; hit confirmation, bleed immunity/resistance, recovery checks, and weapon damage-die interactions remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "wounding"],
+    "variables": {
+      "E20WndEvt000001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "E20WndEvt000001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "E20WndEvt000001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "E20WndEvt000001X", "type": "attack-roll-event", "outs": {"out": {"connection": "E20WndMch000001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "E20WndMch000001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:wounding"}, "list": {"connection": "E20WndEvt000001X:outputs:options"}}, "outs": {"true": {"connection": "E20WndSpl000001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "E20WndSpl000001X", "type": "split-outcome", "inputs": {"input": {"connection": "E20WndEvt000001X:outputs:outcome"}}, "outs": {"success": {"connection": "E20WndBle000001X:ins:in"}, "criticalSuccess": {"connection": "E20WndBle000001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "E20WndBle000001X", "type": "create-persistent", "inputs": {"formula": {"value": "1d6[bleed]"}, "target": {"connection": "E20WndEvt000001X:outputs:target"}, "name": {"value": "Effect: Wounding"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

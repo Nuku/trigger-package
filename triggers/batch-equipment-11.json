@@ -1,0 +1,80 @@
+[
+  {
+    "id": "B11CHDRTRG000001",
+    "name": "Warcaller's Chime of Dread",
+    "folder": "Equipment",
+    "description": "On a Warcaller's Chime of Dread Will-save failure, apply frightened 1; on a critical failure, apply frightened 2. Emanation placement, activation, and temporary immunity remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "warcallers-chime-of-dread"],
+    "variables": {
+      "B11CHDREVE000001:outputs:roller": {"type": "target", "isArray": false, "label": "Roller"},
+      "B11CHDREVE000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"},
+      "B11CHDREVE000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "B11CHDREVE000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B11CHDRMCH000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B11CHDRMCH000001", "type": "match-predicate", "inputs": {"options": {"connection": "B11CHDREVE000001:outputs:options"}, "predicate": {"value": "[\n  \"item:slug:warcallers-chime-of-dread\"\n]"}}, "outs": {"true": {"connection": "B11CHDRSPL000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B11CHDRSPL000001", "type": "split-outcome", "inputs": {"input": {"connection": "B11CHDREVE000001:outputs:outcome"}}, "outs": {"failure": {"connection": "B11CHDRFRI000001:ins:in"}, "criticalFailure": {"connection": "B11CHDRFRI000002:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B11CHDRFRI000001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 1}, "name": {"value": "Effect: Warcaller's Chime of Dread"}, "target": {"connection": "B11CHDREVE000001:outputs:roller"}}, "position": {"x": 960, "y": 100}},
+      {"id": "B11CHDRFRI000002", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 2}, "name": {"value": "Effect: Warcaller's Chime of Dread"}, "target": {"connection": "B11CHDREVE000001:outputs:roller"}}, "position": {"x": 960, "y": -100}}
+    ]
+  },
+  {
+    "id": "B11CHBLTRG000001",
+    "name": "Warcaller's Chime of Blasting",
+    "folder": "Equipment",
+    "description": "On a Warcaller's Chime of Blasting Fortitude-save failure or critical failure, apply prone. Emanation placement, sonic damage, activation, and save adjustments remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "warcallers-chime-of-blasting"],
+    "variables": {
+      "B11CHBLEVE000001:outputs:roller": {"type": "target", "isArray": false, "label": "Roller"},
+      "B11CHBLEVE000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"},
+      "B11CHBLEVE000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "B11CHBLEVE000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B11CHBLMCH000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B11CHBLMCH000001", "type": "match-predicate", "inputs": {"options": {"connection": "B11CHBLEVE000001:outputs:options"}, "predicate": {"value": "[\n  \"item:slug:warcallers-chime-of-blasting\"\n]"}}, "outs": {"true": {"connection": "B11CHBLSPL000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B11CHBLSPL000001", "type": "split-outcome", "inputs": {"input": {"connection": "B11CHBLEVE000001:outputs:outcome"}}, "outs": {"failure": {"connection": "B11CHBLPRN000001:ins:in"}, "criticalFailure": {"connection": "B11CHBLPRN000001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B11CHBLPRN000001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "prone"}, "name": {"value": "Effect: Warcaller's Chime of Blasting"}, "target": {"connection": "B11CHBLEVE000001:outputs:roller"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B11ICSLTRG000001",
+    "name": "Ice Slick Snare",
+    "folder": "Equipment",
+    "description": "On an Ice Slick Snare Reflex-save failure or critical failure, apply prone after the snare's cold damage. Snare placement, trigger timing, and damage remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "ice-slick-snare"],
+    "variables": {
+      "B11ICSLEVE000001:outputs:roller": {"type": "target", "isArray": false, "label": "Roller"},
+      "B11ICSLEVE000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"},
+      "B11ICSLEVE000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "B11ICSLEVE000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B11ICSLMCH000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B11ICSLMCH000001", "type": "match-predicate", "inputs": {"options": {"connection": "B11ICSLEVE000001:outputs:options"}, "predicate": {"value": "[\n  \"item:slug:ice-slick-snare\"\n]"}}, "outs": {"true": {"connection": "B11ICSLSPL000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B11ICSLSPL000001", "type": "split-outcome", "inputs": {"input": {"connection": "B11ICSLEVE000001:outputs:outcome"}}, "outs": {"failure": {"connection": "B11ICSLPRN000001:ins:in"}, "criticalFailure": {"connection": "B11ICSLPRN000001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B11ICSLPRN000001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "prone"}, "name": {"value": "Effect: Ice Slick Snare"}, "target": {"connection": "B11ICSLEVE000001:outputs:roller"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B11SPCLTRG000001",
+    "name": "Spun Cloud (Red)",
+    "folder": "Equipment",
+    "description": "On a Spun Cloud (Red) Will-save failure, apply frightened 2; on a critical failure, apply frightened 3. Cloud placement, activation, temporary immunity, and the spell-like area remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "spun-cloud-red"],
+    "variables": {
+      "B11SPCLEVE000001:outputs:roller": {"type": "target", "isArray": false, "label": "Roller"},
+      "B11SPCLEVE000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"},
+      "B11SPCLEVE000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "B11SPCLEVE000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B11SPCLMCH000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B11SPCLMCH000001", "type": "match-predicate", "inputs": {"options": {"connection": "B11SPCLEVE000001:outputs:options"}, "predicate": {"value": "[\n  \"item:slug:spun-cloud-red\"\n]"}}, "outs": {"true": {"connection": "B11SPCLSPL000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B11SPCLSPL000001", "type": "split-outcome", "inputs": {"input": {"connection": "B11SPCLEVE000001:outputs:outcome"}}, "outs": {"failure": {"connection": "B11SPCLFRI000001:ins:in"}, "criticalFailure": {"connection": "B11SPCLFRI000002:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B11SPCLFRI000001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 2}, "name": {"value": "Effect: Spun Cloud (Red)"}, "target": {"connection": "B11SPCLEVE000001:outputs:roller"}}, "position": {"x": 960, "y": 100}},
+      {"id": "B11SPCLFRI000002", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 3}, "name": {"value": "Effect: Spun Cloud (Red)"}, "target": {"connection": "B11SPCLEVE000001:outputs:roller"}}, "position": {"x": 960, "y": -100}}
+    ]
+  }
+]

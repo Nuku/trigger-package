@@ -1,0 +1,78 @@
+[
+  {
+    "id": "S06AcidArrow0001",
+    "name": "Acid Arrow — Persistent Acid",
+    "folder": "Spells",
+    "description": "On a successful Acid Arrow spell attack, apply 1d6 persistent acid damage; a critical success applies 2d6. Heightened rank scaling remains manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "acid-arrow"],
+    "variables": {
+      "S06AcidEvt000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "S06AcidEvt000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"},
+      "S06AcidEvt000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "S06AcidEvt000001", "type": "attack-roll-event", "outs": {"out": {"connection": "S06AcidMch000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "S06AcidMch000001", "type": "match-predicate", "inputs": {"options": {"connection": "S06AcidEvt000001:outputs:options"}, "predicate": {"value": "[\n  \"item:slug:acid-arrow\"\n]"}}, "outs": {"true": {"connection": "S06AcidSpl000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "S06AcidSpl000001", "type": "split-outcome", "inputs": {"input": {"connection": "S06AcidEvt000001:outputs:outcome"}}, "outs": {"success": {"connection": "S06AcidPer000001:ins:in"}, "criticalSuccess": {"connection": "S06AcidPer000002:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "S06AcidPer000001", "type": "create-persistent", "inputs": {"die": {"value": "1d6"}, "target": {"connection": "S06AcidEvt000001:outputs:target"}, "type": {"value": "acid"}}, "position": {"x": 960, "y": 80}},
+      {"id": "S06AcidPer000002", "type": "create-persistent", "inputs": {"die": {"value": "2d6"}, "target": {"connection": "S06AcidEvt000001:outputs:target"}, "type": {"value": "acid"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "S06ClingIce00001",
+    "name": "Clinging Ice — Immobilized",
+    "folder": "Spells",
+    "description": "On a critically failed Reflex save against Clinging Ice, apply immobilized; the spell's Speed penalty, damage, sustain, and cleanup remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "clinging-ice"],
+    "variables": {
+      "S06ClingEvt00001:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "S06ClingEvt00001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "S06ClingEvt00001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "S06ClingMch00001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "S06ClingMch00001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:clinging-ice"}, "list": {"connection": "S06ClingEvt00001:outputs:options"}}, "outs": {"true": {"connection": "S06ClingCmp00001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "S06ClingCmp00001", "type": "compare-outcomes", "inputs": {"a": {"connection": "S06ClingEvt00001:outputs:outcome"}, "b": {"value": "criticalFailure"}}, "outs": {"true": {"connection": "S06ClingImm00001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "S06ClingImm00001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "immobilized"}, "name": {"value": "Effect: Clinging Ice"}, "target": {"connection": "S06ClingEvt00001:outputs:roller"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "S06DistrChat0001",
+    "name": "Distracting Chatter — Off-Guard",
+    "folder": "Spells",
+    "description": "On a successful, failed, or critically failed Will save against Distracting Chatter, apply off-guard for 1, 3, or 10 rounds respectively; auditory flat checks remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "distracting-chatter"],
+    "variables": {
+      "S06DistrEvt00001:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "S06DistrEvt00001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "S06DistrEvt00001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "S06DistrMch00001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "S06DistrMch00001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:distracting-chatter"}, "list": {"connection": "S06DistrEvt00001:outputs:options"}}, "outs": {"true": {"connection": "S06DistrSpl00001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "S06DistrSpl00001", "type": "split-outcome", "inputs": {"input": {"connection": "S06DistrEvt00001:outputs:outcome"}}, "outs": {"success": {"connection": "S06DistrOff00001:ins:in"}, "failure": {"connection": "S06DistrOff00002:ins:in"}, "criticalFailure": {"connection": "S06DistrOff00003:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "S06DistrOff00001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "name": {"value": "Effect: Distracting Chatter"}, "target": {"connection": "S06DistrEvt00001:outputs:roller"}}, "position": {"x": 960, "y": 120}},
+      {"id": "S06DistrOff00002", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 3}, "name": {"value": "Effect: Distracting Chatter"}, "target": {"connection": "S06DistrEvt00001:outputs:roller"}}, "position": {"x": 960, "y": 0}},
+      {"id": "S06DistrOff00003", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 10}, "name": {"value": "Effect: Distracting Chatter"}, "target": {"connection": "S06DistrEvt00001:outputs:roller"}}, "position": {"x": 960, "y": -120}}
+    ]
+  },
+  {
+    "id": "S06BlossGore0001",
+    "name": "Blossoming Gore — Drained",
+    "folder": "Spells",
+    "description": "On a failed Fortitude save against Blossoming Gore, apply drained 1; the persistent bleed field, thrall placement, and critical-failure escalation remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "blossoming-gore"],
+    "variables": {
+      "S06BlossEvt00001:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "S06BlossEvt00001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "S06BlossEvt00001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "S06BlossMch00001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "S06BlossMch00001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:blossoming-gore"}, "list": {"connection": "S06BlossEvt00001:outputs:options"}}, "outs": {"true": {"connection": "S06BlossCmp00001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "S06BlossCmp00001", "type": "compare-outcomes", "inputs": {"a": {"connection": "S06BlossEvt00001:outputs:outcome"}, "b": {"value": "failure"}}, "outs": {"true": {"connection": "S06BlossDra00001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "S06BlossDra00001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "drained"}, "value": {"value": 1}, "name": {"value": "Effect: Blossoming Gore"}, "target": {"connection": "S06BlossEvt00001:outputs:roller"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

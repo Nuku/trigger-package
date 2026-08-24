@@ -1,0 +1,88 @@
+[
+  {
+    "id": "E18DescTrg00001X",
+    "name": "Desiccating Scepter",
+    "folder": "Equipment",
+    "description": "On a Desiccating Scepter Fortitude save, apply slowed 1 on a failure or slowed 2 on a critical failure; damage, usage limits, and water-targeting behavior remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "desiccating-scepter"],
+    "variables": {
+      "E18DescEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "E18DescEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "E18DescEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "E18DescEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "E18DescMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "E18DescMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:desiccating-scepter"}, "list": {"connection": "E18DescEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "E18DescSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "E18DescSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "E18DescEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "E18DescSlo00001X:ins:in"}, "criticalFailure": {"connection": "E18DescSlo00002X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "E18DescSlo00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "slowed"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Desiccating Scepter"}, "target": {"connection": "E18DescEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "E18DescSlo00002X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "slowed"}, "value": {"value": 2}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Desiccating Scepter"}, "target": {"connection": "E18DescEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "E18MarkTrg00001X",
+    "name": "Marking Snare",
+    "folder": "Equipment",
+    "description": "On a critical failure against a Marking Snare Reflex save, apply blinded for 1 round; the snare's marking and tracking benefits remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "marking-snare"],
+    "variables": {
+      "E18MarkEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "E18MarkEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "E18MarkEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "E18MarkEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "E18MarkMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "E18MarkMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:marking-snare"}, "list": {"connection": "E18MarkEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "E18MarkSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "E18MarkSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "E18MarkEvt00001X:outputs:outcome"}}, "outs": {"criticalFailure": {"connection": "E18MarkBli00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "E18MarkBli00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "blinded"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Marking Snare"}, "target": {"connection": "E18MarkEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "E18DethTrg00001X",
+    "name": "Death Coil",
+    "folder": "Equipment",
+    "description": "On a Death Coil Fortitude save, apply stunned 2 on a failure or stunned 4 on a critical failure; electricity damage and activation timing remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "death-coil"],
+    "variables": {
+      "E18DethEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "E18DethEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "E18DethEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "E18DethEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "E18DethMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "E18DethMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:death-coil"}, "list": {"connection": "E18DethEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "E18DethSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "E18DethSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "E18DethEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "E18DethStu00001X:ins:in"}, "criticalFailure": {"connection": "E18DethStu00002X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "E18DethStu00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "duration": {"value": 2}, "name": {"value": "Effect: Death Coil"}, "target": {"connection": "E18DethEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "E18DethStu00002X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "duration": {"value": 4}, "name": {"value": "Effect: Death Coil"}, "target": {"connection": "E18DethEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "E18MudrTrg00001X",
+    "name": "Mudrock Snare",
+    "folder": "Equipment",
+    "description": "On a Mudrock Snare Fortitude save, apply stunned 2 on a failure; on a critical failure apply stunned 3 and immobilized for 1 minute. Speed penalties, Escape, and placement remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "mudrock-snare"],
+    "variables": {
+      "E18MudrEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "E18MudrEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "E18MudrEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"},
+      "E18MudrAltEvt01X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "E18MudrAltEvt01X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "E18MudrAltEvt01X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "E18MudrEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "E18MudrMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "E18MudrMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:mudrock-snare"}, "list": {"connection": "E18MudrEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "E18MudrSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "E18MudrSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "E18MudrEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "E18MudrStu00001X:ins:in"}, "criticalFailure": {"connection": "E18MudrStu00002X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "E18MudrStu00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "duration": {"value": 2}, "name": {"value": "Effect: Mudrock Snare"}, "target": {"connection": "E18MudrEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "E18MudrStu00002X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "duration": {"value": 3}, "name": {"value": "Effect: Mudrock Snare"}, "target": {"connection": "E18MudrEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}},
+      {"id": "E18MudrAltEvt01X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "E18MudrAltMch01X:ins:in"}}, "position": {"x": 0, "y": 400}},
+      {"id": "E18MudrAltMch01X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:mudrock-snare"}, "list": {"connection": "E18MudrAltEvt01X:outputs:options"}}, "outs": {"true": {"connection": "E18MudrAltSpl01X:ins:in"}}, "position": {"x": 320, "y": 400}},
+      {"id": "E18MudrAltSpl01X", "type": "split-outcome", "inputs": {"input": {"connection": "E18MudrAltEvt01X:outputs:outcome"}}, "outs": {"criticalFailure": {"connection": "E18MudrImm00001X:ins:in"}}, "position": {"x": 640, "y": 400}},
+      {"id": "E18MudrImm00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "immobilized"}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Mudrock Snare"}, "target": {"connection": "E18MudrAltEvt01X:outputs:target"}}, "position": {"x": 960, "y": 400}}
+    ]
+  }
+]

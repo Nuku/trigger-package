@@ -1,0 +1,97 @@
+[
+  {
+    "id": "B305SnbTrg00001X",
+    "name": "Sinister Bite — Frightened",
+    "folder": "Monster Abilities",
+    "description": "Increase frightened by 1 after a failed Sinister Bite Will save, capped at frightened 4; creature qualification and temporary immunity remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "sinister-bite"],
+    "variables": {"B305SnbEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B305SnbEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B305SnbEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B305SnbEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B305SnbMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B305SnbMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:sinister-bite"}, "list": {"connection": "B305SnbEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B305SnbSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B305SnbSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B305SnbEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B305SnbInc00001X:ins:in"}, "criticalFailure": {"connection": "B305SnbInc00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B305SnbInc00001X", "type": "increase-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "max": {"value": 4}, "value": {"value": 1}, "name": {"value": "Effect: Sinister Bite"}, "target": {"connection": "B305SnbEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B305ToiTrg00001X",
+    "name": "Touch of Idiocy — Stupefied",
+    "folder": "Monster Abilities",
+    "description": "Apply stupefied 2 on a failed Touch of Idiocy Will save and stupefied 4 on a critical failure; damage and duration remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "touch-of-idiocy"],
+    "variables": {"B305ToiEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B305ToiEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B305ToiEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B305ToiEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B305ToiMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B305ToiMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:touch-of-idiocy"}, "list": {"connection": "B305ToiEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B305ToiSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B305ToiSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B305ToiEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B305ToiFai00001X:ins:in"}, "criticalFailure": {"connection": "B305ToiCfl00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B305ToiFai00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stupefied"}, "value": {"value": 2}, "name": {"value": "Effect: Touch of Idiocy"}, "target": {"connection": "B305ToiEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B305ToiCfl00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stupefied"}, "value": {"value": 4}, "name": {"value": "Effect: Touch of Idiocy"}, "target": {"connection": "B305ToiEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "B305TstTrg00001X",
+    "name": "Thunderstrike — Prone and Deafened",
+    "folder": "Monster Abilities",
+    "description": "Apply prone and deafened for 1 round after a failed Thunderstrike Fortitude save; the preceding thunderbolt hit, damage, and targeting remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "thunderstrike"],
+    "variables": {"B305TstEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B305TstEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B305TstEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B305TstEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B305TstMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B305TstMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:thunderstrike"}, "list": {"connection": "B305TstEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B305TstSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B305TstSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B305TstEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B305TstPrn00001X:ins:in"}, "criticalFailure": {"connection": "B305TstPrn00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B305TstPrn00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "prone"}, "name": {"value": "Effect: Thunderstrike"}, "target": {"connection": "B305TstEvt00001X:outputs:target"}}, "outs": {"out": {"connection": "B305TstDfn00001X:ins:in"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B305TstDfn00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "deafened"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Thunderstrike"}, "target": {"connection": "B305TstEvt00001X:outputs:target"}}, "position": {"x": 1280, "y": 0}}
+    ]
+  },
+  {
+    "id": "B305XpaTrg00001X",
+    "name": "Xill Paralysis — Slowed and Paralyzed",
+    "folder": "Monster Abilities",
+    "description": "Apply slowed 1 on a successful Xill Paralysis save, paralyzed for 1 round on a failure, and paralyzed on a critical failure; recovery saves and immunity remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "xill-paralysis"],
+    "variables": {"B305XpaEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B305XpaEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B305XpaEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B305XpaEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B305XpaMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B305XpaMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:xill-paralysis"}, "list": {"connection": "B305XpaEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B305XpaSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B305XpaSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B305XpaEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B305XpaSlo00001X:ins:in"}, "failure": {"connection": "B305XpaFai00001X:ins:in"}, "criticalFailure": {"connection": "B305XpaCfl00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B305XpaSlo00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "slowed"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Xill Paralysis"}, "target": {"connection": "B305XpaEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B305XpaFai00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "paralyzed"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Xill Paralysis"}, "target": {"connection": "B305XpaEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B305XpaCfl00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "paralyzed"}, "name": {"value": "Effect: Xill Paralysis"}, "target": {"connection": "B305XpaEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "B305AprTrg00001X",
+    "name": "Am I Pretty? — Immobilized and Paralyzed",
+    "folder": "Monster Abilities",
+    "description": "Apply immobilized for 1 round on a failed Am I Pretty? Will save and paralyzed for 1 round on a critical failure; the verbal response rider remains native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "am-i-pretty"],
+    "variables": {"B305AprEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B305AprEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B305AprEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B305AprEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B305AprMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B305AprMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:am-i-pretty-"}, "list": {"connection": "B305AprEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B305AprSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B305AprSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B305AprEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B305AprImm00001X:ins:in"}, "criticalFailure": {"connection": "B305AprPar00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B305AprImm00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "immobilized"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Am I Pretty?"}, "target": {"connection": "B305AprEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B305AprPar00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "paralyzed"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Am I Pretty?"}, "target": {"connection": "B305AprEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "B305BblTrg00001X",
+    "name": "Brutal Blows — Prone",
+    "folder": "Monster Abilities",
+    "description": "Apply prone after a Brutal Blows critical hit; the fist Strike and attack context remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "brutal-blows"],
+    "variables": {"B305BblEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B305BblEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B305BblEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B305BblEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B305BblMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B305BblMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:brutal-blows"}, "list": {"connection": "B305BblEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B305BblSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B305BblSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B305BblEvt00001X:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "B305BblPrn00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B305BblPrn00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "prone"}, "name": {"value": "Effect: Brutal Blows"}, "target": {"connection": "B305BblEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

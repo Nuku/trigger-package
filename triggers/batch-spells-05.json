@@ -1,0 +1,181 @@
+[
+  {
+    "id": "AccelDecSpell001",
+    "name": "Accelerated Decomposition — Enfeebled",
+    "folder": "Spells",
+    "description": "On a failed or critically failed Fortitude save against Accelerated Decomposition, apply enfeebled 1; damage and the spell's additional clumsy/drained riders remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "accelerated-decomposition"],
+    "variables": {
+      "AccelEvtNode0001:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "AccelEvtNode0001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {
+        "id": "AccelEvtNode0001",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {"for": {"value": "saving-throw"}},
+        "outs": {"out": {"connection": "AccelOptNode0001:ins:in"}},
+        "position": {"x": 0, "y": 0}
+      },
+      {
+        "id": "AccelOptNode0001",
+        "type": "list-contains",
+        "inputs": {"entry": {"value": "item:slug:accelerated-decomposition"}, "list": {"connection": "AccelEvtNode0001:outputs:options"}},
+        "outs": {"true": {"connection": "AccelOutNode0001:ins:in"}},
+        "position": {"x": 320, "y": 0}
+      },
+      {
+        "id": "AccelOutNode0001",
+        "type": "split-outcome",
+        "inputs": {"input": {"connection": "AccelEvtNode0001:outputs:outcome"}},
+        "outs": {"failure": {"connection": "AccelEnfNode0001:ins:in"}, "criticalFailure": {"connection": "AccelEnfNode0001:ins:in"}},
+        "position": {"x": 640, "y": 0}
+      },
+      {
+        "id": "AccelEnfNode0001",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {"condition": {"value": "enfeebled"}, "value": {"value": 1}, "duration": {"value": 1}, "name": {"value": "Effect: Accelerated Decomposition"}, "target": {"connection": "AccelEvtNode0001:outputs:roller"}},
+        "position": {"x": 960, "y": 0}
+      }
+    ]
+  },
+  {
+    "id": "CorpBloomTrig001",
+    "name": "Corpse Bloom — Sickened",
+    "folder": "Spells",
+    "description": "On a failed Fortitude save against Corpse Bloom, apply sickened 1; on a critical failure, apply sickened 2. Area timing, damage, and sustain behavior remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "corpse-bloom"],
+    "variables": {
+      "CorpEvtNode00001:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "CorpEvtNode00001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {
+        "id": "CorpEvtNode00001",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {"for": {"value": "saving-throw"}},
+        "outs": {"out": {"connection": "CorpOptNode00001:ins:in"}},
+        "position": {"x": 0, "y": 0}
+      },
+      {
+        "id": "CorpOptNode00001",
+        "type": "list-contains",
+        "inputs": {"entry": {"value": "item:slug:corpse-bloom"}, "list": {"connection": "CorpEvtNode00001:outputs:options"}},
+        "outs": {"true": {"connection": "CorpOutNode00001:ins:in"}},
+        "position": {"x": 320, "y": 0}
+      },
+      {
+        "id": "CorpOutNode00001",
+        "type": "split-outcome",
+        "inputs": {"input": {"connection": "CorpEvtNode00001:outputs:outcome"}},
+        "outs": {"failure": {"connection": "CorpSikNode00001:ins:in"}, "criticalFailure": {"connection": "CorpSikNode00002:ins:in"}},
+        "position": {"x": 640, "y": 0}
+      },
+      {
+        "id": "CorpSikNode00001",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {"condition": {"value": "sickened"}, "value": {"value": 1}, "name": {"value": "Effect: Corpse Bloom"}, "target": {"connection": "CorpEvtNode00001:outputs:roller"}},
+        "position": {"x": 960, "y": -80}
+      },
+      {
+        "id": "CorpSikNode00002",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {"condition": {"value": "sickened"}, "value": {"value": 2}, "name": {"value": "Effect: Corpse Bloom"}, "target": {"connection": "CorpEvtNode00001:outputs:roller"}},
+        "position": {"x": 960, "y": 80}
+      }
+    ]
+  },
+  {
+    "id": "DreadSecTrig0001",
+    "name": "Dread Secret — Frightened",
+    "folder": "Spells",
+    "description": "On a failed Will save against Dread Secret, apply frightened 1; the spell's revelation and sustained duration remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "dread-secret"],
+    "variables": {
+      "DreadEvtNode0001:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "DreadEvtNode0001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {
+        "id": "DreadEvtNode0001",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {"for": {"value": "saving-throw"}},
+        "outs": {"out": {"connection": "DreadOptNode0001:ins:in"}},
+        "position": {"x": 0, "y": 0}
+      },
+      {
+        "id": "DreadOptNode0001",
+        "type": "list-contains",
+        "inputs": {"entry": {"value": "item:slug:dread-secret"}, "list": {"connection": "DreadEvtNode0001:outputs:options"}},
+        "outs": {"true": {"connection": "DreadOutNode0001:ins:in"}},
+        "position": {"x": 320, "y": 0}
+      },
+      {
+        "id": "DreadOutNode0001",
+        "type": "compare-outcomes",
+        "inputs": {"a": {"connection": "DreadEvtNode0001:outputs:outcome"}, "b": {"value": "failure"}},
+        "outs": {"true": {"connection": "DreadFgtNode0001:ins:in"}},
+        "position": {"x": 640, "y": 0}
+      },
+      {
+        "id": "DreadFgtNode0001",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {"condition": {"value": "frightened"}, "value": {"value": 1}, "duration": {"value": 1}, "name": {"value": "Effect: Dread Secret"}, "target": {"connection": "DreadEvtNode0001:outputs:roller"}},
+        "position": {"x": 960, "y": 0}
+      }
+    ]
+  },
+  {
+    "id": "GravWaveTrig0001",
+    "name": "Gravity Wave — Prone",
+    "folder": "Spells",
+    "description": "On a failed or critically failed Reflex save against Gravity Wave, apply prone; the spell's damage and sustained duration remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "gravity-wave"],
+    "variables": {
+      "GravEvtNode00001:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "GravEvtNode00001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {
+        "id": "GravEvtNode00001",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {"for": {"value": "saving-throw"}},
+        "outs": {"out": {"connection": "GravOptNode00001:ins:in"}},
+        "position": {"x": 0, "y": 0}
+      },
+      {
+        "id": "GravOptNode00001",
+        "type": "list-contains",
+        "inputs": {"entry": {"value": "item:slug:gravity-wave"}, "list": {"connection": "GravEvtNode00001:outputs:options"}},
+        "outs": {"true": {"connection": "GravOutNode00001:ins:in"}},
+        "position": {"x": 320, "y": 0}
+      },
+      {
+        "id": "GravOutNode00001",
+        "type": "split-outcome",
+        "inputs": {"input": {"connection": "GravEvtNode00001:outputs:outcome"}},
+        "outs": {"failure": {"connection": "GravPrnNode00001:ins:in"}, "criticalFailure": {"connection": "GravPrnNode00001:ins:in"}},
+        "position": {"x": 640, "y": 0}
+      },
+      {
+        "id": "GravPrnNode00001",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {"condition": {"value": "prone"}, "name": {"value": "Effect: Gravity Wave"}, "target": {"connection": "GravEvtNode00001:outputs:roller"}},
+        "position": {"x": 960, "y": 0}
+      }
+    ]
+  }
+]

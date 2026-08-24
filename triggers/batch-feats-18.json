@@ -1,0 +1,78 @@
+[
+  {
+    "id": "B18AntRshTrg0001",
+    "name": "Antler Rush",
+    "folder": "Feats & Features",
+    "description": "After an Antler Rush horn Strike is a critical success, apply prone for 1 round. Movement, push distance, and the horn Strike prerequisites remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "antler-rush"],
+    "variables": {
+      "B18AntRshEvt0001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B18AntRshEvt0001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B18AntRshEvt0001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B18AntRshEvt0001", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B18AntRshMch0001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B18AntRshMch0001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:antler-rush"}, "list": {"connection": "B18AntRshEvt0001:outputs:options"}}, "outs": {"true": {"connection": "B18AntRshSpl0001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B18AntRshSpl0001", "type": "split-outcome", "inputs": {"input": {"connection": "B18AntRshEvt0001:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "B18AntRshPrn0001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B18AntRshPrn0001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "prone"}, "duration": {"value": 1}, "name": {"value": "Effect: Antler Rush"}, "target": {"connection": "B18AntRshEvt0001:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B18AnchrArrTrg01",
+    "name": "Anchoring Arrow",
+    "folder": "Feats & Features",
+    "description": "After an Anchoring Arrow critical hit, apply immobilized for 1 round. Ammunition, weapon, range, and the arrow's exact anchoring cleanup remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "anchoring-arrow"],
+    "variables": {
+      "B18AnchrArrEvt01:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B18AnchrArrEvt01:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B18AnchrArrEvt01:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B18AnchrArrEvt01", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B18AnchrArrMch01:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B18AnchrArrMch01", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:anchoring-arrow"}, "list": {"connection": "B18AnchrArrEvt01:outputs:options"}}, "outs": {"true": {"connection": "B18AnchrArrSpl01:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B18AnchrArrSpl01", "type": "split-outcome", "inputs": {"input": {"connection": "B18AnchrArrEvt01:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "B18AnchrArrImm01:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B18AnchrArrImm01", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "immobilized"}, "duration": {"value": 1}, "name": {"value": "Effect: Anchoring Arrow"}, "target": {"connection": "B18AnchrArrEvt01:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B18BearHugTrg001",
+    "name": "Bear Hug",
+    "folder": "Feats & Features",
+    "description": "After the qualifying Bear Hug Athletics check succeeds, apply grabbed for 1 round. The prior claw Strike, hand requirements, Escape, and duration cleanup remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "bear-hug"],
+    "variables": {
+      "B18BearHugEvt001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B18BearHugEvt001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B18BearHugEvt001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B18BearHugEvt001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "skill-check"}}, "outs": {"out": {"connection": "B18BearHugMch001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B18BearHugMch001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:bear-hug"}, "list": {"connection": "B18BearHugEvt001:outputs:options"}}, "outs": {"true": {"connection": "B18BearHugSpl001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B18BearHugSpl001", "type": "split-outcome", "inputs": {"input": {"connection": "B18BearHugEvt001:outputs:outcome"}}, "outs": {"success": {"connection": "B18BearHugGrb001:ins:in"}, "criticalSuccess": {"connection": "B18BearHugGrb001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B18BearHugGrb001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "grabbed"}, "duration": {"value": 1}, "name": {"value": "Effect: Bear Hug"}, "target": {"connection": "B18BearHugEvt001:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B18BarChgTrg0001",
+    "name": "Barreling Charge",
+    "folder": "Feats & Features",
+    "description": "After a successful Barreling Charge Athletics check, apply off-guard for 1 round. The Stride, enemy displacement, movement mode, and exact end-position rules remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "barreling-charge"],
+    "variables": {
+      "B18BarChgEvt0001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B18BarChgEvt0001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B18BarChgEvt0001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B18BarChgEvt0001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "skill-check"}}, "outs": {"out": {"connection": "B18BarChgMch0001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B18BarChgMch0001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:barreling-charge"}, "list": {"connection": "B18BarChgEvt0001:outputs:options"}}, "outs": {"true": {"connection": "B18BarChgSpl0001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B18BarChgSpl0001", "type": "split-outcome", "inputs": {"input": {"connection": "B18BarChgEvt0001:outputs:outcome"}}, "outs": {"success": {"connection": "B18BarChgOff0001:ins:in"}, "criticalSuccess": {"connection": "B18BarChgOff0001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B18BarChgOff0001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "name": {"value": "Effect: Barreling Charge"}, "target": {"connection": "B18BarChgEvt0001:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

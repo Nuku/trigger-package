@@ -1,0 +1,19 @@
+[
+  {
+    "id": "B292ZeiTrg00001X",
+    "name": "Zealous Inevitability",
+    "folder": "Feats & Features",
+    "description": "On a successful Zealous Inevitability Strike, increase the target's doomed condition by 1, up to doomed 4.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "zealous-inevitability"],
+    "variables": {
+      "B292ZeiEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B292ZeiEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "B292ZeiEvt00001X", "type": "attack-roll-event", "outs": {"out": {"connection": "B292ZeiMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B292ZeiMch00001X", "type": "match-predicate", "inputs": {"options": {"connection": "B292ZeiEvt00001X:outputs:options"}, "predicate": {"value": "[\n  \"item:slug:zealous-inevitability\",\n  \"check:outcome:success\"\n]"}}, "outs": {"true": {"connection": "B292ZeiDmd00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B292ZeiDmd00001X", "type": "increase-condition", "inputs": {"condition": {"value": "doomed"}, "max": {"value": 4}, "target": {"connection": "B292ZeiEvt00001X:outputs:target"}, "value": {"value": 1}}, "position": {"x": 640, "y": 0}}
+    ]
+  }
+]

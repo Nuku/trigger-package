@@ -1,0 +1,80 @@
+[
+  {
+    "id": "M07BRSSLMTRG001X",
+    "name": "Berserk Slam",
+    "folder": "Monster Abilities",
+    "description": "When a qualifying Berserk Slam Strike succeeds or critically succeeds, apply prone to the target; berserk state, extra damage, and activation requirements remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "berserk-slam"],
+    "variables": {
+      "M07BRSEVT000001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M07BRSEVT000001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M07BRSEVT000001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M07BRSEVT000001X", "type": "attack-roll-event", "outs": {"out": {"connection": "M07BRSMCH000001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M07BRSMCH000001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:berserk-slam"}, "list": {"connection": "M07BRSEVT000001X:outputs:options"}}, "outs": {"true": {"connection": "M07BRSSPL000001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M07BRSSPL000001X", "type": "split-outcome", "inputs": {"input": {"connection": "M07BRSEVT000001X:outputs:outcome"}}, "outs": {"success": {"connection": "M07BRSPRN000001X:ins:in"}, "criticalSuccess": {"connection": "M07BRSPRN000001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M07BRSPRN000001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "prone"}, "name": {"value": "Effect: Berserk Slam"}, "target": {"connection": "M07BRSEVT000001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "M07DSPSHKTRG01XX",
+    "name": "Despairing Shriek",
+    "folder": "Monster Abilities",
+    "description": "When a holy creature fails a Despairing Shriek Will save, apply frightened 2; the holy-target filter, damage, area, and recharge remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "despairing-shriek"],
+    "variables": {
+      "M07DSEVT0000001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M07DSEVT0000001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M07DSEVT0000001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M07DSEVT0000001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M07DSMCH0000001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M07DSMCH0000001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:despairing-shriek"}, "list": {"connection": "M07DSEVT0000001X:outputs:options"}}, "outs": {"true": {"connection": "M07DSSPL0000001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M07DSSPL0000001X", "type": "split-outcome", "inputs": {"input": {"connection": "M07DSEVT0000001X:outputs:outcome"}}, "outs": {"failure": {"connection": "M07DSFRI0000001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M07DSFRI0000001X", "type": "increase-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "max": {"value": 2}, "value": {"value": 2}, "name": {"value": "Effect: Despairing Shriek"}, "target": {"connection": "M07DSEVT0000001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "M07EUPBRTHRG01XX",
+    "name": "Euphoric Breath",
+    "folder": "Monster Abilities",
+    "description": "On a failed or critically failed Euphoric Breath Fortitude save, apply stupefied 2 and slowed 1; the critical-failure duration, poison damage, area, and frequency remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "euphoric-breath"],
+    "variables": {
+      "M07EBEVT0000001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M07EBEVT0000001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M07EBEVT0000001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M07EBEVT0000001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M07EBMCH0000001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M07EBMCH0000001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:euphoric-breath"}, "list": {"connection": "M07EBEVT0000001X:outputs:options"}}, "outs": {"true": {"connection": "M07EBSPL0000001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M07EBSPL0000001X", "type": "split-outcome", "inputs": {"input": {"connection": "M07EBEVT0000001X:outputs:outcome"}}, "outs": {"failure": {"connection": "M07EBEFF0000001X:ins:in"}, "criticalFailure": {"connection": "M07EBEFF0000001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M07EBEFF0000001X", "type": "increase-condition", "state": "fixed", "inputs": {"condition": {"value": "stupefied"}, "max": {"value": 2}, "value": {"value": 2}, "name": {"value": "Effect: Euphoric Breath"}, "target": {"connection": "M07EBEVT0000001X:outputs:target"}}, "position": {"x": 960, "y": -80}},
+      {"id": "M07EBSDLW000001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "slowed"}, "duration": {"value": 1}, "name": {"value": "Effect: Euphoric Breath"}, "target": {"connection": "M07EBEVT0000001X:outputs:target"}}, "position": {"x": 960, "y": 80}}
+    ]
+  },
+  {
+    "id": "M07BLTBTHRG0001X",
+    "name": "Blight Breath",
+    "folder": "Monster Abilities",
+    "description": "When a creature fails a Blight Breath Fortitude save, apply 2d6 persistent bleed damage; the cone, void damage, and recharge remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "blight-breath"],
+    "variables": {
+      "M07BBEVT0000001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M07BBEVT0000001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M07BBEVT0000001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M07BBEVT0000001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M07BBMCH0000001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M07BBMCH0000001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:blight-breath"}, "list": {"connection": "M07BBEVT0000001X:outputs:options"}}, "outs": {"true": {"connection": "M07BBSPL0000001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M07BBSPL0000001X", "type": "split-outcome", "inputs": {"input": {"connection": "M07BBEVT0000001X:outputs:outcome"}}, "outs": {"failure": {"connection": "M07BBFMT0000001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M07BBFMT0000001X", "type": "format-text", "inputs": {"plain": {"value": "2d6"}}, "outs": {"out": {"connection": "M07BBPER0000001X:ins:in"}}, "position": {"x": 800, "y": 0}},
+      {"id": "M07BBPER0000001X", "type": "create-persistent", "inputs": {"die": {"connection": "M07BBFMT0000001X:outputs:result"}, "target": {"connection": "M07BBEVT0000001X:outputs:target"}, "type": {"value": "bleed"}}, "position": {"x": 1120, "y": 0}}
+    ]
+  }
+]

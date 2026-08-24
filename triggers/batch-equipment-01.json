@@ -1,0 +1,247 @@
+[
+  {
+    "id": "BtlLightTrig0001",
+    "name": "Bottled Lightning",
+    "folder": "Equipment",
+    "description": "On a successful Bottled Lightning attack, apply off-guard for 1 round.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "bottled-lightning"],
+    "variables": {
+      "BtlLightEvt00001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "BtlLightEvt00001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {
+        "id": "BtlLightEvt00001",
+        "type": "attack-roll-event",
+        "outs": {"out": {"connection": "BtlLightMch00001:ins:in"}},
+        "position": {"x": 0, "y": 0}
+      },
+      {
+        "id": "BtlLightMch00001",
+        "type": "match-predicate",
+        "inputs": {
+          "options": {"connection": "BtlLightEvt00001:outputs:options"},
+          "predicate": {"value": "[\n  \"item:slug:bottled-lightning\"\n]"}
+        },
+        "outs": {"true": {"connection": "BtlLightSpl00001:ins:in"}},
+        "position": {"x": 320, "y": 0}
+      },
+      {
+        "id": "BtlLightSpl00001",
+        "type": "split-outcome",
+        "inputs": {"input": {"connection": "BtlLightEvt00001:outputs:outcome"}},
+        "outs": {
+          "success": {"connection": "BtlLightOff00001:ins:in"},
+          "criticalSuccess": {"connection": "BtlLightOff00001:ins:in"}
+        },
+        "position": {"x": 480, "y": 0}
+      },
+      {
+        "id": "BtlLightOff00001",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {"value": "off-guard"},
+          "duration": {"value": 1},
+          "name": {"value": "Effect: Bottled Lightning"},
+          "target": {"connection": "BtlLightEvt00001:outputs:target"}
+        },
+        "position": {"x": 640, "y": 0}
+      }
+    ]
+  },
+  {
+    "id": "TngFootTrig00001",
+    "name": "Tanglefoot Bag",
+    "folder": "Equipment",
+    "description": "On a successful Tanglefoot Bag attack, apply clumsy 1 for 1 minute.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "tanglefoot-bag"],
+    "variables": {
+      "TngFootEvt000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "TngFootEvt000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {
+        "id": "TngFootEvt000001",
+        "type": "attack-roll-event",
+        "outs": {"out": {"connection": "TngFootMch000001:ins:in"}},
+        "position": {"x": 0, "y": 0}
+      },
+      {
+        "id": "TngFootMch000001",
+        "type": "match-predicate",
+        "inputs": {
+          "options": {"connection": "TngFootEvt000001:outputs:options"},
+          "predicate": {"value": "[\n  \"item:slug:tanglefoot-bag\"\n]"}
+        },
+        "outs": {"true": {"connection": "TngFootSpl000001:ins:in"}},
+        "position": {"x": 320, "y": 0}
+      },
+      {
+        "id": "TngFootSpl000001",
+        "type": "split-outcome",
+        "inputs": {"input": {"connection": "TngFootEvt000001:outputs:outcome"}},
+        "outs": {
+          "success": {"connection": "TngFootClm000001:ins:in"},
+          "criticalSuccess": {"connection": "TngFootClm000001:ins:in"}
+        },
+        "position": {"x": 480, "y": 0}
+      },
+      {
+        "id": "TngFootClm000001",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {"value": "clumsy"},
+          "duration": {"value": 10},
+          "name": {"value": "Effect: Tanglefoot Bag"},
+          "target": {"connection": "TngFootEvt000001:outputs:target"}
+        },
+        "position": {"x": 640, "y": 0}
+      }
+    ]
+  },
+  {
+    "id": "ThrStoneTrig0001",
+    "name": "Thunderstone",
+    "folder": "Equipment",
+    "description": "After a Thunderstone Fortitude save, apply deafened for 1 round on a failure or 1 minute on a critical failure.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "thunderstone"],
+    "variables": {
+      "ThrStoneEvt00001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "ThrStoneEvt00001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"},
+      "ThrStoneEvt00001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {
+        "id": "ThrStoneEvt00001",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {"for": {"value": "saving-throw"}},
+        "outs": {"out": {"connection": "ThrStoneMch00001:ins:in"}},
+        "position": {"x": 0, "y": 0}
+      },
+      {
+        "id": "ThrStoneMch00001",
+        "type": "match-predicate",
+        "inputs": {
+          "options": {"connection": "ThrStoneEvt00001:outputs:options"},
+          "predicate": {"value": "[\n  \"item:slug:thunderstone\"\n]"}
+        },
+        "outs": {"true": {"connection": "ThrStoneSpl00001:ins:input"}},
+        "position": {"x": 320, "y": 0}
+      },
+      {
+        "id": "ThrStoneSpl00001",
+        "type": "split-outcome",
+        "inputs": {"input": {"connection": "ThrStoneEvt00001:outputs:outcome"}},
+        "outs": {
+          "failure": {"connection": "ThrStoneDfn00001:ins:in"},
+          "criticalFailure": {"connection": "ThrStoneDfm00001:ins:in"}
+        },
+        "position": {"x": 640, "y": 0}
+      },
+      {
+        "id": "ThrStoneDfn00001",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {"value": "deafened"},
+          "duration": {"value": 1},
+          "name": {"value": "Effect: Thunderstone"},
+          "target": {"connection": "ThrStoneEvt00001:outputs:target"}
+        },
+        "position": {"x": 960, "y": 80}
+      },
+      {
+        "id": "ThrStoneDfm00001",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {"value": "deafened"},
+          "duration": {"value": 10},
+          "name": {"value": "Effect: Thunderstone"},
+          "target": {"connection": "ThrStoneEvt00001:outputs:target"}
+        },
+        "position": {"x": 960, "y": -80}
+      }
+    ]
+  },
+  {
+    "id": "AlcFireTrig00001",
+    "name": "Alchemist's Fire",
+    "folder": "Equipment",
+    "description": "On a successful Alchemist's Fire attack, apply 1 persistent fire damage.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "alchemists-fire"],
+    "variables": {
+      "AlcFireEvt000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "AlcFireEvt000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {
+        "id": "AlcFireEvt000001",
+        "type": "attack-roll-event",
+        "outs": {"out": {"connection": "AlcFireMch000001:ins:in"}},
+        "position": {"x": 0, "y": 0}
+      },
+      {
+        "id": "AlcFireMch000001",
+        "type": "match-predicate",
+        "inputs": {
+          "options": {"connection": "AlcFireEvt000001:outputs:options"},
+          "predicate": {"value": "[\n  \"item:slug:alchemists-fire\"\n]"}
+        },
+        "outs": {"true": {"connection": "AlcFireSpl000001:ins:in"}},
+        "position": {"x": 320, "y": 0}
+      },
+      {
+        "id": "AlcFireSpl000001",
+        "type": "split-outcome",
+        "inputs": {"input": {"connection": "AlcFireEvt000001:outputs:outcome"}},
+        "outs": {
+          "success": {"connection": "AlcFireTxt000001:ins:in"},
+          "criticalSuccess": {"connection": "AlcFireTxt000002:ins:in"}
+        },
+        "position": {"x": 480, "y": 0}
+      },
+      {
+        "id": "AlcFireTxt000001",
+        "type": "format-text",
+        "inputs": {"plain": {"value": "1"}},
+        "outs": {"out": {"connection": "AlcFirePer000001:ins:in"}},
+        "position": {"x": 640, "y": 0}
+      },
+      {
+        "id": "AlcFireTxt000002",
+        "type": "format-text",
+        "inputs": {"plain": {"value": "2"}},
+        "outs": {"out": {"connection": "AlcFirePer000002:ins:in"}},
+        "position": {"x": 640, "y": 120}
+      },
+      {
+        "id": "AlcFirePer000001",
+        "type": "create-persistent",
+        "inputs": {
+          "die": {"connection": "AlcFireTxt000001:outputs:result"},
+          "target": {"connection": "AlcFireEvt000001:outputs:target"},
+          "type": {"value": "fire"}
+        },
+        "position": {"x": 960, "y": 0}
+      },
+      {
+        "id": "AlcFirePer000002",
+        "type": "create-persistent",
+        "inputs": {
+          "die": {"connection": "AlcFireTxt000002:outputs:result"},
+          "target": {"connection": "AlcFireEvt000001:outputs:target"},
+          "type": {"value": "fire"}
+        },
+        "position": {"x": 960, "y": 120}
+      }
+    ]
+  }
+]

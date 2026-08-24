@@ -1,0 +1,63 @@
+[
+  {
+    "id": "B454TelTrg00001X",
+    "name": "Telekinetic Bombardment — Prone and Stunned",
+    "folder": "Spells",
+    "description": "Apply prone on a failed Reflex save and stunned 1 on a critically failed save against Telekinetic Bombardment; area selection, damage, and difficult terrain remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "telekinetic-bombardment"],
+    "variables": {
+      "B454TelEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B454TelEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B454TelEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B454TelEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B454TelMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B454TelMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:telekinetic-bombardment"}, "list": {"connection": "B454TelEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B454TelSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B454TelSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B454TelEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B454TelPro00001X:ins:in"}, "criticalFailure": {"connection": "B454TelPro00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B454TelPro00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "prone"}, "name": {"value": "Effect: Telekinetic Bombardment"}, "target": {"connection": "B454TelEvt00001X:outputs:target"}}, "outs": {"out": {"connection": "B454TelCfs00001X:ins:in"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B454TelCfs00001X", "type": "match-predicate", "inputs": {"options": {"connection": "B454TelEvt00001X:outputs:options"}, "predicate": {"value": "[\n  \"item:slug:telekinetic-bombardment\",\n  \"check:outcome:criticalFailure\"\n]"}}, "outs": {"true": {"connection": "B454TelStu00001X:ins:in"}}, "position": {"x": 1280, "y": 0}},
+      {"id": "B454TelStu00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "stunned"}, "value": {"value": 1}, "name": {"value": "Effect: Telekinetic Bombardment"}, "target": {"connection": "B454TelEvt00001X:outputs:target"}}, "position": {"x": 1600, "y": 0}}
+    ]
+  },
+  {
+    "id": "B454HorTrg00001X",
+    "name": "Horizon’s Veil — Slowed",
+    "folder": "Spells",
+    "description": "Apply slowed 1 for 1 round on a failed or critically failed Will save against Horizon’s Veil at the end of the target’s turn; area tracking remains native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "horizons-veil"],
+    "variables": {
+      "B454HorEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B454HorEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B454HorEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B454HorEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B454HorMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B454HorMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:horizons-veil"}, "list": {"connection": "B454HorEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B454HorSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B454HorSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B454HorEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B454HorSlo00001X:ins:in"}, "criticalFailure": {"connection": "B454HorSlo00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B454HorSlo00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "slowed"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Horizon’s Veil"}, "target": {"connection": "B454HorEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B454MusTrg00001X",
+    "name": "Mushroom Patch — Dazzled and Slowed",
+    "folder": "Spells",
+    "description": "Apply dazzled for 1 round on a successful, failed, or critically failed Fortitude save against Mushroom Patch, and slowed 1 on a critical failure; area timing remains native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "mushroom-patch"],
+    "variables": {
+      "B454MusEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B454MusEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B454MusEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B454MusEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B454MusMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B454MusMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:mushroom-patch"}, "list": {"connection": "B454MusEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B454MusSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B454MusSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B454MusEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B454MusDaz00001X:ins:in"}, "failure": {"connection": "B454MusDaz00001X:ins:in"}, "criticalFailure": {"connection": "B454MusDaz00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B454MusDaz00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Mushroom Patch"}, "target": {"connection": "B454MusEvt00001X:outputs:target"}}, "outs": {"out": {"connection": "B454MusCfs00001X:ins:in"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B454MusCfs00001X", "type": "match-predicate", "inputs": {"options": {"connection": "B454MusEvt00001X:outputs:options"}, "predicate": {"value": "[\n  \"item:slug:mushroom-patch\",\n  \"check:outcome:criticalFailure\"\n]"}}, "outs": {"true": {"connection": "B454MusSlo00001X:ins:in"}}, "position": {"x": 1280, "y": 0}},
+      {"id": "B454MusSlo00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "slowed"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Mushroom Patch"}, "target": {"connection": "B454MusEvt00001X:outputs:target"}}, "position": {"x": 1600, "y": 0}}
+    ]
+  }
+]

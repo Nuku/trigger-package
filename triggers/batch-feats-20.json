@@ -1,0 +1,81 @@
+[
+  {
+    "id": "B20CatDncTrg001X",
+    "name": "Catfolk Dance",
+    "folder": "Feats & Features",
+    "description": "On a Catfolk Dance Acrobatics check critical success, apply off-guard until the start of the user's next turn. Adjacent-target selection and the circumstance penalty remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "catfolk-dance"],
+    "variables": {
+      "B20CatDncEvt001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B20CatDncEvt001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B20CatDncEvt001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B20CatDncEvt001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "skill-check"}}, "outs": {"out": {"connection": "B20CatDncMch001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B20CatDncMch001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:catfolk-dance"}, "list": {"connection": "B20CatDncEvt001X:outputs:options"}}, "outs": {"true": {"connection": "B20CatDncSpl001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B20CatDncSpl001X", "type": "split-outcome", "inputs": {"input": {"connection": "B20CatDncEvt001X:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "B20CatDncOff001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B20CatDncOff001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "expiry": {"value": "turn-start"}, "name": {"value": "Effect: Catfolk Dance"}, "target": {"connection": "B20CatDncEvt001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B20DthDivTrg01XX",
+    "name": "Death Dive",
+    "folder": "Feats & Features",
+    "description": "After a Death Dive melee Strike hits, apply prone to the target. Dragon mount, airborne movement, altitude, size, and damage requirements remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "death-dive"],
+    "variables": {
+      "B20DthDivEvt01XX:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B20DthDivEvt01XX:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B20DthDivEvt01XX:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B20DthDivEvt01XX", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B20DthDivMch01XX:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B20DthDivMch01XX", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:death-dive"}, "list": {"connection": "B20DthDivEvt01XX:outputs:options"}}, "outs": {"true": {"connection": "B20DthDivSpl01XX:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B20DthDivSpl01XX", "type": "split-outcome", "inputs": {"input": {"connection": "B20DthDivEvt01XX:outputs:outcome"}}, "outs": {"success": {"connection": "B20DthDivPrn01XX:ins:in"}, "criticalSuccess": {"connection": "B20DthDivPrn01XX:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B20DthDivPrn01XX", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "prone"}, "name": {"value": "Effect: Death Dive"}, "target": {"connection": "B20DthDivEvt01XX:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B20DemDefTrg01XX",
+    "name": "Demolish Defenses",
+    "folder": "Feats & Features",
+    "description": "On a Demolish Defenses Fortitude save, apply clumsy 2 on a failure or critical failure and off-guard on a success or critical failure for 1 round. Strike damage, taunted-target qualification, and exact save timing remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "demolish-defenses"],
+    "variables": {
+      "B20DemDefEvt01XX:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "B20DemDefEvt01XX:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B20DemDefEvt01XX:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B20DemDefEvt01XX", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B20DemDefMch01XX:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B20DemDefMch01XX", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:demolish-defenses"}, "list": {"connection": "B20DemDefEvt01XX:outputs:options"}}, "outs": {"true": {"connection": "B20DemDefSpl01XX:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B20DemDefSpl01XX", "type": "split-outcome", "inputs": {"input": {"connection": "B20DemDefEvt01XX:outputs:outcome"}}, "outs": {"success": {"connection": "B20DemDefOff01XX:ins:in"}, "failure": {"connection": "B20DemDefClm01XX:ins:in"}, "criticalFailure": {"connection": "B20DemDefClm01XX:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B20DemDefOff01XX", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "expiry": {"value": "turn-end"}, "name": {"value": "Effect: Demolish Defenses"}, "target": {"connection": "B20DemDefEvt01XX:outputs:roller"}}, "position": {"x": 960, "y": 100}},
+      {"id": "B20DemDefClm01XX", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "clumsy"}, "value": {"value": 2}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "expiry": {"value": "turn-end"}, "name": {"value": "Effect: Demolish Defenses"}, "target": {"connection": "B20DemDefEvt01XX:outputs:roller"}}, "outs": {"out": {"connection": "B20DemDfCrit01XX:ins:in"}}, "position": {"x": 960, "y": -100}},
+      {"id": "B20DemDfCrit01XX", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "expiry": {"value": "turn-end"}, "name": {"value": "Effect: Demolish Defenses"}, "target": {"connection": "B20DemDefEvt01XX:outputs:roller"}}, "position": {"x": 1280, "y": -100}}
+    ]
+  },
+  {
+    "id": "B20FrtAurTrg01XX",
+    "name": "Frightful Aura",
+    "folder": "Feats & Features",
+    "description": "On a Frightful Aura Will save failure, apply frightened 1; on a critical failure, apply frightened 2. Aura entry/turn timing, emanation placement, temporary immunity, and save DC selection remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "frightful-aura"],
+    "variables": {
+      "B20FrtAurEvt01XX:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "B20FrtAurEvt01XX:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B20FrtAurEvt01XX:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B20FrtAurEvt01XX", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B20FrtAurMch01XX:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B20FrtAurMch01XX", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:frightful-aura"}, "list": {"connection": "B20FrtAurEvt01XX:outputs:options"}}, "outs": {"true": {"connection": "B20FrtAurSpl01XX:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B20FrtAurSpl01XX", "type": "split-outcome", "inputs": {"input": {"connection": "B20FrtAurEvt01XX:outputs:outcome"}}, "outs": {"failure": {"connection": "B20FrtAurFrt01XX:ins:in"}, "criticalFailure": {"connection": "B20FrtAurFrt02XX:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B20FrtAurFrt01XX", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 1}, "name": {"value": "Effect: Frightful Aura"}, "target": {"connection": "B20FrtAurEvt01XX:outputs:roller"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B20FrtAurFrt02XX", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 2}, "name": {"value": "Effect: Frightful Aura"}, "target": {"connection": "B20FrtAurEvt01XX:outputs:roller"}}, "position": {"x": 960, "y": -80}}
+    ]
+  }
+]

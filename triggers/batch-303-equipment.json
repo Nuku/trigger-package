@@ -1,0 +1,35 @@
+[
+  {
+    "id": "B303NblTrg00001X",
+    "name": "Necrotic Bomb (Lesser) — Sickened",
+    "folder": "Equipment",
+    "description": "Apply sickened 1 to a Necrotic Bomb (Lesser) critical-hit target; void damage, splash, and living-target qualification remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "necrotic-bomb-lesser"],
+    "variables": {"B303NblEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B303NblEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B303NblEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B303NblEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B303NblMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B303NblMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:necrotic-bomb-lesser"}, "list": {"connection": "B303NblEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B303NblSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B303NblSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B303NblEvt00001X:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "B303NblSck00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B303NblSck00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 1}, "name": {"value": "Effect: Necrotic Bomb"}, "target": {"connection": "B303NblEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B303GlsTrg00001X",
+    "name": "Glittering Lights Snare — Dazzled and Blinded",
+    "folder": "Equipment",
+    "description": "Apply Glittering Lights Snare's dazzled/blinded Reflex-save outcomes; placement and trap triggering remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "glittering-lights-snare"],
+    "variables": {"B303GlsEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B303GlsEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B303GlsEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B303GlsEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B303GlsMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B303GlsMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:glittering-lights-snare"}, "list": {"connection": "B303GlsEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B303GlsSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B303GlsSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B303GlsEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B303GlsSuc00001X:ins:in"}, "failure": {"connection": "B303GlsFai00001X:ins:in"}, "criticalFailure": {"connection": "B303GlsCfl00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B303GlsSuc00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 2}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Glittering Lights Snare"}, "target": {"connection": "B303GlsEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B303GlsFai00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Glittering Lights Snare"}, "target": {"connection": "B303GlsEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B303GlsCfl00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "blinded"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Glittering Lights Snare"}, "target": {"connection": "B303GlsEvt00001X:outputs:target"}}, "outs": {"out": {"connection": "B303GlsCdz00001X:ins:in"}}, "position": {"x": 960, "y": -80}},
+      {"id": "B303GlsCdz00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Glittering Lights Snare"}, "target": {"connection": "B303GlsEvt00001X:outputs:target"}}, "position": {"x": 1280, "y": -80}}
+    ]
+  }
+]

@@ -1,0 +1,81 @@
+[
+  {
+    "id": "VomitTarTrig0001",
+    "name": "Vomit Tar — Slowed",
+    "folder": "Monster Abilities",
+    "description": "When a creature fails a Vomit Tar basic Reflex save, apply slowed 1 for 3 rounds.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "vomit-tar"],
+    "variables": {
+      "VomitTarEvt0001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "VomitTarEvt0001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"},
+      "VomitTarEvt0001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "VomitTarEvt0001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "VomitTarOpt0001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "VomitTarOpt0001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:vomit-tar"}, "list": {"connection": "VomitTarEvt0001X:outputs:options"}}, "outs": {"true": {"connection": "VomitTarSpl0001X:ins:input"}}, "position": {"x": 320, "y": 0}},
+      {"id": "VomitTarSpl0001X", "type": "split-outcome", "inputs": {"input": {"connection": "VomitTarEvt0001X:outputs:outcome"}}, "outs": {"failure": {"connection": "VomitTarSlw0001X:ins:in"}, "criticalFailure": {"connection": "VomitTarSlw0001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "VomitTarSlw0001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "slowed"}, "duration": {"value": 3}, "name": {"value": "Effect: Vomit Tar"}, "target": {"connection": "VomitTarEvt0001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "MuskAuraTrig0001",
+    "name": "Musk — Sickened",
+    "folder": "Monster Abilities",
+    "description": "When a creature fails a Musk aura Fortitude save, apply sickened 1.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "musk"],
+    "variables": {
+      "MuskAuraEvt0001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "MuskAuraEvt0001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"},
+      "MuskAuraEvt0001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "MuskAuraEvt0001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "MuskAuraOpt0001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "MuskAuraOpt0001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:musk"}, "list": {"connection": "MuskAuraEvt0001X:outputs:options"}}, "outs": {"true": {"connection": "MuskAuraSpl0001X:ins:input"}}, "position": {"x": 320, "y": 0}},
+      {"id": "MuskAuraSpl0001X", "type": "split-outcome", "inputs": {"input": {"connection": "MuskAuraEvt0001X:outputs:outcome"}}, "outs": {"failure": {"connection": "MuskAuraSic0001X:ins:in"}, "criticalFailure": {"connection": "MuskAuraSic0001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "MuskAuraSic0001X", "type": "increase-condition", "inputs": {"condition": {"value": "sickened"}, "max": {"value": 1}, "target": {"connection": "MuskAuraEvt0001X:outputs:target"}, "value": {"value": 1}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "DisgDemiTrig0001",
+    "name": "Disgusting Demise — Sickened",
+    "folder": "Monster Abilities",
+    "description": "When a creature fails a Disgusting Demise Fortitude save, apply sickened 1/2 by outcome.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "disgusting-demise"],
+    "variables": {
+      "DisgDemiEvt0001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "DisgDemiEvt0001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"},
+      "DisgDemiEvt0001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "DisgDemiEvt0001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "DisgDemiOpt0001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "DisgDemiOpt0001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:disgusting-demise"}, "list": {"connection": "DisgDemiEvt0001X:outputs:options"}}, "outs": {"true": {"connection": "DisgDemiSpl0001X:ins:input"}}, "position": {"x": 320, "y": 0}},
+      {"id": "DisgDemiSpl0001X", "type": "split-outcome", "inputs": {"input": {"connection": "DisgDemiEvt0001X:outputs:outcome"}}, "outs": {"failure": {"connection": "DisgDemiS1N0001X:ins:in"}, "criticalFailure": {"connection": "DisgDemiS2N0001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "DisgDemiS1N0001X", "type": "increase-condition", "inputs": {"condition": {"value": "sickened"}, "max": {"value": 1}, "target": {"connection": "DisgDemiEvt0001X:outputs:target"}, "value": {"value": 1}}, "position": {"x": 960, "y": 60}},
+      {"id": "DisgDemiS2N0001X", "type": "increase-condition", "inputs": {"condition": {"value": "sickened"}, "max": {"value": 2}, "target": {"connection": "DisgDemiEvt0001X:outputs:target"}, "value": {"value": 2}}, "position": {"x": 960, "y": -60}}
+    ]
+  },
+  {
+    "id": "RoarTrig00000001",
+    "name": "Roar — Frightened",
+    "folder": "Monster Abilities",
+    "description": "Apply frightened 1/2/3 from Roar's Will-save outcome.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "roar"],
+    "variables": {
+      "RoarEvt00000001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "RoarEvt00000001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"},
+      "RoarEvt00000001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "RoarEvt00000001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "RoarOpt00000001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "RoarOpt00000001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:roar"}, "list": {"connection": "RoarEvt00000001X:outputs:options"}}, "outs": {"true": {"connection": "RoarSpl00000001X:ins:input"}}, "position": {"x": 320, "y": 0}},
+      {"id": "RoarSpl00000001X", "type": "split-outcome", "inputs": {"input": {"connection": "RoarEvt00000001X:outputs:outcome"}}, "outs": {"success": {"connection": "RoarF1N00000001X:ins:in"}, "failure": {"connection": "RoarF2N00000001X:ins:in"}, "criticalFailure": {"connection": "RoarF3N00000001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "RoarF1N00000001X", "type": "increase-condition", "inputs": {"condition": {"value": "frightened"}, "max": {"value": 1}, "target": {"connection": "RoarEvt00000001X:outputs:target"}, "value": {"value": 1}}, "position": {"x": 960, "y": 120}},
+      {"id": "RoarF2N00000001X", "type": "increase-condition", "inputs": {"condition": {"value": "frightened"}, "max": {"value": 2}, "target": {"connection": "RoarEvt00000001X:outputs:target"}, "value": {"value": 2}}, "position": {"x": 960, "y": 0}},
+      {"id": "RoarF3N00000001X", "type": "increase-condition", "inputs": {"condition": {"value": "frightened"}, "max": {"value": 3}, "target": {"connection": "RoarEvt00000001X:outputs:target"}, "value": {"value": 3}}, "position": {"x": 960, "y": -120}}
+    ]
+  }
+]

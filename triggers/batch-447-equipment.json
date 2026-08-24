@@ -1,0 +1,21 @@
+[
+  {
+    "id": "B447WspTrg00001X",
+    "name": "Wisp Chain (True) — Deafened",
+    "folder": "Equipment",
+    "description": "Apply deafened after a failed Wisp Chain (True) Fortitude save; adjacency and removal when the creature moves away remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "wisp-chain-true"],
+    "variables": {
+      "B447WspEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B447WspEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B447WspEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B447WspEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B447WspMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B447WspMch00001X", "type": "match-predicate", "inputs": {"options": {"connection": "B447WspEvt00001X:outputs:options"}, "predicate": {"value": "[\n  \"item:slug:wisp-chain-true\",\n  \"check:statistic:fortitude\"\n]"}}, "outs": {"true": {"connection": "B447WspSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B447WspSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B447WspEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B447WspDef00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B447WspDef00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "deafened"}, "name": {"value": "Effect: Wisp Chain (True)"}, "target": {"connection": "B447WspEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

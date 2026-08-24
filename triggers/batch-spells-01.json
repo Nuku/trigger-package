@@ -1,0 +1,513 @@
+[
+  {
+    "id": "PhntmlKllrTrig01",
+    "name": "Phantasmal Killer",
+    "folder": "Spells",
+    "description": "When a creature succeeds or fails a Will save against Phantasmal Killer, apply frightened 1 or 2; the critical-failure Fortitude follow-up remains manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "spell",
+      "phantasmal-killer"
+    ],
+    "variables": {
+      "PhntmlKllrEvt001:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "PhntmlKllrEvt001:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      },
+      "PhntmlKllrEvt001:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      }
+    },
+    "nodes": [
+      {
+        "id": "PhntmlKllrEvt001",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "PhntmlKllrMch001:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "PhntmlKllrMch001",
+        "type": "match-predicate",
+        "inputs": {
+          "options": {
+            "connection": "PhntmlKllrEvt001:outputs:options"
+          },
+          "predicate": {
+            "value": "[\n  \"item:slug:phantasmal-killer\"\n]"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "PhntmlKllrSpl001:ins:input"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "PhntmlKllrSpl001",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "PhntmlKllrEvt001:outputs:outcome"
+          }
+        },
+        "outs": {
+          "success": {
+            "connection": "PhntmlKllrSuc001:ins:in"
+          },
+          "failure": {
+            "connection": "PhntmlKllrFai001:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "PhntmlKllrSuc001",
+        "type": "increase-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "frightened"
+          },
+          "max": {
+            "value": 1
+          },
+          "value": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Phantasmal Killer"
+          },
+          "target": {
+            "connection": "PhntmlKllrEvt001:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": -120
+        }
+      },
+      {
+        "id": "PhntmlKllrFai001",
+        "type": "increase-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "frightened"
+          },
+          "max": {
+            "value": 2
+          },
+          "value": {
+            "value": 2
+          },
+          "name": {
+            "value": "Effect: Phantasmal Killer"
+          },
+          "target": {
+            "connection": "PhntmlKllrEvt001:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      }
+    ]
+  },
+  {
+    "id": "EnervtnTrig00001",
+    "name": "Enervation",
+    "folder": "Spells",
+    "description": "When a creature fails a Fortitude save against Enervation, apply drained 1; on a critical failure, apply drained 2.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "spell",
+      "enervation"
+    ],
+    "variables": {
+      "EnervtnEvt000001:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "EnervtnEvt000001:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      },
+      "EnervtnEvt000001:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      }
+    },
+    "nodes": [
+      {
+        "id": "EnervtnEvt000001",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "EnervtnMch000001:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "EnervtnMch000001",
+        "type": "match-predicate",
+        "inputs": {
+          "options": {
+            "connection": "EnervtnEvt000001:outputs:options"
+          },
+          "predicate": {
+            "value": "[\n  \"item:slug:enervation\"\n]"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "EnervtnSpl000001:ins:input"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "EnervtnSpl000001",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "EnervtnEvt000001:outputs:outcome"
+          }
+        },
+        "outs": {
+          "failure": {
+            "connection": "EnervtnFai000001:ins:in"
+          },
+          "criticalFailure": {
+            "connection": "EnervtnCFl000001:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "EnervtnFai000001",
+        "type": "increase-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "drained"
+          },
+          "max": {
+            "value": 1
+          },
+          "value": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Enervation"
+          },
+          "target": {
+            "connection": "EnervtnEvt000001:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 60
+        }
+      },
+      {
+        "id": "EnervtnCFl000001",
+        "type": "increase-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "drained"
+          },
+          "max": {
+            "value": 2
+          },
+          "value": {
+            "value": 2
+          },
+          "name": {
+            "value": "Effect: Enervation"
+          },
+          "target": {
+            "connection": "EnervtnEvt000001:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 180
+        }
+      }
+    ]
+  },
+  {
+    "id": "InfectComTrig001",
+    "name": "Infectious Comedy",
+    "folder": "Spells",
+    "description": "When a creature fails a Will save against Infectious Comedy, apply slowed 1 and prone for 1 round.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "spell",
+      "infectious-comedy"
+    ],
+    "variables": {
+      "InfectComEvt0001:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "InfectComEvt0001:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      },
+      "InfectComEvt0001:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      }
+    },
+    "nodes": [
+      {
+        "id": "InfectComEvt0001",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "InfectComMch0001:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "InfectComMch0001",
+        "type": "match-predicate",
+        "inputs": {
+          "options": {
+            "connection": "InfectComEvt0001:outputs:options"
+          },
+          "predicate": {
+            "value": "[\n  \"item:slug:infectious-comedy\"\n]"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "InfectComSpl0001:ins:input"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "InfectComSpl0001",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "InfectComEvt0001:outputs:outcome"
+          }
+        },
+        "outs": {
+          "failure": {
+            "connection": "InfectComSlw0001:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "InfectComSlw0001",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "slowed"
+          },
+          "duration": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Infectious Comedy"
+          },
+          "target": {
+            "connection": "InfectComEvt0001:outputs:target"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "InfectComPrn0001:ins:in"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": -60
+        }
+      },
+      {
+        "id": "InfectComPrn0001",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "prone"
+          },
+          "duration": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Infectious Comedy"
+          },
+          "target": {
+            "connection": "InfectComEvt0001:outputs:target"
+          }
+        },
+        "position": {
+          "x": 1280,
+          "y": 60
+        }
+      }
+    ]
+  },
+  {
+    "id": "TnglftTrig000001",
+    "name": "Tanglefoot",
+    "folder": "Spells",
+    "description": "On a critical success with a Tanglefoot spell attack, immobilize the target for 1 round.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "spell",
+      "tanglefoot"
+    ],
+    "variables": {
+      "TnglftAtk0000001:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "TnglftAtk0000001:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      }
+    },
+    "nodes": [
+      {
+        "id": "TnglftAtk0000001",
+        "type": "attack-roll-event",
+        "outs": {
+          "out": {
+            "connection": "TnglftMch0000001:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "TnglftMch0000001",
+        "type": "match-predicate",
+        "inputs": {
+          "options": {
+            "connection": "TnglftAtk0000001:outputs:options"
+          },
+          "predicate": {
+            "value": "[\n  \"item:slug:tanglefoot\",\n  \"check:outcome:critical-success\"\n]"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "TnglftImm0000001:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "TnglftImm0000001",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "immobilized"
+          },
+          "duration": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Tanglefoot"
+          },
+          "target": {
+            "connection": "TnglftAtk0000001:outputs:target"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      }
+    ]
+  }
+]

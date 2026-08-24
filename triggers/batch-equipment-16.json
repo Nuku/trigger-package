@@ -1,0 +1,74 @@
+[
+  {
+    "id": "Eq16PeshTrg00001",
+    "name": "Peshpine Grenade (Major)",
+    "folder": "Equipment",
+    "description": "On a hit with a Peshpine Grenade (Major), apply stupefied 1 until the target's next turn ends; splash damage and bomb scaling remain native.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "peshpine-grenade-major"],
+    "variables": {
+      "Eq16PeshEvt00001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "Eq16PeshEvt00001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "Eq16PeshEvt00001", "type": "attack-roll-event", "outs": {"out": {"connection": "Eq16PeshMch00001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "Eq16PeshMch00001", "type": "match-predicate", "inputs": {"options": {"connection": "Eq16PeshEvt00001:outputs:options"}, "predicate": {"value": "[\n  \"item:slug:peshpine-grenade-major\"\n]"}}, "outs": {"true": {"connection": "Eq16PeshSpl00001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "Eq16PeshSpl00001", "type": "split-outcome", "inputs": {"input": {"connection": "Eq16PeshEvt00001:outputs:outcome"}}, "outs": {"success": {"connection": "Eq16PeshStu00001:ins:in"}, "criticalSuccess": {"connection": "Eq16PeshStu00001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "Eq16PeshStu00001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "stupefied"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Peshpine Grenade (Major)"}, "target": {"connection": "Eq16PeshEvt00001:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "Eq16SpiritTrg001",
+    "name": "Spirit-Sealing Fulu",
+    "folder": "Equipment",
+    "description": "On a failed Will save against a Spirit-Sealing Fulu, apply paralyzed for 1 round; undead-only targeting, activation, and recovery saves remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "spirit-sealing-fulu"],
+    "variables": {
+      "Eq16SpiritEvt001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "Eq16SpiritEvt001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "Eq16SpiritEvt001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "Eq16SpiritEvt001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "Eq16SpiritMch001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "Eq16SpiritMch001", "type": "match-predicate", "inputs": {"options": {"connection": "Eq16SpiritEvt001:outputs:options"}, "predicate": {"value": "[\n  \"item:slug:spirit-sealing-fulu\"\n]"}}, "outs": {"true": {"connection": "Eq16SpiritSpl001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "Eq16SpiritSpl001", "type": "split-outcome", "inputs": {"input": {"connection": "Eq16SpiritEvt001:outputs:outcome"}}, "outs": {"failure": {"connection": "Eq16SpiritPar001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "Eq16SpiritPar001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "paralyzed"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Spirit-Sealing Fulu"}, "target": {"connection": "Eq16SpiritEvt001:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "Eq16TenderTrg001",
+    "name": "Tenderizer Grenade (Greater)",
+    "folder": "Equipment",
+    "description": "On a successful Tenderizer Grenade (Greater) Strike, apply off-guard until the end of the target's next turn; the critical-hit duration, damage, and resistance reduction remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "tenderizer-grenade-greater"],
+    "variables": {
+      "Eq16TenderEvt001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "Eq16TenderEvt001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "Eq16TenderEvt001", "type": "attack-roll-event", "outs": {"out": {"connection": "Eq16TenderMch001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "Eq16TenderMch001", "type": "match-predicate", "inputs": {"options": {"connection": "Eq16TenderEvt001:outputs:options"}, "predicate": {"value": "[\n  \"item:slug:tenderizer-grenade-greater\"\n]"}}, "outs": {"true": {"connection": "Eq16TenderSpl001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "Eq16TenderSpl001", "type": "split-outcome", "inputs": {"input": {"connection": "Eq16TenderEvt001:outputs:outcome"}}, "outs": {"success": {"connection": "Eq16TenderOff001:ins:in"}, "criticalSuccess": {"connection": "Eq16TenderOff001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "Eq16TenderOff001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Tenderizer Grenade (Greater)"}, "target": {"connection": "Eq16TenderEvt001:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "Eq16NecroMTrg001",
+    "name": "Necrotic Cap (Major)",
+    "folder": "Equipment",
+    "description": "When a Major Necrotic Cap augments a successful Acid Grip attack, apply enfeebled 4; the catalyst requirement, void damage conversion, sickened rider, and persistent duration remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "necrotic-cap-major"],
+    "variables": {
+      "Eq16NecroMEvt001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "Eq16NecroMEvt001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "Eq16NecroMEvt001", "type": "attack-roll-event", "outs": {"out": {"connection": "Eq16NecroMMch001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "Eq16NecroMMch001", "type": "match-predicate", "inputs": {"options": {"connection": "Eq16NecroMEvt001:outputs:options"}, "predicate": {"value": "[\n  \"item:slug:acid-grip\",\n  \"item:slug:necrotic-cap-major\"\n]"}}, "outs": {"true": {"connection": "Eq16NecroMEnf001:ins:in"}}, "position": {"x": 360, "y": 0}},
+      {"id": "Eq16NecroMEnf001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "enfeebled"}, "value": {"value": 4}, "name": {"value": "Effect: Necrotic Cap (Major)"}, "target": {"connection": "Eq16NecroMEvt001:outputs:target"}}, "position": {"x": 840, "y": 0}}
+    ]
+  }
+]

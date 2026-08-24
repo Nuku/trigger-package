@@ -1,0 +1,37 @@
+[
+  {
+    "id": "B338PolTrg00001X",
+    "name": "Pollen Pods — Dazzled/Stupefied",
+    "folder": "Spells",
+    "description": "Apply dazzled for 1 round on a successful, failed, or critically failed Pollen Pods Fortitude save; add stupefied 1/2 for 1 minute on failure/critical failure. Poison damage, bulb triggering, and area placement remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "pollen-pods"],
+    "variables": {"B338PolEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B338PolEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B338PolEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B338PolEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B338PolMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B338PolMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:pollen-pods"}, "list": {"connection": "B338PolEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B338PolSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B338PolSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B338PolEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B338PolDaz00001X:ins:in"}, "failure": {"connection": "B338PolDaz00002X:ins:in"}, "criticalFailure": {"connection": "B338PolDaz00003X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B338PolDaz00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Pollen Pods"}, "target": {"connection": "B338PolEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 160}},
+      {"id": "B338PolDaz00002X", "type": "create-condition", "state": "timed", "outs": {"out": {"connection": "B338PolStp00001X:ins:in"}}, "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Pollen Pods"}, "target": {"connection": "B338PolEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B338PolDaz00003X", "type": "create-condition", "state": "timed", "outs": {"out": {"connection": "B338PolStp00002X:ins:in"}}, "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Pollen Pods"}, "target": {"connection": "B338PolEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -160}},
+      {"id": "B338PolStp00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "stupefied"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Pollen Pods"}, "target": {"connection": "B338PolEvt00001X:outputs:target"}}, "position": {"x": 1280, "y": 0}},
+      {"id": "B338PolStp00002X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "stupefied"}, "value": {"value": 2}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Pollen Pods"}, "target": {"connection": "B338PolEvt00001X:outputs:target"}}, "position": {"x": 1280, "y": -160}}
+    ]
+  },
+  {
+    "id": "B338FrrTrg00001X",
+    "name": "Freezing Rain — Slowed",
+    "folder": "Spells",
+    "description": "Apply slowed 1 for 1 round on a failed Freezing Rain Reflex save and slowed 2 for 1 round on a critical failure; sustain timing, freezing choice, damage, and area movement remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "freezing-rain"],
+    "variables": {"B338FrrEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B338FrrEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B338FrrEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B338FrrEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B338FrrMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B338FrrMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:freezing-rain"}, "list": {"connection": "B338FrrEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B338FrrSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B338FrrSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B338FrrEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B338FrrSlo00001X:ins:in"}, "criticalFailure": {"connection": "B338FrrSlo00002X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B338FrrSlo00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "slowed"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Freezing Rain"}, "target": {"connection": "B338FrrEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B338FrrSlo00002X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "slowed"}, "value": {"value": 2}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Freezing Rain"}, "target": {"connection": "B338FrrEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  }
+]

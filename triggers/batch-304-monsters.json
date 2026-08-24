@@ -1,0 +1,82 @@
+[
+  {
+    "id": "B304StsTrg00001X",
+    "name": "Stunning Screech — Stunned",
+    "folder": "Monster Abilities",
+    "description": "Apply stunned 2 on a failed Stunning Screech Fortitude save and stunned 3 on a critical failure; area targeting and frequency remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "stunning-screech"],
+    "variables": {"B304StsEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B304StsEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B304StsEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B304StsEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B304StsMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B304StsMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:stunning-screech"}, "list": {"connection": "B304StsEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B304StsSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B304StsSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B304StsEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B304StsFai00001X:ins:in"}, "criticalFailure": {"connection": "B304StsCfl00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B304StsFai00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "value": {"value": 2}, "name": {"value": "Effect: Stunning Screech"}, "target": {"connection": "B304StsEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B304StsCfl00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "value": {"value": 3}, "name": {"value": "Effect: Stunning Screech"}, "target": {"connection": "B304StsEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "B304DflTrg00001X",
+    "name": "Dazzling Flash — Dazzled and Blinded",
+    "folder": "Monster Abilities",
+    "description": "Apply Dazzling Flash's dazzled/blinded Fortitude-save outcomes; area targeting and duration remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "dazzling-flash"],
+    "variables": {"B304DflEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B304DflEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B304DflEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B304DflEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B304DflMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B304DflMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:dazzling-flash"}, "list": {"connection": "B304DflEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B304DflSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B304DflSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B304DflEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B304DflSuc00001X:ins:in"}, "failure": {"connection": "B304DflFai00001X:ins:in"}, "criticalFailure": {"connection": "B304DflCfl00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B304DflSuc00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Dazzling Flash"}, "target": {"connection": "B304DflEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B304DflFai00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "blinded"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Dazzling Flash"}, "target": {"connection": "B304DflEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B304DflCfl00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "blinded"}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Dazzling Flash"}, "target": {"connection": "B304DflEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "B304SplTrg00001X",
+    "name": "Splatter — Dazzled",
+    "folder": "Monster Abilities",
+    "description": "Apply dazzled for 1 round after a successful Splatter Strike; paint removal and the triggering attack remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "splatter"],
+    "variables": {"B304SplEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B304SplEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B304SplEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B304SplEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B304SplMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B304SplMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:splatter"}, "list": {"connection": "B304SplEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B304SplChk00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B304SplChk00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B304SplEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B304SplDaz00001X:ins:in"}, "criticalSuccess": {"connection": "B304SplDaz00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B304SplDaz00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Splatter"}, "target": {"connection": "B304SplEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B304PnbTrg00001X",
+    "name": "Painful Bite — Sickened",
+    "folder": "Monster Abilities",
+    "description": "Apply sickened 1 on a failed Painful Bite Fortitude save and sickened 2 on a critical failure; the bite and targeting remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "painful-bite"],
+    "variables": {"B304PnbEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B304PnbEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B304PnbEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B304PnbEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B304PnbMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B304PnbMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:painful-bite"}, "list": {"connection": "B304PnbEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B304PnbSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B304PnbSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B304PnbEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B304PnbFai00001X:ins:in"}, "criticalFailure": {"connection": "B304PnbCfl00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B304PnbFai00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 1}, "name": {"value": "Effect: Painful Bite"}, "target": {"connection": "B304PnbEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B304PnbCfl00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 2}, "name": {"value": "Effect: Painful Bite"}, "target": {"connection": "B304PnbEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "B304ShrTrg00001X",
+    "name": "Shriek — Frightened",
+    "folder": "Monster Abilities",
+    "description": "Apply frightened 1 on a failed Shriek Will save and frightened 2 on a critical failure; area targeting and damage remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "shriek"],
+    "variables": {"B304ShrEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B304ShrEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B304ShrEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B304ShrEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B304ShrMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B304ShrMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:shriek"}, "list": {"connection": "B304ShrEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B304ShrSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B304ShrSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B304ShrEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B304ShrFai00001X:ins:in"}, "criticalFailure": {"connection": "B304ShrCfl00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B304ShrFai00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 1}, "name": {"value": "Effect: Shriek"}, "target": {"connection": "B304ShrEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B304ShrCfl00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 2}, "name": {"value": "Effect: Shriek"}, "target": {"connection": "B304ShrEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  }
+]

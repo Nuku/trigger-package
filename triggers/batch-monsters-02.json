@@ -1,0 +1,78 @@
+[
+  {
+    "id": "ImpGrabTrig0001X",
+    "name": "Improved Grab — Grabbed",
+    "folder": "Monster Abilities",
+    "description": "On a successful attack using Improved Grab, apply grabbed to the target.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "improved-grab"],
+    "variables": {
+      "ImpGrabEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "ImpGrabEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"},
+      "ImpGrabEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "ImpGrabEvt00001X", "type": "attack-roll-event", "outs": {"out": {"connection": "ImpGrabMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "ImpGrabMch00001X", "type": "match-predicate", "inputs": {"options": {"connection": "ImpGrabEvt00001X:outputs:options"}, "predicate": {"value": "[\n  \"item:slug:improved-grab\"\n]"}}, "outs": {"true": {"connection": "ImpGrabSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "ImpGrabSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "ImpGrabEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "ImpGrabCon00001X:ins:in"}, "criticalSuccess": {"connection": "ImpGrabCon00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "ImpGrabCon00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "grabbed"}, "name": {"value": "Effect: Improved Grab"}, "target": {"connection": "ImpGrabEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "WebAbilTrig0001X",
+    "name": "Web — Immobilized",
+    "folder": "Monster Abilities",
+    "description": "On a successful Web attack, apply immobilized to the target.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "web"],
+    "variables": {
+      "WebAbilEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "WebAbilEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"},
+      "WebAbilEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "WebAbilEvt00001X", "type": "attack-roll-event", "outs": {"out": {"connection": "WebAbilMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "WebAbilMch00001X", "type": "match-predicate", "inputs": {"options": {"connection": "WebAbilEvt00001X:outputs:options"}, "predicate": {"value": "[\n  \"item:slug:web\"\n]"}}, "outs": {"true": {"connection": "WebAbilSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "WebAbilSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "WebAbilEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "WebAbilCon00001X:ins:in"}, "criticalSuccess": {"connection": "WebAbilCon00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "WebAbilCon00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "immobilized"}, "name": {"value": "Effect: Web"}, "target": {"connection": "WebAbilEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "TrampleTrig00001",
+    "name": "Trample — Prone",
+    "folder": "Monster Abilities",
+    "description": "On a failed Reflex save against Trample, apply prone to the target.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "trample"],
+    "variables": {
+      "TrampleEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "TrampleEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"},
+      "TrampleEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "TrampleEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "TrampleMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "TrampleMch00001X", "type": "match-predicate", "inputs": {"options": {"connection": "TrampleEvt00001X:outputs:options"}, "predicate": {"value": "[\n  \"item:slug:trample\"\n]"}}, "outs": {"true": {"connection": "TrampleSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "TrampleSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "TrampleEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "TrampleCon00001X:ins:in"}, "criticalFailure": {"connection": "TrampleCon00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "TrampleCon00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "prone"}, "name": {"value": "Effect: Trample"}, "target": {"connection": "TrampleEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "SwallowTrig00001",
+    "name": "Swallow Whole — Grabbed",
+    "folder": "Monster Abilities",
+    "description": "On a successful Swallow Whole attack, apply grabbed to the target as the swallowed state begins.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "swallow-whole"],
+    "variables": {
+      "SwallowEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "SwallowEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"},
+      "SwallowEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "SwallowEvt00001X", "type": "attack-roll-event", "outs": {"out": {"connection": "SwallowMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "SwallowMch00001X", "type": "match-predicate", "inputs": {"options": {"connection": "SwallowEvt00001X:outputs:options"}, "predicate": {"value": "[\n  \"item:slug:swallow-whole\"\n]"}}, "outs": {"true": {"connection": "SwallowSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "SwallowSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "SwallowEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "SwallowCon00001X:ins:in"}, "criticalSuccess": {"connection": "SwallowCon00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "SwallowCon00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "grabbed"}, "name": {"value": "Effect: Swallow Whole"}, "target": {"connection": "SwallowEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

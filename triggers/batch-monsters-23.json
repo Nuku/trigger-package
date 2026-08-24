@@ -1,0 +1,80 @@
+[
+  {
+    "id": "M23BDTRG0000001X",
+    "name": "Blood Drain",
+    "folder": "Monster Abilities",
+    "description": "Increase drained by 1 after a successful Blood Drain use; the grabbed/restrained prerequisite, damage, temporary HP, and target eligibility remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "blood-drain"],
+    "variables": {
+      "M23BDEVT0000001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M23BDEVT0000001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M23BDEVT0000001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M23BDEVT0000001X", "type": "attack-roll-event", "outs": {"out": {"connection": "M23BDMCH0000001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M23BDMCH0000001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:blood-drain"}, "list": {"connection": "M23BDEVT0000001X:outputs:options"}}, "outs": {"true": {"connection": "M23BDSPL0000001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M23BDSPL0000001X", "type": "split-outcome", "inputs": {"input": {"connection": "M23BDEVT0000001X:outputs:outcome"}}, "outs": {"success": {"connection": "M23BDDRN0000001X:ins:in"}, "criticalSuccess": {"connection": "M23BDDRN0000001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M23BDDRN0000001X", "type": "increase-condition", "state": "fixed", "inputs": {"condition": {"value": "drained"}, "value": {"value": 1}, "name": {"value": "Effect: Blood Drain"}, "target": {"connection": "M23BDEVT0000001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "M23RETTRG000001X",
+    "name": "Retch",
+    "folder": "Monster Abilities",
+    "description": "Apply sickened 1 on a failed Retch save and sickened 2 on a critical failure; cone placement, affected creatures, damage, and the action's frequency remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "retch"],
+    "variables": {
+      "M23RETEVT000001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M23RETEVT000001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M23RETEVT000001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M23RETEVT000001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M23RETMCH000001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M23RETMCH000001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:retch"}, "list": {"connection": "M23RETEVT000001X:outputs:options"}}, "outs": {"true": {"connection": "M23RETSPL000001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M23RETSPL000001X", "type": "split-outcome", "inputs": {"input": {"connection": "M23RETEVT000001X:outputs:outcome"}}, "outs": {"failure": {"connection": "M23RETSCK000001X:ins:in"}, "criticalFailure": {"connection": "M23RETSCK000002X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M23RETSCK000001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 1}, "name": {"value": "Effect: Retch"}, "target": {"connection": "M23RETEVT000001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "M23RETSCK000002X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 2}, "name": {"value": "Effect: Retch"}, "target": {"connection": "M23RETEVT000001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "M23SPVTRG000001X",
+    "name": "Spit Venom",
+    "folder": "Monster Abilities",
+    "description": "Apply poisoned 1 on a failed Spit Venom Fortitude save and poisoned 2 on a critical failure; range, venom damage, duration, and target eligibility remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "spit-venom"],
+    "variables": {
+      "M23SPVEVT000001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M23SPVEVT000001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M23SPVEVT000001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M23SPVEVT000001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M23SPVMCH000001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M23SPVMCH000001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:spit-venom"}, "list": {"connection": "M23SPVEVT000001X:outputs:options"}}, "outs": {"true": {"connection": "M23SPVSPL000001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M23SPVSPL000001X", "type": "split-outcome", "inputs": {"input": {"connection": "M23SPVEVT000001X:outputs:outcome"}}, "outs": {"failure": {"connection": "M23SPVPOI000001X:ins:in"}, "criticalFailure": {"connection": "M23SPVPOI000002X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M23SPVPOI000001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "poisoned"}, "value": {"value": 1}, "name": {"value": "Effect: Spit Venom"}, "target": {"connection": "M23SPVEVT000001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "M23SPVPOI000002X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "poisoned"}, "value": {"value": 2}, "name": {"value": "Effect: Spit Venom"}, "target": {"connection": "M23SPVEVT000001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "M23WHDTRG000001X",
+    "name": "Whip Drain",
+    "folder": "Monster Abilities",
+    "description": "Increase drained by 1 after a successful Whip Drain Strike; reach, damage, the required weapon Strike, and any healing or temporary HP remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "whip-drain"],
+    "variables": {
+      "M23WHDEVT000001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M23WHDEVT000001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M23WHDEVT000001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M23WHDEVT000001X", "type": "attack-roll-event", "outs": {"out": {"connection": "M23WHDMCH000001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M23WHDMCH000001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:whip-drain"}, "list": {"connection": "M23WHDEVT000001X:outputs:options"}}, "outs": {"true": {"connection": "M23WHDSPL000001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M23WHDSPL000001X", "type": "split-outcome", "inputs": {"input": {"connection": "M23WHDEVT000001X:outputs:outcome"}}, "outs": {"success": {"connection": "M23WHDDRN000001X:ins:in"}, "criticalSuccess": {"connection": "M23WHDDRN000001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M23WHDDRN000001X", "type": "increase-condition", "state": "fixed", "inputs": {"condition": {"value": "drained"}, "value": {"value": 1}, "name": {"value": "Effect: Whip Drain"}, "target": {"connection": "M23WHDEVT000001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

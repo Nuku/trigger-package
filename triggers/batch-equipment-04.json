@@ -1,0 +1,286 @@
+[
+  {
+    "id": "EQ4BolaShotTrg01",
+    "name": "Bola Shot",
+    "folder": "Equipment",
+    "description": "On a critical success with Bola Shot against the target's Reflex DC, apply prone and stunned 1.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "equipment",
+      "bola-shot"
+    ],
+    "variables": {
+      "EQ4BolaShotEvt01:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "EQ4BolaShotEvt01:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      },
+      "EQ4BolaShotEvt01:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      }
+    },
+    "nodes": [
+      {
+        "id": "EQ4BolaShotEvt01",
+        "type": "attack-roll-event",
+        "outs": {
+          "out": {
+            "connection": "EQ4BolaShotMch01:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "EQ4BolaShotMch01",
+        "type": "match-predicate",
+        "inputs": {
+          "options": {
+            "connection": "EQ4BolaShotEvt01:outputs:options"
+          },
+          "predicate": {
+            "value": "[\n  \"item:slug:bola-shot\",\n  \"check:outcome:critical-success\"\n]"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "EQ4BolaShotPrn01:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "EQ4BolaShotPrn01",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "prone"
+          },
+          "duration": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Bola Shot"
+          },
+          "target": {
+            "connection": "EQ4BolaShotEvt01:outputs:target"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "EQ4BolaShotStn01:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 80
+        }
+      },
+      {
+        "id": "EQ4BolaShotStn01",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "stunned"
+          },
+          "value": {
+            "value": 1
+          },
+          "duration": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Bola Shot"
+          },
+          "target": {
+            "connection": "EQ4BolaShotEvt01:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 80
+        }
+      }
+    ]
+  },
+  {
+    "id": "EQ4BloodTrg00001",
+    "name": "Bloodseeker Beak",
+    "folder": "Equipment",
+    "description": "After an attack using Bloodseeker Beak hits an off-guard creature, create 1d4 persistent bleed damage; the talisman's extra precision damage remains manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "equipment",
+      "bloodseeker-beak"
+    ],
+    "variables": {
+      "EQ4BloodEvt00001:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "EQ4BloodEvt00001:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      }
+    },
+    "nodes": [
+      {
+        "id": "EQ4BloodEvt00001",
+        "type": "attack-roll-event",
+        "outs": {
+          "out": {
+            "connection": "EQ4BloodMch00001:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "EQ4BloodMch00001",
+        "type": "match-predicate",
+        "inputs": {
+          "options": {
+            "connection": "EQ4BloodEvt00001:outputs:options"
+          },
+          "predicate": {
+            "value": "[\n  \"item:slug:bloodseeker-beak\",\n  \"check:outcome:success\"\n]"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "EQ4BloodBle00001:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "EQ4BloodBle00001",
+        "type": "create-persistent",
+        "inputs": {
+          "die": {
+            "value": "1d4"
+          },
+          "target": {
+            "connection": "EQ4BloodEvt00001:outputs:target"
+          },
+          "type": {
+            "value": "bleed"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      }
+    ]
+  },
+  {
+    "id": "EQ4AtroTrg000001",
+    "name": "Atrophy Bomb",
+    "folder": "Equipment",
+    "description": "When an Atrophy Bomb hits, apply enfeebled 1 until the start of the target's next turn; higher-grade scaling and bomb damage remain manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "equipment",
+      "atrophy-bomb"
+    ],
+    "variables": {
+      "EQ4AtroEvt000001:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "EQ4AtroEvt000001:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      }
+    },
+    "nodes": [
+      {
+        "id": "EQ4AtroEvt000001",
+        "type": "attack-roll-event",
+        "outs": {
+          "out": {
+            "connection": "EQ4AtroMch000001:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "EQ4AtroMch000001",
+        "type": "match-predicate",
+        "inputs": {
+          "options": {
+            "connection": "EQ4AtroEvt000001:outputs:options"
+          },
+          "predicate": {
+            "value": "[\n  \"item:slug:atrophy-bomb\",\n  \"check:outcome:success\"\n]"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "EQ4AtroEnf000001:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "EQ4AtroEnf000001",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "enfeebled"
+          },
+          "value": {
+            "value": 1
+          },
+          "duration": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Atrophy Bomb"
+          },
+          "target": {
+            "connection": "EQ4AtroEvt000001:outputs:target"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      }
+    ]
+  }
+]

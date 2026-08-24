@@ -1,0 +1,82 @@
+[
+  {
+    "id": "B26DizTrg0000001",
+    "name": "Dizzying Colors — Dazzled/Stunned/Blinded",
+    "folder": "Spells",
+    "description": "On a Dizzying Colors Will save, apply dazzled for 1 round on a success, stunned 1 on a failure, or blinded for 1 minute on a critical failure; the spell's cone, visual effects, incapacitation, and targeting remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "dizzying-colors"],
+    "variables": {
+      "B26DizEvt0000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B26DizEvt0000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B26DizEvt0000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B26DizEvt0000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B26DizMch0000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B26DizMch0000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:dizzying-colors"}, "list": {"connection": "B26DizEvt0000001:outputs:options"}}, "outs": {"true": {"connection": "B26DizSpl0000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B26DizSpl0000001", "type": "split-outcome", "inputs": {"input": {"connection": "B26DizEvt0000001:outputs:outcome"}}, "outs": {"success": {"connection": "B26DizDaz0000001:ins:in"}, "failure": {"connection": "B26DizStn0000001:ins:in"}, "criticalFailure": {"connection": "B26DizBld0000001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B26DizDaz0000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Dizzying Colors"}, "target": {"connection": "B26DizEvt0000001:outputs:target"}}, "position": {"x": 960, "y": 120}},
+      {"id": "B26DizStn0000001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "value": {"value": 1}, "name": {"value": "Effect: Dizzying Colors"}, "target": {"connection": "B26DizEvt0000001:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B26DizBld0000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "blinded"}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Dizzying Colors"}, "target": {"connection": "B26DizEvt0000001:outputs:target"}}, "position": {"x": 960, "y": -120}}
+    ]
+  },
+  {
+    "id": "B26CorTrg0000001",
+    "name": "Coral Scourge — Clumsy",
+    "folder": "Spells",
+    "description": "On a Coral Scourge Reflex save, apply clumsy 1 on a success or failure; the growth-removal checks, round-by-round escalation, sustained duration, paralyzed threshold, and targeting remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "coral-scourge"],
+    "variables": {
+      "B26CorEvt0000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B26CorEvt0000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B26CorEvt0000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B26CorEvt0000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B26CorMch0000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B26CorMch0000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:coral-scourge"}, "list": {"connection": "B26CorEvt0000001:outputs:options"}}, "outs": {"true": {"connection": "B26CorSpl0000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B26CorSpl0000001", "type": "split-outcome", "inputs": {"input": {"connection": "B26CorEvt0000001:outputs:outcome"}}, "outs": {"success": {"connection": "B26CorClm0000001:ins:in"}, "failure": {"connection": "B26CorClm0000002:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B26CorClm0000001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "clumsy"}, "value": {"value": 1}, "name": {"value": "Effect: Coral Scourge"}, "target": {"connection": "B26CorEvt0000001:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B26CorClm0000002", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "clumsy"}, "value": {"value": 1}, "name": {"value": "Effect: Coral Scourge"}, "target": {"connection": "B26CorEvt0000001:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "B26GraTrg0000001",
+    "name": "Grasping Vine — Grabbed",
+    "folder": "Spells",
+    "description": "On a Grasping Vine Reflex save, apply grabbed for 1 round on a critical success or 1 minute on a failure; repositioning, Escape, vine destruction, sustain, and targeting remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "grasping-vine"],
+    "variables": {
+      "B26GraEvt0000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B26GraEvt0000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B26GraEvt0000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B26GraEvt0000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B26GraMch0000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B26GraMch0000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:grasping-vine"}, "list": {"connection": "B26GraEvt0000001:outputs:options"}}, "outs": {"true": {"connection": "B26GraSpl0000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B26GraSpl0000001", "type": "split-outcome", "inputs": {"input": {"connection": "B26GraEvt0000001:outputs:outcome"}}, "outs": {"failure": {"connection": "B26GraGrb0000001:ins:in"}, "criticalSuccess": {"connection": "B26GraGrb0000002:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B26GraGrb0000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "grabbed"}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Grasping Vine"}, "target": {"connection": "B26GraEvt0000001:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B26GraGrb0000002", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "grabbed"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Grasping Vine"}, "target": {"connection": "B26GraEvt0000001:outputs:target"}}, "position": {"x": 960, "y": -120}}
+    ]
+  },
+  {
+    "id": "B26FeaTrg0000001",
+    "name": "Fear the Sun — Dazzled",
+    "folder": "Spells",
+    "description": "On a Fear the Sun Fortitude save, apply dazzled for 1 round on a success; light blindness, exposure checks, the sustained duration, temporary immunity, and targeting remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "fear-the-sun"],
+    "variables": {
+      "B26FeaEvt0000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B26FeaEvt0000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B26FeaEvt0000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B26FeaEvt0000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B26FeaMch0000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B26FeaMch0000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:fear-the-sun"}, "list": {"connection": "B26FeaEvt0000001:outputs:options"}}, "outs": {"true": {"connection": "B26FeaCmp0000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B26FeaCmp0000001", "type": "compare-outcomes", "inputs": {"a": {"connection": "B26FeaEvt0000001:outputs:outcome"}, "b": {"value": "success"}}, "outs": {"true": {"connection": "B26FeaDaz0000001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B26FeaDaz0000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Fear the Sun"}, "target": {"connection": "B26FeaEvt0000001:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

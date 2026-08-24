@@ -1,0 +1,82 @@
+[
+  {
+    "id": "M14A001000000001",
+    "name": "Stunning Strike",
+    "folder": "Monster Abilities",
+    "description": "Apply stunned 1 on a failed Fortitude save against Stunning Strike, or stunned 2 on a critical failure; the qualifying Strike, damage, and frequency remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "stunning-strike"],
+    "variables": {
+      "M14A002000000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M14A002000000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M14A002000000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M14A002000000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M14A003000000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M14A003000000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:stunning-strike"}, "list": {"connection": "M14A002000000001:outputs:options"}}, "outs": {"true": {"connection": "M14A004000000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M14A004000000001", "type": "split-outcome", "inputs": {"input": {"connection": "M14A002000000001:outputs:outcome"}}, "outs": {"failure": {"connection": "M14A005000000001:ins:in"}, "criticalFailure": {"connection": "M14A006000000001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M14A005000000001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "value": {"value": 1}, "name": {"value": "Effect: Stunning Strike"}, "target": {"connection": "M14A002000000001:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "M14A006000000001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "value": {"value": 2}, "name": {"value": "Effect: Stunning Strike"}, "target": {"connection": "M14A002000000001:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "M14B001000000001",
+    "name": "Rotting Aura",
+    "folder": "Monster Abilities",
+    "description": "Apply sickened 1 on a failed Fortitude save against Rotting Aura, or sickened 2 on a critical failure; aura range, timing, damage, and immunity remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "rotting-aura"],
+    "variables": {
+      "M14B002000000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M14B002000000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M14B002000000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M14B002000000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M14B003000000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M14B003000000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:rotting-aura"}, "list": {"connection": "M14B002000000001:outputs:options"}}, "outs": {"true": {"connection": "M14B004000000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M14B004000000001", "type": "split-outcome", "inputs": {"input": {"connection": "M14B002000000001:outputs:outcome"}}, "outs": {"failure": {"connection": "M14B005000000001:ins:in"}, "criticalFailure": {"connection": "M14B006000000001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M14B005000000001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 1}, "name": {"value": "Effect: Rotting Aura"}, "target": {"connection": "M14B002000000001:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "M14B006000000001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 2}, "name": {"value": "Effect: Rotting Aura"}, "target": {"connection": "M14B002000000001:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "M14C001000000001",
+    "name": "Toxic Spores",
+    "folder": "Monster Abilities",
+    "description": "Apply sickened 1 on a failed Fortitude save against Toxic Spores, or sickened 2 on a critical failure; spore area, poison damage, and recovery remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "toxic-spores"],
+    "variables": {
+      "M14C002000000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M14C002000000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M14C002000000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M14C002000000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M14C003000000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M14C003000000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:toxic-spores"}, "list": {"connection": "M14C002000000001:outputs:options"}}, "outs": {"true": {"connection": "M14C004000000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M14C004000000001", "type": "split-outcome", "inputs": {"input": {"connection": "M14C002000000001:outputs:outcome"}}, "outs": {"failure": {"connection": "M14C005000000001:ins:in"}, "criticalFailure": {"connection": "M14C006000000001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M14C005000000001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 1}, "name": {"value": "Effect: Toxic Spores"}, "target": {"connection": "M14C002000000001:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "M14C006000000001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 2}, "name": {"value": "Effect: Toxic Spores"}, "target": {"connection": "M14C002000000001:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "M14D001000000001",
+    "name": "Blood Drain",
+    "folder": "Monster Abilities",
+    "description": "Apply drained 1 on a failed Fortitude save against Blood Drain, or drained 2 on a critical failure; the grab prerequisite, damage, and recovery remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "blood-drain"],
+    "variables": {
+      "M14D002000000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M14D002000000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M14D002000000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M14D002000000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M14D003000000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M14D003000000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:blood-drain"}, "list": {"connection": "M14D002000000001:outputs:options"}}, "outs": {"true": {"connection": "M14D004000000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M14D004000000001", "type": "split-outcome", "inputs": {"input": {"connection": "M14D002000000001:outputs:outcome"}}, "outs": {"failure": {"connection": "M14D005000000001:ins:in"}, "criticalFailure": {"connection": "M14D006000000001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M14D005000000001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "drained"}, "value": {"value": 1}, "name": {"value": "Effect: Blood Drain"}, "target": {"connection": "M14D002000000001:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "M14D006000000001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "drained"}, "value": {"value": 2}, "name": {"value": "Effect: Blood Drain"}, "target": {"connection": "M14D002000000001:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  }
+]

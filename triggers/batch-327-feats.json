@@ -1,0 +1,17 @@
+[
+  {
+    "id": "B327StdTrg00001X",
+    "name": "Stay Down! — Prone",
+    "folder": "Feats",
+    "description": "Keep the triggering foe prone after a successful or critically successful Stay Down! Athletics check; the Stand trigger, reach requirement, and critical-success restriction on the next Stand remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "stay-down"],
+    "variables": {"B327StdEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B327StdEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B327StdEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B327StdEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "skill-check"}}, "outs": {"out": {"connection": "B327StdMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B327StdMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:stay-down"}, "list": {"connection": "B327StdEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B327StdSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B327StdSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B327StdEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B327StdPrn00001X:ins:in"}, "criticalSuccess": {"connection": "B327StdPrn00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B327StdPrn00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "prone"}, "name": {"value": "Effect: Stay Down!"}, "target": {"connection": "B327StdEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

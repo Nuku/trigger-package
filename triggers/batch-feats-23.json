@@ -1,0 +1,79 @@
+[
+  {
+    "id": "B23AggBlkTrg001X",
+    "name": "Aggressive Block",
+    "folder": "Feats & Features",
+    "description": "After Aggressive Block's qualifying Shove succeeds, apply off-guard until the start of the user's next turn. The Shield Block reaction, adjacent foe, size limit, and forced movement or collision handling remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "aggressive-block"],
+    "variables": {
+      "B23AggBlkEvt001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B23AggBlkEvt001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B23AggBlkEvt001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B23AggBlkEvt001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "skill-check"}}, "outs": {"out": {"connection": "B23AggBlkMch001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B23AggBlkMch001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:aggressive-block"}, "list": {"connection": "B23AggBlkEvt001X:outputs:options"}}, "outs": {"true": {"connection": "B23AggBlkSpl001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B23AggBlkSpl001X", "type": "split-outcome", "inputs": {"input": {"connection": "B23AggBlkEvt001X:outputs:outcome"}}, "outs": {"success": {"connection": "B23AggBlkOff001X:ins:in"}, "criticalSuccess": {"connection": "B23AggBlkOff001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B23AggBlkOff001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "expiry": {"value": "turn-start"}, "name": {"value": "Effect: Aggressive Block"}, "target": {"connection": "B23AggBlkEvt001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B23IndImbTrg001X",
+    "name": "Induce Imbalance",
+    "folder": "Feats & Features",
+    "description": "After Induce Imbalance's Fortitude save, apply clumsy 2 on a failure until the end of the target's next turn, or for 1 minute on a critical failure. The stance, qualifying Strike, and –2 circumstance penalty remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "induce-imbalance"],
+    "variables": {
+      "B23IndImbEvt001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B23IndImbEvt001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B23IndImbEvt001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B23IndImbEvt001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B23IndImbMch001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B23IndImbMch001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:induce-imbalance"}, "list": {"connection": "B23IndImbEvt001X:outputs:options"}}, "outs": {"true": {"connection": "B23IndImbSpl001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B23IndImbSpl001X", "type": "split-outcome", "inputs": {"input": {"connection": "B23IndImbEvt001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B23IndImbClm001X:ins:in"}, "criticalFailure": {"connection": "B23IndImbClm002X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B23IndImbClm001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "clumsy"}, "value": {"value": 2}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "expiry": {"value": "turn-end"}, "name": {"value": "Effect: Induce Imbalance"}, "target": {"connection": "B23IndImbEvt001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B23IndImbClm002X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "clumsy"}, "value": {"value": 2}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Induce Imbalance"}, "target": {"connection": "B23IndImbEvt001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "B23FrzItXTrg001X",
+    "name": "Freeze It!",
+    "folder": "Feats & Features",
+    "description": "After Freeze It's qualifying Athletics check critically succeeds, apply clumsy 2 for 1 round. The adjacent target, proficiency-based target count, and temporary immunity on a failure remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "freeze-it"],
+    "variables": {
+      "B23FrzItXEvt001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B23FrzItXEvt001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B23FrzItXEvt001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B23FrzItXEvt001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "skill-check"}}, "outs": {"out": {"connection": "B23FrzItXMch001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B23FrzItXMch001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:freeze-it"}, "list": {"connection": "B23FrzItXEvt001X:outputs:options"}}, "outs": {"true": {"connection": "B23FrzItXSpl001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B23FrzItXSpl001X", "type": "split-outcome", "inputs": {"input": {"connection": "B23FrzItXEvt001X:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "B23FrzItXClm001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B23FrzItXClm001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "clumsy"}, "value": {"value": 2}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Freeze It!"}, "target": {"connection": "B23FrzItXEvt001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B23LedDncTrg001X",
+    "name": "Leading Dance",
+    "folder": "Feats & Features",
+    "description": "After Leading Dance's qualifying Performance check critically fails, apply prone to the target. The adjacent-enemy requirement, movement, and forced-movement immunity remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "leading-dance"],
+    "variables": {
+      "B23LedDncEvt001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B23LedDncEvt001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B23LedDncEvt001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B23LedDncEvt001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "skill-check"}}, "outs": {"out": {"connection": "B23LedDncMch001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B23LedDncMch001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:leading-dance"}, "list": {"connection": "B23LedDncEvt001X:outputs:options"}}, "outs": {"true": {"connection": "B23LedDncSpl001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B23LedDncSpl001X", "type": "split-outcome", "inputs": {"input": {"connection": "B23LedDncEvt001X:outputs:outcome"}}, "outs": {"criticalFailure": {"connection": "B23LedDncPrn001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B23LedDncPrn001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "prone"}, "name": {"value": "Effect: Leading Dance"}, "target": {"connection": "B23LedDncEvt001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

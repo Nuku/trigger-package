@@ -1,0 +1,101 @@
+[
+  {
+    "id": "B344RtbTrg00001X",
+    "name": "Ring Their Bell — Stunned",
+    "folder": "Feats",
+    "description": "Apply stunned 1/2/3 by Ring Their Bell Fortitude-save outcome; armor, taunt/off-guard requirements, incapacitation, and Strike handling remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "ring-their-bell"],
+    "variables": {"B344RtbEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B344RtbEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B344RtbEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B344RtbEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B344RtbMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B344RtbMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:ring-their-bell"}, "list": {"connection": "B344RtbEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B344RtbSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B344RtbSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B344RtbEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B344RtbStn00001X:ins:in"}, "failure": {"connection": "B344RtbStn00002X:ins:in"}, "criticalFailure": {"connection": "B344RtbStn00003X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B344RtbStn00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "value": {"value": 1}, "name": {"value": "Effect: Ring Their Bell"}, "target": {"connection": "B344RtbEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 160}},
+      {"id": "B344RtbStn00002X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "value": {"value": 2}, "name": {"value": "Effect: Ring Their Bell"}, "target": {"connection": "B344RtbEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B344RtbStn00003X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "value": {"value": 3}, "name": {"value": "Effect: Ring Their Bell"}, "target": {"connection": "B344RtbEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -160}}
+    ]
+  },
+  {
+    "id": "B344StgTrg00001X",
+    "name": "Stomp Ground — Off-Guard/Prone",
+    "folder": "Feats",
+    "description": "Apply off-guard on a successful Stomp Ground Reflex save and prone on failure or critical failure; emanation targeting, damage, and end-of-turn cleanup remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "stomp-ground"],
+    "variables": {"B344StgEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B344StgEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B344StgEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B344StgEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B344StgMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B344StgMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:stomp-ground"}, "list": {"connection": "B344StgEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B344StgSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B344StgSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B344StgEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B344StgOfg00001X:ins:in"}, "failure": {"connection": "B344StgPrn00001X:ins:in"}, "criticalFailure": {"connection": "B344StgPrn00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B344StgOfg00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "off-guard"}, "name": {"value": "Effect: Stomp Ground"}, "target": {"connection": "B344StgEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B344StgPrn00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "prone"}, "name": {"value": "Effect: Stomp Ground"}, "target": {"connection": "B344StgEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "B344PcfTrg00001X",
+    "name": "Perfume Cloud — Dazzled/Blinded",
+    "folder": "Feats",
+    "description": "Apply dazzled for 1 round on a successful or failed Perfume Cloud Fortitude save and blinded for 1 round on a critical failure; plant/fungus immunity, area, and visibility range remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "perfume-cloud"],
+    "variables": {"B344PcfEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B344PcfEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B344PcfEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B344PcfEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B344PcfMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B344PcfMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:perfume-cloud"}, "list": {"connection": "B344PcfEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B344PcfSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B344PcfSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B344PcfEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B344PcfDaz00001X:ins:in"}, "failure": {"connection": "B344PcfDaz00001X:ins:in"}, "criticalFailure": {"connection": "B344PcfBli00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B344PcfDaz00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Perfume Cloud"}, "target": {"connection": "B344PcfEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B344PcfBli00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "blinded"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Perfume Cloud"}, "target": {"connection": "B344PcfEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "B344SolTrg00001X",
+    "name": "Solar Detonation — Dazzled/Blinded",
+    "folder": "Feats",
+    "description": "Apply dazzled on a successful Solar Detonation Reflex save and blinded for 1 round on failure or 1 minute on critical failure; damage, sunlight interaction, immunity, and area remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "solar-detonation"],
+    "variables": {"B344SolEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B344SolEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B344SolEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B344SolEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B344SolMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B344SolMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:solar-detonation"}, "list": {"connection": "B344SolEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B344SolSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B344SolSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B344SolEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B344SolDaz00001X:ins:in"}, "failure": {"connection": "B344SolBli00001X:ins:in"}, "criticalFailure": {"connection": "B344SolBli00002X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B344SolDaz00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "dazzled"}, "name": {"value": "Effect: Solar Detonation"}, "target": {"connection": "B344SolEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 160}},
+      {"id": "B344SolBli00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "blinded"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Solar Detonation"}, "target": {"connection": "B344SolEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B344SolBli00002X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "blinded"}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Solar Detonation"}, "target": {"connection": "B344SolEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -160}}
+    ]
+  },
+  {
+    "id": "B344PajTrg00001X",
+    "name": "Paralyzing Jewel — Fascinated/Stunned/Paralyzed",
+    "folder": "Feats",
+    "description": "Apply fascinated for 1 round on a successful Paralyzing Jewel save, stunned 1 on failure, and paralyzed for 1 round on critical failure; head-gem, emanation, and immunity remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "paralyzing-jewel"],
+    "variables": {"B344PajEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B344PajEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B344PajEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B344PajEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B344PajMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B344PajMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:paralyzing-jewel"}, "list": {"connection": "B344PajEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B344PajSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B344PajSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B344PajEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B344PajFas00001X:ins:in"}, "failure": {"connection": "B344PajStn00001X:ins:in"}, "criticalFailure": {"connection": "B344PajPar00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B344PajFas00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "fascinated"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Paralyzing Jewel"}, "target": {"connection": "B344PajEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 160}},
+      {"id": "B344PajStn00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "value": {"value": 1}, "name": {"value": "Effect: Paralyzing Jewel"}, "target": {"connection": "B344PajEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B344PajPar00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "paralyzed"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Paralyzing Jewel"}, "target": {"connection": "B344PajEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -160}}
+    ]
+  },
+  {
+    "id": "B344RorTrg00001X",
+    "name": "Roar Mimicry — Stunned/Deafened",
+    "folder": "Feats",
+    "description": "Apply stunned 1 on a failed Roar Mimicry Fortitude save and stunned 2 on critical failure; adjacent deafened rider, damage, area, and adjacency remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "roar-mimicry"],
+    "variables": {"B344RorEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B344RorEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B344RorEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B344RorEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B344RorMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B344RorMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:roar-mimicry"}, "list": {"connection": "B344RorEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B344RorSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B344RorSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B344RorEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B344RorStn00001X:ins:in"}, "criticalFailure": {"connection": "B344RorStn00002X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B344RorStn00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "value": {"value": 1}, "name": {"value": "Effect: Roar Mimicry"}, "target": {"connection": "B344RorEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B344RorStn00002X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "value": {"value": 2}, "name": {"value": "Effect: Roar Mimicry"}, "target": {"connection": "B344RorEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  }
+]

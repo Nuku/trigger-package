@@ -1,0 +1,80 @@
+[
+  {
+    "id": "B09HORNTGR000001",
+    "name": "Horn of Blasting",
+    "folder": "Equipment",
+    "description": "On a Horn of Blasting Fortitude save failure, apply deafened; the horn's sonic damage, 2d6-round duration, and activation mode remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "horn-of-blasting"],
+    "variables": {
+      "B09HORNEVT000001:outputs:roller": {"type": "target", "isArray": false, "label": "Roller"},
+      "B09HORNEVT000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"},
+      "B09HORNEVT000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "B09HORNEVT000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B09HORNMCH000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B09HORNMCH000001", "type": "match-predicate", "inputs": {"options": {"connection": "B09HORNEVT000001:outputs:options"}, "predicate": {"value": "[\n  \"item:slug:horn-of-blasting\"\n]"}}, "outs": {"true": {"connection": "B09HORNSPL000001:ins:input"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B09HORNSPL000001", "type": "split-outcome", "inputs": {"input": {"connection": "B09HORNEVT000001:outputs:outcome"}}, "outs": {"failure": {"connection": "B09HORNDEA000001:ins:in"}, "criticalFailure": {"connection": "B09HORNDEA000001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B09HORNDEA000001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "deafened"}, "name": {"value": "Effect: Horn of Blasting"}, "target": {"connection": "B09HORNEVT000001:outputs:roller"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B09STAMPTRG00001",
+    "name": "Stampede Medallion",
+    "folder": "Equipment",
+    "description": "On a Stampede Medallion critical-failure Reflex save, apply prone; the emanation, damage, eidolon requirement, and activation frequency remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "stampede-medallion"],
+    "variables": {
+      "B09STAMPEVT00001:outputs:roller": {"type": "target", "isArray": false, "label": "Roller"},
+      "B09STAMPEVT00001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"},
+      "B09STAMPEVT00001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "B09STAMPEVT00001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B09STAMPMCH00001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B09STAMPMCH00001", "type": "match-predicate", "inputs": {"options": {"connection": "B09STAMPEVT00001:outputs:options"}, "predicate": {"value": "[\n  \"item:slug:stampede-medallion\"\n]"}}, "outs": {"true": {"connection": "B09STAMPSPL00001:ins:input"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B09STAMPSPL00001", "type": "split-outcome", "inputs": {"input": {"connection": "B09STAMPEVT00001:outputs:outcome"}}, "outs": {"criticalFailure": {"connection": "B09STAMPPRN00001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B09STAMPPRN00001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "prone"}, "name": {"value": "Effect: Stampede Medallion"}, "target": {"connection": "B09STAMPEVT00001:outputs:roller"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B09BLOODTRG00001",
+    "name": "Bloodburn Censer",
+    "folder": "Equipment",
+    "description": "On a Bloodburn Censer Fortitude save failure, apply enfeebled 2; on a critical failure, apply enfeebled 3. Persistent damage choice and temporary immunity remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "bloodburn-censer"],
+    "variables": {
+      "B09BLOODEVT00001:outputs:roller": {"type": "target", "isArray": false, "label": "Roller"},
+      "B09BLOODEVT00001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"},
+      "B09BLOODEVT00001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "B09BLOODEVT00001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B09BLOODMCH00001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B09BLOODMCH00001", "type": "match-predicate", "inputs": {"options": {"connection": "B09BLOODEVT00001:outputs:options"}, "predicate": {"value": "[\n  \"item:slug:bloodburn-censer\"\n]"}}, "outs": {"true": {"connection": "B09BLOODSPL00001:ins:input"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B09BLOODSPL00001", "type": "split-outcome", "inputs": {"input": {"connection": "B09BLOODEVT00001:outputs:outcome"}}, "outs": {"failure": {"connection": "B09BLOODENF00001:ins:in"}, "criticalFailure": {"connection": "B09BLOODENF00002:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B09BLOODENF00001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "enfeebled"}, "value": {"value": 2}, "name": {"value": "Effect: Bloodburn Censer"}, "target": {"connection": "B09BLOODEVT00001:outputs:roller"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B09BLOODENF00002", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "enfeebled"}, "value": {"value": 3}, "name": {"value": "Effect: Bloodburn Censer"}, "target": {"connection": "B09BLOODEVT00001:outputs:roller"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "B09NECROTRG00001",
+    "name": "Necrobinding Serum",
+    "folder": "Equipment",
+    "description": "On a Necrobinding Serum failed Will save, apply friendly; on a critical failure, apply helpful. Undead-only targeting, duration, mental restrictions, and the success attack penalty remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "necrobinding-serum"],
+    "variables": {
+      "B09NECROEVT00001:outputs:roller": {"type": "target", "isArray": false, "label": "Roller"},
+      "B09NECROEVT00001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"},
+      "B09NECROEVT00001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "B09NECROEVT00001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B09NECROMCH00001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B09NECROMCH00001", "type": "match-predicate", "inputs": {"options": {"connection": "B09NECROEVT00001:outputs:options"}, "predicate": {"value": "[\n  \"item:slug:necrobinding-serum\"\n]"}}, "outs": {"true": {"connection": "B09NECROSPL00001:ins:input"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B09NECROSPL00001", "type": "split-outcome", "inputs": {"input": {"connection": "B09NECROEVT00001:outputs:outcome"}}, "outs": {"failure": {"connection": "B09NECROFRI00001:ins:in"}, "criticalFailure": {"connection": "B09NECROHEL00001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B09NECROFRI00001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "friendly"}, "name": {"value": "Effect: Necrobinding Serum"}, "target": {"connection": "B09NECROEVT00001:outputs:roller"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B09NECROHEL00001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "helpful"}, "name": {"value": "Effect: Necrobinding Serum"}, "target": {"connection": "B09NECROEVT00001:outputs:roller"}}, "position": {"x": 960, "y": -80}}
+    ]
+  }
+]

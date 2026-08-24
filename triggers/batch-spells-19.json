@@ -1,0 +1,80 @@
+[
+  {
+    "id": "B19AgitTrg000001",
+    "name": "Agitate — Off-Guard",
+    "folder": "Spells",
+    "description": "On a failed or critically failed Agitate Will save, apply off-guard for 1 round; the compelled movement toward the caster and sustained duration remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "agitate"],
+    "variables": {
+      "B19AgitEvt000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B19AgitEvt000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B19AgitEvt000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B19AgitEvt000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B19AgitMch000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B19AgitMch000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:agitate"}, "list": {"connection": "B19AgitEvt000001:outputs:options"}}, "outs": {"true": {"connection": "B19AgitSpl000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B19AgitSpl000001", "type": "split-outcome", "inputs": {"input": {"connection": "B19AgitEvt000001:outputs:outcome"}}, "outs": {"failure": {"connection": "B19AgitOff000001:ins:in"}, "criticalFailure": {"connection": "B19AgitOff000001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B19AgitOff000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Agitate"}, "target": {"connection": "B19AgitEvt000001:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B19AnimTrg000001",
+    "name": "Animated Assault — Prone",
+    "folder": "Spells",
+    "description": "On a critically failed Animated Assault Reflex save, apply prone for 1 round; damage, area placement, and the assault's heightened effects remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "animated-assault"],
+    "variables": {
+      "B19AnimEvt000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B19AnimEvt000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B19AnimEvt000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B19AnimEvt000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B19AnimMch000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B19AnimMch000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:animated-assault"}, "list": {"connection": "B19AnimEvt000001:outputs:options"}}, "outs": {"true": {"connection": "B19AnimSpl000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B19AnimSpl000001", "type": "split-outcome", "inputs": {"input": {"connection": "B19AnimEvt000001:outputs:outcome"}}, "outs": {"criticalFailure": {"connection": "B19AnimPrn000001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B19AnimPrn000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "prone"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Animated Assault"}, "target": {"connection": "B19AnimEvt000001:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B19DrewTrg000001",
+    "name": "Draw Ire — Frightened",
+    "folder": "Spells",
+    "description": "On a failed Draw Ire Will save, apply frightened 1; on a critical failure apply frightened 2. The spell's temporary Hit Points and duration remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "draw-ire"],
+    "variables": {
+      "B19DrewEvt000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B19DrewEvt000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B19DrewEvt000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B19DrewEvt000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B19DrewMch000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B19DrewMch000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:draw-ire"}, "list": {"connection": "B19DrewEvt000001:outputs:options"}}, "outs": {"true": {"connection": "B19DrewSpl000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B19DrewSpl000001", "type": "split-outcome", "inputs": {"input": {"connection": "B19DrewEvt000001:outputs:outcome"}}, "outs": {"failure": {"connection": "B19DrewFai000001:ins:in"}, "criticalFailure": {"connection": "B19DrewCri000001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B19DrewFai000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "frightened", "value2": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Draw Ire"}, "target": {"connection": "B19DrewEvt000001:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B19DrewCri000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "frightened", "value2": 2}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Draw Ire"}, "target": {"connection": "B19DrewEvt000001:outputs:target"}}, "position": {"x": 960, "y": 120}}
+    ]
+  },
+  {
+    "id": "B19AcidTrg000001",
+    "name": "Acid Grip — Grabbed",
+    "folder": "Spells",
+    "description": "On a failed Acid Grip Reflex save, apply grabbed for 1 round; on a critical failure apply grabbed for 1 minute. Persistent acid damage, forced movement, the Speed penalty, sustain, and heightened scaling remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "acid-grip"],
+    "variables": {
+      "B19AcidEvt000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B19AcidEvt000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B19AcidEvt000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B19AcidEvt000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B19AcidMch000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B19AcidMch000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:acid-grip"}, "list": {"connection": "B19AcidEvt000001:outputs:options"}}, "outs": {"true": {"connection": "B19AcidSpl000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B19AcidSpl000001", "type": "split-outcome", "inputs": {"input": {"connection": "B19AcidEvt000001:outputs:outcome"}}, "outs": {"failure": {"connection": "B19AcidFai000001:ins:in"}, "criticalFailure": {"connection": "B19AcidCri000001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B19AcidFai000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "grabbed"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Acid Grip"}, "target": {"connection": "B19AcidEvt000001:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B19AcidCri000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "grabbed"}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Acid Grip"}, "target": {"connection": "B19AcidEvt000001:outputs:target"}}, "position": {"x": 960, "y": 120}}
+    ]
+  }
+]

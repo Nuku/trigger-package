@@ -1,0 +1,538 @@
+[
+  {
+    "id": "EQ3RattlingTrg01",
+    "name": "Rattling Bolt",
+    "folder": "Equipment",
+    "description": "After a Rattling Bolt damages its target, apply deafened and stupefied 1 for 1 round on a failed Fortitude save, or for 1 minute on a critical failure.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "equipment",
+      "rattling-bolt"
+    ],
+    "variables": {
+      "EQ3RattlingEvt01:outputs:roller": {
+        "type": "target",
+        "isArray": false,
+        "label": "Roller"
+      },
+      "EQ3RattlingEvt01:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      },
+      "EQ3RattlingEvt01:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      }
+    },
+    "nodes": [
+      {
+        "id": "EQ3RattlingEvt01",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "EQ3RattlingMch01:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "EQ3RattlingMch01",
+        "type": "match-predicate",
+        "inputs": {
+          "options": {
+            "connection": "EQ3RattlingEvt01:outputs:options"
+          },
+          "predicate": {
+            "value": "[\n  \"item:slug:rattling-bolt\"\n]"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "EQ3RattlingSpl01:ins:input"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "EQ3RattlingSpl01",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "EQ3RattlingEvt01:outputs:outcome"
+          }
+        },
+        "outs": {
+          "failure": {
+            "connection": "E3RattlingFnd01X:ins:in"
+          },
+          "criticalFailure": {
+            "connection": "E3RattlingCnd01X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "E3RattlingFnd01X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "deafened"
+          },
+          "duration": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Rattling Bolt"
+          },
+          "target": {
+            "connection": "EQ3RattlingEvt01:outputs:roller"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "E3RattlingFnd02X:ins:in"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 80
+        }
+      },
+      {
+        "id": "E3RattlingFnd02X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "stupefied"
+          },
+          "value": {
+            "value": 1
+          },
+          "duration": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Rattling Bolt"
+          },
+          "target": {
+            "connection": "EQ3RattlingEvt01:outputs:roller"
+          }
+        },
+        "position": {
+          "x": 1280,
+          "y": 80
+        }
+      },
+      {
+        "id": "E3RattlingCnd01X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "deafened"
+          },
+          "duration": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Rattling Bolt"
+          },
+          "target": {
+            "connection": "EQ3RattlingEvt01:outputs:roller"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "E3RattlingCnd02X:ins:in"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": -80
+        }
+      },
+      {
+        "id": "E3RattlingCnd02X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "stupefied"
+          },
+          "value": {
+            "value": 1
+          },
+          "duration": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Rattling Bolt"
+          },
+          "target": {
+            "connection": "EQ3RattlingEvt01:outputs:roller"
+          }
+        },
+        "position": {
+          "x": 1280,
+          "y": -80
+        }
+      }
+    ]
+  },
+  {
+    "id": "EQ3SetupSnareTrg",
+    "name": "Setup Snare",
+    "folder": "Equipment",
+    "description": "When a Setup Snare's save is failed or critically failed, apply clumsy 1 until the target's next turn; the snare's push remains manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "equipment",
+      "setup-snare"
+    ],
+    "variables": {
+      "E3SetupSnrEvt01X:outputs:roller": {
+        "type": "target",
+        "isArray": false,
+        "label": "Roller"
+      },
+      "E3SetupSnrEvt01X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      },
+      "E3SetupSnrEvt01X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      }
+    },
+    "nodes": [
+      {
+        "id": "E3SetupSnrEvt01X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "E3SetupSnrMch01X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "E3SetupSnrMch01X",
+        "type": "match-predicate",
+        "inputs": {
+          "options": {
+            "connection": "E3SetupSnrEvt01X:outputs:options"
+          },
+          "predicate": {
+            "value": "[\n  \"item:slug:setup-snare\"\n]"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "E3SetupSnrSpl01X:ins:input"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "E3SetupSnrSpl01X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "E3SetupSnrEvt01X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "failure": {
+            "connection": "E3SetupSnrClm01X:ins:in"
+          },
+          "criticalFailure": {
+            "connection": "E3SetupSnrClm01X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "E3SetupSnrClm01X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "clumsy"
+          },
+          "value": {
+            "value": 1
+          },
+          "duration": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Setup Snare"
+          },
+          "target": {
+            "connection": "E3SetupSnrEvt01X:outputs:roller"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      }
+    ]
+  },
+  {
+    "id": "EQ3RendingSnareG",
+    "name": "Rending Snare",
+    "folder": "Equipment",
+    "description": "Apply off-guard on a successful Rending Snare Reflex save, or clumsy 2 on a failed or critically failed save; failure also creates 2d6 persistent bleed.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "equipment",
+      "rending-snare"
+    ],
+    "variables": {
+      "E3RendingEvt01XX:outputs:roller": {
+        "type": "target",
+        "isArray": false,
+        "label": "Roller"
+      },
+      "E3RendingEvt01XX:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      },
+      "E3RendingEvt01XX:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      }
+    },
+    "nodes": [
+      {
+        "id": "E3RendingEvt01XX",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "E3RendingMch01XX:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "E3RendingMch01XX",
+        "type": "match-predicate",
+        "inputs": {
+          "options": {
+            "connection": "E3RendingEvt01XX:outputs:options"
+          },
+          "predicate": {
+            "value": "[\n  \"item:slug:rending-snare\"\n]"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "E3RendingSpl01XX:ins:input"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "E3RendingSpl01XX",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "E3RendingEvt01XX:outputs:outcome"
+          }
+        },
+        "outs": {
+          "success": {
+            "connection": "E3RendingOff01XX:ins:in"
+          },
+          "failure": {
+            "connection": "E3RendingClm01XX:ins:in"
+          },
+          "criticalFailure": {
+            "connection": "E3RendingClm02XX:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "E3RendingOff01XX",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "off-guard"
+          },
+          "duration": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Rending Snare"
+          },
+          "target": {
+            "connection": "E3RendingEvt01XX:outputs:roller"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 120
+        }
+      },
+      {
+        "id": "E3RendingClm01XX",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "clumsy"
+          },
+          "value": {
+            "value": 2
+          },
+          "duration": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Rending Snare"
+          },
+          "target": {
+            "connection": "E3RendingEvt01XX:outputs:roller"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "E3RendingBle01XX:ins:in"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      },
+      {
+        "id": "E3RendingBle01XX",
+        "type": "create-persistent",
+        "inputs": {
+          "die": {
+            "value": "2d6"
+          },
+          "target": {
+            "connection": "E3RendingEvt01XX:outputs:roller"
+          },
+          "type": {
+            "value": "bleed"
+          }
+        },
+        "position": {
+          "x": 1280,
+          "y": 0
+        }
+      },
+      {
+        "id": "E3RendingClm02XX",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "clumsy"
+          },
+          "value": {
+            "value": 2
+          },
+          "duration": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Rending Snare"
+          },
+          "target": {
+            "connection": "E3RendingEvt01XX:outputs:roller"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "E3RendingBle02XX:ins:in"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": -120
+        }
+      },
+      {
+        "id": "E3RendingBle02XX",
+        "type": "create-persistent",
+        "inputs": {
+          "die": {
+            "value": "2d6"
+          },
+          "target": {
+            "connection": "E3RendingEvt01XX:outputs:roller"
+          },
+          "type": {
+            "value": "bleed"
+          }
+        },
+        "position": {
+          "x": 1280,
+          "y": -120
+        }
+      }
+    ]
+  }
+]

@@ -1,0 +1,114 @@
+[
+  {
+    "id": "B306HisTrg00001X",
+    "name": "Histrionic Injury — Stupefied",
+    "folder": "Feats",
+    "description": "Apply stupefied 1 on a failed Histrionic Injury Will save and stupefied 2 on a critical failure for 1 round; reaction frequency and trigger timing remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "histrionic-injury"],
+    "variables": {"B306HisEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B306HisEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B306HisEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B306HisEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B306HisMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B306HisMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:histrionic-injury"}, "list": {"connection": "B306HisEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B306HisSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B306HisSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B306HisEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B306HisFai00001X:ins:in"}, "criticalFailure": {"connection": "B306HisCfl00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B306HisFai00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "stupefied"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Histrionic Injury"}, "target": {"connection": "B306HisEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B306HisCfl00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "stupefied"}, "value": {"value": 2}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Histrionic Injury"}, "target": {"connection": "B306HisEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "B306DabTrg00001X",
+    "name": "Dazzling Block — Dazzled and Blinded",
+    "folder": "Feats",
+    "description": "Apply Dazzling Block's dazzled/blinded Fortitude-save outcomes; Shield Block timing, area targeting, and eye-rubbing cleanup remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "dazzling-block"],
+    "variables": {"B306DabEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B306DabEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B306DabEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B306DabEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B306DabMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B306DabMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:dazzling-block"}, "list": {"connection": "B306DabEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B306DabSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B306DabSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B306DabEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B306DabSuc00001X:ins:in"}, "failure": {"connection": "B306DabFai00001X:ins:in"}, "criticalFailure": {"connection": "B306DabCfl00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B306DabSuc00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Dazzling Block"}, "target": {"connection": "B306DabEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B306DabFai00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "blinded"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Dazzling Block"}, "target": {"connection": "B306DabEvt00001X:outputs:target"}}, "outs": {"out": {"connection": "B306DabFdz00001X:ins:in"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B306DabFdz00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Dazzling Block"}, "target": {"connection": "B306DabEvt00001X:outputs:target"}}, "position": {"x": 1280, "y": 0}},
+      {"id": "B306DabCfl00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "blinded"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Dazzling Block"}, "target": {"connection": "B306DabEvt00001X:outputs:target"}}, "outs": {"out": {"connection": "B306DabCdz00001X:ins:in"}}, "position": {"x": 960, "y": -80}},
+      {"id": "B306DabCdz00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "unit": {"value": "hours"}, "name": {"value": "Effect: Dazzling Block"}, "target": {"connection": "B306DabEvt00001X:outputs:target"}}, "position": {"x": 1280, "y": -80}}
+    ]
+  },
+  {
+    "id": "B306StaTrg00001X",
+    "name": "Static Snare — Persistent Electricity",
+    "folder": "Equipment",
+    "description": "Apply 1 persistent electricity damage after a failed Static Snare Reflex save; trap placement and the electricity-save penalty remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "static-snare"],
+    "variables": {"B306StaEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B306StaEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B306StaEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B306StaEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B306StaMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B306StaMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:static-snare"}, "list": {"connection": "B306StaEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B306StaSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B306StaSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B306StaEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B306StaPer00001X:ins:in"}, "criticalFailure": {"connection": "B306StaPer00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B306StaPer00001X", "type": "persistent-damage", "state": "fixed", "inputs": {"formula": {"value": "1[electricity]"}, "target": {"connection": "B306StaEvt00001X:outputs:target"}, "name": {"value": "Effect: Static Snare"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B306DthTrg00001X",
+    "name": "Death Tusk Helm — Frightened",
+    "folder": "Equipment",
+    "description": "Apply frightened 1 on a failed Death Tusk Helm Will save and frightened 2 on a critical failure; activation requirements and temporary Hit Points remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "death-tusk-helm"],
+    "variables": {"B306DthEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B306DthEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B306DthEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B306DthEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B306DthMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B306DthMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:death-tusk-helm"}, "list": {"connection": "B306DthEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B306DthSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B306DthSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B306DthEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B306DthFai00001X:ins:in"}, "criticalFailure": {"connection": "B306DthCfl00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B306DthFai00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 1}, "name": {"value": "Effect: Death Tusk Helm"}, "target": {"connection": "B306DthEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B306DthCfl00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 2}, "name": {"value": "Effect: Death Tusk Helm"}, "target": {"connection": "B306DthEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "B306RbgTrg00001X",
+    "name": "Rattling Bolt (Greater) — Deafened and Stupefied",
+    "folder": "Equipment",
+    "description": "Apply deafened and stupefied 1 for 1 round after a failed Rattling Bolt (Greater) Fortitude save; critical-hit duration and undead lifesense suppression remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "rattling-bolt-greater"],
+    "variables": {"B306RbgEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B306RbgEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B306RbgEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B306RbgEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B306RbgMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B306RbgMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:rattling-bolt-greater"}, "list": {"connection": "B306RbgEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B306RbgSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B306RbgSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B306RbgEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B306RbgFai00001X:ins:in"}, "criticalFailure": {"connection": "B306RbgFai00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B306RbgFai00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "deafened"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Rattling Bolt"}, "target": {"connection": "B306RbgEvt00001X:outputs:target"}}, "outs": {"out": {"connection": "B306RbgStu00001X:ins:in"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B306RbgStu00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "stupefied"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Rattling Bolt"}, "target": {"connection": "B306RbgEvt00001X:outputs:target"}}, "position": {"x": 1280, "y": 0}}
+    ]
+  },
+  {
+    "id": "B306GlmTrg00001X",
+    "name": "Glue Bomb (Major) — Immobilized",
+    "folder": "Equipment",
+    "description": "Apply immobilized for 1 round after a critical Glue Bomb (Major) hit; Speed penalties, surface/flying qualification, and Escape cleanup remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "glue-bomb-major"],
+    "variables": {"B306GlmEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B306GlmEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B306GlmEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B306GlmEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B306GlmMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B306GlmMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:glue-bomb-major"}, "list": {"connection": "B306GlmEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B306GlmSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B306GlmSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B306GlmEvt00001X:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "B306GlmImm00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B306GlmImm00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "immobilized"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Glue Bomb"}, "target": {"connection": "B306GlmEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B306TalTrg00001X",
+    "name": "Tallow Bomb (Greater) — Sickened",
+    "folder": "Equipment",
+    "description": "Apply sickened 1 after a Tallow Bomb (Greater) critical hit; persistent fire damage and the sickened floor while burning remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "tallow-bomb-greater"],
+    "variables": {"B306TalEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B306TalEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B306TalEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B306TalEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B306TalMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B306TalMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:tallow-bomb-greater"}, "list": {"connection": "B306TalEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B306TalSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B306TalSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B306TalEvt00001X:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "B306TalSck00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B306TalSck00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 1}, "name": {"value": "Effect: Tallow Bomb"}, "target": {"connection": "B306TalEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

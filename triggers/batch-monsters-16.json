@@ -1,0 +1,78 @@
+[
+  {
+    "id": "M16A001000000001",
+    "name": "Captivating Dance",
+    "folder": "Monster Abilities",
+    "description": "Apply fascinated for 1 round on a failed Will save against Captivating Dance; area targeting, visual requirements, sustained performance, and temporary immunity remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "captivating-dance"],
+    "variables": {
+      "M16A002000000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M16A002000000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M16A002000000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M16A002000000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M16A003000000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M16A003000000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:captivating-dance"}, "list": {"connection": "M16A002000000001:outputs:options"}}, "outs": {"true": {"connection": "M16A004000000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M16A004000000001", "type": "split-outcome", "inputs": {"input": {"connection": "M16A002000000001:outputs:outcome"}}, "outs": {"failure": {"connection": "M16A005000000001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M16A005000000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "fascinated"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "expiry": {"value": "turn-end"}, "name": {"value": "Effect: Captivating Dance"}, "target": {"connection": "M16A002000000001:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "M16B001000000001",
+    "name": "Gory Splash",
+    "folder": "Monster Abilities",
+    "description": "Apply sickened 1 on a failed Fortitude save against Gory Splash; death timing, area placement, damage, and immunity remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "gory-splash"],
+    "variables": {
+      "M16B002000000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M16B002000000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M16B002000000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M16B002000000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M16B003000000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M16B003000000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:gory-splash"}, "list": {"connection": "M16B002000000001:outputs:options"}}, "outs": {"true": {"connection": "M16B004000000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M16B004000000001", "type": "split-outcome", "inputs": {"input": {"connection": "M16B002000000001:outputs:outcome"}}, "outs": {"failure": {"connection": "M16B005000000001:ins:in"}, "criticalFailure": {"connection": "M16B005000000001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M16B005000000001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 1}, "name": {"value": "Effect: Gory Splash"}, "target": {"connection": "M16B002000000001:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "M16C001000000001",
+    "name": "Soul Siphon",
+    "folder": "Monster Abilities",
+    "description": "Increase drained by 1 on a failed or critically failed Fortitude save against Soul Siphon; damage, range, temporary Hit Points, and recovery remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "soul-siphon"],
+    "variables": {
+      "M16C002000000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M16C002000000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M16C002000000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M16C002000000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M16C003000000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M16C003000000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:soul-siphon"}, "list": {"connection": "M16C002000000001:outputs:options"}}, "outs": {"true": {"connection": "M16C004000000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M16C004000000001", "type": "split-outcome", "inputs": {"input": {"connection": "M16C002000000001:outputs:outcome"}}, "outs": {"failure": {"connection": "M16C005000000001:ins:in"}, "criticalFailure": {"connection": "M16C005000000001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M16C005000000001", "type": "increase-condition", "state": "fixed", "inputs": {"condition": {"value": "drained"}, "max": {"value": 4}, "value": {"value": 1}, "name": {"value": "Effect: Soul Siphon"}, "target": {"connection": "M16C002000000001:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "M16D001000000001",
+    "name": "Suffocating Darkness",
+    "folder": "Monster Abilities",
+    "description": "Apply blinded for 1 round on a failed Fortitude save against Suffocating Darkness; darkness placement, concealment, breath restrictions, and repeated saves remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "suffocating-darkness"],
+    "variables": {
+      "M16D002000000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M16D002000000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M16D002000000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M16D002000000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M16D003000000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M16D003000000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:suffocating-darkness"}, "list": {"connection": "M16D002000000001:outputs:options"}}, "outs": {"true": {"connection": "M16D004000000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M16D004000000001", "type": "split-outcome", "inputs": {"input": {"connection": "M16D002000000001:outputs:outcome"}}, "outs": {"failure": {"connection": "M16D005000000001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M16D005000000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "blinded"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "expiry": {"value": "turn-end"}, "name": {"value": "Effect: Suffocating Darkness"}, "target": {"connection": "M16D002000000001:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

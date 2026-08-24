@@ -1,0 +1,111 @@
+{
+  "id": "B301GlsTrg00001X",
+  "name": "Gluttonous Spear — Enfeebled",
+  "folder": "Equipment",
+  "description": "Apply enfeebled 1 for 1 minute after a Gluttonous Spear critical hit; the temporary Hit Points gained by the wielder remain manual.",
+  "priority": 0,
+  "tags": [
+    "pf2e",
+    "equipment",
+    "gluttonous-spear"
+  ],
+  "variables": {
+    "B301GlsEvt00001X:outputs:target": {
+      "type": "target",
+      "isArray": false,
+      "label": "Target"
+    },
+    "B301GlsEvt00001X:outputs:options": {
+      "type": "text",
+      "isArray": true,
+      "label": "Roll Options"
+    },
+    "B301GlsEvt00001X:outputs:outcome": {
+      "type": "outcome",
+      "isArray": false,
+      "label": "Outcome"
+    }
+  },
+  "nodes": [
+    {
+      "id": "B301GlsEvt00001X",
+      "type": "attack-roll-event",
+      "state": "attack",
+      "inputs": {},
+      "outs": {
+        "out": {
+          "connection": "B301GlsMch00001X:ins:in"
+        }
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "B301GlsMch00001X",
+      "type": "list-contains",
+      "inputs": {
+        "entry": {
+          "value": "item:slug:gluttonous-spear"
+        },
+        "list": {
+          "connection": "B301GlsEvt00001X:outputs:options"
+        }
+      },
+      "outs": {
+        "true": {
+          "connection": "B301GlsSpl00001X:ins:in"
+        }
+      },
+      "position": {
+        "x": 320,
+        "y": 0
+      }
+    },
+    {
+      "id": "B301GlsSpl00001X",
+      "type": "split-outcome",
+      "inputs": {
+        "input": {
+          "connection": "B301GlsEvt00001X:outputs:outcome"
+        }
+      },
+      "outs": {
+        "criticalSuccess": {
+          "connection": "B301GlsEnf00001X:ins:in"
+        }
+      },
+      "position": {
+        "x": 640,
+        "y": 0
+      }
+    },
+    {
+      "id": "B301GlsEnf00001X",
+      "type": "create-condition",
+      "state": "timed",
+      "inputs": {
+        "condition": {
+          "value": "enfeebled"
+        },
+        "duration": {
+          "value": 1
+        },
+        "unit": {
+          "value": "minutes"
+        },
+        "name": {
+          "value": "Effect: Gluttonous Spear"
+        },
+        "target": {
+          "connection": "B301GlsEvt00001X:outputs:target"
+        }
+      },
+      "position": {
+        "x": 960,
+        "y": 0
+      }
+    }
+  ]
+}

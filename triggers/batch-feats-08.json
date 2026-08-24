@@ -1,0 +1,74 @@
+[
+  {
+    "id": "B08FLNGWLEVT0001",
+    "name": "Flinging Blow",
+    "folder": "Feats & Features",
+    "description": "On a Flinging Blow Fortitude save failure or critical failure, apply prone to the target. The preceding unarmed Strike, push distance, damage, and exact activity prerequisites remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "flinging-blow"],
+    "variables": {
+      "B08FLNGWLEVT0001:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "B08FLNGWLEVT0001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B08FLNGWLEVT0001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B08FLNGWLEVT0001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B08FLNGWLMCH0001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B08FLNGWLMCH0001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:flinging-blow"}, "list": {"connection": "B08FLNGWLEVT0001:outputs:options"}}, "outs": {"true": {"connection": "B08FLNGWLSPL0001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B08FLNGWLSPL0001", "type": "split-outcome", "inputs": {"input": {"connection": "B08FLNGWLEVT0001:outputs:outcome"}}, "outs": {"failure": {"connection": "B08FLNGWLPRN0001:ins:in"}, "criticalFailure": {"connection": "B08FLNGWLPRN0001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B08FLNGWLPRN0001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "prone"}, "duration": {"value": 1}, "name": {"value": "Effect: Flinging Blow"}, "target": {"connection": "B08FLNGWLEVT0001:outputs:roller"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B08WHRLKDEVT0001",
+    "name": "Whirling Knockdown",
+    "folder": "Feats & Features",
+    "description": "On a Whirling Knockdown Reflex check critical success, apply prone to the target. The required loaded firearm and melee weapon, preceding ranged Strike, reach, damage, and follow-up check timing remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "whirling-knockdown"],
+    "variables": {
+      "B08WHRLKDEVT0001:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "B08WHRLKDEVT0001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B08WHRLKDEVT0001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B08WHRLKDEVT0001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B08WHRLKDMCH0001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B08WHRLKDMCH0001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:whirling-knockdown"}, "list": {"connection": "B08WHRLKDEVT0001:outputs:options"}}, "outs": {"true": {"connection": "B08WHRLKDSPL0001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B08WHRLKDSPL0001", "type": "split-outcome", "inputs": {"input": {"connection": "B08WHRLKDEVT0001:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "B08WHRLKDPRN0001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B08WHRLKDPRN0001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "prone"}, "duration": {"value": 1}, "name": {"value": "Effect: Whirling Knockdown"}, "target": {"connection": "B08WHRLKDEVT0001:outputs:roller"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B08CRDNEVT00001X",
+    "name": "Coordinated Distraction",
+    "folder": "Feats & Features",
+    "description": "When Coordinated Distraction is used, apply off-guard to the chosen ally for its next Strike. The ally selection, range, auditory and visual requirements, and first-Strike expiration remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "coordinated-distraction"],
+    "variables": {
+      "B08CRDNEVT00001X:outputs:targets": {"type": "target", "isArray": true, "label": "Chosen Ally"}
+    },
+    "nodes": [
+      {"id": "B08CRDNEVT00001X", "type": "action-chat-event", "inputs": {"slug": {"value": "coordinated-distraction"}}, "outs": {"out": {"connection": "B08CRDNOFF00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B08CRDNOFF00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "name": {"value": "Effect: Coordinated Distraction"}, "target": {"connection": "B08CRDNEVT00001X:outputs:targets"}}, "position": {"x": 480, "y": 0}}
+    ]
+  },
+  {
+    "id": "B08BANEVT000001X",
+    "name": "Banishing Blow",
+    "folder": "Feats & Features",
+    "description": "When Banishing Blow's Athletics check critically succeeds, apply stunned 1 to the fiend. The champion reaction trigger, fiend targeting, Shove check, teleport prevention, and banishment duration remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "banishing-blow"],
+    "variables": {
+      "B08BANEVT000001X:outputs:roller": {"type": "target", "isArray": false, "label": "Fiend"},
+      "B08BANEVT000001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B08BANEVT000001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B08BANEVT000001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "skill-check"}}, "outs": {"out": {"connection": "B08BANMCH000001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B08BANMCH000001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:banishing-blow"}, "list": {"connection": "B08BANEVT000001X:outputs:options"}}, "outs": {"true": {"connection": "B08BANSPL000001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B08BANSPL000001X", "type": "split-outcome", "inputs": {"input": {"connection": "B08BANEVT000001X:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "B08BANSTN000001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B08BANSTN000001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "value": {"value": 1}, "duration": {"value": 1}, "name": {"value": "Effect: Banishing Blow"}, "target": {"connection": "B08BANEVT000001X:outputs:roller"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

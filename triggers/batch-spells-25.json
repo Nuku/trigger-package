@@ -1,0 +1,78 @@
+[
+  {
+    "id": "B25TanTrg0000001",
+    "name": "Tangle Vine — Immobilized",
+    "folder": "Spells",
+    "description": "On a critical success with a Tangle Vine spell attack, apply immobilized for 1 round; the spell's damage, Speed penalty, Escape DC, and targeting remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "tangle-vine"],
+    "variables": {
+      "B25TanEvt0000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B25TanEvt0000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"},
+      "B25TanEvt0000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "B25TanEvt0000001", "type": "attack-roll-event", "outs": {"out": {"connection": "B25TanMch0000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B25TanMch0000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:tangle-vine"}, "list": {"connection": "B25TanEvt0000001:outputs:options"}}, "outs": {"true": {"connection": "B25TanCmp0000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B25TanCmp0000001", "type": "compare-outcomes", "inputs": {"a": {"connection": "B25TanEvt0000001:outputs:outcome"}, "b": {"value": "criticalSuccess"}}, "outs": {"true": {"connection": "B25TanImm0000001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B25TanImm0000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "immobilized"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Tangle Vine"}, "target": {"connection": "B25TanEvt0000001:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B25BriTrg0000001",
+    "name": "Bridge of Vines — Prone",
+    "folder": "Spells",
+    "description": "On a failed Bridge of Vines Reflex save against its entangling effect, apply prone; bridge placement, duration, and the spell's area and destruction rules remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "bridge-of-vines"],
+    "variables": {
+      "B25BriEvt0000001:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "B25BriEvt0000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B25BriEvt0000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B25BriEvt0000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B25BriMch0000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B25BriMch0000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:bridge-of-vines"}, "list": {"connection": "B25BriEvt0000001:outputs:options"}}, "outs": {"true": {"connection": "B25BriCmp0000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B25BriCmp0000001", "type": "compare-outcomes", "inputs": {"a": {"connection": "B25BriEvt0000001:outputs:outcome"}, "b": {"value": "failure"}}, "outs": {"true": {"connection": "B25BriPrn0000001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B25BriPrn0000001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "prone"}, "name": {"value": "Effect: Bridge of Vines"}, "target": {"connection": "B25BriEvt0000001:outputs:roller"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B25IndTrg0000001",
+    "name": "Indolent Haze — Prone",
+    "folder": "Spells",
+    "description": "On a critical success against Indolent Haze, apply prone; the spell's damage, unconscious rider, crawling restriction, area, and sustain remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "indolent-haze"],
+    "variables": {
+      "B25IndEvt0000001:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "B25IndEvt0000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B25IndEvt0000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B25IndEvt0000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B25IndMch0000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B25IndMch0000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:indolent-haze"}, "list": {"connection": "B25IndEvt0000001:outputs:options"}}, "outs": {"true": {"connection": "B25IndCmp0000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B25IndCmp0000001", "type": "compare-outcomes", "inputs": {"a": {"connection": "B25IndEvt0000001:outputs:outcome"}, "b": {"value": "criticalSuccess"}}, "outs": {"true": {"connection": "B25IndPrn0000001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B25IndPrn0000001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "prone"}, "name": {"value": "Effect: Indolent Haze"}, "target": {"connection": "B25IndEvt0000001:outputs:roller"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B25DarTrg0000001",
+    "name": "Darkened Eyes — Blinded",
+    "folder": "Spells",
+    "description": "On a critical failure against Darkened Eyes, apply blinded for 1 minute; the initial vision suppression, repeated saves, temporary immunity, and targeting remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "darkened-eyes"],
+    "variables": {
+      "B25DarEvt0000001:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "B25DarEvt0000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B25DarEvt0000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B25DarEvt0000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B25DarMch0000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B25DarMch0000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:darkened-eyes"}, "list": {"connection": "B25DarEvt0000001:outputs:options"}}, "outs": {"true": {"connection": "B25DarCmp0000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B25DarCmp0000001", "type": "compare-outcomes", "inputs": {"a": {"connection": "B25DarEvt0000001:outputs:outcome"}, "b": {"value": "criticalFailure"}}, "outs": {"true": {"connection": "B25DarBld0000001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B25DarBld0000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "blinded"}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Darkened Eyes"}, "target": {"connection": "B25DarEvt0000001:outputs:roller"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

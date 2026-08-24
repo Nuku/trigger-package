@@ -1,0 +1,20 @@
+[
+  {
+    "id": "B298PdoTrg00001X",
+    "name": "Piercing Doom",
+    "folder": "Feats & Features",
+    "description": "On a successful Piercing Doom Strike, reduce the target's doomed condition by 1; the feat's 1d10 void damage remains manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "piercing-doom"],
+    "variables": {
+      "B298PdoEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B298PdoEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "B298PdoEvt00001X", "type": "attack-roll-event", "outs": {"out": {"connection": "B298PdoMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B298PdoMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:piercing-doom"}, "list": {"connection": "B298PdoEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B298PdoSpl00001X:ins:input"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B298PdoSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B298PdoEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B298PdoDec00001X:ins:in"}, "criticalSuccess": {"connection": "B298PdoDec00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B298PdoDec00001X", "type": "decrease-condition", "state": "fixed", "inputs": {"condition": {"value": "doomed"}, "name": {"value": "Effect: Piercing Doom"}, "target": {"connection": "B298PdoEvt00001X:outputs:target"}, "value": {"value": 1}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

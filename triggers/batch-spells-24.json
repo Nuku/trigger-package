@@ -1,0 +1,77 @@
+[
+  {
+    "id": "B24MarTrg0000001",
+    "name": "Mariner's Curse — Sickened",
+    "folder": "Spells",
+    "description": "On a Mariner's Curse Will save, apply sickened 1 on a success or failure, or sickened 2 on a critical failure; the curse's minimum sickened value, water-based slowed rider, counteract, and targeting remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "mariners-curse"],
+    "variables": {
+      "B24MarEvt0000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B24MarEvt0000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B24MarEvt0000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B24MarEvt0000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B24MarMch0000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B24MarMch0000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:mariners-curse"}, "list": {"connection": "B24MarEvt0000001:outputs:options"}}, "outs": {"true": {"connection": "B24MarSpl0000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B24MarSpl0000001", "type": "split-outcome", "inputs": {"input": {"connection": "B24MarEvt0000001:outputs:outcome"}}, "outs": {"success": {"connection": "B24MarSic0000001:ins:in"}, "failure": {"connection": "B24MarSic0000002:ins:in"}, "criticalFailure": {"connection": "B24MarSic0000003:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B24MarSic0000001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 1}, "name": {"value": "Effect: Mariner's Curse"}, "target": {"connection": "B24MarEvt0000001:outputs:target"}}, "position": {"x": 960, "y": 120}},
+      {"id": "B24MarSic0000002", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 1}, "name": {"value": "Effect: Mariner's Curse"}, "target": {"connection": "B24MarEvt0000001:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B24MarSic0000003", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 2}, "name": {"value": "Effect: Mariner's Curse"}, "target": {"connection": "B24MarEvt0000001:outputs:target"}}, "position": {"x": 960, "y": -120}}
+    ]
+  },
+  {
+    "id": "B24PhaTrg0000001",
+    "name": "Phantom Pain — Sickened",
+    "folder": "Spells",
+    "description": "On a Phantom Pain Will save, apply sickened 1 on a failure or sickened 2 on a critical failure for 1 minute; mental and persistent damage, sustain, and targeting remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "phantom-pain"],
+    "variables": {
+      "B24PhaEvt0000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B24PhaEvt0000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B24PhaEvt0000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B24PhaEvt0000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B24PhaMch0000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B24PhaMch0000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:phantom-pain"}, "list": {"connection": "B24PhaEvt0000001:outputs:options"}}, "outs": {"true": {"connection": "B24PhaSpl0000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B24PhaSpl0000001", "type": "split-outcome", "inputs": {"input": {"connection": "B24PhaEvt0000001:outputs:outcome"}}, "outs": {"failure": {"connection": "B24PhaSic0000001:ins:in"}, "criticalFailure": {"connection": "B24PhaSic0000002:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B24PhaSic0000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Phantom Pain"}, "target": {"connection": "B24PhaEvt0000001:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B24PhaSic0000002", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 2}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Phantom Pain"}, "target": {"connection": "B24PhaEvt0000001:outputs:target"}}, "position": {"x": 960, "y": -120}}
+    ]
+  },
+  {
+    "id": "B24CurTrg0000001",
+    "name": "Cursed Metamorphosis — Sickened",
+    "folder": "Spells",
+    "description": "On a critical success against Cursed Metamorphosis, apply sickened 1; the animal transformation, duration, save targeting, and all failure or critical-failure polymorph effects remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "cursed-metamorphosis"],
+    "variables": {
+      "B24CurEvt0000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B24CurEvt0000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B24CurEvt0000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B24CurEvt0000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B24CurMch0000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B24CurMch0000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:cursed-metamorphosis"}, "list": {"connection": "B24CurEvt0000001:outputs:options"}}, "outs": {"true": {"connection": "B24CurSpl0000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B24CurSpl0000001", "type": "split-outcome", "inputs": {"input": {"connection": "B24CurEvt0000001:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "B24CurSic0000001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B24CurSic0000001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 1}, "name": {"value": "Effect: Cursed Metamorphosis"}, "target": {"connection": "B24CurEvt0000001:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B24ShaTrg0000001",
+    "name": "Shadow Raid — Concealed",
+    "folder": "Spells",
+    "description": "When Shadow Raid is cast, apply concealed for 1 minute to its chat-event targets; area placement, damage, save choice, sustain, disbelief, and target selection remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "shadow-raid"],
+    "variables": {
+      "B24ShaEvt0000001:outputs:targets": {"type": "target", "isArray": true, "label": "Targets"}
+    },
+    "nodes": [
+      {"id": "B24ShaEvt0000001", "type": "action-chat-event", "inputs": {"slug": {"value": "shadow-raid"}}, "outs": {"out": {"connection": "B24ShaCon0000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B24ShaCon0000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "concealed"}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Shadow Raid"}, "target": {"connection": "B24ShaEvt0000001:outputs:targets"}}, "position": {"x": 480, "y": 0}}
+    ]
+  }
+]

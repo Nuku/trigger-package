@@ -1,0 +1,77 @@
+[
+  {
+    "id": "M15MedusaTrg0001",
+    "name": "Medusa's Scream",
+    "folder": "Equipment",
+    "description": "On a Medusa's Scream Fortitude save, apply slowed 1 on a failure and petrified on a critical failure; gaze targeting, damage, escalating saves, and recovery remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "medusas-scream"],
+    "variables": {
+      "M15MedusaEvt0001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M15MedusaEvt0001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M15MedusaEvt0001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M15MedusaEvt0001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M15MedusaMch0001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M15MedusaMch0001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:medusas-scream"}, "list": {"connection": "M15MedusaEvt0001:outputs:options"}}, "outs": {"true": {"connection": "M15MedusaSpl0001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M15MedusaSpl0001", "type": "split-outcome", "inputs": {"input": {"connection": "M15MedusaEvt0001:outputs:outcome"}}, "outs": {"failure": {"connection": "M15MedusaSlo0001:ins:in"}, "criticalFailure": {"connection": "M15MedusaPet0001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M15MedusaSlo0001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "slowed"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Medusa's Scream"}, "target": {"connection": "M15MedusaEvt0001:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "M15MedusaPet0001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "petrified"}, "name": {"value": "Effect: Medusa's Scream"}, "target": {"connection": "M15MedusaEvt0001:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "M15MedusaGTrg001",
+    "name": "Medusa's Scream (Greater)",
+    "folder": "Equipment",
+    "description": "On a Greater Medusa's Scream Fortitude save, apply slowed 1 on a failure and petrified on a critical failure; gaze targeting, damage, escalating saves, and recovery remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "medusas-scream-greater"],
+    "variables": {
+      "M15MedusaGEvt001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M15MedusaGEvt001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M15MedusaGEvt001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M15MedusaGEvt001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M15MedusaGMch001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M15MedusaGMch001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:greater-medusas-scream"}, "list": {"connection": "M15MedusaGEvt001:outputs:options"}}, "outs": {"true": {"connection": "M15MedusaGSpl001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M15MedusaGSpl001", "type": "split-outcome", "inputs": {"input": {"connection": "M15MedusaGEvt001:outputs:outcome"}}, "outs": {"failure": {"connection": "M15MedusaGSlo001:ins:in"}, "criticalFailure": {"connection": "M15MedusaGPet001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M15MedusaGSlo001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "slowed"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Medusa's Scream (Greater)"}, "target": {"connection": "M15MedusaGEvt001:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "M15MedusaGPet001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "petrified"}, "name": {"value": "Effect: Medusa's Scream (Greater)"}, "target": {"connection": "M15MedusaGEvt001:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "M15SpnGrnTrg0001",
+    "name": "Spun Cloud (Green)",
+    "folder": "Equipment",
+    "description": "On a Green Spun Cloud Fortitude save, apply sickened 1 on a failure and sickened 2 on a critical failure; cloud placement, end-of-turn timing, damage, and cleanup remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "spun-cloud-green"],
+    "variables": {
+      "M15SpnGrnEvt0001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M15SpnGrnEvt0001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M15SpnGrnEvt0001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M15SpnGrnEvt0001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M15SpnGrnMch0001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M15SpnGrnMch0001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:spun-cloud-green"}, "list": {"connection": "M15SpnGrnEvt0001:outputs:options"}}, "outs": {"true": {"connection": "M15SpnGrnSpl0001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M15SpnGrnSpl0001", "type": "split-outcome", "inputs": {"input": {"connection": "M15SpnGrnEvt0001:outputs:outcome"}}, "outs": {"failure": {"connection": "M15SpnGrnSck0001:ins:in"}, "criticalFailure": {"connection": "M15SpnGrnSck0002:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M15SpnGrnSck0001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 1}, "name": {"value": "Effect: Spun Cloud (Green)"}, "target": {"connection": "M15SpnGrnEvt0001:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "M15SpnGrnSck0002", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 2}, "name": {"value": "Effect: Spun Cloud (Green)"}, "target": {"connection": "M15SpnGrnEvt0001:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "M15ImmovTrg00001",
+    "name": "Immovable",
+    "folder": "Equipment",
+    "description": "When the Immovable armor rune is activated, apply immobilized until dismissed; the activation frequency, Force Open exception, and dismissal remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "immovable"],
+    "variables": {
+      "M15ImmovAct00001:outputs:targets": {"type": "target", "isArray": true, "label": "User"}
+    },
+    "nodes": [
+      {"id": "M15ImmovAct00001", "type": "action-chat-event", "inputs": {"slug": {"value": "immovable"}}, "outs": {"out": {"connection": "M15ImmovCon00001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M15ImmovCon00001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "immobilized"}, "name": {"value": "Effect: Immovable"}, "target": {"connection": "M15ImmovAct00001:outputs:targets"}}, "position": {"x": 480, "y": 0}}
+    ]
+  }
+]

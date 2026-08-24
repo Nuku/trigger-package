@@ -1,0 +1,220 @@
+[
+  {
+    "id": "B23JltTrg000001X",
+    "name": "Jolt Coil",
+    "folder": "Equipment",
+    "description": "After a successful Jolt Coil Strike, roll the coil's additional 1d4 electricity damage; activation, resistance, and the end-of-next-turn cutoff remain manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "equipment",
+      "jolt-coil"
+    ],
+    "variables": {
+      "B23JltEvt000001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B23JltEvt000001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B23JltEvt000001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B23JltEvt000001X",
+        "type": "attack-roll-event",
+        "outs": {
+          "out": {
+            "connection": "B23JltMch000001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B23JltMch000001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:jolt-coil"
+          },
+          "list": {
+            "connection": "B23JltEvt000001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B23JltSpl000001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B23JltSpl000001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B23JltEvt000001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "success": {
+            "connection": "B23JltDmg000001X:ins:in"
+          },
+          "criticalSuccess": {
+            "connection": "B23JltDmg000001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B23JltDmg000001X",
+        "type": "roll-damage",
+        "state": "none",
+        "inputs": {
+          "formula": {
+            "value": "1d4[electricity]"
+          },
+          "origin": {
+            "connection": "B23JltEvt000001X:outputs:target"
+          },
+          "targets": {
+            "connection": "B23JltEvt000001X:outputs:target"
+          },
+          "private": {
+            "value": false
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      }
+    ]
+  },
+  {
+    "id": "B23NailTrg00001X",
+    "name": "Nail Bomb (Moderate)",
+    "folder": "Equipment",
+    "description": "After a successful Nail Bomb (Moderate) Strike, roll its 4d4 piercing damage; activation, splash damage, item bonus, and grade handling remain manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "equipment",
+      "nail-bomb-moderate"
+    ],
+    "variables": {
+      "B23NailEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B23NailEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B23NailEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B23NailEvt00001X",
+        "type": "attack-roll-event",
+        "outs": {
+          "out": {
+            "connection": "B23NailMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B23NailMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:nail-bomb-moderate"
+          },
+          "list": {
+            "connection": "B23NailEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B23NailSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B23NailSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B23NailEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "success": {
+            "connection": "B23NailDmg00001X:ins:in"
+          },
+          "criticalSuccess": {
+            "connection": "B23NailDmg00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B23NailDmg00001X",
+        "type": "roll-damage",
+        "state": "none",
+        "inputs": {
+          "formula": {
+            "value": "4d4[piercing]"
+          },
+          "origin": {
+            "connection": "B23NailEvt00001X:outputs:target"
+          },
+          "targets": {
+            "connection": "B23NailEvt00001X:outputs:target"
+          },
+          "private": {
+            "value": false
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      }
+    ]
+  }
+]

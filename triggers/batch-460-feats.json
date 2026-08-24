@@ -1,0 +1,60 @@
+[
+  {
+    "id": "B460BesTrg00001X",
+    "name": "Bestial Snarling — Frightened",
+    "folder": "Feats",
+    "description": "Apply frightened 1 on a successful Bestial Snarling skill check; target selection, animal frightened 2 exception, and immunity remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "bestial-snarling"],
+    "variables": {
+      "B460BesEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B460BesEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B460BesEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B460BesEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "skill-check"}}, "outs": {"out": {"connection": "B460BesMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B460BesMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:bestial-snarling"}, "list": {"connection": "B460BesEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B460BesSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B460BesSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B460BesEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B460BesFht00001X:ins:in"}, "criticalSuccess": {"connection": "B460BesFht00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B460BesFht00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 1}, "name": {"value": "Effect: Bestial Snarling"}, "target": {"connection": "B460BesEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B460EdiTrg00001X",
+    "name": "Edict of Mortality — Frightened",
+    "folder": "Feats",
+    "description": "Apply frightened 1 on a successful Edict of Mortality check and frightened 2 on a critical success; divine-spell flat checks, worship qualification, and immunity remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "edict-of-mortality"],
+    "variables": {
+      "B460EdiEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B460EdiEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B460EdiEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B460EdiEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "skill-check"}}, "outs": {"out": {"connection": "B460EdiMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B460EdiMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:edict-of-mortality"}, "list": {"connection": "B460EdiEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B460EdiSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B460EdiSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B460EdiEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B460EdiF1n00001X:ins:in"}, "criticalSuccess": {"connection": "B460EdiF2n00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B460EdiF1n00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 1}, "name": {"value": "Effect: Edict of Mortality"}, "target": {"connection": "B460EdiEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B460EdiF2n00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 2}, "name": {"value": "Effect: Edict of Mortality"}, "target": {"connection": "B460EdiEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 200}}
+    ]
+  },
+  {
+    "id": "B460MolTrg00001X",
+    "name": "Molten Wire — Clumsy",
+    "folder": "Feats",
+    "description": "Apply clumsy 1 for 1 minute on a successful Molten Wire impulse attack; persistent damage, Escape, wire HP, and termination remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "molten-wire"],
+    "variables": {
+      "B460MolEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B460MolEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B460MolEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B460MolEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B460MolMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B460MolMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:molten-wire"}, "list": {"connection": "B460MolEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B460MolSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B460MolSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B460MolEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B460MolClm00001X:ins:in"}, "criticalSuccess": {"connection": "B460MolClm00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B460MolClm00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "clumsy"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Molten Wire"}, "target": {"connection": "B460MolEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

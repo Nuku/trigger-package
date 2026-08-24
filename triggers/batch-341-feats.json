@@ -1,0 +1,100 @@
+[
+  {
+    "id": "B341DswTrg00001X",
+    "name": "Devastating Shield Wallop — Off-Guard/Prone/Stunned",
+    "folder": "Feats",
+    "description": "Apply off-guard on a successful Devastating Shield Wallop save, prone on failure, and prone plus stunned 1 on critical failure; Shield Wallop timing, shield qualification, and current-turn cleanup remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "devastating-shield-wallop"],
+    "variables": {"B341DswEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B341DswEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B341DswEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B341DswEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B341DswMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B341DswMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:devastating-shield-wallop"}, "list": {"connection": "B341DswEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B341DswSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B341DswSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B341DswEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B341DswOfg00001X:ins:in"}, "failure": {"connection": "B341DswPrn00001X:ins:in"}, "criticalFailure": {"connection": "B341DswPrn00002X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B341DswOfg00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "off-guard"}, "name": {"value": "Effect: Devastating Shield Wallop"}, "target": {"connection": "B341DswEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 160}},
+      {"id": "B341DswPrn00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "prone"}, "name": {"value": "Effect: Devastating Shield Wallop"}, "target": {"connection": "B341DswEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B341DswPrn00002X", "type": "create-condition", "state": "fixed", "outs": {"out": {"connection": "B341DswStn00001X:ins:in"}}, "inputs": {"condition": {"value": "prone"}, "name": {"value": "Effect: Devastating Shield Wallop"}, "target": {"connection": "B341DswEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -160}},
+      {"id": "B341DswStn00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "value": {"value": 1}, "name": {"value": "Effect: Devastating Shield Wallop"}, "target": {"connection": "B341DswEvt00001X:outputs:target"}}, "position": {"x": 1280, "y": -160}}
+    ]
+  },
+  {
+    "id": "B341MprTrg00001X",
+    "name": "Majestic Presence — Frightened",
+    "folder": "Feats",
+    "description": "Apply frightened 1/2/4 by Majestic Presence Will-save outcome; emanation targeting and 24-hour immunity remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "majestic-presence"],
+    "variables": {"B341MprEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B341MprEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B341MprEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B341MprEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B341MprMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B341MprMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:majestic-presence"}, "list": {"connection": "B341MprEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B341MprSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B341MprSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B341MprEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B341MprFrt00001X:ins:in"}, "failure": {"connection": "B341MprFrt00002X:ins:in"}, "criticalFailure": {"connection": "B341MprFrt00003X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B341MprFrt00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 1}, "name": {"value": "Effect: Majestic Presence"}, "target": {"connection": "B341MprEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 160}},
+      {"id": "B341MprFrt00002X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 2}, "name": {"value": "Effect: Majestic Presence"}, "target": {"connection": "B341MprEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B341MprFrt00003X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 4}, "name": {"value": "Effect: Majestic Presence"}, "target": {"connection": "B341MprEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -160}}
+    ]
+  },
+  {
+    "id": "B341DrmTrg00001X",
+    "name": "Drowning Mist — Sickened",
+    "folder": "Feats",
+    "description": "Apply sickened 1 on a failed Drowning Mist Fortitude save and sickened 2 on a critical failure; aura, breath reduction timing, swim qualification, and immunity remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "drowning-mist"],
+    "variables": {"B341DrmEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B341DrmEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B341DrmEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B341DrmEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B341DrmMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B341DrmMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:drowning-mist"}, "list": {"connection": "B341DrmEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B341DrmSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B341DrmSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B341DrmEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B341DrmSck00001X:ins:in"}, "criticalFailure": {"connection": "B341DrmSck00002X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B341DrmSck00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 1}, "name": {"value": "Effect: Drowning Mist"}, "target": {"connection": "B341DrmEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B341DrmSck00002X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 2}, "name": {"value": "Effect: Drowning Mist"}, "target": {"connection": "B341DrmEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "B341CatTrg00001X",
+    "name": "Catchy Tune — Off-Guard",
+    "folder": "Feats",
+    "description": "Apply off-guard on a critically successful Catchy Tune Performance check; Speed penalties and emanation targeting remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "catchy-tune"],
+    "variables": {"B341CatEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B341CatEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B341CatEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B341CatEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "skill-check"}}, "outs": {"out": {"connection": "B341CatMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B341CatMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:catchy-tune"}, "list": {"connection": "B341CatEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B341CatSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B341CatSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B341CatEvt00001X:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "B341CatOfg00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B341CatOfg00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Catchy Tune"}, "target": {"connection": "B341CatEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B341HalTrg00001X",
+    "name": "Hallucinogenic Ink — Frightened",
+    "folder": "Feats",
+    "description": "Apply frightened 1 on a failed Hallucinogenic Ink Will save and frightened 2 on a critical failure; ink application and Spray Ink prerequisites remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "hallucinogenic-ink"],
+    "variables": {"B341HalEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B341HalEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B341HalEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B341HalEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B341HalMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B341HalMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:hallucinogenic-ink"}, "list": {"connection": "B341HalEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B341HalSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B341HalSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B341HalEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B341HalFrt00001X:ins:in"}, "criticalFailure": {"connection": "B341HalFrt00002X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B341HalFrt00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 1}, "name": {"value": "Effect: Hallucinogenic Ink"}, "target": {"connection": "B341HalEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B341HalFrt00002X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 2}, "name": {"value": "Effect: Hallucinogenic Ink"}, "target": {"connection": "B341HalEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "B341HobTrg00001X",
+    "name": "Hobbling Criticals — Slowed",
+    "folder": "Feats",
+    "description": "Apply slowed 1 on a failed Hobbling Criticals Fortitude save and slowed 2 on a critical failure; eidolon critical-hit qualification and Speed penalties remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "hobbling-criticals"],
+    "variables": {"B341HobEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B341HobEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B341HobEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B341HobEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B341HobMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B341HobMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:hobbling-criticals"}, "list": {"connection": "B341HobEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B341HobSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B341HobSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B341HobEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B341HobSlo00001X:ins:in"}, "criticalFailure": {"connection": "B341HobSlo00002X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B341HobSlo00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "slowed"}, "value": {"value": 1}, "name": {"value": "Effect: Hobbling Criticals"}, "target": {"connection": "B341HobEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B341HobSlo00002X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "slowed"}, "value": {"value": 2}, "name": {"value": "Effect: Hobbling Criticals"}, "target": {"connection": "B341HobEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  }
+]

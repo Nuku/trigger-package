@@ -1,0 +1,81 @@
+[
+  {
+    "id": "M06BLITRG00001XX",
+    "name": "Blinding Aura — Blinded",
+    "folder": "Monster Abilities",
+    "description": "When a creature fails a Blinding Aura Fortitude save, apply blinded for 1 minute; on a critical failure, apply blinded permanently. Aura timing, incapacitation, and 24-hour immunity remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "blinding-aura"],
+    "variables": {
+      "M06BLIEVT00001XX:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M06BLIEVT00001XX:outputs:roller": {"type": "target", "isArray": false, "label": "Saving Throw Target"},
+      "M06BLIEVT00001XX:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"},
+      "M06BLIEVT00001XX:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "M06BLIEVT00001XX", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M06BLIMCH00001XX:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M06BLIMCH00001XX", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:blinding-aura"}, "list": {"connection": "M06BLIEVT00001XX:outputs:options"}}, "outs": {"true": {"connection": "M06BLISPL00001XX:ins:input"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M06BLISPL00001XX", "type": "split-outcome", "inputs": {"input": {"connection": "M06BLIEVT00001XX:outputs:outcome"}}, "outs": {"failure": {"connection": "M06BLIFAI00001XX:ins:in"}, "criticalFailure": {"connection": "M06BLICRI00001XX:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M06BLIFAI00001XX", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "blinded"}, "duration": {"value": 1}, "name": {"value": "Effect: Blinding Aura"}, "target": {"connection": "M06BLIEVT00001XX:outputs:roller"}}, "position": {"x": 960, "y": 60}},
+      {"id": "M06BLICRI00001XX", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "blinded"}, "name": {"value": "Effect: Blinding Aura"}, "target": {"connection": "M06BLIEVT00001XX:outputs:roller"}}, "position": {"x": 960, "y": -60}}
+    ]
+  },
+  {
+    "id": "M06CHGTRG00001XX",
+    "name": "Churning Gaze — Sickened",
+    "folder": "Monster Abilities",
+    "description": "When a creature fails a Churning Gaze Fortitude save, apply sickened 1; on a critical failure, apply sickened 2. Aura timing, visual targeting, and 24-hour immunity remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "churning-gaze"],
+    "variables": {
+      "M06CHGEVT00001XX:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M06CHGEVT00001XX:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"},
+      "M06CHGEVT00001XX:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "M06CHGEVT00001XX", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M06CHGMCH00001XX:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M06CHGMCH00001XX", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:churning-gaze"}, "list": {"connection": "M06CHGEVT00001XX:outputs:options"}}, "outs": {"true": {"connection": "M06CHGSPL00001XX:ins:input"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M06CHGSPL00001XX", "type": "split-outcome", "inputs": {"input": {"connection": "M06CHGEVT00001XX:outputs:outcome"}}, "outs": {"failure": {"connection": "M06CHGFAI00001XX:ins:in"}, "criticalFailure": {"connection": "M06CHGCRI00001XX:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M06CHGFAI00001XX", "type": "increase-condition", "inputs": {"condition": {"value": "sickened"}, "max": {"value": 1}, "value": {"value": 1}, "target": {"connection": "M06CHGEVT00001XX:outputs:target"}}, "position": {"x": 960, "y": 60}},
+      {"id": "M06CHGCRI00001XX", "type": "increase-condition", "inputs": {"condition": {"value": "sickened"}, "max": {"value": 2}, "value": {"value": 2}, "target": {"connection": "M06CHGEVT00001XX:outputs:target"}}, "position": {"x": 960, "y": -60}}
+    ]
+  },
+  {
+    "id": "M06DSTTRG00001XX",
+    "name": "Death-Stealing Gaze — Drained",
+    "folder": "Monster Abilities",
+    "description": "When a non-demon creature fails a Death-Stealing Gaze Fortitude save, apply drained 1. Aura timing, creature exclusions, death-to-ghoul transformation, and immunity remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "death-stealing-gaze"],
+    "variables": {
+      "M06DSEEVT00001XX:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M06DSEEVT00001XX:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"},
+      "M06DSEEVT00001XX:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "M06DSEEVT00001XX", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M06DSEMCH00001XX:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M06DSEMCH00001XX", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:death-stealing-gaze"}, "list": {"connection": "M06DSEEVT00001XX:outputs:options"}}, "outs": {"true": {"connection": "M06DSESPL00001XX:ins:input"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M06DSESPL00001XX", "type": "split-outcome", "inputs": {"input": {"connection": "M06DSEEVT00001XX:outputs:outcome"}}, "outs": {"failure": {"connection": "M06DSEDRA00001XX:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M06DSEDRA00001XX", "type": "increase-condition", "inputs": {"condition": {"value": "drained"}, "max": {"value": 10}, "value": {"value": 1}, "target": {"connection": "M06DSEEVT00001XX:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "M06DEBTRG00001XX",
+    "name": "Debilitating Bite — Clumsy",
+    "folder": "Monster Abilities",
+    "description": "When a creature fails the Fortitude save caused by a Debilitating Bite, apply clumsy 1. Repeated-failure escalation, the bite damage prerequisite, and the 24-hour reset remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "debilitating-bite"],
+    "variables": {
+      "M06DEBEVT00001XX:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M06DEBEVT00001XX:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"},
+      "M06DEBEVT00001XX:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "M06DEBEVT00001XX", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M06DEBMCH00001XX:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M06DEBMCH00001XX", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:debilitating-bite"}, "list": {"connection": "M06DEBEVT00001XX:outputs:options"}}, "outs": {"true": {"connection": "M06DEBSPL00001XX:ins:input"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M06DEBSPL00001XX", "type": "split-outcome", "inputs": {"input": {"connection": "M06DEBEVT00001XX:outputs:outcome"}}, "outs": {"failure": {"connection": "M06DEBCON00001XX:ins:in"}, "criticalFailure": {"connection": "M06DEBCON00001XX:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M06DEBCON00001XX", "type": "increase-condition", "inputs": {"condition": {"value": "clumsy"}, "max": {"value": 4}, "value": {"value": 1}, "target": {"connection": "M06DEBEVT00001XX:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

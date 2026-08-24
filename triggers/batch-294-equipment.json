@@ -1,0 +1,20 @@
+[
+  {
+    "id": "B294WdrTrg00001X",
+    "name": "Wand of Dazzling Rays (3rd-rank)",
+    "folder": "Equipment",
+    "description": "On a successful Wand of Dazzling Rays (3rd-rank) attack, apply blinded for 1 round; the follow-up Fortitude save and heightened damage remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "wand-of-dazzling-rays-3rd-rank"],
+    "variables": {
+      "B294WdrEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B294WdrEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "B294WdrEvt00001X", "type": "attack-roll-event", "outs": {"out": {"connection": "B294WdrMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B294WdrMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:wand-of-dazzling-rays-3rd-rank"}, "list": {"connection": "B294WdrEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B294WdrSpl00001X:ins:input"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B294WdrSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B294WdrEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B294WdrBld00001X:ins:in"}, "criticalSuccess": {"connection": "B294WdrBld00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B294WdrBld00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "blinded"}, "duration": {"value": 1}, "name": {"value": "Effect: Wand of Dazzling Rays"}, "target": {"connection": "B294WdrEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

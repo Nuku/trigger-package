@@ -1,0 +1,77 @@
+[
+  {
+    "id": "M12Freezing00001",
+    "name": "Freezing Blood",
+    "folder": "Monster Abilities",
+    "description": "When a creature triggers Freezing Blood by dealing piercing or slashing damage to the monster, apply slowed 1 for 1 round to the attacker; the cold damage and adjacency/source requirements remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "freezing-blood"],
+    "variables": {
+      "M12FreeEvt000001:outputs:origin": {"type": "target", "isArray": false, "label": "Attacker"},
+      "M12FreeEvt000001:outputs:target": {"type": "target", "isArray": false, "label": "Monster"}
+    },
+    "nodes": [
+      {"id": "M12FreeEvt000001", "type": "damage-taken-event", "state": "select", "inputs": {"requires": {"value": true}, "for": {"value": "damage"}}, "outs": {"out": {"connection": "M12FreeMch000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M12FreeMch000001", "type": "has-option", "inputs": {"target": {"connection": "M12FreeEvt000001:outputs:target"}, "option": {"value": "item:slug:freezing-blood"}}, "outs": {"true": {"connection": "M12FreeCon000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M12FreeCon000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "slowed"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "expiry": {"value": "turn-end"}, "name": {"value": "Effect: Freezing Blood"}, "target": {"connection": "M12FreeEvt000001:outputs:origin"}}, "position": {"x": 640, "y": 0}}
+    ]
+  },
+  {
+    "id": "M12SlowGas000001",
+    "name": "Slowing Gas",
+    "folder": "Monster Abilities",
+    "description": "Apply slowed 1 for 1 round on a failed Slowing Gas Fortitude save, or slowed 2 for 1 round on a critical failure; breath area and recharge remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "slowing-gas"],
+    "variables": {
+      "M12SlowEvt000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M12SlowEvt000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M12SlowEvt000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M12SlowEvt000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M12SlowMch000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M12SlowMch000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:slowing-gas"}, "list": {"connection": "M12SlowEvt000001:outputs:options"}}, "outs": {"true": {"connection": "M12SlowSpl000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M12SlowSpl000001", "type": "split-outcome", "inputs": {"input": {"connection": "M12SlowEvt000001:outputs:outcome"}}, "outs": {"failure": {"connection": "M12SlowOne000001:ins:in"}, "criticalFailure": {"connection": "M12SlowTwo000001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M12SlowOne000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "slowed"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "expiry": {"value": "turn-end"}, "name": {"value": "Effect: Slowing Gas"}, "target": {"connection": "M12SlowEvt000001:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "M12SlowTwo000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "slowed"}, "value": {"value": 2}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "expiry": {"value": "turn-end"}, "name": {"value": "Effect: Slowing Gas"}, "target": {"connection": "M12SlowEvt000001:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "M12GroundSlam001",
+    "name": "Ground Slam",
+    "folder": "Monster Abilities",
+    "description": "Apply prone on a failed or critically failed Ground Slam Reflex save; damage, movement, and the monster's ground/flight requirement remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "ground-slam"],
+    "variables": {
+      "M12GrndEvt000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M12GrndEvt000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M12GrndEvt000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M12GrndEvt000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M12GrndMch000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M12GrndMch000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:ground-slam"}, "list": {"connection": "M12GrndEvt000001:outputs:options"}}, "outs": {"true": {"connection": "M12GrndSpl000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M12GrndSpl000001", "type": "split-outcome", "inputs": {"input": {"connection": "M12GrndEvt000001:outputs:outcome"}}, "outs": {"failure": {"connection": "M12GrndPrn000001:ins:in"}, "criticalFailure": {"connection": "M12GrndPrn000001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M12GrndPrn000001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "prone"}, "name": {"value": "Effect: Ground Slam"}, "target": {"connection": "M12GrndEvt000001:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "M12ShapeIce00001",
+    "name": "Shape Ice",
+    "folder": "Monster Abilities",
+    "description": "Apply prone after a failed Shape Ice Acrobatics check, and retain the same prone result on a critical failure; the alternate Reflex-save path, falling off the ice, and the ice-surface requirement remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "shape-ice"],
+    "variables": {
+      "M12IceEvt0000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M12IceEvt0000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M12IceEvt0000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M12IceEvt0000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "skill-check"}}, "outs": {"out": {"connection": "M12IceMch0000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M12IceMch0000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:shape-ice"}, "list": {"connection": "M12IceEvt0000001:outputs:options"}}, "outs": {"true": {"connection": "M12IceSpl0000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M12IceSpl0000001", "type": "split-outcome", "inputs": {"input": {"connection": "M12IceEvt0000001:outputs:outcome"}}, "outs": {"failure": {"connection": "M12IcePrn0000001:ins:in"}, "criticalFailure": {"connection": "M12IcePrn0000001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M12IcePrn0000001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "prone"}, "name": {"value": "Effect: Shape Ice"}, "target": {"connection": "M12IceEvt0000001:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

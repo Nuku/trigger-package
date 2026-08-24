@@ -1,0 +1,19 @@
+[
+  {
+    "id": "B333RdcTrg00001X",
+    "name": "Radiate Cold — Enfeebled/Immobilized",
+    "folder": "Monster Abilities",
+    "description": "Apply enfeebled 1 on a failed Radiate Cold save, and enfeebled 2 plus immobilized on a critical failure; aura placement, Speed penalties, and duration within the aura remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "radiate-cold"],
+    "variables": {"B333RdcEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B333RdcEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B333RdcEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B333RdcEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B333RdcMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B333RdcMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:radiate-cold"}, "list": {"connection": "B333RdcEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B333RdcSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B333RdcSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B333RdcEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B333RdcEnf00001X:ins:in"}, "criticalFailure": {"connection": "B333RdcEnf00002X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B333RdcEnf00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "enfeebled"}, "value": {"value": 1}, "name": {"value": "Effect: Radiate Cold"}, "target": {"connection": "B333RdcEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B333RdcEnf00002X", "type": "create-condition", "state": "fixed", "outs": {"out": {"connection": "B333RdcImm00001X:ins:in"}}, "inputs": {"condition": {"value": "enfeebled"}, "value": {"value": 2}, "name": {"value": "Effect: Radiate Cold"}, "target": {"connection": "B333RdcEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}},
+      {"id": "B333RdcImm00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "immobilized"}, "name": {"value": "Effect: Radiate Cold"}, "target": {"connection": "B333RdcEvt00001X:outputs:target"}}, "position": {"x": 1280, "y": -80}}
+    ]
+  }
+]

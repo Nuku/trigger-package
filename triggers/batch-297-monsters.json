@@ -1,0 +1,21 @@
+[
+  {
+    "id": "B297EhoTrg00001X",
+    "name": "Enervating Howl",
+    "folder": "Monster Abilities",
+    "description": "After an Enervating Howl Fortitude save, apply drained 1 on a success and drained 2 on a failure or critical failure; damage, doomed, and recharge remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "enervating-howl"],
+    "variables": {
+      "B297EhoEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B297EhoEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "B297EhoEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B297EhoMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B297EhoMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:enervating-howl"}, "list": {"connection": "B297EhoEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B297EhoSpl00001X:ins:input"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B297EhoSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B297EhoEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B297EhoD1n00001X:ins:in"}, "failure": {"connection": "B297EhoD2n00001X:ins:in"}, "criticalFailure": {"connection": "B297EhoD2n00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B297EhoD1n00001X", "type": "increase-condition", "inputs": {"condition": {"value": "drained"}, "max": {"value": 4}, "target": {"connection": "B297EhoEvt00001X:outputs:target"}, "value": {"value": 1}}, "position": {"x": 960, "y": 80}},
+      {"id": "B297EhoD2n00001X", "type": "increase-condition", "inputs": {"condition": {"value": "drained"}, "max": {"value": 4}, "target": {"connection": "B297EhoEvt00001X:outputs:target"}, "value": {"value": 2}}, "position": {"x": 960, "y": -80}}
+    ]
+  }
+]

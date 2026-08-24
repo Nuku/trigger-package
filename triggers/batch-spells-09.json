@@ -1,0 +1,79 @@
+[
+  {
+    "id": "S09GhoT00000001X",
+    "name": "Ghoulish Cravings — Sickened",
+    "folder": "Spells",
+    "description": "On a Ghoulish Cravings Fortitude save, apply sickened 1 on a success, sickened 2 on a failure, or sickened 3 on a critical failure; the curse's ghoul-fever stages, raw-meat recovery, damage, and healing restrictions remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "ghoulish-cravings"],
+    "variables": {
+      "S09GhoE00000001X:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "S09GhoE00000001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "S09GhoE00000001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "S09GhoM00000001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "S09GhoM00000001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:ghoulish-cravings"}, "list": {"connection": "S09GhoE00000001X:outputs:options"}}, "outs": {"true": {"connection": "S09GhoS00000001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "S09GhoS00000001X", "type": "split-outcome", "inputs": {"input": {"connection": "S09GhoE00000001X:outputs:outcome"}}, "outs": {"success": {"connection": "S09GhoC00000001X:ins:in"}, "failure": {"connection": "S09GhoC00000002X:ins:in"}, "criticalFailure": {"connection": "S09GhoC00000003X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "S09GhoC00000001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 1}, "name": {"value": "Effect: Ghoulish Cravings"}, "target": {"connection": "S09GhoE00000001X:outputs:roller"}}, "position": {"x": 960, "y": 120}},
+      {"id": "S09GhoC00000002X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 2}, "name": {"value": "Effect: Ghoulish Cravings"}, "target": {"connection": "S09GhoE00000001X:outputs:roller"}}, "position": {"x": 960, "y": 0}},
+      {"id": "S09GhoC00000003X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 3}, "name": {"value": "Effect: Ghoulish Cravings"}, "target": {"connection": "S09GhoE00000001X:outputs:roller"}}, "position": {"x": 960, "y": -120}}
+    ]
+  },
+  {
+    "id": "S09PetT00000001X",
+    "name": "Petrify — Slowed/Petrified",
+    "folder": "Spells",
+    "description": "On a Petrify Fortitude save, apply slowed 1 for 1 round on a success or failure, and petrified on a critical failure; the ongoing end-of-turn saves, escalating slowed value, incapacitation, and counteracting remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "petrify"],
+    "variables": {
+      "S09PetE00000001X:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "S09PetE00000001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "S09PetE00000001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "S09PetM00000001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "S09PetM00000001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:petrify"}, "list": {"connection": "S09PetE00000001X:outputs:options"}}, "outs": {"true": {"connection": "S09PetS00000001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "S09PetS00000001X", "type": "split-outcome", "inputs": {"input": {"connection": "S09PetE00000001X:outputs:outcome"}}, "outs": {"success": {"connection": "S09PetC00000001X:ins:in"}, "failure": {"connection": "S09PetC00000001X:ins:in"}, "criticalFailure": {"connection": "S09PetC00000002X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "S09PetC00000001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "slowed"}, "value": {"value": 1}, "duration": {"value": 1}, "name": {"value": "Effect: Petrify"}, "target": {"connection": "S09PetE00000001X:outputs:roller"}}, "position": {"x": 960, "y": 80}},
+      {"id": "S09PetC00000002X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "petrified"}, "name": {"value": "Effect: Petrify (manual permanent duration)"}, "target": {"connection": "S09PetE00000001X:outputs:roller"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "S09RayT00000001X",
+    "name": "Ray of Enfeeblement — Enfeebled",
+    "folder": "Spells",
+    "description": "On a Ray of Enfeeblement Fortitude save, apply enfeebled 1 on a success, enfeebled 2 on a failure, or enfeebled 3 on a critical failure for 1 round; the spell attack, heightening, and duration increases remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "ray-of-enfeeblement"],
+    "variables": {
+      "S09RayE00000001X:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "S09RayE00000001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "S09RayE00000001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "S09RayM00000001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "S09RayM00000001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:ray-of-enfeeblement"}, "list": {"connection": "S09RayE00000001X:outputs:options"}}, "outs": {"true": {"connection": "S09RayS00000001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "S09RayS00000001X", "type": "split-outcome", "inputs": {"input": {"connection": "S09RayE00000001X:outputs:outcome"}}, "outs": {"success": {"connection": "S09RayC00000001X:ins:in"}, "failure": {"connection": "S09RayC00000002X:ins:in"}, "criticalFailure": {"connection": "S09RayC00000003X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "S09RayC00000001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "enfeebled"}, "value": {"value": 1}, "duration": {"value": 1}, "name": {"value": "Effect: Ray of Enfeeblement"}, "target": {"connection": "S09RayE00000001X:outputs:roller"}}, "position": {"x": 960, "y": 120}},
+      {"id": "S09RayC00000002X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "enfeebled"}, "value": {"value": 2}, "duration": {"value": 1}, "name": {"value": "Effect: Ray of Enfeeblement"}, "target": {"connection": "S09RayE00000001X:outputs:roller"}}, "position": {"x": 960, "y": 0}},
+      {"id": "S09RayC00000003X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "enfeebled"}, "value": {"value": 3}, "duration": {"value": 1}, "name": {"value": "Effect: Ray of Enfeeblement"}, "target": {"connection": "S09RayE00000001X:outputs:roller"}}, "position": {"x": 960, "y": -120}}
+    ]
+  },
+  {
+    "id": "S09TemT00000001X",
+    "name": "Tempest Surge — Clumsy",
+    "folder": "Spells",
+    "description": "On a failed Reflex save against Tempest Surge, apply clumsy 2 for 1 round; electricity damage, basic-save handling, and heightened damage remain with the originating spell.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "tempest-surge"],
+    "variables": {
+      "S09TemE00000001X:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "S09TemE00000001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "S09TemE00000001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "S09TemM00000001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "S09TemM00000001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:tempest-surge"}, "list": {"connection": "S09TemE00000001X:outputs:options"}}, "outs": {"true": {"connection": "S09TemO00000001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "S09TemO00000001X", "type": "compare-outcomes", "inputs": {"a": {"connection": "S09TemE00000001X:outputs:outcome"}, "b": {"value": "failure"}}, "outs": {"true": {"connection": "S09TemC00000001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "S09TemC00000001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "clumsy"}, "value": {"value": 2}, "duration": {"value": 1}, "name": {"value": "Effect: Tempest Surge"}, "target": {"connection": "S09TemE00000001X:outputs:roller"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

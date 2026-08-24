@@ -1,0 +1,61 @@
+[
+  {
+    "id": "B21SlpTrg0000001",
+    "name": "Sleep — Unconscious",
+    "folder": "Spells",
+    "description": "On a Sleep Will save, apply unconscious for 1 round on a failure or 1 minute on a critical failure; damage wake-up, area placement, immunity, and heightened effects remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "sleep"],
+    "variables": {
+      "B21SlpEvt0000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B21SlpEvt0000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B21SlpEvt0000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B21SlpEvt0000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B21SlpMch0000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B21SlpMch0000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:sleep"}, "list": {"connection": "B21SlpEvt0000001:outputs:options"}}, "outs": {"true": {"connection": "B21SlpSpl0000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B21SlpSpl0000001", "type": "split-outcome", "inputs": {"input": {"connection": "B21SlpEvt0000001:outputs:outcome"}}, "outs": {"failure": {"connection": "B21SlpUnc0000001:ins:in"}, "criticalFailure": {"connection": "B21SlpUnc0000002:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B21SlpUnc0000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "unconscious"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Sleep"}, "target": {"connection": "B21SlpEvt0000001:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B21SlpUnc0000002", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "unconscious"}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Sleep"}, "target": {"connection": "B21SlpEvt0000001:outputs:target"}}, "position": {"x": 960, "y": 120}}
+    ]
+  },
+  {
+    "id": "B21InvTrg0000001",
+    "name": "Invisibility — Invisible",
+    "folder": "Spells",
+    "description": "When Invisibility is cast, apply invisible for 10 minutes to the spell's target; hostile-action termination, target selection, and heightened duration remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "invisibility"],
+    "variables": {"B21InvEvt0000001:outputs:targets": {"type": "target", "isArray": true, "label": "Targets"}},
+    "nodes": [
+      {"id": "B21InvEvt0000001", "type": "action-chat-event", "inputs": {"slug": {"value": "invisibility"}}, "outs": {"out": {"connection": "B21InvCon0000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B21InvCon0000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "invisible"}, "duration": {"value": 10}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Invisibility"}, "target": {"connection": "B21InvEvt0000001:outputs:targets"}}, "position": {"x": 480, "y": 0}}
+    ]
+  },
+  {
+    "id": "B21BlkTrg0000001",
+    "name": "Blink — Concealed",
+    "folder": "Spells",
+    "description": "When Blink is cast, apply concealed for 1 minute to the spell's target; teleport timing, flat checks, sustain, and heightened effects remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "blink"],
+    "variables": {"B21BlkEvt0000001:outputs:targets": {"type": "target", "isArray": true, "label": "Targets"}},
+    "nodes": [
+      {"id": "B21BlkEvt0000001", "type": "action-chat-event", "inputs": {"slug": {"value": "blink"}}, "outs": {"out": {"connection": "B21BlkCon0000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B21BlkCon0000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "concealed"}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Blink"}, "target": {"connection": "B21BlkEvt0000001:outputs:targets"}}, "position": {"x": 480, "y": 0}}
+    ]
+  },
+  {
+    "id": "B21DspTrg0000001",
+    "name": "Displacement — Concealed",
+    "folder": "Spells",
+    "description": "When Displacement is cast, apply concealed for 1 minute to the spell's target; flat checks, sustain, target selection, and heightened effects remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "displacement"],
+    "variables": {"B21DspEvt0000001:outputs:targets": {"type": "target", "isArray": true, "label": "Targets"}},
+    "nodes": [
+      {"id": "B21DspEvt0000001", "type": "action-chat-event", "inputs": {"slug": {"value": "displacement"}}, "outs": {"out": {"connection": "B21DspCon0000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B21DspCon0000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "concealed"}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Displacement"}, "target": {"connection": "B21DspEvt0000001:outputs:targets"}}, "position": {"x": 480, "y": 0}}
+    ]
+  }
+]

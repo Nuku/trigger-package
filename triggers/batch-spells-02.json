@@ -1,0 +1,179 @@
+[
+  {
+    "id": "SavStngTrig00001",
+    "name": "Savor the Sting — Persistent Mental",
+    "folder": "Spells",
+    "description": "On a failed or critically failed Will save against Savor the Sting, apply its persistent mental damage; the spell's attack and skill bonuses remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "savor-the-sting"],
+    "variables": {
+      "SavStngEvt000001:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "SavStngEvt000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {
+        "id": "SavStngEvt000001",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {"for": {"value": "saving-throw"}},
+        "outs": {"out": {"connection": "SavStngSlg000001:ins:in"}},
+        "position": {"x": 0, "y": 0}
+      },
+      {
+        "id": "SavStngSlg000001",
+        "type": "list-contains",
+        "inputs": {"entry": {"value": "item:slug:savor-the-sting"}, "list": {"connection": "SavStngEvt000001:outputs:options"}},
+        "outs": {"true": {"connection": "SavStngOut000001:ins:in"}},
+        "position": {"x": 320, "y": 0}
+      },
+      {
+        "id": "SavStngOut000001",
+        "type": "split-outcome",
+        "inputs": {"input": {"connection": "SavStngEvt000001:outputs:outcome"}},
+        "outs": {"criticalFailure": {"connection": "SavStngPer000002:ins:in"}, "failure": {"connection": "SavStngPer000001:ins:in"}},
+        "position": {"x": 640, "y": 0}
+      },
+      {
+        "id": "SavStngPer000001",
+        "type": "create-persistent",
+        "inputs": {"die": {"value": "1d4"}, "target": {"connection": "SavStngEvt000001:outputs:roller"}, "type": {"value": "mental"}},
+        "position": {"x": 960, "y": 160}
+      },
+      {
+        "id": "SavStngPer000002",
+        "type": "create-persistent",
+        "inputs": {"die": {"value": "2d4"}, "target": {"connection": "SavStngEvt000001:outputs:roller"}, "type": {"value": "mental"}},
+        "position": {"x": 960, "y": -160}
+      }
+    ]
+  },
+  {
+    "id": "DistrDecTrig0001",
+    "name": "Distracting Decoy",
+    "folder": "Spells",
+    "description": "On a failed or critically failed Will save against Distracting Decoy, apply off-guard until the start of the caster's next turn; the critical-failure attack penalty remains manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "distracting-decoy"],
+    "variables": {
+      "DistrDecEvt00001:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "DistrDecEvt00001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {
+        "id": "DistrDecEvt00001",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {"for": {"value": "saving-throw"}},
+        "outs": {"out": {"connection": "DistrDecSlg00001:ins:in"}},
+        "position": {"x": 0, "y": 0}
+      },
+      {
+        "id": "DistrDecSlg00001",
+        "type": "list-contains",
+        "inputs": {"entry": {"value": "item:slug:distracting-decoy"}, "list": {"connection": "DistrDecEvt00001:outputs:options"}},
+        "outs": {"true": {"connection": "DistrDecOut00001:ins:in"}},
+        "position": {"x": 320, "y": 0}
+      },
+      {
+        "id": "DistrDecOut00001",
+        "type": "split-outcome",
+        "inputs": {"input": {"connection": "DistrDecEvt00001:outputs:outcome"}},
+        "outs": {"criticalFailure": {"connection": "DistrDecOff00001:ins:in"}, "failure": {"connection": "DistrDecOff00001:ins:in"}},
+        "position": {"x": 640, "y": 0}
+      },
+      {
+        "id": "DistrDecOff00001",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "name": {"value": "Effect: Distracting Decoy"}, "target": {"connection": "DistrDecEvt00001:outputs:roller"}},
+        "position": {"x": 960, "y": 0}
+      }
+    ]
+  },
+  {
+    "id": "HeavEarthTrig001",
+    "name": "Heaving Earth — Prone",
+    "folder": "Spells",
+    "description": "On a failed or critically failed Reflex save against the Heaving Earth explosion, apply prone for 1 round; forced movement and damage remain with the originating spell.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "heaving-earth"],
+    "variables": {
+      "HeavEarthEvt0001:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "HeavEarthEvt0001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {
+        "id": "HeavEarthEvt0001",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {"for": {"value": "saving-throw"}},
+        "outs": {"out": {"connection": "HeavEarthSlg0001:ins:in"}},
+        "position": {"x": 0, "y": 0}
+      },
+      {
+        "id": "HeavEarthSlg0001",
+        "type": "list-contains",
+        "inputs": {"entry": {"value": "item:slug:heaving-earth"}, "list": {"connection": "HeavEarthEvt0001:outputs:options"}},
+        "outs": {"true": {"connection": "HeavEarthOut0001:ins:in"}},
+        "position": {"x": 320, "y": 0}
+      },
+      {
+        "id": "HeavEarthOut0001",
+        "type": "split-outcome",
+        "inputs": {"input": {"connection": "HeavEarthEvt0001:outputs:outcome"}},
+        "outs": {"criticalFailure": {"connection": "HeavEarthPrn0001:ins:in"}, "failure": {"connection": "HeavEarthPrn0001:ins:in"}},
+        "position": {"x": 640, "y": 0}
+      },
+      {
+        "id": "HeavEarthPrn0001",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {"condition": {"value": "prone"}, "duration": {"value": 1}, "name": {"value": "Effect: Heaving Earth"}, "target": {"connection": "HeavEarthEvt0001:outputs:roller"}},
+        "position": {"x": 960, "y": 0}
+      }
+    ]
+  },
+  {
+    "id": "PossnTrig0000001",
+    "name": "Possession — Controlled",
+    "folder": "Spells",
+    "description": "On a critical failure against Possession, apply controlled for 1 minute; the spell's ongoing possession saves and partial-control behavior remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "possession"],
+    "variables": {
+      "PossnEvt00000001:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "PossnEvt00000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {
+        "id": "PossnEvt00000001",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {"for": {"value": "saving-throw"}},
+        "outs": {"out": {"connection": "PossnSlg00000001:ins:in"}},
+        "position": {"x": 0, "y": 0}
+      },
+      {
+        "id": "PossnSlg00000001",
+        "type": "list-contains",
+        "inputs": {"entry": {"value": "item:slug:possession"}, "list": {"connection": "PossnEvt00000001:outputs:options"}},
+        "outs": {"true": {"connection": "PossnOut00000001:ins:in"}},
+        "position": {"x": 320, "y": 0}
+      },
+      {
+        "id": "PossnOut00000001",
+        "type": "compare-outcomes",
+        "inputs": {"a": {"connection": "PossnEvt00000001:outputs:outcome"}, "b": {"value": "criticalFailure"}},
+        "outs": {"true": {"connection": "PossnCtl00000001:ins:in"}},
+        "position": {"x": 640, "y": 0}
+      },
+      {
+        "id": "PossnCtl00000001",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {"condition": {"value": "controlled"}, "duration": {"value": 60}, "name": {"value": "Effect: Possession"}, "target": {"connection": "PossnEvt00000001:outputs:roller"}},
+        "position": {"x": 960, "y": 0}
+      }
+    ]
+  }
+]

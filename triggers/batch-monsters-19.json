@@ -1,0 +1,80 @@
+[
+  {
+    "id": "M19KNOCKTRG00001",
+    "name": "Knockdown",
+    "folder": "Monster Abilities",
+    "description": "Apply prone after a successful or critically successful Knockdown Strike; the triggering Strike, target eligibility, and any follow-up actions remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "knockdown"],
+    "variables": {
+      "M19KNOCKEVT00001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M19KNOCKEVT00001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M19KNOCKEVT00001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M19KNOCKEVT00001", "type": "attack-roll-event", "outs": {"out": {"connection": "M19KNOCKMCH00001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M19KNOCKMCH00001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:knockdown"}, "list": {"connection": "M19KNOCKEVT00001:outputs:options"}}, "outs": {"true": {"connection": "M19KNOCKSPL00001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M19KNOCKSPL00001", "type": "split-outcome", "inputs": {"input": {"connection": "M19KNOCKEVT00001:outputs:outcome"}}, "outs": {"success": {"connection": "M19KNOCKPRN00001:ins:in"}, "criticalSuccess": {"connection": "M19KNOCKPRN00001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M19KNOCKPRN00001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "prone"}, "name": {"value": "Effect: Knockdown"}, "target": {"connection": "M19KNOCKEVT00001:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "M19RETCHTRG00001",
+    "name": "Retch",
+    "folder": "Monster Abilities",
+    "description": "Apply sickened 2 on a failed Retch Fortitude save and sickened 4 on a critical failure; cone placement, cooldown, creature filtering, and recovery remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "retch"],
+    "variables": {
+      "M19RETCHEVT00001:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "M19RETCHEVT00001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M19RETCHEVT00001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M19RETCHEVT00001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M19RETCHMCH00001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M19RETCHMCH00001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:retch"}, "list": {"connection": "M19RETCHEVT00001:outputs:options"}}, "outs": {"true": {"connection": "M19RETCHSPL00001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M19RETCHSPL00001", "type": "split-outcome", "inputs": {"input": {"connection": "M19RETCHEVT00001:outputs:outcome"}}, "outs": {"failure": {"connection": "M19RETCHSK200001:ins:in"}, "criticalFailure": {"connection": "M19RETCHSK400001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M19RETCHSK200001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 2}, "name": {"value": "Effect: Retch"}, "target": {"connection": "M19RETCHEVT00001:outputs:roller"}}, "position": {"x": 960, "y": 80}},
+      {"id": "M19RETCHSK400001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 4}, "name": {"value": "Effect: Retch"}, "target": {"connection": "M19RETCHEVT00001:outputs:roller"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "M19PARALTRG00001",
+    "name": "Paralyzing Gaze",
+    "folder": "Monster Abilities",
+    "description": "Apply paralyzed for 1 round on a failed Paralyzing Gaze Fortitude save; gaze targeting, visual requirements, critical-failure duration, and immunity remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "paralyzing-gaze"],
+    "variables": {
+      "M19PARALEVT00001:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "M19PARALEVT00001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M19PARALEVT00001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M19PARALEVT00001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M19PARALMCH00001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M19PARALMCH00001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:paralyzing-gaze"}, "list": {"connection": "M19PARALEVT00001:outputs:options"}}, "outs": {"true": {"connection": "M19PARALSPL00001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M19PARALSPL00001", "type": "split-outcome", "inputs": {"input": {"connection": "M19PARALEVT00001:outputs:outcome"}}, "outs": {"failure": {"connection": "M19PARALPRZ00001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M19PARALPRZ00001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "paralyzed"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "expiry": {"value": "turn-end"}, "name": {"value": "Effect: Paralyzing Gaze"}, "target": {"connection": "M19PARALEVT00001:outputs:roller"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "M19TERRITRG00001",
+    "name": "Terrifying Croak",
+    "folder": "Monster Abilities",
+    "description": "Apply frightened 2 on a failed Terrifying Croak Will save and frightened 3 on a critical failure; audible targeting, area placement, and duration remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "terrifying-croak"],
+    "variables": {
+      "M19TERRIEVT00001:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "M19TERRIEVT00001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M19TERRIEVT00001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M19TERRIEVT00001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M19TERRIMCH00001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M19TERRIMCH00001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:terrifying-croak"}, "list": {"connection": "M19TERRIEVT00001:outputs:options"}}, "outs": {"true": {"connection": "M19TERRISPL00001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M19TERRISPL00001", "type": "split-outcome", "inputs": {"input": {"connection": "M19TERRIEVT00001:outputs:outcome"}}, "outs": {"failure": {"connection": "M19TERRIFR200001:ins:in"}, "criticalFailure": {"connection": "M19TERRIFR300001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M19TERRIFR200001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 2}, "name": {"value": "Effect: Terrifying Croak"}, "target": {"connection": "M19TERRIEVT00001:outputs:roller"}}, "position": {"x": 960, "y": 80}},
+      {"id": "M19TERRIFR300001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 3}, "name": {"value": "Effect: Terrifying Croak"}, "target": {"connection": "M19TERRIEVT00001:outputs:roller"}}, "position": {"x": 960, "y": -80}}
+    ]
+  }
+]

@@ -1,0 +1,77 @@
+[
+  {
+    "id": "EQ6GlueTrg000001",
+    "name": "Glue Bomb (Greater)",
+    "folder": "Equipment",
+    "description": "On a critical hit with a Greater Glue Bomb, apply immobilized for 1 round; its Speed penalty, Escape DC, and activation remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "glue-bomb-greater"],
+    "variables": {
+      "EQ6GlueEvt000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "EQ6GlueEvt000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "EQ6GlueEvt000001", "type": "attack-roll-event", "outs": {"out": {"connection": "EQ6GlueMch000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "EQ6GlueMch000001", "type": "match-predicate", "inputs": {"options": {"connection": "EQ6GlueEvt000001:outputs:options"}, "predicate": {"value": "[\n  \"item:slug:glue-bomb-greater\",\n  \"check:outcome:critical-success\"\n]"}}, "outs": {"true": {"connection": "EQ6GlueImm000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "EQ6GlueImm000001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "immobilized"}, "duration": {"value": 1}, "name": {"value": "Effect: Glue Bomb (Greater)"}, "target": {"connection": "EQ6GlueEvt000001:outputs:target"}}, "position": {"x": 640, "y": 0}}
+    ]
+  },
+  {
+    "id": "EQ6SkunkTrg00001",
+    "name": "Skunk Bomb (Moderate)",
+    "folder": "Equipment",
+    "description": "Apply sickened 1 on a successful Skunk Bomb save, sickened 1 and slowed 1 on a failure, or blinded 1 round, sickened 2, and slowed 1 on a critical failure; splash targeting and odor remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "skunk-bomb-moderate"],
+    "variables": {
+      "EQ6SkunkEvt00001:outputs:roller": {"type": "target", "isArray": false, "label": "Roller"},
+      "EQ6SkunkEvt00001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"},
+      "EQ6SkunkEvt00001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "EQ6SkunkEvt00001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "EQ6SkunkMch00001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "EQ6SkunkMch00001", "type": "match-predicate", "inputs": {"options": {"connection": "EQ6SkunkEvt00001:outputs:options"}, "predicate": {"value": "[\n  \"item:slug:skunk-bomb-moderate\"\n]"}}, "outs": {"true": {"connection": "EQ6SkunkSpl00001:ins:input"}}, "position": {"x": 320, "y": 0}},
+      {"id": "EQ6SkunkSpl00001", "type": "split-outcome", "inputs": {"input": {"connection": "EQ6SkunkEvt00001:outputs:outcome"}}, "outs": {"success": {"connection": "EQ6SkunkSicS0001:ins:in"}, "failure": {"connection": "EQ6SkunkSicF0001:ins:in"}, "criticalFailure": {"connection": "EQ6SkunkSicC0001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "EQ6SkunkSicS0001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 1}, "name": {"value": "Effect: Skunk Bomb (Moderate)"}, "target": {"connection": "EQ6SkunkEvt00001:outputs:roller"}}, "position": {"x": 960, "y": 120}},
+      {"id": "EQ6SkunkSicF0001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 1}, "name": {"value": "Effect: Skunk Bomb (Moderate)"}, "target": {"connection": "EQ6SkunkEvt00001:outputs:roller"}}, "outs": {"out": {"connection": "EQ6SkunkSloF0001:ins:in"}}, "position": {"x": 960, "y": 0}},
+      {"id": "EQ6SkunkSloF0001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "slowed"}, "value": {"value": 1}, "duration": {"value": 1}, "name": {"value": "Effect: Skunk Bomb (Moderate)"}, "target": {"connection": "EQ6SkunkEvt00001:outputs:roller"}}, "position": {"x": 1280, "y": 0}},
+      {"id": "EQ6SkunkSicC0001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 2}, "name": {"value": "Effect: Skunk Bomb (Moderate)"}, "target": {"connection": "EQ6SkunkEvt00001:outputs:roller"}}, "outs": {"out": {"connection": "EQ6SkunkSloC0001:ins:in"}}, "position": {"x": 960, "y": -120}},
+      {"id": "EQ6SkunkSloC0001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "slowed"}, "value": {"value": 1}, "duration": {"value": 1}, "name": {"value": "Effect: Skunk Bomb (Moderate)"}, "target": {"connection": "EQ6SkunkEvt00001:outputs:roller"}}, "outs": {"out": {"connection": "EQ6SkunkBliC0001:ins:in"}}, "position": {"x": 1280, "y": -120}},
+      {"id": "EQ6SkunkBliC0001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "blinded"}, "duration": {"value": 1}, "name": {"value": "Effect: Skunk Bomb (Moderate)"}, "target": {"connection": "EQ6SkunkEvt00001:outputs:roller"}}, "position": {"x": 1600, "y": -120}}
+    ]
+  },
+  {
+    "id": "EQ6DreamTrg00001",
+    "name": "Dream Pollen Snare",
+    "folder": "Equipment",
+    "description": "On a successful Will save against a Dream Pollen Snare, apply stupefied 1 for 1 round; the snare's friendly behavior, duration, and immunity remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "dream-pollen-snare"],
+    "variables": {
+      "EQ6DreamEvt00001:outputs:roller": {"type": "target", "isArray": false, "label": "Roller"},
+      "EQ6DreamEvt00001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "EQ6DreamEvt00001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "EQ6DreamMch00001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "EQ6DreamMch00001", "type": "match-predicate", "inputs": {"options": {"connection": "EQ6DreamEvt00001:outputs:options"}, "predicate": {"value": "[\n  \"item:slug:dream-pollen-snare\",\n  \"check:outcome:success\"\n]"}}, "outs": {"true": {"connection": "EQ6DreamStu00001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "EQ6DreamStu00001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stupefied"}, "value": {"value": 1}, "duration": {"value": 1}, "name": {"value": "Effect: Dream Pollen Snare"}, "target": {"connection": "EQ6DreamEvt00001:outputs:roller"}}, "position": {"x": 640, "y": 0}}
+    ]
+  },
+  {
+    "id": "EQ6MudTrg0000001",
+    "name": "Mud Bomb (Greater)",
+    "folder": "Equipment",
+    "description": "On a critical hit with a Greater Mud Bomb, apply dazzled until the start of the attacker's next turn; bomb damage, splash, and activation remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "mud-bomb-greater"],
+    "variables": {
+      "EQ6MudEvt0000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "EQ6MudEvt0000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "EQ6MudEvt0000001", "type": "attack-roll-event", "outs": {"out": {"connection": "EQ6MudMch0000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "EQ6MudMch0000001", "type": "match-predicate", "inputs": {"options": {"connection": "EQ6MudEvt0000001:outputs:options"}, "predicate": {"value": "[\n  \"item:slug:mud-bomb-greater\",\n  \"check:outcome:critical-success\"\n]"}}, "outs": {"true": {"connection": "EQ6MudDaz0000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "EQ6MudDaz0000001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "name": {"value": "Effect: Mud Bomb (Greater)"}, "target": {"connection": "EQ6MudEvt0000001:outputs:target"}}, "position": {"x": 640, "y": 0}}
+    ]
+  }
+]

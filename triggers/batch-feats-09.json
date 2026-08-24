@@ -1,0 +1,75 @@
+[
+  {
+    "id": "B09AGGBLKEVT0001",
+    "name": "Aggressive Block",
+    "folder": "Feats & Features",
+    "description": "When Aggressive Block is used with Shield Block, apply off-guard to the affected adjacent creature until the start of the feat user's next turn. The size, adjacency, Shove choice, and obstacle handling remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "aggressive-block"],
+    "variables": {
+      "B09AGGBLKEVT0001:outputs:targets": {"type": "target", "isArray": true, "label": "Affected Creatures"},
+      "B09AGGBLKEVT0001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "B09AGGBLKEVT0001", "type": "action-chat-event", "inputs": {"slug": {"value": "shield-block"}}, "outs": {"out": {"connection": "B09AGGBLKMCH0001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B09AGGBLKMCH0001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:aggressive-block"}, "list": {"connection": "B09AGGBLKEVT0001:outputs:options"}}, "outs": {"true": {"connection": "B09AGGBLKOFG0001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B09AGGBLKOFG0001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "name": {"value": "Effect: Aggressive Block"}, "target": {"connection": "B09AGGBLKEVT0001:outputs:targets"}}, "position": {"x": 640, "y": 0}}
+    ]
+  },
+  {
+    "id": "B09FLASHEVT00001",
+    "name": "Flashing Shield",
+    "folder": "Feats & Features",
+    "description": "When Flashing Shield is used with Shield Block against an adjacent undead creature, apply off-guard for 1 round. The undead and adjacency requirements, vitality damage, and faith prerequisite remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "flashing-shield"],
+    "variables": {
+      "B09FLASHEVT00001:outputs:targets": {"type": "target", "isArray": true, "label": "Affected Creatures"},
+      "B09FLASHEVT00001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "B09FLASHEVT00001", "type": "action-chat-event", "inputs": {"slug": {"value": "shield-block"}}, "outs": {"out": {"connection": "B09FLASHMCH00001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B09FLASHMCH00001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:flashing-shield"}, "list": {"connection": "B09FLASHEVT00001:outputs:options"}}, "outs": {"true": {"connection": "B09FLASHOFG00001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B09FLASHOFG00001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "name": {"value": "Effect: Flashing Shield"}, "target": {"connection": "B09FLASHEVT00001:outputs:targets"}}, "position": {"x": 640, "y": 0}}
+    ]
+  },
+  {
+    "id": "B09CORNERFUEVT01",
+    "name": "Cornered Fury",
+    "folder": "Feats & Features",
+    "description": "When a foe larger than the Cornered Fury user critically hits and damages them, apply off-guard to the feat user for 1 round. The foe's size, damage confirmation, and ancestry eligibility remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "cornered-fury"],
+    "variables": {
+      "B09CORNERFUEVT01:outputs:target": {"type": "target", "isArray": false, "label": "Cornered Creature"},
+      "B09CORNERFUEVT01:outputs:origin": {"type": "target", "isArray": false, "label": "Attacker"},
+      "B09CORNERFUEVT01:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B09CORNERFUEVT01:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B09CORNERFUEVT01", "type": "attack-roll-event", "outs": {"out": {"connection": "B09CORNERFUMCH01:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B09CORNERFUMCH01", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:cornered-fury"}, "list": {"connection": "B09CORNERFUEVT01:outputs:options"}}, "outs": {"true": {"connection": "B09CORNERFUSPL01:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B09CORNERFUSPL01", "type": "split-outcome", "inputs": {"input": {"connection": "B09CORNERFUEVT01:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "B09CORNERFUOFG01:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B09CORNERFUOFG01", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "name": {"value": "Effect: Cornered Fury"}, "target": {"connection": "B09CORNERFUEVT01:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B09FIRSTSTRKEVT1",
+    "name": "First to Strike, Fall",
+    "folder": "Feats & Features",
+    "description": "When the First to Strike, Fall user successfully Strikes a creature that has not acted in the first round, apply off-guard to that creature until the end of the user's next turn. First-round activity, target eligibility, and the feat's additional rewards remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "first-to-strike-fall"],
+    "variables": {
+      "B09FIRSTSTRKEVT1:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B09FIRSTSTRKEVT1:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B09FIRSTSTRKEVT1:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B09FIRSTSTRKEVT1", "type": "attack-roll-event", "outs": {"out": {"connection": "B09FIRSTSTRMCH01:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B09FIRSTSTRMCH01", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:first-to-strike-fall"}, "list": {"connection": "B09FIRSTSTRKEVT1:outputs:options"}}, "outs": {"true": {"connection": "B09FIRSTSTRSPL01:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B09FIRSTSTRSPL01", "type": "split-outcome", "inputs": {"input": {"connection": "B09FIRSTSTRKEVT1:outputs:outcome"}}, "outs": {"success": {"connection": "B09FIRSTSTROFG01:ins:in"}, "criticalSuccess": {"connection": "B09FIRSTSTROFG01:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B09FIRSTSTROFG01", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 2}, "name": {"value": "Effect: First to Strike, Fall"}, "target": {"connection": "B09FIRSTSTRKEVT1:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

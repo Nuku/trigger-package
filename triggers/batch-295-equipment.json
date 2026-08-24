@@ -1,0 +1,22 @@
+[
+  {
+    "id": "B295FheTrg00001X",
+    "name": "Frightful Hag Eye",
+    "folder": "Equipment",
+    "description": "After a Frightful Hag Eye Will save, apply frightened 1/2/3; the critical-failure fleeing rider remains manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "frightful-hag-eye"],
+    "variables": {
+      "B295FheEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B295FheEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "B295FheEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B295FheMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B295FheMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:frightful-hag-eye"}, "list": {"connection": "B295FheEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B295FheSpl00001X:ins:input"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B295FheSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B295FheEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B295FheF1n00001X:ins:in"}, "failure": {"connection": "B295FheF2n00001X:ins:in"}, "criticalFailure": {"connection": "B295FheF3n00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B295FheF1n00001X", "type": "increase-condition", "inputs": {"condition": {"value": "frightened"}, "max": {"value": 3}, "target": {"connection": "B295FheEvt00001X:outputs:target"}, "value": {"value": 1}}, "position": {"x": 960, "y": 100}},
+      {"id": "B295FheF2n00001X", "type": "increase-condition", "inputs": {"condition": {"value": "frightened"}, "max": {"value": 3}, "target": {"connection": "B295FheEvt00001X:outputs:target"}, "value": {"value": 2}}, "position": {"x": 960, "y": 220}},
+      {"id": "B295FheF3n00001X", "type": "increase-condition", "inputs": {"condition": {"value": "frightened"}, "max": {"value": 3}, "target": {"connection": "B295FheEvt00001X:outputs:target"}, "value": {"value": 3}}, "position": {"x": 960, "y": 340}}
+    ]
+  }
+]

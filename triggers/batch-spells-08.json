@@ -1,0 +1,80 @@
+[
+  {
+    "id": "S08LdnT00000001X",
+    "name": "Leaden Steps — Encumbered",
+    "folder": "Spells",
+    "description": "On a Leaden Steps Fortitude save, apply encumbered for 1 round on a success, or for the spell's sustained duration on a failure or critical failure; electricity weakness, sustain termination, and exact duration cleanup remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "leaden-steps"],
+    "variables": {
+      "S08LdnE00000001X:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "S08LdnE00000001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "S08LdnE00000001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "S08LdnM00000001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "S08LdnM00000001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:leaden-steps"}, "list": {"connection": "S08LdnE00000001X:outputs:options"}}, "outs": {"true": {"connection": "S08LdnS00000001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "S08LdnS00000001X", "type": "split-outcome", "inputs": {"input": {"connection": "S08LdnE00000001X:outputs:outcome"}}, "outs": {"success": {"connection": "S08LdnC00000001X:ins:in"}, "failure": {"connection": "S08LdnC00000002X:ins:in"}, "criticalFailure": {"connection": "S08LdnC00000002X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "S08LdnC00000001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "encumbered"}, "duration": {"value": 1}, "name": {"value": "Effect: Leaden Steps"}, "target": {"connection": "S08LdnE00000001X:outputs:roller"}}, "position": {"x": 960, "y": 80}},
+      {"id": "S08LdnC00000002X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "encumbered"}, "name": {"value": "Effect: Leaden Steps (manual sustain duration)"}, "target": {"connection": "S08LdnE00000001X:outputs:roller"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "S08CnfT00000001X",
+    "name": "Confusing Colors — Stunned",
+    "folder": "Spells",
+    "description": "On a critically failed Will save against Confusing Colors, apply stunned 1 for an approximate 1d4-round duration; the failure confusion duration, critical-failure transition to confusion, area re-save timing, and sustained cleanup remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "confusing-colors"],
+    "variables": {
+      "S08CnfE00000001X:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "S08CnfE00000001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "S08CnfE00000001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "S08CnfM00000001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "S08CnfM00000001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:confusing-colors"}, "list": {"connection": "S08CnfE00000001X:outputs:options"}}, "outs": {"true": {"connection": "S08CnfO00000001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "S08CnfO00000001X", "type": "compare-outcomes", "inputs": {"a": {"connection": "S08CnfE00000001X:outputs:outcome"}, "b": {"value": "criticalFailure"}}, "outs": {"true": {"connection": "S08CnfC00000001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "S08CnfC00000001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "duration": {"value": 4}, "name": {"value": "Effect: Confusing Colors (manual 1d4-round duration)"}, "target": {"connection": "S08CnfE00000001X:outputs:roller"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "S08WavT00000001X",
+    "name": "Wave of Despair — Slowed",
+    "folder": "Spells",
+    "description": "On a failed or critically failed Will save against Wave of Despair, apply slowed 1 for the spell's outcome-dependent duration; the success branch's next-turn save, lost reactions, and sobbing timing remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "wave-of-despair"],
+    "variables": {
+      "S08WavE00000001X:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "S08WavE00000001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "S08WavE00000001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "S08WavM00000001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "S08WavM00000001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:wave-of-despair"}, "list": {"connection": "S08WavE00000001X:outputs:options"}}, "outs": {"true": {"connection": "S08WavS00000001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "S08WavS00000001X", "type": "split-outcome", "inputs": {"input": {"connection": "S08WavE00000001X:outputs:outcome"}}, "outs": {"failure": {"connection": "S08WavC00000001X:ins:in"}, "criticalFailure": {"connection": "S08WavC00000002X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "S08WavC00000001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "slowed"}, "value": {"value": 1}, "duration": {"value": 10}, "name": {"value": "Effect: Wave of Despair"}, "target": {"connection": "S08WavE00000001X:outputs:roller"}}, "position": {"x": 960, "y": 80}},
+      {"id": "S08WavC00000002X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "slowed"}, "value": {"value": 1}, "duration": {"value": 10}, "name": {"value": "Effect: Wave of Despair"}, "target": {"connection": "S08WavE00000001X:outputs:roller"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "S08ChrT00000001X",
+    "name": "Chroma Leach — Enfeebled/Drained",
+    "folder": "Spells",
+    "description": "On a Chroma Leach Fortitude save, apply enfeebled 2 on success, enfeebled 2 plus drained 1 on failure, or enfeebled 2 plus drained 2 on critical failure; permanent critical-failure duration, gnome save adjustment, lost-move-action rider, and recovery remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "chroma-leach"],
+    "variables": {
+      "S08ChrE00000001X:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "S08ChrE00000001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "S08ChrE00000001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "S08ChrM00000001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "S08ChrM00000001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:chroma-leach"}, "list": {"connection": "S08ChrE00000001X:outputs:options"}}, "outs": {"true": {"connection": "S08ChrS00000001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "S08ChrS00000001X", "type": "split-outcome", "inputs": {"input": {"connection": "S08ChrE00000001X:outputs:outcome"}}, "outs": {"success": {"connection": "S08ChrC00000001X:ins:in"}, "failure": {"connection": "S08ChrC00000002X:ins:in"}, "criticalFailure": {"connection": "S08ChrC00000003X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "S08ChrC00000001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "enfeebled"}, "value": {"value": 2}, "duration": {"value": 1}, "name": {"value": "Effect: Chroma Leach"}, "target": {"connection": "S08ChrE00000001X:outputs:roller"}}, "position": {"x": 960, "y": 160}},
+      {"id": "S08ChrC00000002X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "enfeebled"}, "value": {"value": 2}, "duration": {"value": 1}, "name": {"value": "Effect: Chroma Leach (manual 1-minute duration)"}, "target": {"connection": "S08ChrE00000001X:outputs:roller"}}, "outs": {"out": {"connection": "S08ChrD00000001X:ins:in"}}, "position": {"x": 960, "y": 40}},
+      {"id": "S08ChrC00000003X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "enfeebled"}, "value": {"value": 2}, "name": {"value": "Effect: Chroma Leach (manual permanent duration)"}, "target": {"connection": "S08ChrE00000001X:outputs:roller"}}, "outs": {"out": {"connection": "S08ChrD00000002X:ins:in"}}, "position": {"x": 960, "y": -80}},
+      {"id": "S08ChrD00000001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "drained"}, "value": {"value": 1}, "name": {"value": "Effect: Chroma Leach"}, "target": {"connection": "S08ChrE00000001X:outputs:roller"}}, "position": {"x": 1280, "y": 40}},
+      {"id": "S08ChrD00000002X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "drained"}, "value": {"value": 2}, "name": {"value": "Effect: Chroma Leach (manual permanent duration)"}, "target": {"connection": "S08ChrE00000001X:outputs:roller"}}, "position": {"x": 1280, "y": -80}}
+    ]
+  }
+]

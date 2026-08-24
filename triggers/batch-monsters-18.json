@@ -1,0 +1,80 @@
+[
+  {
+    "id": "M18F000000000001",
+    "name": "Stench",
+    "folder": "Monster Abilities",
+    "description": "Apply sickened 1 on a failed Stench Fortitude save or sickened 2 on a critical failure; aura entry, temporary immunity, creature filtering, and duration remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "frightful-presence"],
+    "variables": {
+      "M18F000000000002:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "M18F000000000002:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M18F000000000002:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M18F000000000002", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M18F000000000003:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M18F000000000003", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:stench"}, "list": {"connection": "M18F000000000002:outputs:options"}}, "outs": {"true": {"connection": "M18F000000000004:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M18F000000000004", "type": "split-outcome", "inputs": {"input": {"connection": "M18F000000000002:outputs:outcome"}}, "outs": {"failure": {"connection": "M18F000000000005:ins:in"}, "criticalFailure": {"connection": "M18F000000000006:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M18F000000000005", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 1}, "name": {"value": "Effect: Stench"}, "target": {"connection": "M18F000000000002:outputs:roller"}}, "position": {"x": 960, "y": 80}},
+      {"id": "M18F000000000006", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 2}, "name": {"value": "Effect: Stench"}, "target": {"connection": "M18F000000000002:outputs:roller"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "M18E000000000001",
+    "name": "Engulf",
+    "folder": "Monster Abilities",
+    "description": "On a failed Engulf Reflex save, apply grabbed and slowed 1; movement path, space containment, damage, suffocation, rupture, Escape, and release remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "engulf"],
+    "variables": {
+      "M18E000000000002:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "M18E000000000002:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M18E000000000002:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M18E000000000002", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M18E000000000003:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M18E000000000003", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:engulf"}, "list": {"connection": "M18E000000000002:outputs:options"}}, "outs": {"true": {"connection": "M18E000000000004:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M18E000000000004", "type": "split-outcome", "inputs": {"input": {"connection": "M18E000000000002:outputs:outcome"}}, "outs": {"failure": {"connection": "M18E000000000005:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M18E000000000005", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "grabbed"}, "name": {"value": "Effect: Engulf"}, "target": {"connection": "M18E000000000002:outputs:roller"}}, "outs": {"out": {"connection": "M18E000000000006:ins:in"}}, "position": {"x": 960, "y": 0}},
+      {"id": "M18E000000000006", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "slowed"}, "value": {"value": 1}, "name": {"value": "Effect: Engulf"}, "target": {"connection": "M18E000000000002:outputs:roller"}}, "position": {"x": 1280, "y": 0}}
+    ]
+  },
+  {
+    "id": "M18G000000000001",
+    "name": "Greater Constrict",
+    "folder": "Monster Abilities",
+    "description": "On a failed Greater Constrict Fortitude save, apply unconscious; the grabbed or restrained prerequisite, damage, escape, and temporary immunity remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "greater-constrict"],
+    "variables": {
+      "M18G000000000002:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "M18G000000000002:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M18G000000000002:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M18G000000000002", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M18G000000000003:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M18G000000000003", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:greater-constrict"}, "list": {"connection": "M18G000000000002:outputs:options"}}, "outs": {"true": {"connection": "M18G000000000004:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M18G000000000004", "type": "split-outcome", "inputs": {"input": {"connection": "M18G000000000002:outputs:outcome"}}, "outs": {"failure": {"connection": "M18G000000000005:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M18G000000000005", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "unconscious"}, "name": {"value": "Effect: Greater Constrict"}, "target": {"connection": "M18G000000000002:outputs:roller"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "M18K000000000001",
+    "name": "Grab",
+    "folder": "Monster Abilities",
+    "description": "On a successful or critically successful Grab Athletics check, apply grabbed; the triggering Strike, appendage choice, reach, Escape DC, and extension timing remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "grab"],
+    "variables": {
+      "M18K000000000002:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M18K000000000002:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M18K000000000002:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M18K000000000002", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "skill-check"}}, "outs": {"out": {"connection": "M18K000000000003:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M18K000000000003", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:grab"}, "list": {"connection": "M18K000000000002:outputs:options"}}, "outs": {"true": {"connection": "M18K000000000004:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M18K000000000004", "type": "split-outcome", "inputs": {"input": {"connection": "M18K000000000002:outputs:outcome"}}, "outs": {"success": {"connection": "M18K000000000005:ins:in"}, "criticalSuccess": {"connection": "M18K000000000005:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M18K000000000005", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "grabbed"}, "duration": {"value": 1}, "name": {"value": "Effect: Grab"}, "target": {"connection": "M18K000000000002:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

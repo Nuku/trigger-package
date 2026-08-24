@@ -1,0 +1,386 @@
+[
+  {
+    "id": "B10STUMTRG000001",
+    "name": "Stumbling Fulu",
+    "folder": "Equipment",
+    "description": "On a Stumbling Fulu Reflex-save failure, apply clumsy 1; on a critical failure, apply clumsy 2 and prone. Stride triggering, affixed-armor targeting, and Interact cleanup remain manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "equipment",
+      "stumbling-fulu"
+    ],
+    "variables": {
+      "B10STUMEVE000001:outputs:roller": {
+        "type": "target",
+        "isArray": false,
+        "label": "Roller"
+      },
+      "B10STUMEVE000001:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      },
+      "B10STUMEVE000001:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B10STUMEVE000001",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B10STUMMCH000001:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B10STUMMCH000001",
+        "type": "match-predicate",
+        "inputs": {
+          "options": {
+            "connection": "B10STUMEVE000001:outputs:options"
+          },
+          "predicate": {
+            "value": "[\n  \"item:slug:stumbling-fulu\"\n]"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B10STUMSPL000001:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B10STUMSPL000001",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B10STUMEVE000001:outputs:outcome"
+          }
+        },
+        "outs": {
+          "failure": {
+            "connection": "B10STUMCLM000001:ins:in"
+          },
+          "criticalFailure": {
+            "connection": "B10STUMCLM000002:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B10STUMCLM000001",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "clumsy"
+          },
+          "value": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Stumbling Fulu"
+          },
+          "target": {
+            "connection": "B10STUMEVE000001:outputs:roller"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 100
+        }
+      },
+      {
+        "id": "B10STUMCLM000002",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "clumsy"
+          },
+          "value": {
+            "value": 2
+          },
+          "name": {
+            "value": "Effect: Stumbling Fulu"
+          },
+          "target": {
+            "connection": "B10STUMEVE000001:outputs:roller"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B10STUMPRN000001:ins:in"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": -100
+        }
+      },
+      {
+        "id": "B10STUMPRN000001",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "prone"
+          },
+          "name": {
+            "value": "Effect: Stumbling Fulu"
+          },
+          "target": {
+            "connection": "B10STUMEVE000001:outputs:roller"
+          }
+        },
+        "position": {
+          "x": 1280,
+          "y": -100
+        }
+      }
+    ]
+  },
+  {
+    "id": "B10BEGUTRG000001",
+    "name": "Beguiling Crown",
+    "folder": "Equipment",
+    "description": "On a Beguiling Crown Will-save failure or critical failure, apply friendly to the affected creature. Attack-trigger sequencing, activation frequency, duration, and the crown's automatic attitude aura remain manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "equipment",
+      "beguiling-crown"
+    ],
+    "variables": {
+      "B10BEGUEVE000001:outputs:roller": {
+        "type": "target",
+        "isArray": false,
+        "label": "Roller"
+      },
+      "B10BEGUEVE000001:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      },
+      "B10BEGUEVE000001:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B10BEGUEVE000001",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B10BEGUMCH000001:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B10BEGUMCH000001",
+        "type": "match-predicate",
+        "inputs": {
+          "options": {
+            "connection": "B10BEGUEVE000001:outputs:options"
+          },
+          "predicate": {
+            "value": "[\n  \"item:slug:beguiling-crown\"\n]"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B10BEGUSPL000001:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B10BEGUSPL000001",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B10BEGUEVE000001:outputs:outcome"
+          }
+        },
+        "outs": {
+          "failure": {
+            "connection": "B10BEGUFRI000001:ins:in"
+          },
+          "criticalFailure": {
+            "connection": "B10BEGUFRI000001:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B10BEGUFRI000001",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "friendly"
+          },
+          "name": {
+            "value": "Effect: Beguiling Crown"
+          },
+          "target": {
+            "connection": "B10BEGUEVE000001:outputs:roller"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      }
+    ]
+  },
+  {
+    "id": "B10ALCOTRG000001",
+    "name": "Alcohol",
+    "folder": "Equipment",
+    "description": "On an Alcohol critical-failure Fortitude save, apply off-guard from the affliction's flat-footed stage. Onset, later stages, duration, immunity, and recovery remain manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "equipment",
+      "alcohol"
+    ],
+    "variables": {
+      "B10ALCOEVE000001:outputs:roller": {
+        "type": "target",
+        "isArray": false,
+        "label": "Roller"
+      },
+      "B10ALCOEVE000001:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      },
+      "B10ALCOEVE000001:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B10ALCOEVE000001",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B10ALCOMCH000001:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B10ALCOMCH000001",
+        "type": "match-predicate",
+        "inputs": {
+          "options": {
+            "connection": "B10ALCOEVE000001:outputs:options"
+          },
+          "predicate": {
+            "value": "[\n  \"item:slug:alcohol\"\n]"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B10ALCOSPL000001:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B10ALCOSPL000001",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B10ALCOEVE000001:outputs:outcome"
+          }
+        },
+        "outs": {
+          "criticalFailure": {
+            "connection": "B10ALCOOFF000001:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B10ALCOOFF000001",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "off-guard"
+          },
+          "name": {
+            "value": "Effect: Alcohol"
+          },
+          "target": {
+            "connection": "B10ALCOEVE000001:outputs:roller"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      }
+    ]
+  }
+]

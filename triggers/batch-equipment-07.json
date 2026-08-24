@@ -1,0 +1,168 @@
+[
+  {
+    "id": "EQ7FearTrg000001",
+    "name": "Fearsome",
+    "folder": "Equipment",
+    "description": "When a weapon with the Fearsome rune critically hits, apply frightened 1 to the target; weapon selection and other critical-hit effects remain native/manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "equipment",
+      "fearsome"
+    ],
+    "variables": {
+      "EQ7FearEvt000001:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "EQ7FearEvt000001:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      }
+    },
+    "nodes": [
+      {
+        "id": "EQ7FearEvt000001",
+        "type": "attack-roll-event",
+        "outs": {
+          "out": {
+            "connection": "EQ7FearMch000001:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "EQ7FearMch000001",
+        "type": "match-predicate",
+        "inputs": {
+          "options": {
+            "connection": "EQ7FearEvt000001:outputs:options"
+          },
+          "predicate": {
+            "value": "[\n  \"item:slug:fearsome\",\n  \"check:outcome:critical-success\"\n]"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "EQ7FearCnd000001:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "EQ7FearCnd000001",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "frightened"
+          },
+          "value": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Fearsome"
+          },
+          "target": {
+            "connection": "EQ7FearEvt000001:outputs:target"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      }
+    ]
+  },
+  {
+    "id": "EQ7GFearTrg00001",
+    "name": "Greater Fearsome",
+    "folder": "Equipment",
+    "description": "When a weapon with the Greater Fearsome rune critically hits, apply frightened 2 to the target; weapon selection and other critical-hit effects remain native/manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "equipment",
+      "greater-fearsome"
+    ],
+    "variables": {
+      "EQ7GFearEvt00001:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "EQ7GFearEvt00001:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      }
+    },
+    "nodes": [
+      {
+        "id": "EQ7GFearEvt00001",
+        "type": "attack-roll-event",
+        "outs": {
+          "out": {
+            "connection": "EQ7GFearMch00001:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "EQ7GFearMch00001",
+        "type": "match-predicate",
+        "inputs": {
+          "options": {
+            "connection": "EQ7GFearEvt00001:outputs:options"
+          },
+          "predicate": {
+            "value": "[\n  \"item:slug:greater-fearsome\",\n  \"check:outcome:critical-success\"\n]"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "EQ7GFearCnd00001:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "EQ7GFearCnd00001",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "frightened"
+          },
+          "value": {
+            "value": 2
+          },
+          "name": {
+            "value": "Effect: Greater Fearsome"
+          },
+          "target": {
+            "connection": "EQ7GFearEvt00001:outputs:target"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      }
+    ]
+  }
+]

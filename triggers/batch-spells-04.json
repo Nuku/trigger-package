@@ -1,0 +1,174 @@
+[
+  {
+    "id": "AntlionTrig00001",
+    "name": "Antlion Trap — Immobilized",
+    "folder": "Spells",
+    "description": "On a critical failure against Antlion Trap, apply immobilized; the pit's forced movement and Escape check remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "antlion-trap"],
+    "variables": {
+      "AntlionEvt000001:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "AntlionEvt000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {
+        "id": "AntlionEvt000001",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {"for": {"value": "saving-throw"}},
+        "outs": {"out": {"connection": "AntlionOpt000001:ins:in"}},
+        "position": {"x": 0, "y": 0}
+      },
+      {
+        "id": "AntlionOpt000001",
+        "type": "list-contains",
+        "inputs": {"entry": {"value": "item:slug:antlion-trap"}, "list": {"connection": "AntlionEvt000001:outputs:options"}},
+        "outs": {"true": {"connection": "AntlionOut000001:ins:in"}},
+        "position": {"x": 320, "y": 0}
+      },
+      {
+        "id": "AntlionOut000001",
+        "type": "compare-outcomes",
+        "inputs": {"a": {"connection": "AntlionEvt000001:outputs:outcome"}, "b": {"value": "criticalFailure"}},
+        "outs": {"true": {"connection": "AntlionImm000001:ins:in"}},
+        "position": {"x": 640, "y": 0}
+      },
+      {
+        "id": "AntlionImm000001",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {"condition": {"value": "immobilized"}, "name": {"value": "Effect: Antlion Trap"}, "target": {"connection": "AntlionEvt000001:outputs:roller"}},
+        "position": {"x": 960, "y": 0}
+      }
+    ]
+  },
+  {
+    "id": "GraveTrig0000001",
+    "name": "Grasping Grave — Immobilized",
+    "folder": "Spells",
+    "description": "On a critical failure against Grasping Grave, apply immobilized; damage, Speed penalties, and Escape remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "grasping-grave"],
+    "variables": {
+      "GraveEvt00000001:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "GraveEvt00000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {
+        "id": "GraveEvt00000001",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {"for": {"value": "saving-throw"}},
+        "outs": {"out": {"connection": "GraveOpt00000001:ins:in"}},
+        "position": {"x": 0, "y": 0}
+      },
+      {
+        "id": "GraveOpt00000001",
+        "type": "list-contains",
+        "inputs": {"entry": {"value": "item:slug:grasping-grave"}, "list": {"connection": "GraveEvt00000001:outputs:options"}},
+        "outs": {"true": {"connection": "GraveOut00000001:ins:in"}},
+        "position": {"x": 320, "y": 0}
+      },
+      {
+        "id": "GraveOut00000001",
+        "type": "compare-outcomes",
+        "inputs": {"a": {"connection": "GraveEvt00000001:outputs:outcome"}, "b": {"value": "criticalFailure"}},
+        "outs": {"true": {"connection": "GraveImm00000001:ins:in"}},
+        "position": {"x": 640, "y": 0}
+      },
+      {
+        "id": "GraveImm00000001",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {"condition": {"value": "immobilized"}, "duration": {"value": 1}, "name": {"value": "Effect: Grasping Grave"}, "target": {"connection": "GraveEvt00000001:outputs:roller"}},
+        "position": {"x": 960, "y": 0}
+      }
+    ]
+  },
+  {
+    "id": "MagFetTrig000001",
+    "name": "Magical Fetters — Slowed",
+    "folder": "Spells",
+    "description": "On a failed or critically failed Reflex save against Magical Fetters, apply slowed 1; clumsy, Speed, and Escape effects remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "magical-fetters"],
+    "variables": {
+      "MagFetEvt0000001:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "MagFetEvt0000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {
+        "id": "MagFetEvt0000001",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {"for": {"value": "saving-throw"}},
+        "outs": {"out": {"connection": "MagFetOpt0000001:ins:in"}},
+        "position": {"x": 0, "y": 0}
+      },
+      {
+        "id": "MagFetOpt0000001",
+        "type": "list-contains",
+        "inputs": {"entry": {"value": "item:slug:magical-fetters"}, "list": {"connection": "MagFetEvt0000001:outputs:options"}},
+        "outs": {"true": {"connection": "MagFetOut0000001:ins:in"}},
+        "position": {"x": 320, "y": 0}
+      },
+      {
+        "id": "MagFetOut0000001",
+        "type": "split-outcome",
+        "inputs": {"input": {"connection": "MagFetEvt0000001:outputs:outcome"}},
+        "outs": {"failure": {"connection": "MagFetSlw0000001:ins:in"}, "criticalFailure": {"connection": "MagFetSlw0000001:ins:in"}},
+        "position": {"x": 640, "y": 0}
+      },
+      {
+        "id": "MagFetSlw0000001",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {"condition": {"value": "slowed"}, "value": {"value": 1}, "duration": {"value": 1}, "name": {"value": "Effect: Magical Fetters"}, "target": {"connection": "MagFetEvt0000001:outputs:roller"}},
+        "position": {"x": 960, "y": 0}
+      }
+    ]
+  },
+  {
+    "id": "StinkCloudTrig01",
+    "name": "Stinking Cloud — Sickened",
+    "folder": "Spells",
+    "description": "On a successful, failed, or critically failed Fortitude save against Stinking Cloud, apply sickened 1; the cloud's sustained-area, concealment, and additional slowed effects remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "stinking-cloud"],
+    "variables": {
+      "StinkEvt00000001:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "StinkEvt00000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {
+        "id": "StinkEvt00000001",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {"for": {"value": "saving-throw"}},
+        "outs": {"out": {"connection": "StinkOpt00000001:ins:in"}},
+        "position": {"x": 0, "y": 0}
+      },
+      {
+        "id": "StinkOpt00000001",
+        "type": "list-contains",
+        "inputs": {"entry": {"value": "item:slug:stinking-cloud"}, "list": {"connection": "StinkEvt00000001:outputs:options"}},
+        "outs": {"true": {"connection": "StinkOut00000001:ins:in"}},
+        "position": {"x": 320, "y": 0}
+      },
+      {
+        "id": "StinkOut00000001",
+        "type": "split-outcome",
+        "inputs": {"input": {"connection": "StinkEvt00000001:outputs:outcome"}},
+        "outs": {"success": {"connection": "StinkSick0000001:ins:in"}, "failure": {"connection": "StinkSick0000001:ins:in"}, "criticalFailure": {"connection": "StinkSick0000001:ins:in"}},
+        "position": {"x": 640, "y": 0}
+      },
+      {
+        "id": "StinkSick0000001",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {"condition": {"value": "sickened"}, "value": {"value": 1}, "name": {"value": "Effect: Stinking Cloud"}, "target": {"connection": "StinkEvt00000001:outputs:roller"}},
+        "position": {"x": 960, "y": 0}
+      }
+    ]
+  }
+]

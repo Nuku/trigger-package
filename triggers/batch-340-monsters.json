@@ -1,0 +1,32 @@
+[
+  {
+    "id": "B340HrsTrg00001X",
+    "name": "Hair Snare — Immobilized",
+    "folder": "Monster Abilities",
+    "description": "Apply immobilized on a failed or critically failed Hair Snare save; trap placement, Speed penalty, and Escape/cleanup remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "hair-snare"],
+    "variables": {"B340HrsEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B340HrsEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B340HrsEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B340HrsEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B340HrsMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B340HrsMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:hair-snare"}, "list": {"connection": "B340HrsEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B340HrsSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B340HrsSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B340HrsEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B340HrsImm00001X:ins:in"}, "criticalFailure": {"connection": "B340HrsImm00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B340HrsImm00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "immobilized"}, "name": {"value": "Effect: Hair Snare"}, "target": {"connection": "B340HrsEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B340NumTrg00001X",
+    "name": "Numbing Strike — Clumsy",
+    "folder": "Monster Abilities",
+    "description": "Apply clumsy 1 after a successful or critically successful Numbing Strike; Speed penalty and attack-specific duration remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "numbing-strike"],
+    "variables": {"B340NumEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B340NumEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B340NumEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B340NumEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B340NumMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B340NumMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:numbing-strike"}, "list": {"connection": "B340NumEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B340NumSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B340NumSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B340NumEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B340NumClm00001X:ins:in"}, "criticalSuccess": {"connection": "B340NumClm00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B340NumClm00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "clumsy"}, "value": {"value": 1}, "name": {"value": "Effect: Numbing Strike"}, "target": {"connection": "B340NumEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

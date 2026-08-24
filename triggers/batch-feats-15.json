@@ -1,0 +1,81 @@
+[
+  {
+    "id": "F15CnfCmdTrg0001",
+    "name": "Confusing Commands",
+    "folder": "Feats & Features",
+    "description": "After a Confusing Commands Will save, apply confused 1 on a failure or confused 2 on a critical failure for 1 round. The banner aura, target filtering, and temporary immunity remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "confusing-commands"],
+    "variables": {
+      "F15CnfCmdEvt0001:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "F15CnfCmdEvt0001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "F15CnfCmdEvt0001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "F15CnfCmdEvt0001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "F15CnfCmdMch0001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "F15CnfCmdMch0001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:confusing-commands"}, "list": {"connection": "F15CnfCmdEvt0001:outputs:options"}}, "outs": {"true": {"connection": "F15CnfCmdSpl0001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "F15CnfCmdSpl0001", "type": "split-outcome", "inputs": {"input": {"connection": "F15CnfCmdEvt0001:outputs:outcome"}}, "outs": {"failure": {"connection": "F15CnfCmdCnf0001:ins:in"}, "criticalFailure": {"connection": "F15CnfCmdCnf0002:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "F15CnfCmdCnf0001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "confused"}, "duration": {"value": 1}, "name": {"value": "Effect: Confusing Commands"}, "target": {"connection": "F15CnfCmdEvt0001:outputs:roller"}}, "position": {"x": 960, "y": -80}},
+      {"id": "F15CnfCmdCnf0002", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "confused"}, "value": {"value": 2}, "duration": {"value": 1}, "name": {"value": "Effect: Confusing Commands"}, "target": {"connection": "F15CnfCmdEvt0001:outputs:roller"}}, "position": {"x": 960, "y": 80}}
+    ]
+  },
+  {
+    "id": "F15FrtPwrTrg0001",
+    "name": "Frightening Power",
+    "folder": "Feats & Features",
+    "description": "After a Frightening Power Will save, apply frightened 1 on a success, frightened 2 on a failure, or frightened 3 on a critical failure. The draconic gift requirement, emanation, and temporary immunity remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "frightening-power"],
+    "variables": {
+      "F15FrtPwrEvt0001:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "F15FrtPwrEvt0001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "F15FrtPwrEvt0001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "F15FrtPwrEvt0001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "F15FrtPwrMch0001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "F15FrtPwrMch0001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:frightening-power"}, "list": {"connection": "F15FrtPwrEvt0001:outputs:options"}}, "outs": {"true": {"connection": "F15FrtPwrSpl0001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "F15FrtPwrSpl0001", "type": "split-outcome", "inputs": {"input": {"connection": "F15FrtPwrEvt0001:outputs:outcome"}}, "outs": {"success": {"connection": "F15FrtPwrFrt0001:ins:in"}, "failure": {"connection": "F15FrtPwrFrt0002:ins:in"}, "criticalFailure": {"connection": "F15FrtPwrFrt0003:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "F15FrtPwrFrt0001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 1}, "name": {"value": "Effect: Frightening Power"}, "target": {"connection": "F15FrtPwrEvt0001:outputs:roller"}}, "position": {"x": 960, "y": -120}},
+      {"id": "F15FrtPwrFrt0002", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 2}, "name": {"value": "Effect: Frightening Power"}, "target": {"connection": "F15FrtPwrEvt0001:outputs:roller"}}, "position": {"x": 960, "y": 0}},
+      {"id": "F15FrtPwrFrt0003", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 3}, "name": {"value": "Effect: Frightening Power"}, "target": {"connection": "F15FrtPwrEvt0001:outputs:roller"}}, "position": {"x": 960, "y": 120}}
+    ]
+  },
+  {
+    "id": "F15TwrlStrTrg001",
+    "name": "Twirling Strike",
+    "folder": "Feats & Features",
+    "description": "On a critical success with Twirling Strike's qualifying fan attack, apply off-guard to the target. The Tumble Through, fan, movement, and timing requirements remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "twirling-strike"],
+    "variables": {
+      "F15TwrlStrEvt001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "F15TwrlStrEvt001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "F15TwrlStrEvt001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "F15TwrlStrEvt001", "type": "attack-roll-event", "outs": {"out": {"connection": "F15TwrlStrMch001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "F15TwrlStrMch001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:twirling-strike"}, "list": {"connection": "F15TwrlStrEvt001:outputs:options"}}, "outs": {"true": {"connection": "F15TwrlStrSpl001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "F15TwrlStrSpl001", "type": "split-outcome", "inputs": {"input": {"connection": "F15TwrlStrEvt001:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "F15TwrlStrOff001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "F15TwrlStrOff001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "name": {"value": "Effect: Twirling Strike"}, "target": {"connection": "F15TwrlStrEvt001:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "F15ShvDwnXTrg001",
+    "name": "Shove Down",
+    "folder": "Feats & Features",
+    "description": "After Shove Down's qualifying Athletics check succeeds, apply prone to the target. The preceding Strike, target reach, and Athletics action requirements remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "shove-down"],
+    "variables": {
+      "F15ShvDwnXEvt001:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "F15ShvDwnXEvt001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "F15ShvDwnXEvt001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "F15ShvDwnXEvt001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "skill-check"}}, "outs": {"out": {"connection": "F15ShvDwnXMch001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "F15ShvDwnXMch001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:shove-down"}, "list": {"connection": "F15ShvDwnXEvt001:outputs:options"}}, "outs": {"true": {"connection": "F15ShvDwnXSpl001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "F15ShvDwnXSpl001", "type": "split-outcome", "inputs": {"input": {"connection": "F15ShvDwnXEvt001:outputs:outcome"}}, "outs": {"success": {"connection": "F15ShvDwnXPrn001:ins:in"}, "criticalSuccess": {"connection": "F15ShvDwnXPrn001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "F15ShvDwnXPrn001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "prone"}, "duration": {"value": 1}, "name": {"value": "Effect: Shove Down"}, "target": {"connection": "F15ShvDwnXEvt001:outputs:roller"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

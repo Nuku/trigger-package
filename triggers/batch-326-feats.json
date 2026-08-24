@@ -1,0 +1,34 @@
+[
+  {
+    "id": "B326ShoTrg00001X",
+    "name": "Shoulder Check — Off-Guard",
+    "folder": "Feats",
+    "description": "Apply off-guard for 1 round on a successful or critically successful Shoulder Check; next-attack timing, armor/weapon requirements, and critical-failure self-effect remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "shoulder-check"],
+    "variables": {"B326ShoEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B326ShoEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B326ShoEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B326ShoEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B326ShoMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B326ShoMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:shoulder-check"}, "list": {"connection": "B326ShoEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B326ShoSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B326ShoSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B326ShoEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B326ShoOfg00001X:ins:in"}, "criticalSuccess": {"connection": "B326ShoOfg00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B326ShoOfg00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Shoulder Check"}, "target": {"connection": "B326ShoEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B326SubTrg00001X",
+    "name": "Submission Hold — Enfeebled",
+    "folder": "Feats",
+    "description": "Apply enfeebled 1 on a successful Submission Hold Athletics check and enfeebled 2 on a critical success; grapple prerequisites and duration sequencing remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "submission-hold"],
+    "variables": {"B326SubEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B326SubEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B326SubEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B326SubEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "skill-check"}}, "outs": {"out": {"connection": "B326SubMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B326SubMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:submission-hold"}, "list": {"connection": "B326SubEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B326SubSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B326SubSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B326SubEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B326SubEnf00001X:ins:in"}, "criticalSuccess": {"connection": "B326SubEnf00002X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B326SubEnf00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "enfeebled"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Submission Hold"}, "target": {"connection": "B326SubEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B326SubEnf00002X", "type": "create-condition", "state": "timed", "outs": {"out": {"connection": "B326SubEnf00003X:ins:in"}}, "inputs": {"condition": {"value": "enfeebled"}, "value": {"value": 2}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Submission Hold"}, "target": {"connection": "B326SubEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}},
+      {"id": "B326SubEnf00003X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "enfeebled"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Submission Hold"}, "target": {"connection": "B326SubEvt00001X:outputs:target"}}, "position": {"x": 1280, "y": -80}}
+    ]
+  }
+]

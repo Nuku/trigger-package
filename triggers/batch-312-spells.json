@@ -1,0 +1,49 @@
+[
+  {
+    "id": "B312LigTrg00001X",
+    "name": "Lignify — Slowed",
+    "folder": "Spells",
+    "description": "Apply slowed 1 on a Lignify save success/failure and slowed 2 on a critical failure; ongoing saves, escalation, petrification, and cleanup remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "lignify"],
+    "variables": {"B312LigEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B312LigEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B312LigEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B312LigEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B312LigMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B312LigMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:lignify"}, "list": {"connection": "B312LigEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B312LigSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B312LigSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B312LigEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B312LigSlo00001X:ins:in"}, "failure": {"connection": "B312LigSlo00001X:ins:in"}, "criticalFailure": {"connection": "B312LigSlo00002X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B312LigSlo00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "slowed"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Lignify"}, "target": {"connection": "B312LigEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B312LigSlo00002X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "slowed"}, "value": {"value": 2}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Lignify"}, "target": {"connection": "B312LigEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "B312BlbTrg00001X",
+    "name": "Blister Bomb — Sickened",
+    "folder": "Spells",
+    "description": "Apply sickened 2 on a Blister Bomb save success; disease stages, persistent bleed, immunity, and heightened effects remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "blister-bomb"],
+    "variables": {"B312BlbEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B312BlbEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B312BlbEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B312BlbEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B312BlbMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B312BlbMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:blister-bomb"}, "list": {"connection": "B312BlbEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B312BlbSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B312BlbSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B312BlbEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B312BlbSic00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B312BlbSic00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 2}, "name": {"value": "Effect: Blister Bomb"}, "target": {"connection": "B312BlbEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B312FunTrg00001X",
+    "name": "Fungal Infestation — Persistent Poison",
+    "folder": "Spells",
+    "description": "Apply persistent poison damage from Fungal Infestation on save success/failure, doubled on a critical failure; weakness, area targeting, and heightened scaling remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "fungal-infestation"],
+    "variables": {"B312FunEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B312FunEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B312FunEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B312FunEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B312FunMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B312FunMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:fungal-infestation"}, "list": {"connection": "B312FunEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B312FunSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B312FunSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B312FunEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B312FunPer00001X:ins:in"}, "failure": {"connection": "B312FunPer00001X:ins:in"}, "criticalFailure": {"connection": "B312FunPer00002X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B312FunPer00001X", "type": "persistent-damage", "state": "fixed", "inputs": {"formula": {"value": "2d6[poison]"}, "target": {"connection": "B312FunEvt00001X:outputs:target"}, "name": {"value": "Effect: Fungal Infestation"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B312FunPer00002X", "type": "persistent-damage", "state": "fixed", "inputs": {"formula": {"value": "4d6[poison]"}, "target": {"connection": "B312FunEvt00001X:outputs:target"}, "name": {"value": "Effect: Fungal Infestation"}}, "position": {"x": 960, "y": -80}}
+    ]
+  }
+]

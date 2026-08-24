@@ -1,0 +1,80 @@
+[
+  {
+    "id": "M04ALGTRG0001XXX",
+    "name": "Allergen Aura — Sickened",
+    "folder": "Monster Abilities",
+    "description": "When a non-plant living creature fails an Allergen Aura Fortitude save, apply sickened 2; aura timing, creature filtering, and 24-hour immunity remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "allergen-aura"],
+    "variables": {
+      "M04ALGEVT0001XXX:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M04ALGEVT0001XXX:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"},
+      "M04ALGEVT0001XXX:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "M04ALGEVT0001XXX", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M04ALGMCH0001XXX:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M04ALGMCH0001XXX", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:allergen-aura"}, "list": {"connection": "M04ALGEVT0001XXX:outputs:options"}}, "outs": {"true": {"connection": "M04ALGSPL0001XXX:ins:input"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M04ALGSPL0001XXX", "type": "split-outcome", "inputs": {"input": {"connection": "M04ALGEVT0001XXX:outputs:outcome"}}, "outs": {"failure": {"connection": "M04ALGCON0001XXX:ins:in"}, "criticalFailure": {"connection": "M04ALGCON0001XXX:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M04ALGCON0001XXX", "type": "increase-condition", "inputs": {"condition": {"value": "sickened"}, "max": {"value": 2}, "target": {"connection": "M04ALGEVT0001XXX:outputs:target"}, "value": {"value": 2}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "M04SHRTRG0001XXX",
+    "name": "Shrieking Charge — Deafened",
+    "folder": "Monster Abilities",
+    "description": "When a creature fails a Shrieking Charge Reflex save, apply deafened for 1 round; the troop's movement, emanation, damage, and recharge remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "shrieking-charge"],
+    "variables": {
+      "M04SHREVT0001XXX:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M04SHREVT0001XXX:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"},
+      "M04SHREVT0001XXX:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "M04SHREVT0001XXX", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M04SHRMCH0001XXX:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M04SHRMCH0001XXX", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:shrieking-charge"}, "list": {"connection": "M04SHREVT0001XXX:outputs:options"}}, "outs": {"true": {"connection": "M04SHRSPL0001XXX:ins:input"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M04SHRSPL0001XXX", "type": "split-outcome", "inputs": {"input": {"connection": "M04SHREVT0001XXX:outputs:outcome"}}, "outs": {"failure": {"connection": "M04SHRCON0001XXX:ins:in"}, "criticalFailure": {"connection": "M04SHRCON0001XXX:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M04SHRCON0001XXX", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "deafened"}, "duration": {"value": 1}, "name": {"value": "Effect: Shrieking Charge"}, "target": {"connection": "M04SHREVT0001XXX:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "M04WRETRG0001XXX",
+    "name": "Wrestle (Visitant) — Grabbed and Prone",
+    "folder": "Monster Abilities",
+    "description": "When a Wrestle (Visitant) claw Strike succeeds, apply grabbed and prone to the target; the Strike and Escape/recovery cleanup remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "wrestle"],
+    "variables": {
+      "M04WREEVT0001XXX:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M04WREEVT0001XXX:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"},
+      "M04WREEVT0001XXX:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "M04WREEVT0001XXX", "type": "attack-roll-event", "outs": {"out": {"connection": "M04WREMCH0001XXX:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M04WREMCH0001XXX", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:wrestle"}, "list": {"connection": "M04WREEVT0001XXX:outputs:options"}}, "outs": {"true": {"connection": "M04WRESPL0001XXX:ins:input"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M04WRESPL0001XXX", "type": "split-outcome", "inputs": {"input": {"connection": "M04WREEVT0001XXX:outputs:outcome"}}, "outs": {"success": {"connection": "M04WREGRB0001XXX:ins:in"}, "criticalSuccess": {"connection": "M04WREGRB0001XXX:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M04WREGRB0001XXX", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "grabbed"}, "name": {"value": "Effect: Wrestle (Visitant)"}, "target": {"connection": "M04WREEVT0001XXX:outputs:target"}}, "outs": {"out": {"connection": "M04WREPRN0001XXX:ins:in"}}, "position": {"x": 960, "y": 60}},
+      {"id": "M04WREPRN0001XXX", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "prone"}, "name": {"value": "Effect: Wrestle (Visitant)"}, "target": {"connection": "M04WREEVT0001XXX:outputs:target"}}, "position": {"x": 1280, "y": 60}}
+    ]
+  },
+  {
+    "id": "M04SEDTRG0001XXX",
+    "name": "Seed of Doubt — Stunned",
+    "folder": "Monster Abilities",
+    "description": "Apply stunned 1 on a failed Seed of Doubt Will save or stunned 3 on a critical failure; the belief-ray Strike and 24-hour immunity remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "seed-of-doubt"],
+    "variables": {
+      "M04SEDEVT0001XXX:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M04SEDEVT0001XXX:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"},
+      "M04SEDEVT0001XXX:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "M04SEDEVT0001XXX", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M04SEDMCH0001XXX:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M04SEDMCH0001XXX", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:seed-of-doubt"}, "list": {"connection": "M04SEDEVT0001XXX:outputs:options"}}, "outs": {"true": {"connection": "M04SEDSPL0001XXX:ins:input"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M04SEDSPL0001XXX", "type": "split-outcome", "inputs": {"input": {"connection": "M04SEDEVT0001XXX:outputs:outcome"}}, "outs": {"failure": {"connection": "M04SEDSTN0001XXX:ins:in"}, "criticalFailure": {"connection": "M04SEDSTN0003XXX:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M04SEDSTN0001XXX", "type": "increase-condition", "inputs": {"condition": {"value": "stunned"}, "max": {"value": 1}, "target": {"connection": "M04SEDEVT0001XXX:outputs:target"}, "value": {"value": 1}}, "position": {"x": 960, "y": 60}},
+      {"id": "M04SEDSTN0003XXX", "type": "increase-condition", "inputs": {"condition": {"value": "stunned"}, "max": {"value": 3}, "target": {"connection": "M04SEDEVT0001XXX:outputs:target"}, "value": {"value": 3}}, "position": {"x": 960, "y": -60}}
+    ]
+  }
+]

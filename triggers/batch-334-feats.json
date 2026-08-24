@@ -1,0 +1,35 @@
+[
+  {
+    "id": "B334SacTrg00001X",
+    "name": "Sacred Weapon — Enfeebled/Clumsy",
+    "folder": "Feats",
+    "description": "Apply enfeebled 2 and clumsy 2 for 1 round after a critical Sacred Weapon Strike; fiend qualification, extra weapon damage, and exact beginning-of-turn cleanup remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "sacred-weapon"],
+    "variables": {"B334SacEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B334SacEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B334SacEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B334SacEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B334SacMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B334SacMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:sacred-weapon"}, "list": {"connection": "B334SacEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B334SacSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B334SacSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B334SacEvt00001X:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "B334SacEnf00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B334SacEnf00001X", "type": "create-condition", "state": "timed", "outs": {"out": {"connection": "B334SacClm00001X:ins:in"}}, "inputs": {"condition": {"value": "enfeebled"}, "value": {"value": 2}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Sacred Weapon"}, "target": {"connection": "B334SacEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B334SacClm00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "clumsy"}, "value": {"value": 2}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Sacred Weapon"}, "target": {"connection": "B334SacEvt00001X:outputs:target"}}, "position": {"x": 1280, "y": 0}}
+    ]
+  },
+  {
+    "id": "B334TolTrg00001X",
+    "name": "Touch of Lunacy — Clumsy",
+    "folder": "Feats",
+    "description": "Apply clumsy 2 for 1 round on a failed Touch of Lunacy Fortitude save and clumsy 1 for 1 minute on a critical failure; werecreature attack qualification and beginning-of-turn cleanup remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "touch-of-lunacy"],
+    "variables": {"B334TolEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B334TolEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B334TolEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B334TolEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B334TolMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B334TolMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:touch-of-lunacy"}, "list": {"connection": "B334TolEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B334TolSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B334TolSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B334TolEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B334TolClm00001X:ins:in"}, "criticalFailure": {"connection": "B334TolClm00002X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B334TolClm00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "clumsy"}, "value": {"value": 2}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Touch of Lunacy"}, "target": {"connection": "B334TolEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B334TolClm00002X", "type": "create-condition", "state": "timed", "outs": {"out": {"connection": "B334TolClm00003X:ins:in"}}, "inputs": {"condition": {"value": "clumsy"}, "value": {"value": 2}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Touch of Lunacy"}, "target": {"connection": "B334TolEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}},
+      {"id": "B334TolClm00003X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "clumsy"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Touch of Lunacy"}, "target": {"connection": "B334TolEvt00001X:outputs:target"}}, "position": {"x": 1280, "y": -80}}
+    ]
+  }
+]

@@ -1,0 +1,80 @@
+[
+  {
+    "id": "B10DWrathTrig01A",
+    "name": "Divine Wrath — Sickened/Slowed",
+    "folder": "Spells",
+    "description": "On a Divine Wrath Fortitude save, apply sickened 1 and slowed 1 on a failure, or sickened 2 and slowed 2 on a critical failure; spirit damage, sanctification targeting, and sustain-based duration remain with the spell.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "divine-wrath"],
+    "variables": {
+      "B10DWrathEvt01AX:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "B10DWrathEvt01AX:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "B10DWrathEvt01AX", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B10DWrathMch01AA:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B10DWrathMch01AA", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:divine-wrath"}, "list": {"connection": "B10DWrathEvt01AX:outputs:options"}}, "outs": {"true": {"connection": "B10DWrathSpl01AA:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B10DWrathSpl01AA", "type": "split-outcome", "inputs": {"input": {"connection": "B10DWrathEvt01AX:outputs:outcome"}}, "outs": {"failure": {"connection": "B10DWrathSic01AA:ins:in"}, "criticalFailure": {"connection": "B10DWrathSic02AA:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B10DWrathSic01AA", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 1}, "name": {"value": "Effect: Divine Wrath"}, "target": {"connection": "B10DWrathEvt01AX:outputs:roller"}}, "outs": {"out": {"connection": "B10DWrathSlo01AA:ins:in"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B10DWrathSlo01AA", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "slowed"}, "value": {"value": 1}, "name": {"value": "Effect: Divine Wrath"}, "target": {"connection": "B10DWrathEvt01AX:outputs:roller"}}, "position": {"x": 1280, "y": 80}},
+      {"id": "B10DWrathSic02AA", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 2}, "name": {"value": "Effect: Divine Wrath"}, "target": {"connection": "B10DWrathEvt01AX:outputs:roller"}}, "outs": {"out": {"connection": "B10DWrathSlo02AA:ins:in"}}, "position": {"x": 960, "y": -80}},
+      {"id": "B10DWrathSlo02AA", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "slowed"}, "value": {"value": 2}, "name": {"value": "Effect: Divine Wrath"}, "target": {"connection": "B10DWrathEvt01AX:outputs:roller"}}, "position": {"x": 1280, "y": -80}}
+    ]
+  },
+  {
+    "id": "B10InvSpirTrg01A",
+    "name": "Invoke Spirits — Frightened/Fleeing",
+    "folder": "Spells",
+    "description": "On a failed Invoke Spirits Will save, apply frightened 2 and fleeing for 1 round; the spell's sustained movement, area damage, and later sustain checks remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "invoke-spirits"],
+    "variables": {
+      "B10InvSpirEvt01A:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "B10InvSpirEvt01A:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "B10InvSpirEvt01A", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B10InvSpirMch01A:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B10InvSpirMch01A", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:invoke-spirits"}, "list": {"connection": "B10InvSpirEvt01A:outputs:options"}}, "outs": {"true": {"connection": "B10InvSpirSpl01A:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B10InvSpirSpl01A", "type": "split-outcome", "inputs": {"input": {"connection": "B10InvSpirEvt01A:outputs:outcome"}}, "outs": {"failure": {"connection": "B10InvSpirFri01A:ins:in"}, "criticalFailure": {"connection": "B10InvSpirFri01A:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B10InvSpirFri01A", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 2}, "name": {"value": "Effect: Invoke Spirits"}, "target": {"connection": "B10InvSpirEvt01A:outputs:roller"}}, "outs": {"out": {"connection": "B10InvSpirFle01A:ins:in"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B10InvSpirFle01A", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "fleeing"}, "duration": {"value": 1}, "name": {"value": "Effect: Invoke Spirits"}, "target": {"connection": "B10InvSpirEvt01A:outputs:roller"}}, "position": {"x": 1280, "y": 0}}
+    ]
+  },
+  {
+    "id": "B10ParanoiaTrg01",
+    "name": "Paranoia — Unfriendly",
+    "folder": "Spells",
+    "description": "On a Paranoia Will save, apply unfriendly on a success for 1 round or on a failure/critical failure for 1 minute; the critical-failure mortal-enemy behavior and attitude scope remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "paranoia"],
+    "variables": {
+      "B10ParanoiaEvt01:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "B10ParanoiaEvt01:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "B10ParanoiaEvt01", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B10ParanoiaMch01:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B10ParanoiaMch01", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:paranoia"}, "list": {"connection": "B10ParanoiaEvt01:outputs:options"}}, "outs": {"true": {"connection": "B10ParanoiaSpl01:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B10ParanoiaSpl01", "type": "split-outcome", "inputs": {"input": {"connection": "B10ParanoiaEvt01:outputs:outcome"}}, "outs": {"success": {"connection": "B10ParanoiaUnf01:ins:in"}, "failure": {"connection": "B10ParanoiaUnf02:ins:in"}, "criticalFailure": {"connection": "B10ParanoiaUnf02:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B10ParanoiaUnf01", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "unfriendly"}, "duration": {"value": 1}, "name": {"value": "Effect: Paranoia"}, "target": {"connection": "B10ParanoiaEvt01:outputs:roller"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B10ParanoiaUnf02", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "unfriendly"}, "duration": {"value": 10}, "name": {"value": "Effect: Paranoia"}, "target": {"connection": "B10ParanoiaEvt01:outputs:roller"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "B10ChillTrg01ABC",
+    "name": "Chilling Darkness — Dazzled/Blinded",
+    "folder": "Spells",
+    "description": "On a Chilling Darkness Fortitude save, apply dazzled for 1 round on a failure or blinded for 1 round on a critical failure; cold/void damage, darkness, and area placement remain with the spell.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "chilling-darkness"],
+    "variables": {
+      "B10ChillDarkEvt1:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "B10ChillDarkEvt1:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "B10ChillDarkEvt1", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B10ChillDarkMch1:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B10ChillDarkMch1", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:chilling-darkness"}, "list": {"connection": "B10ChillDarkEvt1:outputs:options"}}, "outs": {"true": {"connection": "B10ChillDarkSpl1:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B10ChillDarkSpl1", "type": "split-outcome", "inputs": {"input": {"connection": "B10ChillDarkEvt1:outputs:outcome"}}, "outs": {"failure": {"connection": "B10ChillDarkDaz1:ins:in"}, "criticalFailure": {"connection": "B10ChillDarkBli1:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B10ChillDarkDaz1", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "name": {"value": "Effect: Chilling Darkness"}, "target": {"connection": "B10ChillDarkEvt1:outputs:roller"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B10ChillDarkBli1", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "blinded"}, "duration": {"value": 1}, "name": {"value": "Effect: Chilling Darkness"}, "target": {"connection": "B10ChillDarkEvt1:outputs:roller"}}, "position": {"x": 960, "y": -80}}
+    ]
+  }
+]

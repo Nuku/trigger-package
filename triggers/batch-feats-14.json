@@ -1,0 +1,80 @@
+[
+  {
+    "id": "F14DisFlrTrg0001",
+    "name": "Disarming Flair",
+    "folder": "Feats & Features",
+    "description": "On a critical success with Disarming Flair's qualifying Disarm check, apply off-guard to the disarmed target until the start of the user's next turn. The weapon and hand requirements remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "disarming-flair"],
+    "variables": {
+      "F14DisFlrEvt0001:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "F14DisFlrEvt0001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "F14DisFlrEvt0001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "F14DisFlrEvt0001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "skill-check"}}, "outs": {"out": {"connection": "F14DisFlrMch0001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "F14DisFlrMch0001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:disarming-flair"}, "list": {"connection": "F14DisFlrEvt0001:outputs:options"}}, "outs": {"true": {"connection": "F14DisFlrSpl0001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "F14DisFlrSpl0001", "type": "split-outcome", "inputs": {"input": {"connection": "F14DisFlrEvt0001:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "F14DisFlrOff0001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "F14DisFlrOff0001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "name": {"value": "Effect: Disarming Flair"}, "target": {"connection": "F14DisFlrEvt0001:outputs:roller"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "F14YreNxtTrg0001",
+    "name": "You're Next",
+    "folder": "Feats & Features",
+    "description": "When You're Next produces a successful Demoralize result, apply frightened 1, or frightened 2 on a critical success, to the Demoralize target. The triggering defeat and range/targeting requirements remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "youre-next"],
+    "variables": {
+      "F14YreNxtEvt0001:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "F14YreNxtEvt0001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "F14YreNxtEvt0001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "F14YreNxtEvt0001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "skill-check"}}, "outs": {"out": {"connection": "F14YreNxtMch0001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "F14YreNxtMch0001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:youre-next"}, "list": {"connection": "F14YreNxtEvt0001:outputs:options"}}, "outs": {"true": {"connection": "F14YreNxtSpl0001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "F14YreNxtSpl0001", "type": "split-outcome", "inputs": {"input": {"connection": "F14YreNxtEvt0001:outputs:outcome"}}, "outs": {"success": {"connection": "F14YreNxtFrt0001:ins:in"}, "criticalSuccess": {"connection": "F14YreNxtFrt0002:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "F14YreNxtFrt0001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 1}, "duration": {"value": 1}, "name": {"value": "Effect: You're Next"}, "target": {"connection": "F14YreNxtEvt0001:outputs:roller"}}, "position": {"x": 960, "y": -80}},
+      {"id": "F14YreNxtFrt0002", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 2}, "duration": {"value": 1}, "name": {"value": "Effect: You're Next"}, "target": {"connection": "F14YreNxtEvt0001:outputs:roller"}}, "position": {"x": 960, "y": 80}}
+    ]
+  },
+  {
+    "id": "F14SckStrTrg0001",
+    "name": "Sickening Strike",
+    "folder": "Feats & Features",
+    "description": "After a Sickening Strike Fortitude save, apply sickened 1 on a failure and sickened 2 on a critical failure. The qualifying Strike and frequency requirements remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "sickening-strike"],
+    "variables": {
+      "F14SckStrEvt0001:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "F14SckStrEvt0001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "F14SckStrEvt0001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "F14SckStrEvt0001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "F14SckStrMch0001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "F14SckStrMch0001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:sickening-strike"}, "list": {"connection": "F14SckStrEvt0001:outputs:options"}}, "outs": {"true": {"connection": "F14SckStrSpl0001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "F14SckStrSpl0001", "type": "split-outcome", "inputs": {"input": {"connection": "F14SckStrEvt0001:outputs:outcome"}}, "outs": {"failure": {"connection": "F14SckStrSck0001:ins:in"}, "criticalFailure": {"connection": "F14SckStrSck0002:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "F14SckStrSck0001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 1}, "name": {"value": "Effect: Sickening Strike"}, "target": {"connection": "F14SckStrEvt0001:outputs:roller"}}, "position": {"x": 960, "y": -80}},
+      {"id": "F14SckStrSck0002", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 2}, "name": {"value": "Effect: Sickening Strike"}, "target": {"connection": "F14SckStrEvt0001:outputs:roller"}}, "position": {"x": 960, "y": 80}}
+    ]
+  },
+  {
+    "id": "F14PinFirTrg0001",
+    "name": "Pinning Fire",
+    "folder": "Feats & Features",
+    "description": "On a successful or critically successful Pinning Fire ranged Strike, apply immobilized to the target until the start of the user's next turn. Ammunition, range, and follow-up requirements remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "pinning-fire"],
+    "variables": {
+      "F14PinFirEvt0001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "F14PinFirEvt0001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "F14PinFirEvt0001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "F14PinFirEvt0001", "type": "attack-roll-event", "outs": {"out": {"connection": "F14PinFirMch0001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "F14PinFirMch0001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:pinning-fire"}, "list": {"connection": "F14PinFirEvt0001:outputs:options"}}, "outs": {"true": {"connection": "F14PinFirSpl0001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "F14PinFirSpl0001", "type": "split-outcome", "inputs": {"input": {"connection": "F14PinFirEvt0001:outputs:outcome"}}, "outs": {"success": {"connection": "F14PinFirImm0001:ins:in"}, "criticalSuccess": {"connection": "F14PinFirImm0001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "F14PinFirImm0001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "immobilized"}, "duration": {"value": 1}, "name": {"value": "Effect: Pinning Fire"}, "target": {"connection": "F14PinFirEvt0001:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

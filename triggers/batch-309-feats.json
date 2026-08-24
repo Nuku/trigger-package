@@ -1,0 +1,53 @@
+[
+  {
+    "id": "B309VspTrg00001X",
+    "name": "Venom Spit — Persistent Poison",
+    "folder": "Feats",
+    "description": "Apply persistent poison on a critical Venom Spit hit; weapon-dice scaling and the hooded nagaji dazzled rider remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "venom-spit"],
+    "variables": {"B309VspEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B309VspEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B309VspEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B309VspEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B309VspMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B309VspMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:venom-spit"}, "list": {"connection": "B309VspEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B309VspSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B309VspSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B309VspEvt00001X:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "B309VspPer00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B309VspPer00001X", "type": "persistent-damage", "state": "fixed", "inputs": {"formula": {"value": "1[poison]"}, "target": {"connection": "B309VspEvt00001X:outputs:target"}, "name": {"value": "Effect: Venom Spit"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B309ElgTrg00001X",
+    "name": "Electrogenesis — Clumsy",
+    "folder": "Feats",
+    "description": "Apply clumsy 1/2/3 for 1 round from Electrogenesis's Fortitude save; extra electricity damage, frequency, and qualifying Strike remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "electrogenesis"],
+    "variables": {"B309ElgEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B309ElgEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B309ElgEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B309ElgEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B309ElgMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B309ElgMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:electrogenesis"}, "list": {"connection": "B309ElgEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B309ElgSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B309ElgSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B309ElgEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B309ElgC1c00001X:ins:in"}, "failure": {"connection": "B309ElgC2c00001X:ins:in"}, "criticalFailure": {"connection": "B309ElgC3c00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B309ElgC1c00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "clumsy"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Electrogenesis"}, "target": {"connection": "B309ElgEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B309ElgC2c00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "clumsy"}, "value": {"value": 2}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Electrogenesis"}, "target": {"connection": "B309ElgEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B309ElgC3c00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "clumsy"}, "value": {"value": 3}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Electrogenesis"}, "target": {"connection": "B309ElgEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "B309WrpTrg00001X",
+    "name": "Warp Likeness — Clumsy and Sickened",
+    "folder": "Feats",
+    "description": "Apply clumsy and sickened from Warp Likeness's Fortitude save; the prior Strike requirement and duration cleanup remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "warp-likeness"],
+    "variables": {"B309WrpEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B309WrpEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B309WrpEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B309WrpEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B309WrpMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B309WrpMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:warp-likeness"}, "list": {"connection": "B309WrpEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B309WrpSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B309WrpSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B309WrpEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B309WrpC1c00001X:ins:in"}, "failure": {"connection": "B309WrpFai00001X:ins:in"}, "criticalFailure": {"connection": "B309WrpCfl00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B309WrpC1c00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "clumsy"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Warp Likeness"}, "target": {"connection": "B309WrpEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 100}},
+      {"id": "B309WrpFai00001X", "type": "create-condition", "state": "timed", "outs": {"out": {"connection": "B309WrpFs100001X:ins:in"}}, "inputs": {"condition": {"value": "clumsy"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Warp Likeness"}, "target": {"connection": "B309WrpEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B309WrpFs100001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Warp Likeness"}, "target": {"connection": "B309WrpEvt00001X:outputs:target"}}, "position": {"x": 1280, "y": 0}},
+      {"id": "B309WrpCfl00001X", "type": "create-condition", "state": "timed", "outs": {"out": {"connection": "B309WrpCs200001X:ins:in"}}, "inputs": {"condition": {"value": "clumsy"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Warp Likeness"}, "target": {"connection": "B309WrpEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -100}},
+      {"id": "B309WrpCs200001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 2}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Warp Likeness"}, "target": {"connection": "B309WrpEvt00001X:outputs:target"}}, "position": {"x": 1280, "y": -100}}
+    ]
+  }
+]

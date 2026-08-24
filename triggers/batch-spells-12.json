@@ -1,0 +1,75 @@
+[
+  {
+    "id": "B12DreTrig0001AX",
+    "name": "Deathly Scream — Frightened",
+    "folder": "Spells",
+    "description": "On a Deathly Scream Will save, apply frightened 1 on a failure; the emanation, mental damage, sustained timing, and any heightened scaling remain with the spell or manual handling.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "deathly-scream"],
+    "variables": {
+      "B12DreEvt00001AX:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "B12DreEvt00001AX:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "B12DreEvt00001AX", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B12DreMch00001AX:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B12DreMch00001AX", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:deathly-scream"}, "list": {"connection": "B12DreEvt00001AX:outputs:options"}}, "outs": {"true": {"connection": "B12DreSpl00001AX:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B12DreSpl00001AX", "type": "split-outcome", "inputs": {"input": {"connection": "B12DreEvt00001AX:outputs:outcome"}}, "outs": {"failure": {"connection": "B12DreFri00001AX:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B12DreFri00001AX", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened", "value2": 1}, "name": {"value": "Effect: Deathly Scream"}, "target": {"connection": "B12DreEvt00001AX:outputs:roller"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B12MosTrig0001AX",
+    "name": "Dread Mosquito Storm — Sickened",
+    "folder": "Spells",
+    "description": "On a Dread Mosquito Storm Fortitude save, apply sickened 1 on a failure as the first-stage disease rider; the void damage, area entry, sustained duration, disease progression, recovery, and temporary immunity remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "dread-mosquito-storm"],
+    "variables": {
+      "B12MosEvt00001AX:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "B12MosEvt00001AX:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "B12MosEvt00001AX", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B12MosMch00001AX:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B12MosMch00001AX", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:dread-mosquito-storm"}, "list": {"connection": "B12MosEvt00001AX:outputs:options"}}, "outs": {"true": {"connection": "B12MosSpl00001AX:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B12MosSpl00001AX", "type": "split-outcome", "inputs": {"input": {"connection": "B12MosEvt00001AX:outputs:outcome"}}, "outs": {"failure": {"connection": "B12MosSic00001AX:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B12MosSic00001AX", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened", "value2": 1}, "name": {"value": "Effect: Dread Mosquito Storm"}, "target": {"connection": "B12MosEvt00001AX:outputs:roller"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B12AroTrig0001AX",
+    "name": "Aromatic Lure — Stupefied",
+    "folder": "Spells",
+    "description": "On an Aromatic Lure critical success, apply stupefied 1 for 1 round; the lure destination, compelled movement, incapacitation, and other save outcomes remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "aromatic-lure"],
+    "variables": {
+      "B12AroEvt00001AX:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "B12AroEvt00001AX:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "B12AroEvt00001AX", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B12AroMch00001AX:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B12AroMch00001AX", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:aromatic-lure"}, "list": {"connection": "B12AroEvt00001AX:outputs:options"}}, "outs": {"true": {"connection": "B12AroSpl00001AX:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B12AroSpl00001AX", "type": "split-outcome", "inputs": {"input": {"connection": "B12AroEvt00001AX:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "B12AroStu00001AX:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B12AroStu00001AX", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "stupefied", "value2": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Aromatic Lure"}, "target": {"connection": "B12AroEvt00001AX:outputs:roller"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B12ChrTrig0001AX",
+    "name": "Chrysopoetic Curse — Encumbered/Clumsy",
+    "folder": "Spells",
+    "description": "On a Chrysopoetic Curse Will save, apply encumbered for 1 minute on a critical success and clumsy 3 for 1 minute on a failure; the curse's gear, terrain, sustained effects, and critical-failure escalation remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "chrysopoetic-curse"],
+    "variables": {
+      "B12ChrEvt00001AX:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "B12ChrEvt00001AX:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "B12ChrEvt00001AX", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B12ChrMch00001AX:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B12ChrMch00001AX", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:chrysopoetic-curse"}, "list": {"connection": "B12ChrEvt00001AX:outputs:options"}}, "outs": {"true": {"connection": "B12ChrSpl00001AX:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B12ChrSpl00001AX", "type": "split-outcome", "inputs": {"input": {"connection": "B12ChrEvt00001AX:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "B12ChrEnc00001AX:ins:in"}, "failure": {"connection": "B12ChrClu00001AX:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B12ChrEnc00001AX", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "encumbered"}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Chrysopoetic Curse"}, "target": {"connection": "B12ChrEvt00001AX:outputs:roller"}}, "position": {"x": 960, "y": -80}},
+      {"id": "B12ChrClu00001AX", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "clumsy", "value2": 3}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Chrysopoetic Curse"}, "target": {"connection": "B12ChrEvt00001AX:outputs:roller"}}, "position": {"x": 960, "y": 80}}
+    ]
+  }
+]

@@ -1,0 +1,67 @@
+[
+  {
+    "id": "S07StupT0000001X",
+    "name": "Stupefy — Stupefied",
+    "folder": "Spells",
+    "description": "On a Stupefy Will save, apply stupefied 1 on success, 2 on failure, or 3 on critical failure for 1 minute; heightened and critical-success details remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "stupefy"],
+    "variables": {
+      "S07StupE0000001X:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "S07StupE0000001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "S07StupE0000001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "S07StupM0000001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "S07StupM0000001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:stupefy"}, "list": {"connection": "S07StupE0000001X:outputs:options"}}, "outs": {"true": {"connection": "S07StupS0000001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "S07StupS0000001X", "type": "split-outcome", "inputs": {"input": {"connection": "S07StupE0000001X:outputs:outcome"}}, "outs": {"success": {"connection": "S07StupC0000001X:ins:in"}, "failure": {"connection": "S07StupC0000002X:ins:in"}, "criticalFailure": {"connection": "S07StupC0000003X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "S07StupC0000001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stupefied"}, "value": {"value": 1}, "duration": {"value": 1}, "name": {"value": "Effect: Stupefy"}, "target": {"connection": "S07StupE0000001X:outputs:roller"}}, "position": {"x": 960, "y": 120}},
+      {"id": "S07StupC0000002X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stupefied"}, "value": {"value": 2}, "duration": {"value": 1}, "name": {"value": "Effect: Stupefy"}, "target": {"connection": "S07StupE0000001X:outputs:roller"}}, "position": {"x": 960, "y": 0}},
+      {"id": "S07StupC0000003X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stupefied"}, "value": {"value": 3}, "duration": {"value": 1}, "name": {"value": "Effect: Stupefy"}, "target": {"connection": "S07StupE0000001X:outputs:roller"}}, "position": {"x": 960, "y": -120}}
+    ]
+  },
+  {
+    "id": "S07CloakT000001X",
+    "name": "Cloak of Colors — Blinded/Stunned",
+    "folder": "Spells",
+    "description": "When a melee attack hits a creature protected by Cloak of Colors, apply blinded for 1 round on a failed Will save or stunned 1 on a critical failure; temporary immunity and incapacitation remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "cloak-of-colors"],
+    "variables": {
+      "S07CloakE000001X:outputs:roller": {"type": "target", "isArray": false, "label": "Attacker"},
+      "S07CloakE000001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "S07CloakE000001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "S07CloakM000001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "S07CloakM000001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:cloak-of-colors"}, "list": {"connection": "S07CloakE000001X:outputs:options"}}, "outs": {"true": {"connection": "S07CloakS000001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "S07CloakS000001X", "type": "split-outcome", "inputs": {"input": {"connection": "S07CloakE000001X:outputs:outcome"}}, "outs": {"failure": {"connection": "S07CloakC000001X:ins:in"}, "criticalFailure": {"connection": "S07CloakC000002X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "S07CloakC000001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "blinded"}, "duration": {"value": 1}, "name": {"value": "Effect: Cloak of Colors"}, "target": {"connection": "S07CloakE000001X:outputs:roller"}}, "position": {"x": 960, "y": 60}},
+      {"id": "S07CloakC000002X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "value": {"value": 1}, "duration": {"value": 1}, "name": {"value": "Effect: Cloak of Colors"}, "target": {"connection": "S07CloakE000001X:outputs:roller"}}, "position": {"x": 960, "y": -60}}
+    ]
+  },
+  {
+    "id": "S07PwStnT000001X",
+    "name": "Power Word Stun — Stunned",
+    "folder": "Spells",
+    "description": "When Power Word Stun is used, apply stunned to the target; target-level eligibility, the 1d6-round duration, and heightened thresholds remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "power-word-stun"],
+    "variables": {"S07PwStnE000001X:outputs:targets": {"type": "target", "isArray": true, "label": "Targets"}},
+    "nodes": [
+      {"id": "S07PwStnE000001X", "type": "action-chat-event", "inputs": {"slug": {"value": "power-word-stun"}}, "outs": {"out": {"connection": "S07PwStnC000001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "S07PwStnC000001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "duration": {"value": 1}, "name": {"value": "Effect: Power Word Stun (manual duration roll)"}, "target": {"connection": "S07PwStnE000001X:outputs:targets"}}, "position": {"x": 480, "y": 0}}
+    ]
+  },
+  {
+    "id": "S07PwBlnT000001X",
+    "name": "Power Word Blind — Blinded",
+    "folder": "Spells",
+    "description": "When Power Word Blind is used, apply blinded to the target; target-level eligibility, duration, and heightened thresholds remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "power-word-blind"],
+    "variables": {"S07PwBlnE000001X:outputs:targets": {"type": "target", "isArray": true, "label": "Targets"}},
+    "nodes": [
+      {"id": "S07PwBlnE000001X", "type": "action-chat-event", "inputs": {"slug": {"value": "power-word-blind"}}, "outs": {"out": {"connection": "S07PwBlnC000001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "S07PwBlnC000001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "blinded"}, "duration": {"value": 1}, "name": {"value": "Effect: Power Word Blind (manual duration)"}, "target": {"connection": "S07PwBlnE000001X:outputs:targets"}}, "position": {"x": 480, "y": 0}}
+    ]
+  }
+]

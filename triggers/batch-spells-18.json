@@ -1,0 +1,84 @@
+[
+  {
+    "id": "B18SlowTrig00001",
+    "name": "Slow — Slowed",
+    "folder": "Spells",
+    "description": "On a Slow Fortitude save, apply slowed 1 for 1 round on a success, slowed 1 for 1 minute on a failure, or slowed 2 for 1 minute on a critical failure; the spell's sustained duration and action restrictions remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "slow"],
+    "variables": {
+      "B18SlowEvt000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B18SlowEvt000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B18SlowEvt000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B18SlowEvt000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B18SlowMch000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B18SlowMch000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:slow"}, "list": {"connection": "B18SlowEvt000001:outputs:options"}}, "outs": {"true": {"connection": "B18SlowSpl000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B18SlowSpl000001", "type": "split-outcome", "inputs": {"input": {"connection": "B18SlowEvt000001:outputs:outcome"}}, "outs": {"success": {"connection": "B18SlowSuc000001:ins:in"}, "failure": {"connection": "B18SlowFai000001:ins:in"}, "criticalFailure": {"connection": "B18SlowCri000001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B18SlowSuc000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "slowed", "value2": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Slow"}, "target": {"connection": "B18SlowEvt000001:outputs:target"}}, "position": {"x": 960, "y": -120}},
+      {"id": "B18SlowFai000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "slowed", "value2": 1}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Slow"}, "target": {"connection": "B18SlowEvt000001:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B18SlowCri000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "slowed", "value2": 2}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Slow"}, "target": {"connection": "B18SlowEvt000001:outputs:target"}}, "position": {"x": 960, "y": 120}}
+    ]
+  },
+  {
+    "id": "B18RoarTrig00001",
+    "name": "Roaring Applause — Slowed",
+    "folder": "Spells",
+    "description": "On a failed or critically failed Roaring Applause Will save, apply slowed 1 for 1 round; sustained fascination, no-reaction effects, area timing, and duration extension remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "roaring-applause"],
+    "variables": {
+      "B18RoarEvt000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B18RoarEvt000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B18RoarEvt000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B18RoarEvt000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B18RoarMch000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B18RoarMch000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:roaring-applause"}, "list": {"connection": "B18RoarEvt000001:outputs:options"}}, "outs": {"true": {"connection": "B18RoarSpl000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B18RoarSpl000001", "type": "split-outcome", "inputs": {"input": {"connection": "B18RoarEvt000001:outputs:outcome"}}, "outs": {"failure": {"connection": "B18RoarSlw000001:ins:in"}, "criticalFailure": {"connection": "B18RoarSlw000001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B18RoarSlw000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "slowed", "value2": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Roaring Applause"}, "target": {"connection": "B18RoarEvt000001:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B18HideTrig00001",
+    "name": "Hideous Laughter — Slowed/Prone",
+    "folder": "Spells",
+    "description": "On a failed Hideous Laughter Will save, apply slowed 1 for 1 round; on a critical failure also apply prone. Reaction lockout, sustained termination, and exact duration remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "hideous-laughter"],
+    "variables": {
+      "B18HideEvt000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B18HideEvt000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B18HideEvt000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B18HideEvt000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B18HideMch000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B18HideMch000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:hideous-laughter"}, "list": {"connection": "B18HideEvt000001:outputs:options"}}, "outs": {"true": {"connection": "B18HideSpl000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B18HideSpl000001", "type": "split-outcome", "inputs": {"input": {"connection": "B18HideEvt000001:outputs:outcome"}}, "outs": {"failure": {"connection": "B18HideSlw000001:ins:in"}, "criticalFailure": {"connection": "B18HideSlw000002:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B18HideSlw000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "slowed", "value2": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Hideous Laughter"}, "target": {"connection": "B18HideEvt000001:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B18HideSlw000002", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "slowed", "value2": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Hideous Laughter"}, "target": {"connection": "B18HideEvt000001:outputs:target"}}, "outs": {"out": {"connection": "B18HidePrn000001:ins:in"}}, "position": {"x": 960, "y": 120}},
+      {"id": "B18HidePrn000001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "prone"}, "name": {"value": "Effect: Hideous Laughter"}, "target": {"connection": "B18HideEvt000001:outputs:target"}}, "position": {"x": 1280, "y": 120}}
+    ]
+  },
+  {
+    "id": "B18ArctTrig00001",
+    "name": "Arctic Rift — Slowed/Immobilized",
+    "folder": "Spells",
+    "description": "On an Arctic Rift Fortitude save, apply slowed 1 for 1 round on a failure or critical failure, and immobilized for 1 minute on a critical failure; cold damage, area placement, and critical-failure follow-up remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "arctic-rift"],
+    "variables": {
+      "B18ArctEvt000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B18ArctEvt000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B18ArctEvt000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B18ArctEvt000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B18ArctMch000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B18ArctMch000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:arctic-rift"}, "list": {"connection": "B18ArctEvt000001:outputs:options"}}, "outs": {"true": {"connection": "B18ArctSpl000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B18ArctSpl000001", "type": "split-outcome", "inputs": {"input": {"connection": "B18ArctEvt000001:outputs:outcome"}}, "outs": {"failure": {"connection": "B18ArctSlw000001:ins:in"}, "criticalFailure": {"connection": "B18ArctSlw000002:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B18ArctSlw000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "slowed", "value2": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Arctic Rift"}, "target": {"connection": "B18ArctEvt000001:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B18ArctSlw000002", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "slowed", "value2": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Arctic Rift"}, "target": {"connection": "B18ArctEvt000001:outputs:target"}}, "outs": {"out": {"connection": "B18ArctImm000001:ins:in"}}, "position": {"x": 960, "y": 120}},
+      {"id": "B18ArctImm000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "immobilized"}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Arctic Rift"}, "target": {"connection": "B18ArctEvt000001:outputs:target"}}, "position": {"x": 1280, "y": 120}}
+    ]
+  }
+]

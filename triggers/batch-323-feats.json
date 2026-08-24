@@ -1,0 +1,47 @@
+[
+  {
+    "id": "B323SblTrg00001X",
+    "name": "Soul Bleed — Persistent Spirit",
+    "folder": "Feats",
+    "description": "Apply 1d6 persistent spirit damage on a critical Spectral Dagger hit from Soul Bleed; weapon qualification and healing remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "soul-bleed"],
+    "variables": {"B323SblEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B323SblEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B323SblEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B323SblEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B323SblMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B323SblMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:soul-bleed"}, "list": {"connection": "B323SblEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B323SblSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B323SblSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B323SblEvt00001X:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "B323SblPer00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B323SblPer00001X", "type": "persistent-damage", "state": "fixed", "inputs": {"formula": {"value": "1d6[spirit]"}, "target": {"connection": "B323SblEvt00001X:outputs:target"}, "name": {"value": "Effect: Soul Bleed"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B323BloTrg00001X",
+    "name": "Bloody Blows — Persistent Bleed",
+    "folder": "Feats",
+    "description": "Apply 1d4 persistent bleed on a critical qualifying unarmed hit from Bloody Blows; nonlethal and unarmed qualification remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "bloody-blows"],
+    "variables": {"B323BloEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B323BloEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B323BloEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B323BloEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B323BloMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B323BloMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:bloody-blows"}, "list": {"connection": "B323BloEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B323BloSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B323BloSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B323BloEvt00001X:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "B323BloPer00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B323BloPer00001X", "type": "persistent-damage", "state": "fixed", "inputs": {"formula": {"value": "1d4[bleed]"}, "target": {"connection": "B323BloEvt00001X:outputs:target"}, "name": {"value": "Effect: Bloody Blows"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B323BtfTrg00001X",
+    "name": "Bloodletting Fangs — Persistent Bleed",
+    "folder": "Feats",
+    "description": "Apply 1d4 persistent bleed on a critical fangs Strike from Bloodletting Fangs; fangs qualification remains native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "bloodletting-fangs"],
+    "variables": {"B323BtfEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B323BtfEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B323BtfEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B323BtfEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B323BtfMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B323BtfMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:bloodletting-fangs"}, "list": {"connection": "B323BtfEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B323BtfSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B323BtfSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B323BtfEvt00001X:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "B323BtfPer00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B323BtfPer00001X", "type": "persistent-damage", "state": "fixed", "inputs": {"formula": {"value": "1d4[bleed]"}, "target": {"connection": "B323BtfEvt00001X:outputs:target"}, "name": {"value": "Effect: Bloodletting Fangs"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

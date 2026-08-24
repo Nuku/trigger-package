@@ -1,0 +1,48 @@
+[
+  {
+    "id": "B325GlaTrg00001X",
+    "name": "Glacial Prison — Slowed",
+    "folder": "Feats",
+    "description": "Apply slowed 1 on a successful Glacial Prison Fortitude save and after a critical failure; frozen-state behavior and temporary immunity remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "glacial-prison"],
+    "variables": {"B325GlaEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B325GlaEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B325GlaEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B325GlaEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B325GlaMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B325GlaMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:glacial-prison"}, "list": {"connection": "B325GlaEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B325GlaSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B325GlaSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B325GlaEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B325GlaSlo00001X:ins:in"}, "criticalFailure": {"connection": "B325GlaSlo00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B325GlaSlo00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "slowed"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Glacial Prison"}, "target": {"connection": "B325GlaEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B325WitTrg00001X",
+    "name": "Witchwood Seed — Clumsy and Immobilized",
+    "folder": "Feats",
+    "description": "Apply clumsy 2 and immobilized on a failed or critically failed Witchwood Seed Fortitude save; dynamic damage, immunity, and recovery saves remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "witchwood-seed"],
+    "variables": {"B325WitEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B325WitEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B325WitEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B325WitEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B325WitMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B325WitMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:witchwood-seed"}, "list": {"connection": "B325WitEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B325WitSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B325WitSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B325WitEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B325WitClu00001X:ins:in"}, "criticalFailure": {"connection": "B325WitClu00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B325WitClu00001X", "type": "create-condition", "state": "timed", "outs": {"out": {"connection": "B325WitImm00001X:ins:in"}}, "inputs": {"condition": {"value": "clumsy"}, "value": {"value": 2}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Witchwood Seed"}, "target": {"connection": "B325WitEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B325WitImm00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "immobilized"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Witchwood Seed"}, "target": {"connection": "B325WitEvt00001X:outputs:target"}}, "position": {"x": 1280, "y": 0}}
+    ]
+  },
+  {
+    "id": "B325GorTrg00001X",
+    "name": "Goring Charge — Persistent Bleed",
+    "folder": "Feats",
+    "description": "Apply 1d6 persistent bleed on a successful Goring Charge horns hit; the 20-foot movement requirement and damage remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "goring-charge"],
+    "variables": {"B325GorEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B325GorEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B325GorEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B325GorEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B325GorMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B325GorMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:goring-charge"}, "list": {"connection": "B325GorEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B325GorSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B325GorSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B325GorEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B325GorPer00001X:ins:in"}, "criticalSuccess": {"connection": "B325GorPer00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B325GorPer00001X", "type": "persistent-damage", "state": "fixed", "inputs": {"formula": {"value": "1d6[bleed]"}, "target": {"connection": "B325GorEvt00001X:outputs:target"}, "name": {"value": "Effect: Goring Charge"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

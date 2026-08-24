@@ -1,0 +1,83 @@
+[
+  {
+    "id": "B19GRootTrg00001",
+    "name": "Greater Rooting",
+    "folder": "Equipment",
+    "description": "On a critical hit with a Greater Rooting weapon, apply immobilized and clumsy 1 for 1 round; the Escape DC, critical-hit qualification, and exact end-of-turn timing remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "greater-rooting"],
+    "variables": {
+      "B19GRootEvt00001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B19GRootEvt00001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B19GRootEvt00001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B19GRootEvt00001", "type": "attack-roll-event", "outs": {"out": {"connection": "B19GRootMch00001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B19GRootMch00001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:greater-rooting"}, "list": {"connection": "B19GRootEvt00001:outputs:options"}}, "outs": {"true": {"connection": "B19GRootSpl00001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B19GRootSpl00001", "type": "split-outcome", "inputs": {"input": {"connection": "B19GRootEvt00001:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "B19GRootImm00001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B19GRootImm00001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "immobilized"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Greater Rooting"}, "target": {"connection": "B19GRootEvt00001:outputs:target"}}, "outs": {"out": {"connection": "B19GRootClm00001:ins:in"}}, "position": {"x": 960, "y": -80}},
+      {"id": "B19GRootClm00001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "clumsy"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Greater Rooting"}, "target": {"connection": "B19GRootEvt00001:outputs:target"}}, "position": {"x": 1280, "y": -80}}
+    ]
+  },
+  {
+    "id": "B19NightTrg00001",
+    "name": "Nightmare",
+    "folder": "Equipment",
+    "description": "On a critical hit with a Nightmare weapon, apply stupefied 1, or frightened 2 if the target is already stupefied; fear traits, immunity, and the exact critical-hit timing remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "nightmare"],
+    "variables": {
+      "B19NightEvt00001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B19NightEvt00001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B19NightEvt00001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B19NightEvt00001", "type": "attack-roll-event", "outs": {"out": {"connection": "B19NightMch00001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B19NightMch00001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:nightmare"}, "list": {"connection": "B19NightEvt00001:outputs:options"}}, "outs": {"true": {"connection": "B19NightSpl00001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B19NightSpl00001", "type": "split-outcome", "inputs": {"input": {"connection": "B19NightEvt00001:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "B19NightHas00001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B19NightHas00001", "type": "has-condition", "inputs": {"condition": {"value": "stupefied"}, "target": {"connection": "B19NightEvt00001:outputs:target"}}, "outs": {"true": {"connection": "B19NightFgt00001:ins:in"}, "false": {"connection": "B19NightStu00001:ins:in"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B19NightStu00001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stupefied"}, "value": {"value": 1}, "name": {"value": "Effect: Nightmare"}, "target": {"connection": "B19NightEvt00001:outputs:target"}}, "position": {"x": 1280, "y": 80}},
+      {"id": "B19NightFgt00001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 2}, "name": {"value": "Effect: Nightmare"}, "target": {"connection": "B19NightEvt00001:outputs:target"}}, "position": {"x": 1280, "y": -80}}
+    ]
+  },
+  {
+    "id": "B19GThunTrg00001",
+    "name": "Greater Thundering",
+    "folder": "Equipment",
+    "description": "After a Greater Thundering critical hit's Fortitude save, apply deafened permanently on a failure or critical failure; the save DC, sonic damage, resistance interaction, and critical-hit setup remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "greater-thundering"],
+    "variables": {
+      "B19GThunEvt00001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B19GThunEvt00001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B19GThunEvt00001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B19GThunEvt00001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B19GThunMch00001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B19GThunMch00001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:greater-thundering"}, "list": {"connection": "B19GThunEvt00001:outputs:options"}}, "outs": {"true": {"connection": "B19GThunSpl00001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B19GThunSpl00001", "type": "split-outcome", "inputs": {"input": {"connection": "B19GThunEvt00001:outputs:outcome"}}, "outs": {"failure": {"connection": "B19GThunDea00001:ins:in"}, "criticalFailure": {"connection": "B19GThunDea00001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B19GThunDea00001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "deafened"}, "name": {"value": "Effect: Greater Thundering"}, "target": {"connection": "B19GThunEvt00001:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B19GGiantTrg0001",
+    "name": "Greater Giant-Killing",
+    "folder": "Equipment",
+    "description": "On the Fortitude save caused by a Greater Giant-Killing critical hit, apply enfeebled 1 on a critical success, enfeebled 2 on a success or failure, and enfeebled 4 on a critical failure; giant targeting, save DC, mental damage, and exact end-of-turn timing remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "greater-giant-killing"],
+    "variables": {
+      "B19GGiantEvt0001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B19GGiantEvt0001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B19GGiantEvt0001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B19GGiantEvt0001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B19GGiantMch0001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B19GGiantMch0001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:greater-giant-killing"}, "list": {"connection": "B19GGiantEvt0001:outputs:options"}}, "outs": {"true": {"connection": "B19GGiantSpl0001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B19GGiantSpl0001", "type": "split-outcome", "inputs": {"input": {"connection": "B19GGiantEvt0001:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "B19GGiantE01N001:ins:in"}, "success": {"connection": "B19GGiantE02N001:ins:in"}, "failure": {"connection": "B19GGiantE02N001:ins:in"}, "criticalFailure": {"connection": "B19GGiantE04N001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B19GGiantE01N001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "enfeebled"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Greater Giant-Killing"}, "target": {"connection": "B19GGiantEvt0001:outputs:target"}}, "position": {"x": 960, "y": -160}},
+      {"id": "B19GGiantE02N001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "enfeebled"}, "value": {"value": 2}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Greater Giant-Killing"}, "target": {"connection": "B19GGiantEvt0001:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B19GGiantE04N001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "enfeebled"}, "value": {"value": 4}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Greater Giant-Killing"}, "target": {"connection": "B19GGiantEvt0001:outputs:target"}}, "position": {"x": 960, "y": 160}}
+    ]
+  }
+]

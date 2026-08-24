@@ -1,0 +1,82 @@
+[
+  {
+    "id": "B06BLDFINEVT0001",
+    "name": "Bleeding Finisher",
+    "folder": "Feats & Features",
+    "description": "After a successful Bleeding Finisher Strike, apply persistent bleed to the target. The feat's finisher requirement, slashing/piercing requirement, and persistent damage scaling remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "bleeding-finisher"],
+    "variables": {
+      "B06BLDFINEVT0001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B06BLDFINEVT0001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B06BLDFINEVT0001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B06BLDFINEVT0001", "type": "attack-roll-event", "outs": {"out": {"connection": "B06BLDFINMCH0001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B06BLDFINMCH0001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:bleeding-finisher"}, "list": {"connection": "B06BLDFINEVT0001:outputs:options"}}, "outs": {"true": {"connection": "B06BLDFINSPL0001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B06BLDFINSPL0001", "type": "split-outcome", "inputs": {"input": {"connection": "B06BLDFINEVT0001:outputs:outcome"}}, "outs": {"success": {"connection": "B06BLDFINTXT0001:ins:in"}, "criticalSuccess": {"connection": "B06BLDFINTXT0001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B06BLDFINTXT0001", "type": "format-text", "inputs": {"plain": {"value": "1"}}, "outs": {"out": {"connection": "B06BLDFINPER0001:ins:in"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B06BLDFINPER0001", "type": "create-persistent", "inputs": {"die": {"connection": "B06BLDFINTXT0001:outputs:result"}, "target": {"connection": "B06BLDFINEVT0001:outputs:target"}, "type": {"value": "bleed"}}, "position": {"x": 1280, "y": 0}}
+    ]
+  },
+  {
+    "id": "B06BRUTCRSEVT001",
+    "name": "Brutal Crush",
+    "folder": "Feats & Features",
+    "description": "After a qualifying Brutal Crush Strike succeeds, apply stupefied 2; on a critical success, apply stupefied 4. The preceding bludgeoning morph or polymorph unarmed Strike and attack prerequisites remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "brutal-crush"],
+    "variables": {
+      "B06BRUTCRSEVT001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B06BRUTCRSEVT001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B06BRUTCRSEVT001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B06BRUTCRSEVT001", "type": "attack-roll-event", "outs": {"out": {"connection": "B06BRUTCRSMCH001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B06BRUTCRSMCH001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:brutal-crush"}, "list": {"connection": "B06BRUTCRSEVT001:outputs:options"}}, "outs": {"true": {"connection": "B06BRUTCRSSPL001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B06BRUTCRSSPL001", "type": "split-outcome", "inputs": {"input": {"connection": "B06BRUTCRSEVT001:outputs:outcome"}}, "outs": {"success": {"connection": "B06BRUTCRSSTU001:ins:in"}, "criticalSuccess": {"connection": "B06BRUTCRSSTU401:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B06BRUTCRSSTU001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stupefied"}, "value": {"value": 2}, "duration": {"value": 1}, "name": {"value": "Effect: Brutal Crush"}, "target": {"connection": "B06BRUTCRSEVT001:outputs:target"}}, "position": {"x": 960, "y": 100}},
+      {"id": "B06BRUTCRSSTU401", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stupefied"}, "value": {"value": 4}, "duration": {"value": 1}, "name": {"value": "Effect: Brutal Crush"}, "target": {"connection": "B06BRUTCRSEVT001:outputs:target"}}, "position": {"x": 960, "y": -100}}
+    ]
+  },
+  {
+    "id": "B06BLDNYEVT00001",
+    "name": "Bloody Denial",
+    "folder": "Feats & Features",
+    "description": "On a Bloody Denial Fortitude save failure, apply stunned 1; on a critical failure, apply stunned 2. The triggering hit, guardian save DC, and the feat's special critical-success adjustment remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "bloody-denial"],
+    "variables": {
+      "B06BLDNYEVT00001:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "B06BLDNYEVT00001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B06BLDNYEVT00001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B06BLDNYEVT00001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B06BLDNYMCH00001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B06BLDNYMCH00001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:bloody-denial"}, "list": {"connection": "B06BLDNYEVT00001:outputs:options"}}, "outs": {"true": {"connection": "B06BLDNYSPL00001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B06BLDNYSPL00001", "type": "split-outcome", "inputs": {"input": {"connection": "B06BLDNYEVT00001:outputs:outcome"}}, "outs": {"failure": {"connection": "B06BLDNYSTN00001:ins:in"}, "criticalFailure": {"connection": "B06BLDNYST200001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B06BLDNYSTN00001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "value": {"value": 1}, "duration": {"value": 1}, "name": {"value": "Effect: Bloody Denial"}, "target": {"connection": "B06BLDNYEVT00001:outputs:roller"}}, "position": {"x": 960, "y": 100}},
+      {"id": "B06BLDNYST200001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "value": {"value": 2}, "duration": {"value": 1}, "name": {"value": "Effect: Bloody Denial"}, "target": {"connection": "B06BLDNYEVT00001:outputs:roller"}}, "position": {"x": 960, "y": -100}}
+    ]
+  },
+  {
+    "id": "B06CALCSNDEVT001",
+    "name": "Calcifying Sand",
+    "folder": "Feats & Features",
+    "description": "On a Calcifying Sand Fortitude save failure, apply slowed 1; on a critical failure, apply petrified. The reaction trigger, physical resistance, one-hour frequency, and exact petrified duration remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "calcifying-sand"],
+    "variables": {
+      "B06CALCSNDEVT001:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "B06CALCSNDEVT001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B06CALCSNDEVT001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B06CALCSNDEVT001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B06CALCSNDMCH001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B06CALCSNDMCH001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:calcifying-sand"}, "list": {"connection": "B06CALCSNDEVT001:outputs:options"}}, "outs": {"true": {"connection": "B06CALCSNDSPL001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B06CALCSNDSPL001", "type": "split-outcome", "inputs": {"input": {"connection": "B06CALCSNDEVT001:outputs:outcome"}}, "outs": {"failure": {"connection": "B06CALCSNDSLW001:ins:in"}, "criticalFailure": {"connection": "B06CALCSNDPET001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B06CALCSNDSLW001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "slowed"}, "value": {"value": 1}, "duration": {"value": 1}, "name": {"value": "Effect: Calcifying Sand"}, "target": {"connection": "B06CALCSNDEVT001:outputs:roller"}}, "position": {"x": 960, "y": 100}},
+      {"id": "B06CALCSNDPET001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "petrified"}, "duration": {"value": 1}, "name": {"value": "Effect: Calcifying Sand"}, "target": {"connection": "B06CALCSNDEVT001:outputs:roller"}}, "position": {"x": 960, "y": -100}}
+    ]
+  }
+]

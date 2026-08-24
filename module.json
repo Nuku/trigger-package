@@ -1,0 +1,42 @@
+{
+  "id": "trigger-package",
+  "title": "Trigger Package",
+  "description": "Additional PF2e and SF2e Trigger Engine automation for feats, spells, equipment, and monster abilities.",
+  "version": "0.1.0",
+  "authors": [
+    {
+      "name": "Nuku"
+    }
+  ],
+  "compatibility": {
+    "minimum": "14",
+    "verified": "14"
+  },
+  "esmodules": [
+    "scripts/main.js"
+  ],
+  "license": "MIT",
+  "readme": "README.md",
+  "changelog": "CHANGELOG.md",
+  "relationships": {
+    "systems": [
+      {
+        "id": "pf2e",
+        "type": "system"
+      },
+      {
+        "id": "sf2e",
+        "type": "system"
+      }
+    ],
+    "requires": [
+      {
+        "id": "trigger-engine",
+        "type": "module",
+        "compatibility": {
+          "minimum": "1.28.0"
+        }
+      }
+    ]
+  }
+}

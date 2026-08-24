@@ -1,0 +1,80 @@
+[
+  {
+    "id": "B24S2DTrg000001X",
+    "name": "Scare to Death",
+    "folder": "Feats & Features",
+    "description": "After Scare to Death's qualifying Intimidation check, apply frightened 1 on a success or failure and frightened 2 on a critical success. The death effect, fleeing result, immunity, and target eligibility remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "scare-to-death"],
+    "variables": {
+      "B24S2DEvt000001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B24S2DEvt000001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B24S2DEvt000001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B24S2DEvt000001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "skill-check"}}, "outs": {"out": {"connection": "B24S2DMch000001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B24S2DMch000001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:scare-to-death"}, "list": {"connection": "B24S2DEvt000001X:outputs:options"}}, "outs": {"true": {"connection": "B24S2DSpl000001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B24S2DSpl000001X", "type": "split-outcome", "inputs": {"input": {"connection": "B24S2DEvt000001X:outputs:outcome"}}, "outs": {"success": {"connection": "B24S2DFrt000001X:ins:in"}, "failure": {"connection": "B24S2DFrt000001X:ins:in"}, "criticalSuccess": {"connection": "B24S2DFrt000002X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B24S2DFrt000001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 1}, "duration": {"value": 1}, "name": {"value": "Effect: Scare to Death"}, "target": {"connection": "B24S2DEvt000001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B24S2DFrt000002X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 2}, "duration": {"value": 1}, "name": {"value": "Effect: Scare to Death"}, "target": {"connection": "B24S2DEvt000001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "B24TopTrg000001X",
+    "name": "Toppling Dance",
+    "folder": "Feats & Features",
+    "description": "After Toppling Dance's qualifying Acrobatics check, apply prone on a critical success and off-guard on a success. The movement, target positioning, and follow-up Strike requirements remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "toppling-dance"],
+    "variables": {
+      "B24TopEvt000001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B24TopEvt000001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B24TopEvt000001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B24TopEvt000001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "skill-check"}}, "outs": {"out": {"connection": "B24TopMch000001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B24TopMch000001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:toppling-dance"}, "list": {"connection": "B24TopEvt000001X:outputs:options"}}, "outs": {"true": {"connection": "B24TopSpl000001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B24TopSpl000001X", "type": "split-outcome", "inputs": {"input": {"connection": "B24TopEvt000001X:outputs:outcome"}}, "outs": {"success": {"connection": "B24TopOff000001X:ins:in"}, "criticalSuccess": {"connection": "B24TopPrn000001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B24TopOff000001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "name": {"value": "Effect: Toppling Dance"}, "target": {"connection": "B24TopEvt000001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B24TopPrn000001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "prone"}, "name": {"value": "Effect: Toppling Dance"}, "target": {"connection": "B24TopEvt000001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "B24OEFTrg000001X",
+    "name": "Overextending Feint",
+    "folder": "Feats & Features",
+    "description": "After Overextending Feint's qualifying Deception check succeeds, apply off-guard to the target. The feint's attack timing, reach, and duration limits remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "overextending-feint"],
+    "variables": {
+      "B24OEFEvt000001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B24OEFEvt000001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B24OEFEvt000001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B24OEFEvt000001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "skill-check"}}, "outs": {"out": {"connection": "B24OEFMch000001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B24OEFMch000001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:overextending-feint"}, "list": {"connection": "B24OEFЕvt000001X:outputs:options"}}, "outs": {"true": {"connection": "B24OEFSpl000001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B24OEFSpl000001X", "type": "split-outcome", "inputs": {"input": {"connection": "B24OEFEvt000001X:outputs:outcome"}}, "outs": {"success": {"connection": "B24OEFOff000001X:ins:in"}, "criticalSuccess": {"connection": "B24OEFOff000001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B24OEFOff000001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "name": {"value": "Effect: Overextending Feint"}, "target": {"connection": "B24OEFEvt000001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B24GFeTrg000001X",
+    "name": "Frightening Power",
+    "folder": "Feats & Features",
+    "description": "After Frightening Power's qualifying Intimidation check succeeds, apply frightened 1 to the target. The required action, target eligibility, and duration remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "frightening-power"],
+    "variables": {
+      "B24GFeEvt000001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B24GFeEvt000001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B24GFeEvt000001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B24GFeEvt000001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "skill-check"}}, "outs": {"out": {"connection": "B24GFeMch000001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B24GFeMch000001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:frightening-power"}, "list": {"connection": "B24GFeEvt000001X:outputs:options"}}, "outs": {"true": {"connection": "B24GFeSpl000001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B24GFeSpl000001X", "type": "split-outcome", "inputs": {"input": {"connection": "B24GFeEvt000001X:outputs:outcome"}}, "outs": {"success": {"connection": "B24GFeOff000001X:ins:in"}, "criticalSuccess": {"connection": "B24GFeOff000001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B24GFeOff000001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 1}, "duration": {"value": 1}, "name": {"value": "Effect: Frightening Power"}, "target": {"connection": "B24GFeEvt000001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

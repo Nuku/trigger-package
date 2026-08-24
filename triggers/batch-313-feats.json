@@ -1,0 +1,49 @@
+[
+  {
+    "id": "B313RgmTrg00001X",
+    "name": "Regurgitate Mutagen — Sickened",
+    "folder": "Feats",
+    "description": "Apply sickened 1 on a failed Regurgitate Mutagen Reflex save and sickened 2 on a critical failure; damage, mutagen removal, and targeting remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "regurgitate-mutagen"],
+    "variables": {"B313RgmEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B313RgmEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B313RgmEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B313RgmEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B313RgmMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B313RgmMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:regurgitate-mutagen"}, "list": {"connection": "B313RgmEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B313RgmSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B313RgmSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B313RgmEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B313RgmS1c00001X:ins:in"}, "criticalFailure": {"connection": "B313RgmS2c00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B313RgmS1c00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 1}, "name": {"value": "Effect: Regurgitate Mutagen"}, "target": {"connection": "B313RgmEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B313RgmS2c00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 2}, "name": {"value": "Effect: Regurgitate Mutagen"}, "target": {"connection": "B313RgmEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "B313RsbTrg00001X",
+    "name": "Resounding Blow — Deafened",
+    "folder": "Feats",
+    "description": "Apply deafened until the start of the next turn on a Resounding Blow hit, or for 1 minute on a critical hit; weapon qualification and damage remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "resounding-blow"],
+    "variables": {"B313RsbEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B313RsbEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B313RsbEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B313RsbEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B313RsbMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B313RsbMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:resounding-blow"}, "list": {"connection": "B313RsbEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B313RsbSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B313RsbSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B313RsbEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B313RsbDea00001X:ins:in"}, "criticalSuccess": {"connection": "B313RsbDea00002X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B313RsbDea00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "deafened"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Resounding Blow"}, "target": {"connection": "B313RsbEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B313RsbDea00002X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "deafened"}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Resounding Blow"}, "target": {"connection": "B313RsbEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "B313EnbTrg00001X",
+    "name": "Energy Beam — Persistent Fire",
+    "folder": "Feats",
+    "description": "Apply persistent fire damage on a critical Energy Beam hit; weapon-dice scaling and the unarmed attack remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "energy-beam"],
+    "variables": {"B313EnbEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B313EnbEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B313EnbEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B313EnbEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B313EnbMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B313EnbMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:energy-beam"}, "list": {"connection": "B313EnbEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B313EnbSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B313EnbSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B313EnbEvt00001X:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "B313EnbPer00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B313EnbPer00001X", "type": "persistent-damage", "state": "fixed", "inputs": {"formula": {"value": "1[fire]"}, "target": {"connection": "B313EnbEvt00001X:outputs:target"}, "name": {"value": "Effect: Energy Beam"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

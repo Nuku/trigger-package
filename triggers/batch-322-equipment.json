@@ -1,0 +1,69 @@
+[
+  {
+    "id": "B322WheTrg00001X",
+    "name": "Whelming Scrimshaw — Sickened",
+    "folder": "Equipment",
+    "description": "Apply sickened 1/2/3 from Whelming Scrimshaw Fortitude-save outcomes; amphibious immunity and breathing restriction remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "whelming-scrimshaw"],
+    "variables": {"B322WheEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B322WheEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B322WheEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B322WheEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B322WheMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B322WheMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:whelming-scrimshaw"}, "list": {"connection": "B322WheEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B322WheSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B322WheSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B322WheEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B322WheSic00001X:ins:in"}, "failure": {"connection": "B322WheSic00002X:ins:in"}, "criticalFailure": {"connection": "B322WheSic00003X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B322WheSic00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 1}, "name": {"value": "Effect: Whelming Scrimshaw"}, "target": {"connection": "B322WheEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 100}},
+      {"id": "B322WheSic00002X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 2}, "name": {"value": "Effect: Whelming Scrimshaw"}, "target": {"connection": "B322WheEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B322WheSic00003X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 3}, "name": {"value": "Effect: Whelming Scrimshaw"}, "target": {"connection": "B322WheEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -100}}
+    ]
+  },
+  {
+    "id": "B322BtsTrg00001X",
+    "name": "Black Tendril Shot (Moderate) — Slowed",
+    "folder": "Equipment",
+    "description": "Apply slowed 1 on a success/failure and slowed 2 on a critical failure against Black Tendril Shot (Moderate); Escape bonuses and cleanup remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "black-tendril-shot-moderate"],
+    "variables": {"B322BtsEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B322BtsEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B322BtsEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B322BtsEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B322BtsMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B322BtsMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:black-tendril-shot-moderate"}, "list": {"connection": "B322BtsEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B322BtsSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B322BtsSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B322BtsEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B322BtsSlo00001X:ins:in"}, "failure": {"connection": "B322BtsSlo00001X:ins:in"}, "criticalFailure": {"connection": "B322BtsSlo00002X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B322BtsSlo00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "slowed"}, "value": {"value": 1}, "name": {"value": "Effect: Black Tendril Shot (Moderate)"}, "target": {"connection": "B322BtsEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B322BtsSlo00002X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "slowed"}, "value": {"value": 2}, "name": {"value": "Effect: Black Tendril Shot (Moderate)"}, "target": {"connection": "B322BtsEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "B322ScrTrg00001X",
+    "name": "Screech Shooter (Greater) — Fear",
+    "folder": "Equipment",
+    "description": "Apply frightened 1/2/3 and fleeing for 1 round on a critical Screech Shooter save failure; area targeting and activation remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "screech-shooter-greater"],
+    "variables": {"B322ScrEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B322ScrEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B322ScrEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B322ScrEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B322ScrMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B322ScrMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:screech-shooter-greater"}, "list": {"connection": "B322ScrEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B322ScrSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B322ScrSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B322ScrEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B322ScrF1c00001X:ins:in"}, "failure": {"connection": "B322ScrF2c00001X:ins:in"}, "criticalFailure": {"connection": "B322ScrF3c00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B322ScrF1c00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 1}, "name": {"value": "Effect: Screech Shooter (Greater)"}, "target": {"connection": "B322ScrEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 100}},
+      {"id": "B322ScrF2c00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 2}, "name": {"value": "Effect: Screech Shooter (Greater)"}, "target": {"connection": "B322ScrEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B322ScrF3c00001X", "type": "create-condition", "state": "fixed", "outs": {"out": {"connection": "B322ScrFle00001X:ins:in"}}, "inputs": {"condition": {"value": "frightened"}, "value": {"value": 3}, "name": {"value": "Effect: Screech Shooter (Greater)"}, "target": {"connection": "B322ScrEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -100}},
+      {"id": "B322ScrFle00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "fleeing"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Screech Shooter (Greater)"}, "target": {"connection": "B322ScrEvt00001X:outputs:target"}}, "position": {"x": 1280, "y": -100}}
+    ]
+  },
+  {
+    "id": "B322MgbTrg00001X",
+    "name": "Magnetic Bola — Clumsy",
+    "folder": "Equipment",
+    "description": "Apply clumsy 1 on a successful Magnetic Bola overcharge Reflex save failure and clumsy 2 on a critical failure; metal qualification, Speed penalty, and damage remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "magnetic-bola"],
+    "variables": {"B322MgbEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B322MgbEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B322MgbEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B322MgbEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B322MgbMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B322MgbMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:magnetic-bola"}, "list": {"connection": "B322MgbEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B322MgbSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B322MgbSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B322MgbEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B322MgbClu00001X:ins:in"}, "criticalFailure": {"connection": "B322MgbClu00002X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B322MgbClu00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "clumsy"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Magnetic Bola"}, "target": {"connection": "B322MgbEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B322MgbClu00002X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "clumsy"}, "value": {"value": 2}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Magnetic Bola"}, "target": {"connection": "B322MgbEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  }
+]

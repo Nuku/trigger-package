@@ -1,0 +1,78 @@
+[
+  {
+    "id": "B12EmoPushTrg001",
+    "name": "Emotional Push",
+    "folder": "Feats & Features",
+    "description": "When Emotional Push is used after an enemy fails a save against an emotion spell, apply off-guard to that enemy until the end of the user's next turn. The reaction timing and next-attack restriction remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "emotional-push"],
+    "variables": {
+      "B12EmoPushEvt001:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "B12EmoPushEvt001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B12EmoPushEvt001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B12EmoPushEvt001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B12EmoPushMch001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B12EmoPushMch001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:emotional-push"}, "list": {"connection": "B12EmoPushEvt001:outputs:options"}}, "outs": {"true": {"connection": "B12EmoPushSpl001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B12EmoPushSpl001", "type": "split-outcome", "inputs": {"input": {"connection": "B12EmoPushEvt001:outputs:outcome"}}, "outs": {"failure": {"connection": "B12EmoPushOff001:ins:in"}, "criticalFailure": {"connection": "B12EmoPushOff001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B12EmoPushOff001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "name": {"value": "Effect: Emotional Push"}, "target": {"connection": "B12EmoPushEvt001:outputs:roller"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B12SilTrg0000001",
+    "name": "Silence the Profane",
+    "folder": "Feats & Features",
+    "description": "After a successful Silence the Profane Strike, apply off-guard to the spellcaster until the end of the user's next turn. The reaction trigger, favored-weapon requirement, and spell disruption remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "silence-the-profane"],
+    "variables": {
+      "B12SilEvt0000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B12SilEvt0000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B12SilEvt0000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B12SilEvt0000001", "type": "attack-roll-event", "outs": {"out": {"connection": "B12SilMch0000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B12SilMch0000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:silence-the-profane"}, "list": {"connection": "B12SilEvt0000001:outputs:options"}}, "outs": {"true": {"connection": "B12SilSpl0000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B12SilSpl0000001", "type": "split-outcome", "inputs": {"input": {"connection": "B12SilEvt0000001:outputs:outcome"}}, "outs": {"success": {"connection": "B12SilOff0000001:ins:in"}, "criticalSuccess": {"connection": "B12SilOff0000001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B12SilOff0000001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "name": {"value": "Effect: Silence the Profane"}, "target": {"connection": "B12SilEvt0000001:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B12DlyTrg0000001",
+    "name": "Delay Trap",
+    "folder": "Feats & Features",
+    "description": "On a critical failure of the Delay Trap Thievery check, apply off-guard to the user until the start of the user's next turn. The trap trigger, reaction timing, and successful delay outcomes remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "delay-trap"],
+    "variables": {
+      "B12DlyEvt0000001:outputs:roller": {"type": "target", "isArray": false, "label": "User"},
+      "B12DlyEvt0000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B12DlyEvt0000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B12DlyEvt0000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "skill-check"}}, "outs": {"out": {"connection": "B12DlyMch0000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B12DlyMch0000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:delay-trap"}, "list": {"connection": "B12DlyEvt0000001:outputs:options"}}, "outs": {"true": {"connection": "B12DlySpl0000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B12DlySpl0000001", "type": "split-outcome", "inputs": {"input": {"connection": "B12DlyEvt0000001:outputs:outcome"}}, "outs": {"criticalFailure": {"connection": "B12DlyOff0000001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B12DlyOff0000001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "name": {"value": "Effect: Delay Trap"}, "target": {"connection": "B12DlyEvt0000001:outputs:roller"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B12BndTrg0000001",
+    "name": "Bound in Ice",
+    "folder": "Feats & Features",
+    "description": "When Bound in Ice's qualifying Fortitude save fails, apply stunned 1 to the creature entering the user's space. The discorporation state, once-per-round frequency, movement trigger, and cold damage remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "bound-in-ice"],
+    "variables": {
+      "B12BndEvt0000001:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "B12BndEvt0000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B12BndEvt0000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B12BndEvt0000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B12BndMch0000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B12BndMch0000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:bound-in-ice"}, "list": {"connection": "B12BndEvt0000001:outputs:options"}}, "outs": {"true": {"connection": "B12BndSpl0000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B12BndSpl0000001", "type": "split-outcome", "inputs": {"input": {"connection": "B12BndEvt0000001:outputs:outcome"}}, "outs": {"failure": {"connection": "B12BndStn0000001:ins:in"}, "criticalFailure": {"connection": "B12BndStn0000001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B12BndStn0000001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "value": {"value": 1}, "duration": {"value": 1}, "name": {"value": "Effect: Bound in Ice"}, "target": {"connection": "B12BndEvt0000001:outputs:roller"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

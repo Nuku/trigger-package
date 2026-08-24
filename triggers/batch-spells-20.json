@@ -1,0 +1,87 @@
+[
+  {
+    "id": "B20FearTrg000001",
+    "name": "Fear",
+    "folder": "Spells",
+    "description": "On a Fear Will save, apply frightened 1 on a success, frightened 2 on a failure, or frightened 3 and fleeing for 1 round on a critical failure; area targeting, immunity, and the spell's mental effect remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "fear"],
+    "variables": {
+      "B20FearEvt000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B20FearEvt000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B20FearEvt000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B20FearEvt000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B20FearMch000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B20FearMch000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:fear"}, "list": {"connection": "B20FearEvt000001:outputs:options"}}, "outs": {"true": {"connection": "B20FearSpl000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B20FearSpl000001", "type": "split-outcome", "inputs": {"input": {"connection": "B20FearEvt000001:outputs:outcome"}}, "outs": {"success": {"connection": "B20FearFrt000001:ins:in"}, "failure": {"connection": "B20FearFrt000002:ins:in"}, "criticalFailure": {"connection": "B20FearFrt000003:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B20FearFrt000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Fear"}, "target": {"connection": "B20FearEvt000001:outputs:target"}}, "position": {"x": 960, "y": 120}},
+      {"id": "B20FearFrt000002", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 2}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Fear"}, "target": {"connection": "B20FearEvt000001:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B20FearFrt000003", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 3}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Fear"}, "target": {"connection": "B20FearEvt000001:outputs:target"}}, "outs": {"out": {"connection": "B20FearFle000001:ins:in"}}, "position": {"x": 960, "y": -120}},
+      {"id": "B20FearFle000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "fleeing"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Fear"}, "target": {"connection": "B20FearEvt000001:outputs:target"}}, "position": {"x": 1280, "y": -120}}
+    ]
+  },
+  {
+    "id": "B20ParaTrg000001",
+    "name": "Paralyze",
+    "folder": "Spells",
+    "description": "On a Paralyze Fortitude save, apply stunned 1 on a success, paralyzed for 1 round on a failure, or paralyzed for 4 rounds on a critical failure; incapacitation, targeting, and counteracting remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "paralyze"],
+    "variables": {
+      "B20ParaEvt000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B20ParaEvt000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B20ParaEvt000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B20ParaEvt000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B20ParaMch000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B20ParaMch000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:paralyze"}, "list": {"connection": "B20ParaEvt000001:outputs:options"}}, "outs": {"true": {"connection": "B20ParaSpl000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B20ParaSpl000001", "type": "split-outcome", "inputs": {"input": {"connection": "B20ParaEvt000001:outputs:outcome"}}, "outs": {"success": {"connection": "B20ParaStn000001:ins:in"}, "failure": {"connection": "B20ParaPar000001:ins:in"}, "criticalFailure": {"connection": "B20ParaPar000002:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B20ParaStn000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "stunned"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Paralyze"}, "target": {"connection": "B20ParaEvt000001:outputs:target"}}, "position": {"x": 960, "y": 120}},
+      {"id": "B20ParaPar000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "paralyzed"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Paralyze"}, "target": {"connection": "B20ParaEvt000001:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B20ParaPar000002", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "paralyzed"}, "duration": {"value": 4}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Paralyze"}, "target": {"connection": "B20ParaEvt000001:outputs:target"}}, "position": {"x": 960, "y": -120}}
+    ]
+  },
+  {
+    "id": "B20BefuTrg000001",
+    "name": "Befuddle",
+    "folder": "Spells",
+    "description": "On a Befuddle Will save, apply stupefied 1 for 1 round on a success, stupefied 2 for 1 minute on a failure, or stupefied 3 for 1 minute on a critical failure; mental damage and immunity remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "befuddle"],
+    "variables": {
+      "B20BefuEvt000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B20BefuEvt000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B20BefuEvt000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B20BefuEvt000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B20BefuMch000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B20BefuMch000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:befuddle"}, "list": {"connection": "B20BefuEvt000001:outputs:options"}}, "outs": {"true": {"connection": "B20BefuSpl000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B20BefuSpl000001", "type": "split-outcome", "inputs": {"input": {"connection": "B20BefuEvt000001:outputs:outcome"}}, "outs": {"success": {"connection": "B20BefuStu000001:ins:in"}, "failure": {"connection": "B20BefuStu000002:ins:in"}, "criticalFailure": {"connection": "B20BefuStu000003:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B20BefuStu000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "stupefied"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Befuddle"}, "target": {"connection": "B20BefuEvt000001:outputs:target"}}, "position": {"x": 960, "y": 120}},
+      {"id": "B20BefuStu000002", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "stupefied"}, "value": {"value": 2}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Befuddle"}, "target": {"connection": "B20BefuEvt000001:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B20BefuStu000003", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "stupefied"}, "value": {"value": 3}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Befuddle"}, "target": {"connection": "B20BefuEvt000001:outputs:target"}}, "position": {"x": 960, "y": -120}}
+    ]
+  },
+  {
+    "id": "B20BlinTrg000001",
+    "name": "Blindness",
+    "folder": "Spells",
+    "description": "On a Blindness Fortitude save, apply dazzled until the next turn on a success, blinded for 1 minute on a failure, or blinded permanently on a critical failure; temporary immunity and targeting remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "blindness"],
+    "variables": {
+      "B20BlinEvt000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B20BlinEvt000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B20BlinEvt000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B20BlinEvt000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B20BlinMch000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B20BlinMch000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:blindness"}, "list": {"connection": "B20BlinEvt000001:outputs:options"}}, "outs": {"true": {"connection": "B20BlinSpl000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B20BlinSpl000001", "type": "split-outcome", "inputs": {"input": {"connection": "B20BlinEvt000001:outputs:outcome"}}, "outs": {"success": {"connection": "B20BlinDaz000001:ins:in"}, "failure": {"connection": "B20BlinBli000001:ins:in"}, "criticalFailure": {"connection": "B20BlinBli000002:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B20BlinDaz000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Blindness"}, "target": {"connection": "B20BlinEvt000001:outputs:target"}}, "position": {"x": 960, "y": 120}},
+      {"id": "B20BlinBli000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "blinded"}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Blindness"}, "target": {"connection": "B20BlinEvt000001:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B20BlinBli000002", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "blinded"}, "name": {"value": "Effect: Blindness (manual permanent duration)"}, "target": {"connection": "B20BlinEvt000001:outputs:target"}}, "position": {"x": 960, "y": -120}}
+    ]
+  }
+]

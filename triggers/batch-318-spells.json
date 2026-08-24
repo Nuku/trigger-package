@@ -1,0 +1,51 @@
+[
+  {
+    "id": "B318CrgTrg00001X",
+    "name": "Crushing Ground — Off-Guard and Immobilized",
+    "folder": "Spells",
+    "description": "Apply off-guard on a failed or critically failed Crushing Ground Reflex save and immobilized on a critical failure; Speed penalty, Escape, and end-of-spell damage remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "crushing-ground"],
+    "variables": {"B318CrgEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B318CrgEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B318CrgEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B318CrgEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B318CrgMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B318CrgMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:crushing-ground"}, "list": {"connection": "B318CrgEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B318CrgSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B318CrgSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B318CrgEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B318CrgOfg00001X:ins:in"}, "criticalFailure": {"connection": "B318CrgOfg00002X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B318CrgOfg00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "off-guard"}, "name": {"value": "Effect: Crushing Ground"}, "target": {"connection": "B318CrgEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B318CrgOfg00002X", "type": "create-condition", "state": "fixed", "outs": {"out": {"connection": "B318CrgImm00001X:ins:in"}}, "inputs": {"condition": {"value": "off-guard"}, "name": {"value": "Effect: Crushing Ground"}, "target": {"connection": "B318CrgEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}},
+      {"id": "B318CrgImm00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "immobilized"}, "name": {"value": "Effect: Crushing Ground"}, "target": {"connection": "B318CrgEvt00001X:outputs:target"}}, "position": {"x": 1280, "y": -80}}
+    ]
+  },
+  {
+    "id": "B318MtgTrg00001X",
+    "name": "Mantis's Grasp — Immobilized",
+    "folder": "Spells",
+    "description": "Apply immobilized for 1 round on a failed Mantis's Grasp Reflex save and 1 minute on a critical failure; Escape and heightened targeting remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "mantiss-grasp"],
+    "variables": {"B318MtgEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B318MtgEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B318MtgEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B318MtgEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B318MtgMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B318MtgMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:mantiss-grasp"}, "list": {"connection": "B318MtgEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B318MtgSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B318MtgSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B318MtgEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B318MtgImm00001X:ins:in"}, "criticalFailure": {"connection": "B318MtgImm00002X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B318MtgImm00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "immobilized"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Mantis's Grasp"}, "target": {"connection": "B318MtgEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B318MtgImm00002X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "immobilized"}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Mantis's Grasp"}, "target": {"connection": "B318MtgEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "B318ZenTrg00001X",
+    "name": "Zenith Star — Dazzled and Blinded",
+    "folder": "Spells",
+    "description": "Apply dazzled on a Zenith Star success/failure and blinded on a critical failure; tracking, night-sky requirements, and heightened duration remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "zenith-star"],
+    "variables": {"B318ZenEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B318ZenEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B318ZenEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B318ZenEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B318ZenMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B318ZenMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:zenith-star"}, "list": {"connection": "B318ZenEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B318ZenSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B318ZenSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B318ZenEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B318ZenDaz00001X:ins:in"}, "failure": {"connection": "B318ZenDaz00001X:ins:in"}, "criticalFailure": {"connection": "B318ZenBli00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B318ZenDaz00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Zenith Star"}, "target": {"connection": "B318ZenEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B318ZenBli00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "blinded"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Zenith Star"}, "target": {"connection": "B318ZenEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  }
+]

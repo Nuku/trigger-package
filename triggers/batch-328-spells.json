@@ -1,0 +1,48 @@
+[
+  {
+    "id": "B328RpsTrg00001X",
+    "name": "Rip the Spirit — Drained",
+    "folder": "Spells",
+    "description": "Apply drained 1 on a failed or critically failed Rip the Spirit Fortitude save; void damage, action-count variants, living-target restriction, and heightened scaling remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "rip-the-spirit"],
+    "variables": {"B328RpsEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B328RpsEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B328RpsEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B328RpsEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B328RpsMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B328RpsMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:rip-the-spirit"}, "list": {"connection": "B328RpsEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B328RpsSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B328RpsSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B328RpsEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B328RpsDrn00001X:ins:in"}, "criticalFailure": {"connection": "B328RpsDrn00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B328RpsDrn00001X", "type": "increase-condition", "state": "fixed", "inputs": {"condition": {"value": "drained"}, "max": {"value": 4}, "value": {"value": 1}, "name": {"value": "Effect: Rip the Spirit"}, "target": {"connection": "B328RpsEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B328RabTrg00001X",
+    "name": "Radiant Beam — Dazzled",
+    "folder": "Spells",
+    "description": "Apply dazzled for 1 round on a failed Radiant Beam save and 4 rounds on a critical failure; spirit damage, magical-darkness counteract, and heightened scaling remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "radiant-beam"],
+    "variables": {"B328RabEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B328RabEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B328RabEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B328RabEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B328RabMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B328RabMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:radiant-beam"}, "list": {"connection": "B328RabEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B328RabSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B328RabSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B328RabEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B328RabDaz00001X:ins:in"}, "criticalFailure": {"connection": "B328RabDaz00002X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B328RabDaz00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Radiant Beam"}, "target": {"connection": "B328RabEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B328RabDaz00002X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 4}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Radiant Beam"}, "target": {"connection": "B328RabEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "B328CamTrg00001X",
+    "name": "Carrion Mire — Prone",
+    "folder": "Spells",
+    "description": "Apply prone on a failed or critically failed Carrion Mire Reflex save; area placement, recurring saves, healing counteract, and spell duration remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "carrion-mire"],
+    "variables": {"B328CamEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B328CamEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B328CamEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B328CamEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B328CamMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B328CamMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:carrion-mire"}, "list": {"connection": "B328CamEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B328CamSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B328CamSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B328CamEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B328CamPrn00001X:ins:in"}, "criticalFailure": {"connection": "B328CamPrn00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B328CamPrn00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "prone"}, "name": {"value": "Effect: Carrion Mire"}, "target": {"connection": "B328CamEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

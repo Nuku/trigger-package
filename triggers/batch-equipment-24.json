@@ -1,0 +1,485 @@
+[
+  {
+    "id": "A24AnatTrg00001X",
+    "name": "Anathema Fulu",
+    "folder": "Equipment",
+    "description": "On an Anathema Fulu Fortitude-save failure, apply sickened 2 until the start of the target's next turn; trait selection, four-piece placement, banishment interaction, and temporary immunity remain manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "equipment",
+      "anathema-fulu"
+    ],
+    "variables": {
+      "A24AnatEvt00001X:outputs:roller": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "A24AnatEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "A24AnatEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "A24AnatEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "A24AnatMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "A24AnatMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:anathema-fulu"
+          },
+          "list": {
+            "connection": "A24AnatEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "A24AnatSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "A24AnatSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "A24AnatEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "failure": {
+            "connection": "A24AnatSck00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "A24AnatSck00001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "sickened"
+          },
+          "value": {
+            "value": 2
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "rounds"
+          },
+          "expiry": {
+            "value": "turn-start"
+          },
+          "name": {
+            "value": "Effect: Anathema Fulu"
+          },
+          "target": {
+            "connection": "A24AnatEvt00001X:outputs:roller"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      }
+    ]
+  },
+  {
+    "id": "A24BlndTrg00001X",
+    "name": "Blindpepper Tube",
+    "folder": "Equipment",
+    "description": "On a Blindpepper Tube Reflex-save failure, apply blinded for 1 round and dazzled for 1 round; on a critical failure, also apply sickened 1 and remind the user that dazzled lasts until sickened ends. Loading, adjacent targeting, and action timing remain manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "equipment",
+      "blindpepper-tube"
+    ],
+    "variables": {
+      "A24BlndEvt00001X:outputs:roller": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "A24BlndEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "A24BlndEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "A24BlndEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "A24BlndMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "A24BlndMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:blindpepper-tube"
+          },
+          "list": {
+            "connection": "A24BlndEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "A24BlndSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "A24BlndSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "A24BlndEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "failure": {
+            "connection": "A24BlndBld00001X:ins:in"
+          },
+          "criticalFailure": {
+            "connection": "A24BlndBld00002X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "A24BlndBld00001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "blinded"
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "rounds"
+          },
+          "name": {
+            "value": "Effect: Blindpepper Tube"
+          },
+          "target": {
+            "connection": "A24BlndEvt00001X:outputs:roller"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "A24BlndDaz00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": -120
+        }
+      },
+      {
+        "id": "A24BlndBld00002X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "blinded"
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "rounds"
+          },
+          "name": {
+            "value": "Effect: Blindpepper Tube"
+          },
+          "target": {
+            "connection": "A24BlndEvt00001X:outputs:roller"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "A24BlndSck00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 120
+        }
+      },
+      {
+        "id": "A24BlndDaz00001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "dazzled"
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "rounds"
+          },
+          "name": {
+            "value": "Effect: Blindpepper Tube"
+          },
+          "target": {
+            "connection": "A24BlndEvt00001X:outputs:roller"
+          }
+        },
+        "position": {
+          "x": 1280,
+          "y": -120
+        }
+      },
+      {
+        "id": "A24BlndSck00001X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "sickened"
+          },
+          "value": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Blindpepper Tube"
+          },
+          "target": {
+            "connection": "A24BlndEvt00001X:outputs:roller"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "A24BlndMsg00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 1280,
+          "y": 120
+        }
+      },
+      {
+        "id": "A24BlndMsg00001X",
+        "type": "create-message",
+        "inputs": {
+          "plain": {
+            "value": "Blindpepper Tube critical failure: keep dazzled until the sickened condition is removed; cleanup remains manual."
+          },
+          "speaker": {
+            "connection": "A24BlndEvt00001X:outputs:roller"
+          }
+        },
+        "position": {
+          "x": 1600,
+          "y": 120
+        }
+      }
+    ]
+  },
+  {
+    "id": "A24DazeTrg00001X",
+    "name": "Dazing Coil",
+    "folder": "Equipment",
+    "description": "After a Dazing Coil Will-save failure, apply stunned 1; on a critical failure, apply stunned 2. Affixing, the damage-to-flat-footed trigger, and activation remain manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "equipment",
+      "dazing-coil"
+    ],
+    "variables": {
+      "A24DazeEvt00001X:outputs:roller": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "A24DazeEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "A24DazeEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "A24DazeEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "A24DazeMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "A24DazeMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:dazing-coil"
+          },
+          "list": {
+            "connection": "A24DazeEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "A24DazeSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "A24DazeSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "A24DazeEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "failure": {
+            "connection": "A24DazeStu00001X:ins:in"
+          },
+          "criticalFailure": {
+            "connection": "A24DazeStu00002X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "A24DazeStu00001X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "stunned"
+          },
+          "value": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Dazing Coil"
+          },
+          "target": {
+            "connection": "A24DazeEvt00001X:outputs:roller"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 100
+        }
+      },
+      {
+        "id": "A24DazeStu00002X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "stunned"
+          },
+          "value": {
+            "value": 2
+          },
+          "name": {
+            "value": "Effect: Dazing Coil"
+          },
+          "target": {
+            "connection": "A24DazeEvt00001X:outputs:roller"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": -100
+        }
+      }
+    ]
+  }
+]

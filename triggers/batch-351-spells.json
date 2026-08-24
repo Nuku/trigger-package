@@ -1,0 +1,494 @@
+[
+  {
+    "id": "B351HeiTrg00001X",
+    "name": "Heinous Future — Slowed",
+    "folder": "Spells",
+    "description": "Apply slowed 1 for 1 round on a successful Heinous Future save; long-rest durations and recovery remain native/manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "spell",
+      "heinous-future"
+    ],
+    "variables": {
+      "B351HeiEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B351HeiEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B351HeiEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B351HeiEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B351HeiMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B351HeiMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:heinous-future"
+          },
+          "list": {
+            "connection": "B351HeiEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B351HeiSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B351HeiSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B351HeiEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "success": {
+            "connection": "B351HeiSlo00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B351HeiSlo00001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "slowed"
+          },
+          "value": {
+            "value": 1
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "rounds"
+          },
+          "name": {
+            "value": "Effect: Heinous Future"
+          },
+          "target": {
+            "connection": "B351HeiEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 80
+        }
+      }
+    ]
+  },
+  {
+    "id": "B351HypTrg00001X",
+    "name": "Hypnopompic Terrors — Frightened",
+    "folder": "Spells",
+    "description": "Apply frightened 2 on a success/failure/critical failure Hypnopompic Terrors save; sleep adjustment, paralysis, and mental damage remain native/manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "spell",
+      "hypnopompic-terrors"
+    ],
+    "variables": {
+      "B351HypEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B351HypEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B351HypEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B351HypEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B351HypMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B351HypMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:hypnopompic-terrors"
+          },
+          "list": {
+            "connection": "B351HypEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B351HypSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B351HypSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B351HypEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "success": {
+            "connection": "B351HypFht00001X:ins:in"
+          },
+          "failure": {
+            "connection": "B351HypFht00001X:ins:in"
+          },
+          "criticalFailure": {
+            "connection": "B351HypFht00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B351HypFht00001X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "frightened"
+          },
+          "value": {
+            "value": 2
+          },
+          "name": {
+            "value": "Effect: Hypnopompic Terrors"
+          },
+          "target": {
+            "connection": "B351HypEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 120
+        }
+      }
+    ]
+  },
+  {
+    "id": "B351GleTrg00001X",
+    "name": "Gleaming Pet — Dazzled/Blinded",
+    "folder": "Spells",
+    "description": "Apply dazzled on a failed Gleaming Pet Fortitude save and blinded on a critical failure; adjacent-turn timing, immunity, and aura targeting remain native/manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "spell",
+      "gleaming-pet"
+    ],
+    "variables": {
+      "B351GleEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B351GleEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B351GleEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B351GleEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B351GleMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B351GleMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:gleaming-pet"
+          },
+          "list": {
+            "connection": "B351GleEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B351GleSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B351GleSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B351GleEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "failure": {
+            "connection": "B351GleDaz00001X:ins:in"
+          },
+          "criticalFailure": {
+            "connection": "B351GleBli00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B351GleDaz00001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "dazzled"
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "rounds"
+          },
+          "name": {
+            "value": "Effect: Gleaming Pet"
+          },
+          "target": {
+            "connection": "B351GleEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 80
+        }
+      },
+      {
+        "id": "B351GleBli00001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "blinded"
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "rounds"
+          },
+          "name": {
+            "value": "Effect: Gleaming Pet"
+          },
+          "target": {
+            "connection": "B351GleEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": -80
+        }
+      }
+    ]
+  },
+  {
+    "id": "B351GraTrg00001X",
+    "name": "Grasp of the Deep — Grabbed",
+    "folder": "Spells",
+    "description": "Apply grabbed on a failed or critically failed Grasp of the Deep Will save; Escape, damage, and heightened multi-target handling remain native/manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "spell",
+      "grasp-of-the-deep"
+    ],
+    "variables": {
+      "B351GraEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B351GraEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B351GraEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B351GraEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B351GraMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B351GraMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:grasp-of-the-deep"
+          },
+          "list": {
+            "connection": "B351GraEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B351GraSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B351GraSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B351GraEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "failure": {
+            "connection": "B351GraGrb00001X:ins:in"
+          },
+          "criticalFailure": {
+            "connection": "B351GraGrb00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B351GraGrb00001X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "grabbed"
+          },
+          "name": {
+            "value": "Effect: Grasp of the Deep"
+          },
+          "target": {
+            "connection": "B351GraEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      }
+    ]
+  }
+]

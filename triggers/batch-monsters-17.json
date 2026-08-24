@@ -1,0 +1,79 @@
+[
+  {
+    "id": "M17A000000000001",
+    "name": "Swarming Bites",
+    "folder": "Monster Abilities",
+    "description": "Apply clumsy 1 for 1 round on a failed or critically failed Swarming Bites Fortitude save; swarm positioning, damage, and the concentrate/manipulate flat check remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "swarming-bites"],
+    "variables": {
+      "M17A000000000002:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "M17A000000000002:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M17A000000000002:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M17A000000000002", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M17A000000000003:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M17A000000000003", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:swarming-bites"}, "list": {"connection": "M17A000000000002:outputs:options"}}, "outs": {"true": {"connection": "M17A000000000004:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M17A000000000004", "type": "split-outcome", "inputs": {"input": {"connection": "M17A000000000002:outputs:outcome"}}, "outs": {"failure": {"connection": "M17A000000000005:ins:in"}, "criticalFailure": {"connection": "M17A000000000005:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M17A000000000005", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "clumsy"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "expiry": {"value": "turn-end"}, "name": {"value": "Effect: Swarming Bites"}, "target": {"connection": "M17A000000000002:outputs:roller"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "M17B000000000001",
+    "name": "Twist the Hook",
+    "folder": "Monster Abilities",
+    "description": "Apply prone and 2d6 persistent bleed after a successful or critically successful Twist the Hook Strike; the preceding gaff Strike, target selection, and recovery remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "twist-the-hook"],
+    "variables": {
+      "M17B000000000002:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M17B000000000002:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M17B000000000002:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M17B000000000002", "type": "attack-roll-event", "outs": {"out": {"connection": "M17B000000000003:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M17B000000000003", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:twist-the-hook"}, "list": {"connection": "M17B000000000002:outputs:options"}}, "outs": {"true": {"connection": "M17B000000000004:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M17B000000000004", "type": "split-outcome", "inputs": {"input": {"connection": "M17B000000000002:outputs:outcome"}}, "outs": {"success": {"connection": "M17B000000000005:ins:in"}, "criticalSuccess": {"connection": "M17B000000000005:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M17B000000000005", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "prone"}, "name": {"value": "Effect: Twist the Hook"}, "target": {"connection": "M17B000000000002:outputs:target"}}, "outs": {"out": {"connection": "M17B000000000006:ins:in"}}, "position": {"x": 960, "y": 0}},
+      {"id": "M17B000000000006", "type": "create-persistent", "inputs": {"die": {"value": "2d6"}, "target": {"connection": "M17B000000000002:outputs:target"}, "type": {"value": "bleed"}}, "position": {"x": 1280, "y": 0}}
+    ]
+  },
+  {
+    "id": "M17C000000000001",
+    "name": "Wrathful Misfortune",
+    "folder": "Monster Abilities",
+    "description": "Apply clumsy 2 for 1 minute on a failed or critically failed Wrathful Misfortune Will save; the triggering damage, curse duration, and misfortune effect remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "wrathful-misfortune"],
+    "variables": {
+      "M17C000000000002:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "M17C000000000002:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M17C000000000002:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M17C000000000002", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M17C000000000003:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M17C000000000003", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:wrathful-misfortune"}, "list": {"connection": "M17C000000000002:outputs:options"}}, "outs": {"true": {"connection": "M17C000000000004:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M17C000000000004", "type": "split-outcome", "inputs": {"input": {"connection": "M17C000000000002:outputs:outcome"}}, "outs": {"failure": {"connection": "M17C000000000005:ins:in"}, "criticalFailure": {"connection": "M17C000000000005:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M17C000000000005", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "clumsy"}, "value": {"value": 2}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "expiry": {"value": "turn-end"}, "name": {"value": "Effect: Wrathful Misfortune"}, "target": {"connection": "M17C000000000002:outputs:roller"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "M17D000000000001",
+    "name": "Shove into Stone",
+    "folder": "Monster Abilities",
+    "description": "Apply immobilized on a failed or critically failed Shove into Stone Reflex save; the successful Shove prerequisite, barrier merging, meld-into-stone effect, and Escape cleanup remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "shove-into-stone"],
+    "variables": {
+      "M17D000000000002:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "M17D000000000002:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M17D000000000002:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M17D000000000002", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M17D000000000003:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M17D000000000003", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:shove-into-stone"}, "list": {"connection": "M17D000000000002:outputs:options"}}, "outs": {"true": {"connection": "M17D000000000004:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M17D000000000004", "type": "split-outcome", "inputs": {"input": {"connection": "M17D000000000002:outputs:outcome"}}, "outs": {"failure": {"connection": "M17D000000000005:ins:in"}, "criticalFailure": {"connection": "M17D000000000005:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M17D000000000005", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "immobilized"}, "name": {"value": "Effect: Shove into Stone"}, "target": {"connection": "M17D000000000002:outputs:roller"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

@@ -1,0 +1,80 @@
+[
+  {
+    "id": "B28DtwTrg000001X",
+    "name": "Disarming Twist",
+    "folder": "Feats & Features",
+    "description": "After a qualifying Disarming Twist Strike fails, apply off-guard to the target until the end of the current turn. The one-handed weapon requirement, attack, and successful Disarm effects remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "disarming-twist"],
+    "variables": {
+      "B28DtwEvt000001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B28DtwEvt000001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B28DtwEvt000001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B28DtwEvt000001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B28DtwMch000001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B28DtwMch000001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:disarming-twist"}, "list": {"connection": "B28DtwEvt000001X:outputs:options"}}, "outs": {"true": {"connection": "B28DtwSpl000001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B28DtwSpl000001X", "type": "split-outcome", "inputs": {"input": {"connection": "B28DtwEvt000001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B28DtwOff000001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B28DtwOff000001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "expiry": {"value": "turn-end"}, "name": {"value": "Effect: Disarming Twist"}, "target": {"connection": "B28DtwEvt000001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B28DtyTrg000001X",
+    "name": "Dirty Trick",
+    "folder": "Feats & Features",
+    "description": "After a qualifying Dirty Trick check, apply clumsy 1 for 1 round on a success, clumsy 1 on a critical success, or prone on a critical failure. The hand-free requirement, Reflex DC, Interact cleanup, and manual action handling remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "dirty-trick"],
+    "variables": {
+      "B28DtyEvt000001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B28DtyEvt000001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B28DtyEvt000001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B28DtyEvt000001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "skill-check"}}, "outs": {"out": {"connection": "B28DtyMch000001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B28DtyMch000001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:dirty-trick"}, "list": {"connection": "B28DtyEvt000001X:outputs:options"}}, "outs": {"true": {"connection": "B28DtySpl000001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B28DtySpl000001X", "type": "split-outcome", "inputs": {"input": {"connection": "B28DtyEvt000001X:outputs:outcome"}}, "outs": {"success": {"connection": "B28DtyClm000001X:ins:in"}, "criticalSuccess": {"connection": "B28DtyClm000002X:ins:in"}, "criticalFailure": {"connection": "B28DtyPrn000001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B28DtyClm000001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "clumsy"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "expiry": {"value": "turn-end"}, "name": {"value": "Effect: Dirty Trick"}, "target": {"connection": "B28DtyEvt000001X:outputs:target"}}, "position": {"x": 960, "y": 60}},
+      {"id": "B28DtyClm000002X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "clumsy"}, "value": {"value": 1}, "name": {"value": "Effect: Dirty Trick"}, "target": {"connection": "B28DtyEvt000001X:outputs:target"}}, "position": {"x": 960, "y": -60}},
+      {"id": "B28DtyPrn000001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "prone"}, "name": {"value": "Effect: Dirty Trick"}, "target": {"connection": "B28DtyEvt000001X:outputs:target"}}, "position": {"x": 1280, "y": 0}}
+    ]
+  },
+  {
+    "id": "B28FsfTrg000001X",
+    "name": "First to Strike, First to Fall",
+    "folder": "Feats & Features",
+    "description": "After a qualifying First to Strike, First to Fall Strike succeeds, apply off-guard to a creature that has not acted in the first round until the end of the attacker's next turn. The first-round timing, target activity check, and quickened follow-up remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "first-to-strike-first-to-fall"],
+    "variables": {
+      "B28FsfEvt000001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B28FsfEvt000001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B28FsfEvt000001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B28FsfEvt000001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B28FsfMch000001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B28FsfMch000001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:first-to-strike-first-to-fall"}, "list": {"connection": "B28FsfEvt000001X:outputs:options"}}, "outs": {"true": {"connection": "B28FsfSpl000001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B28FsfSpl000001X", "type": "split-outcome", "inputs": {"input": {"connection": "B28FsfEvt000001X:outputs:outcome"}}, "outs": {"success": {"connection": "B28FsfOff000001X:ins:in"}, "criticalSuccess": {"connection": "B28FsfOff000001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B28FsfOff000001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "expiry": {"value": "turn-end"}, "name": {"value": "Effect: First to Strike, First to Fall"}, "target": {"connection": "B28FsfEvt000001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B28OvrTrg000001X",
+    "name": "Overpowering Charge",
+    "folder": "Feats & Features",
+    "description": "After a qualifying Barreling Charge critically succeeds, apply off-guard to a creature moved through until the end of the next turn. The movement, Strength damage, space traversal, and feat qualification remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "overpowering-charge"],
+    "variables": {
+      "B28OvrEvt000001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B28OvrEvt000001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B28OvrEvt000001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B28OvrEvt000001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B28OvrMch000001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B28OvrMch000001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:barreling-charge"}, "list": {"connection": "B28OvrEvt000001X:outputs:options"}}, "outs": {"true": {"connection": "B28OvrSpl000001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B28OvrSpl000001X", "type": "split-outcome", "inputs": {"input": {"connection": "B28OvrEvt000001X:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "B28OvrOff000001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B28OvrOff000001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "expiry": {"value": "turn-end"}, "name": {"value": "Effect: Overpowering Charge"}, "target": {"connection": "B28OvrEvt000001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

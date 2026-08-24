@@ -1,0 +1,76 @@
+[
+  {
+    "id": "M13A001000000001",
+    "name": "Corrupting Gaze",
+    "folder": "Monster Abilities",
+    "description": "Apply stupefied 1 for 1 minute when a creature fails or critically fails the Will save against Corrupting Gaze; mental damage, range, and Belcorra-specific presentation remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "corrupting-gaze"],
+    "variables": {
+      "M13A002000000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M13A002000000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M13A002000000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M13A002000000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M13A003000000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M13A003000000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:corrupting-gaze"}, "list": {"connection": "M13A002000000001:outputs:options"}}, "outs": {"true": {"connection": "M13A004000000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M13A004000000001", "type": "split-outcome", "inputs": {"input": {"connection": "M13A002000000001:outputs:outcome"}}, "outs": {"failure": {"connection": "M13A005000000001:ins:in"}, "criticalFailure": {"connection": "M13A005000000001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M13A005000000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "stupefied"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "expiry": {"value": "turn-end"}, "name": {"value": "Effect: Corrupting Gaze"}, "target": {"connection": "M13A002000000001:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "M13B001000000001",
+    "name": "Death Throes",
+    "folder": "Monster Abilities",
+    "description": "Apply drained 1 on a failed or critically failed Fortitude save against Death Throes; the death trigger, void damage, emanation, and source-specific timing remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "death-throes"],
+    "variables": {
+      "M13B002000000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M13B002000000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M13B002000000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M13B002000000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M13B003000000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M13B003000000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:death-throes"}, "list": {"connection": "M13B002000000001:outputs:options"}}, "outs": {"true": {"connection": "M13B004000000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M13B004000000001", "type": "split-outcome", "inputs": {"input": {"connection": "M13B002000000001:outputs:outcome"}}, "outs": {"failure": {"connection": "M13B005000000001:ins:in"}, "criticalFailure": {"connection": "M13B005000000001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M13B005000000001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "drained"}, "value": {"value": 1}, "name": {"value": "Effect: Death Throes"}, "target": {"connection": "M13B002000000001:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "M13C001000000001",
+    "name": "Miasma",
+    "folder": "Monster Abilities",
+    "description": "Apply concealed after a creature is affected by Miasma; the continuing cloud, end-of-turn area check, poison damage, and source-specific concealment limitations remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "miasma"],
+    "variables": {
+      "M13C002000000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M13C002000000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "M13C002000000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M13C003000000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M13C003000000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:miasma"}, "list": {"connection": "M13C002000000001:outputs:options"}}, "outs": {"true": {"connection": "M13C004000000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M13C004000000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "concealed"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "expiry": {"value": "turn-end"}, "name": {"value": "Effect: Miasma"}, "target": {"connection": "M13C002000000001:outputs:target"}}, "position": {"x": 640, "y": 0}}
+    ]
+  },
+  {
+    "id": "M13D001000000001",
+    "name": "Spit Venom",
+    "folder": "Monster Abilities",
+    "description": "Apply sickened 1 on a failed or critically failed Reflex save against Spit Venom; poison damage, burst placement, range, recharge, and the jungle drake's activation remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "spit-venom"],
+    "variables": {
+      "M13D002000000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M13D002000000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M13D002000000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M13D002000000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M13D003000000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M13D003000000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:spit-venom"}, "list": {"connection": "M13D002000000001:outputs:options"}}, "outs": {"true": {"connection": "M13D004000000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M13D004000000001", "type": "split-outcome", "inputs": {"input": {"connection": "M13D002000000001:outputs:outcome"}}, "outs": {"failure": {"connection": "M13D005000000001:ins:in"}, "criticalFailure": {"connection": "M13D005000000001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M13D005000000001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 1}, "name": {"value": "Effect: Spit Venom"}, "target": {"connection": "M13D002000000001:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

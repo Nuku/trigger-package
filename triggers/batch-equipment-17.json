@@ -1,0 +1,308 @@
+[
+  {
+    "id": "Eq17BloomTrg0001",
+    "name": "Brightbloom Posy",
+    "folder": "Equipment",
+    "description": "After a qualifying Strike with pollen from a Brightbloom Posy, apply sickened 1 on a hit and sickened 2 on a critical hit; plant-spell activation, the next-Strike gate, recovery checks, and plant immunity remain manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "equipment",
+      "brightbloom-posy"
+    ],
+    "variables": {
+      "Eq17BloomEvt0001:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "Eq17BloomEvt0001:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "Eq17BloomEvt0001:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "Eq17BloomEvt0001",
+        "type": "attack-roll-event",
+        "outs": {
+          "out": {
+            "connection": "Eq17BloomMch0001:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "Eq17BloomMch0001",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:brightbloom-posy"
+          },
+          "list": {
+            "connection": "Eq17BloomEvt0001:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "Eq17BloomSpl0001:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "Eq17BloomSpl0001",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "Eq17BloomEvt0001:outputs:outcome"
+          }
+        },
+        "outs": {
+          "success": {
+            "connection": "Eq17BloomSck0001:ins:in"
+          },
+          "criticalSuccess": {
+            "connection": "Eq17BloomSck0002:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "Eq17BloomSck0001",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "sickened"
+          },
+          "value": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Brightbloom Posy"
+          },
+          "target": {
+            "connection": "Eq17BloomEvt0001:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 80
+        }
+      },
+      {
+        "id": "Eq17BloomSck0002",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "sickened"
+          },
+          "value": {
+            "value": 2
+          },
+          "name": {
+            "value": "Effect: Brightbloom Posy"
+          },
+          "target": {
+            "connection": "Eq17BloomEvt0001:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": -80
+        }
+      }
+    ]
+  },
+  {
+    "id": "Eq17CloakTrg0001",
+    "name": "Cloak of Illusions",
+    "folder": "Equipment",
+    "description": "When the Cloak of Illusions hood activation is used, apply invisible for 10 minutes; drawing the hood, dismissal, and the item's normal spell duration remain manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "equipment",
+      "cloak-of-illusions"
+    ],
+    "variables": {
+      "Eq17CloakEvt0001:outputs:targets": {
+        "type": "target",
+        "isArray": true,
+        "label": "User"
+      }
+    },
+    "nodes": [
+      {
+        "id": "Eq17CloakEvt0001",
+        "type": "action-chat-event",
+        "inputs": {
+          "slug": {
+            "value": "cloak-of-illusions"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "Eq17CloakInv0001:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "Eq17CloakInv0001",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "invisible"
+          },
+          "duration": {
+            "value": 10
+          },
+          "unit": {
+            "value": "minutes"
+          },
+          "name": {
+            "value": "Effect: Cloak of Illusions"
+          },
+          "target": {
+            "connection": "Eq17CloakEvt0001:outputs:targets"
+          }
+        },
+        "position": {
+          "x": 480,
+          "y": 0
+        }
+      }
+    ]
+  },
+  {
+    "id": "Eq17TemperTrg001",
+    "name": "Temperbrand",
+    "folder": "Equipment",
+    "description": "On a critical-failure Reflex save against Temperbrand's Molten Smash, apply prone; activation frequency, area, damage, wielder immunity, and accepted-wielder rules remain manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "equipment",
+      "temperbrand"
+    ],
+    "variables": {
+      "Eq17TemperEvt001:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "Eq17TemperEvt001:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "Eq17TemperEvt001:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "Eq17TemperEvt001",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "Eq17TemperMch001:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "Eq17TemperMch001",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:temperbrand"
+          },
+          "list": {
+            "connection": "Eq17TemperEvt001:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "Eq17TemperSpl001:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "Eq17TemperSpl001",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "Eq17TemperEvt001:outputs:outcome"
+          }
+        },
+        "outs": {
+          "criticalFailure": {
+            "connection": "Eq17TemperPrn001:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "Eq17TemperPrn001",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "prone"
+          },
+          "name": {
+            "value": "Effect: Temperbrand"
+          },
+          "target": {
+            "connection": "Eq17TemperEvt001:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      }
+    ]
+  }
+]

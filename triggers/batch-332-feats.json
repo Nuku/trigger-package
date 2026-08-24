@@ -1,0 +1,49 @@
+[
+  {
+    "id": "B332DykTrg00001X",
+    "name": "Do You Know Who I Am? — Frightened",
+    "folder": "Feats",
+    "description": "Apply frightened 2 on a successful Do You Know Who I Am? Intimidation check and frightened 3 on a critical success; mental damage, location bonuses, immunity, and adjacency recovery restriction remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "do-you-know-who-i-am"],
+    "variables": {"B332DykEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B332DykEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B332DykEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B332DykEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "skill-check"}}, "outs": {"out": {"connection": "B332DykMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B332DykMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:do-you-know-who-i-am"}, "list": {"connection": "B332DykEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B332DykSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B332DykSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B332DykEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B332DykFrt00001X:ins:in"}, "criticalSuccess": {"connection": "B332DykFrt00002X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B332DykFrt00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 2}, "name": {"value": "Effect: Do You Know Who I Am?"}, "target": {"connection": "B332DykEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B332DykFrt00002X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 3}, "name": {"value": "Effect: Do You Know Who I Am?"}, "target": {"connection": "B332DykEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "B332DntTrg00001X",
+    "name": "Dance of the Tiger — Frightened",
+    "folder": "Feats",
+    "description": "Apply frightened 1 on a successful Dance of the Tiger Performance check and frightened 2 on a critical success; shadow tether, distance cleanup, and temporary immunity remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "dance-of-the-tiger"],
+    "variables": {"B332DntEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B332DntEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B332DntEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B332DntEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "skill-check"}}, "outs": {"out": {"connection": "B332DntMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B332DntMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:dance-of-the-tiger"}, "list": {"connection": "B332DntEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B332DntSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B332DntSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B332DntEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B332DntFrt00001X:ins:in"}, "criticalSuccess": {"connection": "B332DntFrt00002X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B332DntFrt00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 1}, "name": {"value": "Effect: Dance of the Tiger"}, "target": {"connection": "B332DntEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B332DntFrt00002X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 2}, "name": {"value": "Effect: Dance of the Tiger"}, "target": {"connection": "B332DntEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "B332UnsTrg00001X",
+    "name": "Unseat — Prone",
+    "folder": "Feats",
+    "description": "Apply prone on a critically successful Unseat Athletics check; the preceding mounted Strike, forced movement, mount requirements, and landing space remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "unseat"],
+    "variables": {"B332UnsEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B332UnsEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B332UnsEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B332UnsEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "skill-check"}}, "outs": {"out": {"connection": "B332UnsMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B332UnsMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:unseat"}, "list": {"connection": "B332UnsEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B332UnsSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B332UnsSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B332UnsEvt00001X:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "B332UnsPrn00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B332UnsPrn00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "prone"}, "name": {"value": "Effect: Unseat"}, "target": {"connection": "B332UnsEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

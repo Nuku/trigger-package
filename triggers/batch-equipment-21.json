@@ -1,0 +1,78 @@
+[
+  {
+    "id": "B21AtrophyTrg01X",
+    "name": "Atrophy Bomb (Greater)",
+    "folder": "Equipment",
+    "description": "On a successful Atrophy Bomb (Greater) Strike, apply enfeebled 2 until the start of the user's next turn; splash damage, attack bonus, activation, and item targeting remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "atrophy-bomb-greater"],
+    "variables": {
+      "B21AtrophyEvt01X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B21AtrophyEvt01X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B21AtrophyEvt01X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B21AtrophyEvt01X", "type": "attack-roll-event", "outs": {"out": {"connection": "B21AtrophyMch01X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B21AtrophyMch01X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:atrophy-bomb-greater"}, "list": {"connection": "B21AtrophyEvt01X:outputs:options"}}, "outs": {"true": {"connection": "B21AtrophySpl01X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B21AtrophySpl01X", "type": "split-outcome", "inputs": {"input": {"connection": "B21AtrophyEvt01X:outputs:outcome"}}, "outs": {"success": {"connection": "B21AtrophyEnf01X:ins:in"}, "criticalSuccess": {"connection": "B21AtrophyEnf01X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B21AtrophyEnf01X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "enfeebled"}, "value": {"value": 2}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "expiry": {"value": "turn-start"}, "name": {"value": "Effect: Atrophy Bomb (Greater)"}, "target": {"connection": "B21AtrophyEvt01X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B21CorrosiveTrgX",
+    "name": "Corrosive",
+    "folder": "Equipment",
+    "description": "On a successful Corrosive weapon hit, roll the rune's 1d6 acid damage; the critical-hit armor or raised-shield Hardness interaction remains manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "corrosive"],
+    "variables": {
+      "B21CorrosiveEvtX:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B21CorrosiveEvtX:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B21CorrosiveEvtX:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B21CorrosiveEvtX", "type": "attack-roll-event", "outs": {"out": {"connection": "B21CorrosiveMchX:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B21CorrosiveMchX", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:corrosive"}, "list": {"connection": "B21CorrosiveEvtX:outputs:options"}}, "outs": {"true": {"connection": "B21CorrosiveSplX:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B21CorrosiveSplX", "type": "split-outcome", "inputs": {"input": {"connection": "B21CorrosiveEvtX:outputs:outcome"}}, "outs": {"success": {"connection": "B21CorrosiveDmgX:ins:in"}, "criticalSuccess": {"connection": "B21CorrosiveDmgX:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B21CorrosiveDmgX", "type": "roll-damage", "state": "none", "inputs": {"formula": {"value": "1d6[acid]"}, "origin": {"connection": "B21CorrosiveEvtX:outputs:target"}, "targets": {"connection": "B21CorrosiveEvtX:outputs:target"}, "private": {"value": false}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B21BatterTrg01XX",
+    "name": "Battering Snare",
+    "folder": "Equipment",
+    "description": "On a Battering Snare critical failure against its Reflex save, apply stunned 1; snare placement, triggering, bludgeoning damage, and the save remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "battering-snare"],
+    "variables": {
+      "B21BatterEvt01XX:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B21BatterEvt01XX:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B21BatterEvt01XX:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B21BatterEvt01XX", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B21BatterMch01XX:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B21BatterMch01XX", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:battering-snare"}, "list": {"connection": "B21BatterEvt01XX:outputs:options"}}, "outs": {"true": {"connection": "B21BatterSpl01XX:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B21BatterSpl01XX", "type": "split-outcome", "inputs": {"input": {"connection": "B21BatterEvt01XX:outputs:outcome"}}, "outs": {"criticalFailure": {"connection": "B21BatterStu01XX:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B21BatterStu01XX", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "value": {"value": 1}, "duration": {"value": 1}, "name": {"value": "Effect: Battering Snare"}, "target": {"connection": "B21BatterEvt01XX:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B21SpinesTrg01XX",
+    "name": "Bristling Spines (Moderate)",
+    "folder": "Equipment",
+    "description": "On a Bristling Spines (Moderate) critical Reflex-save failure, apply dazzled until the target's next turn; activation, cone damage, area targeting, and save remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "equipment", "bristling-spines-moderate"],
+    "variables": {
+      "B21SpinesEvt01XX:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B21SpinesEvt01XX:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B21SpinesEvt01XX:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B21SpinesEvt01XX", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B21SpinesMch01XX:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B21SpinesMch01XX", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:bristling-spines-moderate"}, "list": {"connection": "B21SpinesEvt01XX:outputs:options"}}, "outs": {"true": {"connection": "B21SpinesSpl01XX:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B21SpinesSpl01XX", "type": "split-outcome", "inputs": {"input": {"connection": "B21SpinesEvt01XX:outputs:outcome"}}, "outs": {"criticalFailure": {"connection": "B21SpinesDaz01XX:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B21SpinesDaz01XX", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Bristling Spines (Moderate)"}, "target": {"connection": "B21SpinesEvt01XX:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

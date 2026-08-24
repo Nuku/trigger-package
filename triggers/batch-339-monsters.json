@@ -1,0 +1,36 @@
+[
+  {
+    "id": "B339StsTrg00001X",
+    "name": "Stink Sap — Sickened/Stunned",
+    "folder": "Monster Abilities",
+    "description": "Apply sickened 1 on a failed Stink Sap Fortitude save and sickened 1 plus stunned 1 on a critical failure; aura placement, recovery penalties, immunity, and sap cleanup remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "stink-sap"],
+    "variables": {"B339StsEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B339StsEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B339StsEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B339StsEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B339StsMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B339StsMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:stink-sap"}, "list": {"connection": "B339StsEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B339StsSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B339StsSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B339StsEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B339StsSck00001X:ins:in"}, "criticalFailure": {"connection": "B339StsSck00002X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B339StsSck00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 1}, "name": {"value": "Effect: Stink Sap"}, "target": {"connection": "B339StsEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B339StsSck00002X", "type": "create-condition", "state": "fixed", "outs": {"out": {"connection": "B339StsStn00001X:ins:in"}}, "inputs": {"condition": {"value": "sickened"}, "value": {"value": 1}, "name": {"value": "Effect: Stink Sap"}, "target": {"connection": "B339StsEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}},
+      {"id": "B339StsStn00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "value": {"value": 1}, "name": {"value": "Effect: Stink Sap"}, "target": {"connection": "B339StsEvt00001X:outputs:target"}}, "position": {"x": 1280, "y": -80}}
+    ]
+  },
+  {
+    "id": "B339BarTrg00001X",
+    "name": "Barbed Net — Clumsy/Immobilized",
+    "folder": "Monster Abilities",
+    "description": "Apply clumsy 1 after a successful or critically successful Barbed Net Strike and immobilized on a critical success; Speed penalty, net targeting, and Escape remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "barbed-net"],
+    "variables": {"B339BarEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B339BarEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B339BarEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B339BarEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B339BarMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B339BarMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:barbed-net"}, "list": {"connection": "B339BarEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B339BarSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B339BarSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B339BarEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B339BarClm00001X:ins:in"}, "criticalSuccess": {"connection": "B339BarClm00002X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B339BarClm00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "clumsy"}, "value": {"value": 1}, "name": {"value": "Effect: Barbed Net"}, "target": {"connection": "B339BarEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B339BarClm00002X", "type": "create-condition", "state": "fixed", "outs": {"out": {"connection": "B339BarImm00001X:ins:in"}}, "inputs": {"condition": {"value": "clumsy"}, "value": {"value": 1}, "name": {"value": "Effect: Barbed Net"}, "target": {"connection": "B339BarEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}},
+      {"id": "B339BarImm00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "immobilized"}, "name": {"value": "Effect: Barbed Net"}, "target": {"connection": "B339BarEvt00001X:outputs:target"}}, "position": {"x": 1280, "y": -80}}
+    ]
+  }
+]

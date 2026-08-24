@@ -1,0 +1,77 @@
+[
+  {
+    "id": "B13WarpT000001AX",
+    "name": "Warp Mind — Confused",
+    "folder": "Spells",
+    "description": "On a Warp Mind Will save, apply confused for the first action of the target's next turn on a success, for 1 minute on a failure, or permanently on a critical failure; temporary immunity and counteracting remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "warp-mind"],
+    "variables": {
+      "B13WarpE000001AX:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "B13WarpE000001AX:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "B13WarpE000001AX", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B13WarpM000001AX:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B13WarpM000001AX", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:warp-mind"}, "list": {"connection": "B13WarpE000001AX:outputs:options"}}, "outs": {"true": {"connection": "B13WarpS000001AX:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B13WarpS000001AX", "type": "split-outcome", "inputs": {"input": {"connection": "B13WarpE000001AX:outputs:outcome"}}, "outs": {"success": {"connection": "B13WarpC000001AX:ins:in"}, "failure": {"connection": "B13WarpC000002AX:ins:in"}, "criticalFailure": {"connection": "B13WarpC000003AX:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B13WarpC000001AX", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "confused"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Warp Mind"}, "target": {"connection": "B13WarpE000001AX:outputs:roller"}}, "position": {"x": 960, "y": -120}},
+      {"id": "B13WarpC000002AX", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "confused"}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Warp Mind"}, "target": {"connection": "B13WarpE000001AX:outputs:roller"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B13WarpC000003AX", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "confused"}, "name": {"value": "Effect: Warp Mind"}, "target": {"connection": "B13WarpE000001AX:outputs:roller"}}, "position": {"x": 960, "y": 120}}
+    ]
+  },
+  {
+    "id": "B13CrisT000001AX",
+    "name": "Crisis of Faith — Stupefied",
+    "folder": "Spells",
+    "description": "On a Crisis of Faith Will save, apply stupefied 1 for 1 round on a failure or critical failure; the divine-spellcaster requirement and mental damage remain manual/native.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "crisis-of-faith"],
+    "variables": {
+      "B13CrisE000001AX:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "B13CrisE000001AX:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "B13CrisE000001AX", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B13CrisM000001AX:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B13CrisM000001AX", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:crisis-of-faith"}, "list": {"connection": "B13CrisE000001AX:outputs:options"}}, "outs": {"true": {"connection": "B13CrisS000001AX:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B13CrisS000001AX", "type": "split-outcome", "inputs": {"input": {"connection": "B13CrisE000001AX:outputs:outcome"}}, "outs": {"failure": {"connection": "B13CrisC000001AX:ins:in"}, "criticalFailure": {"connection": "B13CrisC000001AX:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B13CrisC000001AX", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "stupefied", "value2": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Crisis of Faith"}, "target": {"connection": "B13CrisE000001AX:outputs:roller"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B13DiviT000001AX",
+    "name": "Divine Immolation — Persistent Fire",
+    "folder": "Spells",
+    "description": "On a Divine Immolation Reflex save, apply 2d6 persistent fire damage on a failure or 4d6 on a critical failure; area damage, sanctification, and heightened scaling remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "divine-immolation"],
+    "variables": {
+      "B13DiviE000001AX:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "B13DiviE000001AX:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "B13DiviE000001AX", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B13DiviM000001AX:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B13DiviM000001AX", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:divine-immolation"}, "list": {"connection": "B13DiviE000001AX:outputs:options"}}, "outs": {"true": {"connection": "B13DiviS000001AX:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B13DiviS000001AX", "type": "split-outcome", "inputs": {"input": {"connection": "B13DiviE000001AX:outputs:outcome"}}, "outs": {"failure": {"connection": "B13DiviP000001AX:ins:in"}, "criticalFailure": {"connection": "B13DiviP000002AX:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B13DiviP000001AX", "type": "create-persistent", "inputs": {"die": {"value": "2d6"}, "target": {"connection": "B13DiviE000001AX:outputs:roller"}, "type": {"value": "fire"}}, "position": {"x": 960, "y": -80}},
+      {"id": "B13DiviP000002AX", "type": "create-persistent", "inputs": {"die": {"value": "4d6"}, "target": {"connection": "B13DiviE000001AX:outputs:roller"}, "type": {"value": "fire"}}, "position": {"x": 960, "y": 80}}
+    ]
+  },
+  {
+    "id": "B13EnthT000001AX",
+    "name": "Enthrall — Fascinated",
+    "folder": "Spells",
+    "description": "On an Enthrall Will save, apply fascinated for 1 round on a success, failure, or critical failure; sustained duration, auditory targeting, and hostile-action restrictions remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "enthrall"],
+    "variables": {
+      "B13EnthE000001AX:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "B13EnthE000001AX:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
+    },
+    "nodes": [
+      {"id": "B13EnthE000001AX", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B13EnthM000001AX:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B13EnthM000001AX", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:enthrall"}, "list": {"connection": "B13EnthE000001AX:outputs:options"}}, "outs": {"true": {"connection": "B13EnthS000001AX:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B13EnthS000001AX", "type": "split-outcome", "inputs": {"input": {"connection": "B13EnthE000001AX:outputs:outcome"}}, "outs": {"success": {"connection": "B13EnthF000001AX:ins:in"}, "failure": {"connection": "B13EnthF000001AX:ins:in"}, "criticalFailure": {"connection": "B13EnthF000001AX:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B13EnthF000001AX", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "fascinated"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Enthrall"}, "target": {"connection": "B13EnthE000001AX:outputs:roller"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

@@ -1,0 +1,54 @@
+[
+  {
+    "id": "B317WtwTrg00001X",
+    "name": "Weight of the World — Dazzled and Stunned",
+    "folder": "Spells",
+    "description": "Apply dazzled and stunned from Weight of the World's Fortitude-save outcome; damage and heightened scaling remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "weight-of-the-world"],
+    "variables": {"B317WtwEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B317WtwEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B317WtwEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B317WtwEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B317WtwMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B317WtwMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:weight-of-the-world"}, "list": {"connection": "B317WtwEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B317WtwSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B317WtwSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B317WtwEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B317WtwDaz00001X:ins:in"}, "failure": {"connection": "B317WtwDaz00002X:ins:in"}, "criticalFailure": {"connection": "B317WtwDaz00003X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B317WtwDaz00001X", "type": "create-condition", "state": "timed", "outs": {"out": {"connection": "B317WtwStu00001X:ins:in"}}, "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Weight of the World"}, "target": {"connection": "B317WtwEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 120}},
+      {"id": "B317WtwStu00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "value": {"value": 1}, "name": {"value": "Effect: Weight of the World"}, "target": {"connection": "B317WtwEvt00001X:outputs:target"}}, "position": {"x": 1280, "y": 120}},
+      {"id": "B317WtwDaz00002X", "type": "create-condition", "state": "timed", "outs": {"out": {"connection": "B317WtwStu00002X:ins:in"}}, "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Weight of the World"}, "target": {"connection": "B317WtwEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B317WtwStu00002X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "value": {"value": 2}, "name": {"value": "Effect: Weight of the World"}, "target": {"connection": "B317WtwEvt00001X:outputs:target"}}, "position": {"x": 1280, "y": 0}},
+      {"id": "B317WtwDaz00003X", "type": "create-condition", "state": "timed", "outs": {"out": {"connection": "B317WtwStu00003X:ins:in"}}, "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Weight of the World"}, "target": {"connection": "B317WtwEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -120}},
+      {"id": "B317WtwStu00003X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "value": {"value": 3}, "name": {"value": "Effect: Weight of the World"}, "target": {"connection": "B317WtwEvt00001X:outputs:target"}}, "position": {"x": 1280, "y": -120}}
+    ]
+  },
+  {
+    "id": "B317WftTrg00001X",
+    "name": "With Friends like These — Sickened",
+    "folder": "Spells",
+    "description": "Apply sickened 1 on a success and sickened 2 on a failure or critical failure against With Friends like These; ally restrictions and heightened targeting remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "with-friends-like-these"],
+    "variables": {"B317WftEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B317WftEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B317WftEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B317WftEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B317WftMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B317WftMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:with-friends-like-these"}, "list": {"connection": "B317WftEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B317WftSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B317WftSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B317WftEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B317WftSic00001X:ins:in"}, "failure": {"connection": "B317WftSic00002X:ins:in"}, "criticalFailure": {"connection": "B317WftSic00002X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B317WftSic00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 1}, "name": {"value": "Effect: With Friends like These"}, "target": {"connection": "B317WftEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B317WftSic00002X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 2}, "name": {"value": "Effect: With Friends like These"}, "target": {"connection": "B317WftEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "B317EqfTrg00001X",
+    "name": "Equal Footing — Clumsy",
+    "folder": "Spells",
+    "description": "Apply clumsy 1 on Equal Footing success/failure and clumsy 2 on a critical failure; Speed penalties and restrictions remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "equal-footing"],
+    "variables": {"B317EqfEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B317EqfEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B317EqfEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B317EqfEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B317EqfMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B317EqfMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:equal-footing"}, "list": {"connection": "B317EqfEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B317EqfSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B317EqfSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B317EqfEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B317EqfClu00001X:ins:in"}, "failure": {"connection": "B317EqfClu00001X:ins:in"}, "criticalFailure": {"connection": "B317EqfClu00002X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B317EqfClu00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "clumsy"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Equal Footing"}, "target": {"connection": "B317EqfEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B317EqfClu00002X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "clumsy"}, "value": {"value": 2}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Equal Footing"}, "target": {"connection": "B317EqfEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  }
+]

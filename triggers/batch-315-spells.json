@@ -1,0 +1,66 @@
+[
+  {
+    "id": "B315InkTrg00001X",
+    "name": "Inkshot — Dazzled",
+    "folder": "Spells",
+    "description": "Apply dazzled for 1 round on an Inkshot hit and 1 minute on a critical hit; damage, ink cleanup, and heightened scaling remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "inkshot"],
+    "variables": {"B315InkEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B315InkEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B315InkEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B315InkEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B315InkMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B315InkMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:inkshot"}, "list": {"connection": "B315InkEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B315InkSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B315InkSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B315InkEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B315InkDaz00001X:ins:in"}, "criticalSuccess": {"connection": "B315InkDaz00002X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B315InkDaz00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Inkshot"}, "target": {"connection": "B315InkEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B315InkDaz00002X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Inkshot"}, "target": {"connection": "B315InkEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "B315MooTrg00001X",
+    "name": "Moonbeam — Dazzled",
+    "folder": "Spells",
+    "description": "Apply dazzled for 1 round on a Moonbeam hit and 1 minute on a critical hit; damage and heightened scaling remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "moonbeam"],
+    "variables": {"B315MooEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B315MooEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B315MooEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B315MooEvt00001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B315MooMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B315MooMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:moonbeam"}, "list": {"connection": "B315MooEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B315MooSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B315MooSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B315MooEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B315MooDaz00001X:ins:in"}, "criticalSuccess": {"connection": "B315MooDaz00002X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B315MooDaz00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Moonbeam"}, "target": {"connection": "B315MooEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B315MooDaz00002X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Moonbeam"}, "target": {"connection": "B315MooEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "B315SprTrg00001X",
+    "name": "Spray of Stars — Dazzled",
+    "folder": "Spells",
+    "description": "Apply dazzled for 1/3 rounds or 1 minute from Spray of Stars save outcomes; area damage and heightened scaling remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "spray-of-stars"],
+    "variables": {"B315SprEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B315SprEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B315SprEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B315SprEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B315SprMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B315SprMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:spray-of-stars"}, "list": {"connection": "B315SprEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B315SprSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B315SprSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B315SprEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B315SprDaz00001X:ins:in"}, "failure": {"connection": "B315SprDaz00002X:ins:in"}, "criticalFailure": {"connection": "B315SprDaz00003X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B315SprDaz00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Spray of Stars"}, "target": {"connection": "B315SprEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 100}},
+      {"id": "B315SprDaz00002X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 3}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Spray of Stars"}, "target": {"connection": "B315SprEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B315SprDaz00003X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Spray of Stars"}, "target": {"connection": "B315SprEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -100}}
+    ]
+  },
+  {
+    "id": "B315BrcTrg00001X",
+    "name": "Blood Runs Cold — Slowed",
+    "folder": "Spells",
+    "description": "Apply slowed 1 on a failed Blood Runs Cold Fortitude save and on a critical failure; persistent cold damage and its cleanup remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "blood-runs-cold"],
+    "variables": {"B315BrcEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B315BrcEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B315BrcEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B315BrcEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B315BrcMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B315BrcMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:blood-runs-cold"}, "list": {"connection": "B315BrcEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B315BrcSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B315BrcSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B315BrcEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B315BrcSlo00001X:ins:in"}, "criticalFailure": {"connection": "B315BrcSlo00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B315BrcSlo00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "slowed"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Blood Runs Cold"}, "target": {"connection": "B315BrcEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

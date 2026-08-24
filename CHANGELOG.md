@@ -1,0 +1,245 @@
+# Changelog
+
+## 0.1.0
+
+- Added Trigger Engine registration for the module's PF2e trigger source.
+- Added stupefied escalation automation for Hajeck's Caress.
+- Added drained automation for Vrolikai's Consume Death.
+- Added stupefied and critical-failure confused automation for Vrolikai's Mindwarping.
+- Added drained automation for Shadow Yai's Shadow Touch.
+- Added failed-save stupefied automation for Primordial Envy's Spell Drain.
+- Added stupefied and critical-failure confused automation for Bitter Epiphany.
+- Added initial slowed automation for Dreaming Round.
+- Added slowed automation for failed Starless Scope saves.
+- Added stunned automation for Llorona's Wail's successful save outcome.
+- Added slowed automation for Identity Crisis.
+- Added stupefied automation for Veil of Lies.
+- Added frightened automation for Escape From Hell.
+- Added stunned automation for Enchanting Shot critical hits.
+- Added slowed, fascinated, and immobilized automation for Revenant's Self-Loathing.
+- Added Arctic Rift's critical-failure immobilized rider.
+- Added drained 2/3 automation for Vampiric Scythe.
+- Added immobilized automation for Sticky Spores on a critical Terotricus spores hit.
+- Added frightened and fleeing automation for Fear of Crabs.
+- Added cumulative enfeebled automation for Steal Shadow, capped at enfeebled 4.
+- Added outcome-based enfeebled automation for Grinding Bite.
+- Added enfeebled 3/4 automation for Weakening Gas.
+- Added enfeebled 1/2 automation for Enfeebling Humors.
+- Added stupefied automation for failed Aura of Sobs Will saves.
+- Added fascinated and slowed automation for Distracting Gaze.
+- Added cumulative drained automation for Drain Life, capped at drained 10.
+- Added frightened and paralyzed automation for Baleful Shriek.
+- Added slowed and doomed automation for Eclipse.
+- Added cumulative drained automation for Sever Fate, capped at drained 4.
+- Added slowed automation for failed Agonizing Wail saves.
+- Added frightened 1/2/3 automation for Aura of Disquietude.
+- Added cumulative drained automation for Drain Blood and one-hour enfeebled automation for Drain Vitality.
+- Added 2d6 persistent bleed automation for the Bloodbird melee rider.
+- Added immobilized automation for failed Hydraulic Asphyxiation saves.
+- Added blinded and critical-failure clumsy automation for Smother.
+- Added prone and critical-failure immobilized automation for Liberate the Earth.
+- Added drained and stupefied automation for Drink Essence.
+- Added grabbed and slowed automation for failed Engulf saves.
+- Added unconscious automation for failed Greater Constrict saves.
+- Added slowed and conditional petrified automation for Crystallize.
+- Added slowed and petrification outcome automation for Serpentstone Breath.
+- Added paralyzed automation for failed Necrophidic Paralysis saves.
+- Added off-guard and stunned outcome automation for Dance of Death.
+- Added initial slowed outcome automation for Crystallize Flesh.
+- Added paralyzed duration automation for Paralyzing Gas.
+- Added slowed outcome automation for Shadow Breath.
+- Added stunned outcome automation for Scintillating Aura.
+- Added doomed and sickened automation for Purge Plaguebearers.
+- Added slowed outcome automation for Desiccating Scepter.
+- Added critical-failure blinded automation for Marking Snare.
+- Added stunned outcome automation for Death Coil.
+- Added stunned and critical-failure immobilized automation for Mudrock Snare.
+- Added blinded duration automation for Squid Ink Sac.
+- Added blinded and critical-failure sickened automation for Blindpepper Tube.
+- Added immobilized and critical-failure off-guard automation for Obsidian Cage.
+- Added generic sickened and critical-failure slowed automation for Stench.
+- Added generic frightened outcome automation for Frightful Presence.
+- Added sickened outcome automation for Piteous Moan.
+- Added sickened outcome automation for Noxious Breath.
+- Added sickened outcome automation for Gravechoke.
+- Added Touch of Obedience critical-failure prone automation.
+- Added Steal Breath fatigued and critical-failure unconscious automation.
+- Added Aberrant Whispers critical-failure confused automation.
+- Added Nightmare Rune conditional frightened automation.
+- Added You're Mine base critical-failure controlled automation.
+- Added Evaluate Discordance critical-failure stunned automation.
+- Added Paralyzing Touch permanent critical-failure paralysis automation.
+- Added Slime Trap critical-failure clumsy automation.
+- Added Noxious Odor sickened outcome automation.
+- Added Pungent Aura sickened outcome automation.
+- Added Shameful Loathing stupefied and doomed outcome automation.
+- Added Blight sickened outcome automation.
+- Added Curse of Futility critical-failure doomed automation.
+- Added Swallow Future doomed outcome automation.
+- Added Drain Potential doomed outcome automation.
+- Added outcome-based automation for Fear, Blindness, and Intimidating Strike.
+- Added Wounding rune bleed and Aura of Doom frightened automation.
+- Added persistent damage automation for Sticky Fire and Blinding Foam.
+- Added slowed 1 automation for Debilitating Shot.
+- Added slowed 1 automation for Petrifying Glance.
+- Added slowed 1 automation for Staggering Blow.
+- Added frightened 2/3 automation for Devil's Howl.
+- Added dazzled/blinded automation for Blinding Beauty and slowed-to-petrified progression for Petrifying Gaze.
+- Added 3d6 persistent bleed automation for Bloodletting.
+- Added initial-target slowed automation for Fateful Condemnation.
+- Added 1d8 persistent bleed automation for Flaying Knife.
+- Added 4d6 persistent bleed automation for Infernal Wound.
+- Added frightened 2 automation for Antagonize after a successful Demoralize.
+- Added off-guard automation for Shatter Defenses.
+- Added sickened 1 automation for Sickening Bite.
+- Added failed-save slowed 1 automation for Frost's critical-hit effect.
+- Added stupefied 1/2 automation for Befuddle's Will save outcomes.
+- Added stupefied 1/2 automation for Touch of Obedience's Will save outcomes.
+- Added sickened 1/2 automation for Mariner's Curse's Will save outcomes.
+- Added sickened 1/2 automation for Mercurial Stride's Fortitude save outcomes.
+- Added stupefied 2 automation for Sculpt Sound's critical-failure save outcome.
+- Added enfeebled 1 automation for Steal Breath's save outcomes.
+- Added initial-round paralysis automation for Vargouille's Shriek failed saves.
+- Added sickened 1 and stunned 1 automation for Shameful Touch save outcomes.
+- Added stupefied 1/2 automation for Siren Song's initial Will save failures.
+- Added dazzled, stunned, and blinded automation for Dizzying Colors save outcomes.
+- Added stunned 1/3 and unconscious automation for Stunning Surprise save outcomes.
+- Added sickened 1/2 automation for Brinesoul's Salt Wound save outcomes.
+- Added sickened and dazzled automation for Mask of the Cursed Eye save outcomes.
+- Added slowed 1/2 and fatigued automation for Dreaming Round save outcomes.
+- Added stunned 1 automation for You're Mine success and failure outcomes.
+- Added stunned 1 automation for Stasis successful saves.
+- Added frightened 1/2 and slowed 1 automation for Sea Hag's Dread Gaze save outcomes.
+- Added sickened 1/2 and stunned 1/3 automation for Jangle the Chain save outcomes.
+- Added stunned 1/3 automation for Astral Labyrinth save outcomes.
+- Added stupefied 2 automation for Never Mind successful saves.
+- Added save-dependent stupefied 2 duration automation for Heart's Desire.
+- Added stupefied 2 automation for Aberrant Whispers failed saves.
+- Added complete outcome-dependent slowed automation for Slow.
+- Added sickened 1 automation for Cursed Metamorphosis successful saves.
+- Added complete outcome-dependent enfeebled automation for Enfeeble.
+- Added outcome-dependent enfeebled 2 automation for Pressure Point Attack.
+- Added fatigued 1 automation for Feast of Ashes successful saves.
+- Added fatigued 1 automation for Cup of Dust successful saves.
+- Added enfeebled 1 for 1 round automation for Disrupt Undead critical failures.
+- Added Synaptic Pulse stunned outcome automation.
+- Added Roaring Applause slowed 1 automation on failed saves.
+- Added Horrific Visage frightened outcome automation.
+- Added Ancestral Winds frightened and stunned outcome automation.
+- Added Thundering deafened outcome automation.
+- Added Radiant Blast blinded automation on critical failures.
+- Added Alghollthu Lash dazzled and stunned outcome automation.
+- Added Funereal Touch drained outcome automation up to drained 4.
+- Added Befuddling Lash stupefied outcome automation.
+- Added Queasy Lantern sickened outcome automation.
+- Added Nexian Sealing Blade deafened outcome automation.
+- Added Frightening Howl frightened outcome automation.
+- Added Transfixing Sunbeam stunned outcome automation.
+- Added Swarm Form sickened outcome automation.
+- Added Utter Destruction deafened outcome automation.
+- Added Scare to Death frightened outcome automation.
+- Corrected Scare to Death to use numeric frightened values and added its critical-success Fortitude-save frightened/fleeing rider; the death result remains documented as manual.
+- Added Dread Striker off-guard automation for attacks against frightened targets.
+- Added Terrified Retreat fleeing automation after a critical Demoralize, with the lower-level target restriction documented.
+- Added Remorseless Lash frightened reinforcement after a successful attack against a frightened target.
+- Added Agonizing Rebuke mental nonlethal retaliation for damage taken from a frightened attacker.
+- Added Phantom Pain sickened and persistent mental damage save outcomes.
+- Added Deafness deafened duration ladder from Fortitude save outcomes.
+- Added Canticle of Everlasting Grief frightened outcome automation.
+- Added Litany against Sloth slowed outcome automation.
+- Added Frightful Moan frightened outcome automation.
+- Added Regurgitated Wrath sickened outcome automation.
+- Added Green Caress slowed outcome automation.
+- Added Blood Feast enfeebled and drained outcome automation.
+- Added Release Soul sickened and drained outcome automation.
+- Added Take Root drained automation up to drained 5.
+- Added Curse of Futility stupefied duration automation.
+- Added Arctic Rift slowed automation.
+- Added Identity Crisis slowed duration automation.
+- Added Steal Face dazzled and blinded outcome automation.
+- Added Broken Mindscape stunned and paralyzed outcome automation.
+- Added Confusion stunned and confused outcome automation.
+- Added Paralyze stunned and paralyzed outcome automation.
+- Added Synesthesia clumsy and stunned outcome automation.
+- Added Hideous Laughter slowed and prone outcome automation.
+- Added Dazing Blow stunned outcome automation.
+- Added Sleeper Hold clumsy and unconscious outcome automation.
+- Added Quivering Palm stunned outcome automation.
+- Added Terrifying Howl frightened outcome automation.
+- Added Dread Ampoule frightened outcome automation.
+- Added Nightmare Rune stupefied outcome automation.
+- Added Terrifying Touch frightened and stunned outcome automation with a condition gate.
+- Added Owlbear Egg frightened and fleeing outcome automation.
+- Added Ghost Ampoule frightened outcome automation.
+- Added Mukradi Jar frightened outcome automation.
+- Added the missing Terrifying Touch critical-failure frightened 2 rider alongside its stunned 4 rider.
+- Added Slime Spit dazzled and critical-failure blinded automation.
+- Added Blinding Sulfur blinded outcome automation.
+- Added Stunning Display stunned outcome automation.
+- Added Shadow Scream deafened and confused outcome automation.
+- Added Tick Tock Tick Tock slowed outcome automation.
+- Added Primordial Roar frightened outcome automation.
+- Added Noxious Breath sickened outcome automation.
+- Added Shadow Breath enfeebled and slowed outcome automation.
+- Added Scream in Agony sickened outcome automation.
+- Added Evil Eye sickened outcome automation.
+- Added Grisly Growths secondary sickened outcome automation.
+- Added Gasping Marsh sickened outcome automation.
+- Added Blindpepper Tube blinded, dazzled, and sickened outcome automation.
+- Added Squid Ink Sac blinded outcome automation.
+- Added Tentacle Cannon blinded and dazzled outcome automation.
+- Added Induction Word stunned outcome automation.
+- Added Radiate Glory dazzled and blinded outcome automation.
+- Added Thunder Clap deafened outcome automation.
+- Added Black Powder Flash blinded and dazzled outcome automation.
+- Added Dragon Roar frightened outcome automation.
+- Added Momentous Charge stunned outcome automation.
+- Added Mountain Quake prone outcome automation.
+- Added Whirling in the Summer Storm off-guard outcome automation.
+- Added Doleful Tolling slowed outcome automation.
+- Added Stutter Time stunned outcome automation.
+- Added Wild Gaze slowed outcome automation.
+- Added Forceful Focus stunned outcome automation.
+- Added Brutal Gore stunned outcome automation.
+- Added Paralyzing Touch paralyzed and prone outcome automation.
+- Added Paralyzing Gas paralyzed outcome automation.
+- Added Scarecrow's Leer frightened and fascinated outcome automation.
+- Added Trollhound Pick off-guard and enfeebled outcome automation.
+- Added Frightening Display frightened outcome automation.
+- Added Pheromone Flare fascinated outcome automation.
+- Added Mesmerizing Performance fascinated outcome automation.
+- Added Tick Tock Tick Tock slowed outcome automation.
+- Added Laughing Fit slowed, prone, and stunned outcome automation.
+- Added Painful Vibrations sickened and deafened outcome automation.
+- Added Sound Burst deafened and stunned outcome automation.
+- Added Noise Blast deafened and stunned outcome automation.
+- Added Ultrasonic Scream stunned outcome automation.
+- Added Shockwave off-guard and prone outcome automation.
+- Added Aqueous Blast prone-on-critical-attack automation.
+- Added Black Tentacles grabbed-on-success automation.
+- Added Grease prone-on-failed-save automation for area mode.
+- Added Tangle Vine immobilized-on-critical-attack automation.
+- Added Caustic Blast persistent acid automation on a critical failure; area damage and heightened persistent scaling remain with the originating spell/manual adjustment.
+- Added Corrosive Muck persistent acid automation on a critical failure; sustained pool behavior and repeated-save timing remain manual.
+- Added Sea Hag's Bargain frightened and slowed outcome automation; its dying-target unconscious/death sequence remains manual.
+- Added Empty Wail stupefied and stunned outcome automation; its damage, cone, and recharge remain manual.
+- Added Salt Wound persistent acid damage automation for failed and critically failed saves.
+- Added Gasping Marsh persistent poison automation on a critical failure; sustained-area behavior and related manual effects remain documented.
+- Added Gouging Claw persistent bleed automation for successful and critically successful spell attacks; heightened scaling remains manual.
+- Added Acid Grip persistent acid automation on failed and critically failed saves; movement, Speed penalty, sustain, and heightening remain manual.
+- Added Spider Sting enfeebled 1/2 automation for failed and critically failed saves; poison-stage recurrence and damage remain manual/native affliction handling.
+- Added Vomit Swarm sickened 1 automation on failed and critically failed basic Reflex saves; cone damage and spell-ending behavior remain manual.
+- Added Blistering Invective frightened 1/2 automation on failed and critically failed Will saves; persistent fire damage scaling remains with the originating spell.
+- Added Noxious Vapors sickened 1 automation on a critically failed Fortitude save; emanation, concealment, sustain, and poison damage remain with the originating spell.
+- Added Shatter Space prone automation on a critically failed saving throw; aura, damage, and amp-level scaling remain with the originating feat.
+- Added Tectonic Stomp prone and critical-failure stunned 1 automation; emanation, damage, and terrain remain with the originating feat.
+- Added Schadenfreude stupefied 1/2 and critical-failure stunned 1 automation; the reaction's triggering prerequisite remains manual.
+- Added Control Construct stunned 1 automation on a successful Will save; construct control and repeat-save behavior remain manual.
+- Added Sudden Transposition prone automation on a critical failure; teleportation, damage, and destination handling remain manual.
+- Added Paralyzing Gaze slowed 1 and critical-failure paralyzed automation; aura, visual targeting, and temporary immunity remain manual.
+- Added Disruptive Breath stupefied 1/2 automation for failed and critically failed Reflex saves; cone damage and recharge remain manual.
+# Changelog
+
+## 0.1.0
+
+- Added SF2e system compatibility metadata and documentation.

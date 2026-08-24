@@ -1,0 +1,85 @@
+[
+  {
+    "id": "FT03SPRSTRK0001X",
+    "name": "Surprise Strike",
+    "folder": "Feats & Features",
+    "description": "When a qualifying Surprise Strike improvised-weapon Strike succeeds, apply off-guard to the target for that Strike; the feat's unaware-target requirement remains manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "surprise-strike"],
+    "variables": {
+      "N03SPRKEVT0001XX:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "N03SPRKEVT0001XX:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "N03SPRKEVT0001XX:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "N03SPRKEVT0001XX", "type": "attack-roll-event", "outs": {"out": {"connection": "N03SPRMCH0001XXX:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "N03SPRMCH0001XXX", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:surprise-strike"}, "list": {"connection": "N03SPRKEVT0001XX:outputs:options"}}, "outs": {"true": {"connection": "N03SPRMSP0001XXX:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "N03SPRMSP0001XXX", "type": "split-outcome", "inputs": {"input": {"connection": "N03SPRKEVT0001XX:outputs:outcome"}}, "outs": {"success": {"connection": "N03SPROFF0001XXX:ins:in"}, "criticalSuccess": {"connection": "N03SPROFF0001XXX:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "N03SPROFF0001XXX", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "name": {"value": "Effect: Surprise Strike"}, "target": {"connection": "N03SPRKEVT0001XX:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "FT03POLDST0001XX",
+    "name": "Polished Distraction",
+    "folder": "Feats & Features",
+    "description": "Apply dazzled, blinded, and their outcome-dependent durations from a Polished Distraction Fortitude save; area, visibility, immunity, and self-immunity remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "polished-distraction"],
+    "variables": {
+      "N03POLEVT0001XXX:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
+      "N03POLEVT0001XXX:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "N03POLEVT0001XXX:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "N03POLEVT0001XXX", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "N03POLMCH0001XXX:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "N03POLMCH0001XXX", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:polished-distraction"}, "list": {"connection": "N03POLEVT0001XXX:outputs:options"}}, "outs": {"true": {"connection": "N03POLMSP0001XXX:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "N03POLMSP0001XXX", "type": "split-outcome", "inputs": {"input": {"connection": "N03POLEVT0001XXX:outputs:outcome"}}, "outs": {"success": {"connection": "N03POLDZ10001XXX:ins:in"}, "failure": {"connection": "N03POLBL10001XXX:ins:in"}, "criticalFailure": {"connection": "N03POLBL20001XXX:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "N03POLDZ10001XXX", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "name": {"value": "Effect: Polished Distraction"}, "target": {"connection": "N03POLEVT0001XXX:outputs:roller"}}, "position": {"x": 960, "y": 160}},
+      {"id": "N03POLBL10001XXX", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "blinded"}, "duration": {"value": 1}, "name": {"value": "Effect: Polished Distraction"}, "target": {"connection": "N03POLEVT0001XXX:outputs:roller"}}, "outs": {"out": {"connection": "N03POLDZ20001XXX:ins:in"}}, "position": {"x": 960, "y": 0}},
+      {"id": "N03POLDZ20001XXX", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 2}, "name": {"value": "Effect: Polished Distraction"}, "target": {"connection": "N03POLEVT0001XXX:outputs:roller"}}, "position": {"x": 1280, "y": 0}},
+      {"id": "N03POLBL20001XXX", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "blinded"}, "duration": {"value": 2}, "name": {"value": "Effect: Polished Distraction"}, "target": {"connection": "N03POLEVT0001XXX:outputs:roller"}}, "outs": {"out": {"connection": "N03POLDZ10001XXY:ins:in"}}, "position": {"x": 960, "y": -160}},
+      {"id": "N03POLDZ10001XXY", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 10}, "name": {"value": "Effect: Polished Distraction"}, "target": {"connection": "N03POLEVT0001XXX:outputs:roller"}}, "position": {"x": 1280, "y": -160}}
+    ]
+  },
+  {
+    "id": "DtyTrkFeat03C001",
+    "name": "Dirty Trick",
+    "folder": "Feats & Features",
+    "description": "Apply clumsy 1 after a successful Dirty Trick Thievery check; critical success lasts until the impediment is Interacted away, while ordinary success lasts 1 round.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "dirty-trick"],
+    "variables": {
+      "DtyTrkEvt03C0001": {"type": "target", "isArray": false, "label": "Target"},
+      "DtyTrkOpt03C0001": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "DtyTrkOut03C0001": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "DtyTrkEvt03C0001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "skill-check"}}, "outs": {"out": {"connection": "DtyTrkMch03C0001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "DtyTrkMch03C0001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:dirty-trick"}, "list": {"connection": "DtyTrkEvt03C0001:outputs:options"}}, "outs": {"true": {"connection": "DtyTrkSpl03C0001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "DtyTrkSpl03C0001", "type": "split-outcome", "inputs": {"input": {"connection": "DtyTrkEvt03C0001:outputs:outcome"}}, "outs": {"success": {"connection": "DtyTrkClm1C00001:ins:in"}, "criticalSuccess": {"connection": "DtyTrkClmFC00001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "DtyTrkClm1C00001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "clumsy"}, "duration": {"value": 1}, "name": {"value": "Effect: Dirty Trick"}, "target": {"connection": "DtyTrkEvt03C0001:outputs:target"}}, "position": {"x": 960, "y": 120}},
+      {"id": "DtyTrkClmFC00001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "clumsy"}, "name": {"value": "Effect: Dirty Trick"}, "target": {"connection": "DtyTrkEvt03C0001:outputs:target"}}, "position": {"x": 960, "y": -120}}
+    ]
+  },
+  {
+    "id": "IrrdteFeat03D001",
+    "name": "Irradiate",
+    "folder": "Feats & Features",
+    "description": "Apply sickened 1 on a failed Irradiate Fortitude save, sickened 2 on a critical failure, and fatigued for 1 minute on a critical failure; aura, scaling, damage, and self-immunity remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "irradiate"],
+    "variables": {
+      "IrrdteEvt03D0001": {"type": "target", "isArray": false, "label": "Target"},
+      "IrrdteOpt03D0001": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "IrrdteOut03D0001": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "IrrdteEvt03D0001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "IrrdteMch03D0001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "IrrdteMch03D0001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:irradiate"}, "list": {"connection": "IrrdteEvt03D0001:outputs:options"}}, "outs": {"true": {"connection": "IrrdteSpl03D0001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "IrrdteSpl03D0001", "type": "split-outcome", "inputs": {"input": {"connection": "IrrdteEvt03D0001:outputs:outcome"}}, "outs": {"failure": {"connection": "IrrdteSick1D0001:ins:in"}, "criticalFailure": {"connection": "IrrdteSick2D0001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "IrrdteSick1D0001", "type": "increase-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "max": {"value": 1}, "value": {"value": 1}, "name": {"value": "Effect: Irradiate"}, "target": {"connection": "IrrdteEvt03D0001:outputs:target"}}, "position": {"x": 960, "y": 120}},
+      {"id": "IrrdteSick2D0001", "type": "increase-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "max": {"value": 2}, "value": {"value": 2}, "name": {"value": "Effect: Irradiate"}, "target": {"connection": "IrrdteEvt03D0001:outputs:target"}}, "position": {"x": 960, "y": -120}},
+      {"id": "IrrdteFat1D00001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "fatigued"}, "duration": {"value": 10}, "name": {"value": "Effect: Irradiate"}, "target": {"connection": "IrrdteEvt03D0001:outputs:target"}}, "position": {"x": 1280, "y": -120}}
+    ]
+  }
+]

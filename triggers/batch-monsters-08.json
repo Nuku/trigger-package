@@ -1,0 +1,81 @@
+[
+  {
+    "id": "M08TANGLBNTRG01X",
+    "name": "Tanglebones",
+    "folder": "Monster Abilities",
+    "description": "When Tanglebones affects a grabbed creature with its Fortitude save, apply sickened 1 on a failure and stunned 1 in addition on a critical failure; the Strike, Grabbed prerequisite, damage, and Escape handling remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "tanglebones"],
+    "variables": {
+      "M08TANEVT000001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M08TANEVT000001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M08TANEVT000001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M08TANEVT000001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M08TANMCH000001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M08TANMCH000001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:tanglebones"}, "list": {"connection": "M08TANEVT000001X:outputs:options"}}, "outs": {"true": {"connection": "M08TANSPL000001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M08TANSPL000001X", "type": "split-outcome", "inputs": {"input": {"connection": "M08TANEVT000001X:outputs:outcome"}}, "outs": {"failure": {"connection": "M08TANSIC000001X:ins:in"}, "criticalFailure": {"connection": "M08TANSIC000001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M08TANSIC000001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 1}, "name": {"value": "Effect: Tanglebones"}, "target": {"connection": "M08TANEVT000001X:outputs:target"}}, "outs": {"out": {"connection": "M08TANSTN000001X:ins:in"}}, "position": {"x": 960, "y": 0}},
+      {"id": "M08TANSTN000001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "value": {"value": 1}, "name": {"value": "Effect: Tanglebones"}, "target": {"connection": "M08TANEVT000001X:outputs:target"}}, "position": {"x": 1280, "y": 0}}
+    ]
+  },
+  {
+    "id": "M08PAINRETRG01XX",
+    "name": "Pained Retribution",
+    "folder": "Monster Abilities",
+    "description": "When Pained Retribution's Will save fails, apply restrained; on a critical failure also apply slowed 1 for 1 minute. The emanation, damage, temporary immunity, and Escape remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "pained-retribution"],
+    "variables": {
+      "M08PAIEVT000001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M08PAIEVT000001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M08PAIEVT000001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M08PAIEVT000001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M08PAIMCH000001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M08PAIMCH000001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:pained-retribution"}, "list": {"connection": "M08PAIEVT000001X:outputs:options"}}, "outs": {"true": {"connection": "M08PAISPL000001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M08PAISPL000001X", "type": "split-outcome", "inputs": {"input": {"connection": "M08PAIEVT000001X:outputs:outcome"}}, "outs": {"failure": {"connection": "M08PAIRST00001XX:ins:in"}, "criticalFailure": {"connection": "M08PAIRST00001XX:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M08PAIRST00001XX", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "restrained"}, "name": {"value": "Effect: Pained Retribution"}, "target": {"connection": "M08PAIEVT000001X:outputs:target"}}, "outs": {"out": {"connection": "M08PAISLO00001XX:ins:in"}}, "position": {"x": 960, "y": 0}},
+      {"id": "M08PAISLO00001XX", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "slowed"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "expiry": {"value": "turn-end"}, "name": {"value": "Effect: Pained Retribution"}, "target": {"connection": "M08PAIEVT000001X:outputs:target"}}, "position": {"x": 1280, "y": 0}}
+    ]
+  },
+  {
+    "id": "M08SNOWBLDTRG01X",
+    "name": "Snowblind",
+    "folder": "Monster Abilities",
+    "description": "On a failed Snowblind Will save, apply slowed 1 for 1 round; on a critical failure apply slowed 2. The temporal damage, area, recharge, and exact critical-failure duration remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "snowblind"],
+    "variables": {
+      "M08SNOEVT000001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M08SNOEVT000001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M08SNOEVT000001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M08SNOEVT000001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M08SNOMCH000001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M08SNOMCH000001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:snowblind"}, "list": {"connection": "M08SNOEVT000001X:outputs:options"}}, "outs": {"true": {"connection": "M08SNOSPL000001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M08SNOSPL000001X", "type": "split-outcome", "inputs": {"input": {"connection": "M08SNOEVT000001X:outputs:outcome"}}, "outs": {"failure": {"connection": "M08SNOSL1000001X:ins:in"}, "criticalFailure": {"connection": "M08SNOSL2000001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M08SNOSL1000001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "slowed"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "expiry": {"value": "turn-end"}, "name": {"value": "Effect: Snowblind"}, "target": {"connection": "M08SNOEVT000001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "M08SNOSL2000001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "slowed"}, "value": {"value": 2}, "name": {"value": "Effect: Snowblind"}, "target": {"connection": "M08SNOEVT000001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "M08VOIDSHRRG001X",
+    "name": "Void Shroud",
+    "folder": "Monster Abilities",
+    "description": "When a living creature fails a Void Shroud Will save, apply doomed 1; the aura entry/start-of-turn event, living-target filter, fear penalties, and immunity remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "monster-ability", "void-shroud"],
+    "variables": {
+      "M08VOIEVT000001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "M08VOIEVT000001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "M08VOIEVT000001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "M08VOIEVT000001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M08VOIMCH000001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "M08VOIMCH000001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:void-shroud"}, "list": {"connection": "M08VOIEVT000001X:outputs:options"}}, "outs": {"true": {"connection": "M08VOISPL000001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "M08VOISPL000001X", "type": "split-outcome", "inputs": {"input": {"connection": "M08VOIEVT000001X:outputs:outcome"}}, "outs": {"failure": {"connection": "M08VOIDOM00001XX:ins:in"}, "criticalFailure": {"connection": "M08VOIDOM00001XX:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "M08VOIDOM00001XX", "type": "increase-condition", "state": "fixed", "inputs": {"condition": {"value": "doomed"}, "max": {"value": 1}, "value": {"value": 1}, "name": {"value": "Effect: Void Shroud"}, "target": {"connection": "M08VOIEVT000001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]

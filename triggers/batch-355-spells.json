@@ -1,0 +1,651 @@
+[
+  {
+    "id": "B355DayTrg00001X",
+    "name": "Day's Weight — Fatigued/Enfeebled",
+    "folder": "Spells",
+    "description": "Apply fatigued and enfeebled 1 for 1 round on a successful Day's Weight Fortitude save; longer durations and overnight recovery remain native/manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "spell",
+      "days-weight"
+    ],
+    "variables": {
+      "B355DayEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B355DayEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B355DayEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B355DayEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B355DayMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B355DayMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:days-weight"
+          },
+          "list": {
+            "connection": "B355DayEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B355DaySpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B355DaySpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B355DayEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "success": {
+            "connection": "B355DayFat00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B355DayFat00001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "fatigued"
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "rounds"
+          },
+          "name": {
+            "value": "Effect: Day's Weight"
+          },
+          "target": {
+            "connection": "B355DayEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 80
+        },
+        "outs": {
+          "out": {
+            "connection": "B355DayEnf00001X:ins:in"
+          }
+        }
+      },
+      {
+        "id": "B355DayEnf00001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "enfeebled"
+          },
+          "value": {
+            "value": 1
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "rounds"
+          },
+          "name": {
+            "value": "Effect: Day's Weight"
+          },
+          "target": {
+            "connection": "B355DayEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": -80
+        }
+      }
+    ]
+  },
+  {
+    "id": "B355GlaTrg00001X",
+    "name": "Glacial Heart — Slowed",
+    "folder": "Spells",
+    "description": "Apply slowed 1 for 1 round on a successful Glacial Heart Fortitude save; the ongoing save, ice enclosure, immunity, and heightened effects remain native/manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "spell",
+      "glacial-heart"
+    ],
+    "variables": {
+      "B355GlaEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B355GlaEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B355GlaEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B355GlaEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B355GlaMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B355GlaMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:glacial-heart"
+          },
+          "list": {
+            "connection": "B355GlaEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B355GlaSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B355GlaSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B355GlaEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "success": {
+            "connection": "B355GlaSlo00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B355GlaSlo00001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "slowed"
+          },
+          "value": {
+            "value": 1
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "rounds"
+          },
+          "name": {
+            "value": "Effect: Glacial Heart"
+          },
+          "target": {
+            "connection": "B355GlaEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      }
+    ]
+  },
+  {
+    "id": "B355RepTrg00001X",
+    "name": "Repelling Pulse — Prone",
+    "folder": "Spells",
+    "description": "Apply prone on a critical failure against Repelling Pulse; force damage, forced movement, and area remain native/manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "spell",
+      "repelling-pulse"
+    ],
+    "variables": {
+      "B355RepEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B355RepEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B355RepEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B355RepEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B355RepMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B355RepMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:repelling-pulse"
+          },
+          "list": {
+            "connection": "B355RepEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B355RepSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B355RepSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B355RepEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "criticalFailure": {
+            "connection": "B355RepPrn00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B355RepPrn00001X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "prone"
+          },
+          "name": {
+            "value": "Effect: Repelling Pulse"
+          },
+          "target": {
+            "connection": "B355RepEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      }
+    ]
+  },
+  {
+    "id": "B355PerTrg00001X",
+    "name": "Personal Blizzard — Persistent Cold/Concealed",
+    "folder": "Spells",
+    "description": "Apply 1d6 persistent cold and concealed on a failed Personal Blizzard save, doubled to 2d6 on a critical failure; spell-end cleanup and concealment remain native/manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "spell",
+      "personal-blizzard"
+    ],
+    "variables": {
+      "B355PerEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B355PerEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B355PerEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B355PerEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B355PerMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B355PerMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:personal-blizzard"
+          },
+          "list": {
+            "connection": "B355PerEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B355PerSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B355PerSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B355PerEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "failure": {
+            "connection": "B355PerPer00001X:ins:in"
+          },
+          "criticalFailure": {
+            "connection": "B355PerPer00002X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B355PerPer00001X",
+        "type": "persistent-damage",
+        "state": "fixed",
+        "inputs": {
+          "formula": {
+            "value": "1d6[cold]"
+          },
+          "target": {
+            "connection": "B355PerEvt00001X:outputs:target"
+          },
+          "name": {
+            "value": "Effect: Personal Blizzard"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 80
+        }
+      },
+      {
+        "id": "B355PerPer00002X",
+        "type": "persistent-damage",
+        "state": "fixed",
+        "inputs": {
+          "formula": {
+            "value": "2d6[cold]"
+          },
+          "target": {
+            "connection": "B355PerEvt00001X:outputs:target"
+          },
+          "name": {
+            "value": "Effect: Personal Blizzard"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": -80
+        }
+      }
+    ]
+  },
+  {
+    "id": "B355OveTrg00001X",
+    "name": "Overstuff — Sickened",
+    "folder": "Spells",
+    "description": "Apply sickened 1 on success or failure and sickened 2 on a critical failure against Overstuff; automatic recovery, Speed penalty, and item effects remain native/manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "spell",
+      "overstuff"
+    ],
+    "variables": {
+      "B355OveEvt00001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B355OveEvt00001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B355OveEvt00001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B355OveEvt00001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B355OveMch00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B355OveMch00001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:overstuff"
+          },
+          "list": {
+            "connection": "B355OveEvt00001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B355OveSpl00001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B355OveSpl00001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B355OveEvt00001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "success": {
+            "connection": "B355OveSck00001X:ins:in"
+          },
+          "failure": {
+            "connection": "B355OveSck00001X:ins:in"
+          },
+          "criticalFailure": {
+            "connection": "B355OveSck00002X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B355OveSck00001X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "sickened"
+          },
+          "value": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Overstuff"
+          },
+          "target": {
+            "connection": "B355OveEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 80
+        }
+      },
+      {
+        "id": "B355OveSck00002X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "sickened"
+          },
+          "value": {
+            "value": 2
+          },
+          "name": {
+            "value": "Effect: Overstuff"
+          },
+          "target": {
+            "connection": "B355OveEvt00001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": -80
+        }
+      }
+    ]
+  }
+]

@@ -1,0 +1,79 @@
+[
+  {
+    "id": "B23BefTrg0000001",
+    "name": "Befuddle — Stupefied",
+    "folder": "Spells",
+    "description": "On a Befuddle Will save, apply stupefied 1 for 1 round on a success, stupefied 2 for 1 round on a failure, or stupefied 3 for 1 round on a critical failure; mental damage, targeting, and heightened effects remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "befuddle"],
+    "variables": {
+      "B23BefEvt0000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B23BefEvt0000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B23BefEvt0000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B23BefEvt0000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B23BefMch0000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B23BefMch0000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:befuddle"}, "list": {"connection": "B23BefEvt0000001:outputs:options"}}, "outs": {"true": {"connection": "B23BefSpl0000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B23BefSpl0000001", "type": "split-outcome", "inputs": {"input": {"connection": "B23BefEvt0000001:outputs:outcome"}}, "outs": {"success": {"connection": "B23BefStu0000001:ins:in"}, "failure": {"connection": "B23BefStu0000002:ins:in"}, "criticalFailure": {"connection": "B23BefStu0000003:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B23BefStu0000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "stupefied"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Befuddle"}, "target": {"connection": "B23BefEvt0000001:outputs:target"}}, "position": {"x": 960, "y": 120}},
+      {"id": "B23BefStu0000002", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "stupefied"}, "value": {"value": 2}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Befuddle"}, "target": {"connection": "B23BefEvt0000001:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B23BefStu0000003", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "stupefied"}, "value": {"value": 3}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Befuddle"}, "target": {"connection": "B23BefEvt0000001:outputs:target"}}, "position": {"x": 960, "y": -120}}
+    ]
+  },
+  {
+    "id": "B23BliTrg0000001",
+    "name": "Blinding Beauty — Dazzled/Blinded",
+    "folder": "Spells",
+    "description": "On a Blinding Beauty Will save, apply dazzled for 1 round on a success, dazzled for 1 minute on a failure, or blinded for 1 minute on a critical failure; area placement, sustain, and visual effects remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "blinding-beauty"],
+    "variables": {
+      "B23BliEvt0000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B23BliEvt0000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B23BliEvt0000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B23BliEvt0000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B23BliMch0000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B23BliMch0000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:blinding-beauty"}, "list": {"connection": "B23BliEvt0000001:outputs:options"}}, "outs": {"true": {"connection": "B23BliSpl0000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B23BliSpl0000001", "type": "split-outcome", "inputs": {"input": {"connection": "B23BliEvt0000001:outputs:outcome"}}, "outs": {"success": {"connection": "B23BliDaz0000001:ins:in"}, "failure": {"connection": "B23BliBli0000001:ins:in"}, "criticalFailure": {"connection": "B23BliBli0000002:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B23BliDaz0000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Blindness"}, "target": {"connection": "B23BliEvt0000001:outputs:target"}}, "position": {"x": 960, "y": 120}},
+      {"id": "B23BliBli0000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Blinding Beauty"}, "target": {"connection": "B23BliEvt0000001:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B23BliBli0000002", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "blinded"}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Blinding Beauty"}, "target": {"connection": "B23BliEvt0000001:outputs:target"}}, "position": {"x": 960, "y": -120}}
+    ]
+  },
+  {
+    "id": "B23GraTrg0000001",
+    "name": "Aberrant Whispers — Stupefied/Confused",
+    "folder": "Spells",
+    "description": "On an Aberrant Whispers Will save, apply stupefied 2 for 1 round on a failure or confused for 1 round on a critical failure; emanation placement, immunity, sustain, and heightened effects remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "aberrant-whispers"],
+    "variables": {
+      "B23GraEvt0000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
+      "B23GraEvt0000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
+      "B23GraEvt0000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+    },
+    "nodes": [
+      {"id": "B23GraEvt0000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B23GraMch0000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B23GraMch0000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:aberrant-whispers"}, "list": {"connection": "B23GraEvt0000001:outputs:options"}}, "outs": {"true": {"connection": "B23GraSpl0000001:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B23GraSpl0000001", "type": "split-outcome", "inputs": {"input": {"connection": "B23GraEvt0000001:outputs:outcome"}}, "outs": {"failure": {"connection": "B23GraStu0000001:ins:in"}, "criticalFailure": {"connection": "B23GraCnf0000001:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B23GraStu0000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "stupefied"}, "value": {"value": 2}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Aberrant Whispers"}, "target": {"connection": "B23GraEvt0000001:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B23GraCnf0000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "confused"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Aberrant Whispers"}, "target": {"connection": "B23GraEvt0000001:outputs:target"}}, "position": {"x": 960, "y": -120}}
+    ]
+  },
+  {
+    "id": "B23RayTrg0000001",
+    "name": "Blinding Foam — Blinded",
+    "folder": "Spells",
+    "description": "When Blinding Foam hits, apply blinded for 1 minute; the spell attack, acid damage, removal checks, targeting, and heightened effects remain manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "blinding-foam"],
+    "variables": {
+      "B23RayEvt0000001:outputs:targets": {"type": "target", "isArray": true, "label": "Targets"}
+    },
+    "nodes": [
+      {"id": "B23RayEvt0000001", "type": "action-chat-event", "inputs": {"slug": {"value": "blinding-foam"}}, "outs": {"out": {"connection": "B23RayBli0000001:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B23RayBli0000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "blinded"}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Blinding Foam"}, "target": {"connection": "B23RayEvt0000001:outputs:targets"}}, "position": {"x": 480, "y": 0}}
+    ]
+  }
+]

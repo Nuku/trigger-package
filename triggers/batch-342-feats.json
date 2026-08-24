@@ -1,0 +1,105 @@
+[
+  {
+    "id": "B342AwrTrg00001X",
+    "name": "Awake With a Roar — Frightened/Stunned",
+    "folder": "Feats",
+    "description": "Apply frightened 1 on a successful Awake With a Roar save, frightened 2 plus stunned 1 on failure, and frightened 3 plus stunned 1 on critical failure; area targeting and immunity remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "awake-with-a-roar"],
+    "variables": {"B342AwrEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B342AwrEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B342AwrEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B342AwrEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B342AwrMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B342AwrMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:awake-with-a-roar"}, "list": {"connection": "B342AwrEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B342AwrSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B342AwrSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B342AwrEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B342AwrFrt00001X:ins:in"}, "failure": {"connection": "B342AwrFrt00002X:ins:in"}, "criticalFailure": {"connection": "B342AwrFrt00003X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B342AwrFrt00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 1}, "name": {"value": "Effect: Awake With a Roar"}, "target": {"connection": "B342AwrEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 160}},
+      {"id": "B342AwrFrt00002X", "type": "create-condition", "state": "fixed", "outs": {"out": {"connection": "B342AwrStn00001X:ins:in"}}, "inputs": {"condition": {"value": "frightened"}, "value": {"value": 2}, "name": {"value": "Effect: Awake With a Roar"}, "target": {"connection": "B342AwrEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B342AwrFrt00003X", "type": "create-condition", "state": "fixed", "outs": {"out": {"connection": "B342AwrStn00002X:ins:in"}}, "inputs": {"condition": {"value": "frightened"}, "value": {"value": 3}, "name": {"value": "Effect: Awake With a Roar"}, "target": {"connection": "B342AwrEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -160}},
+      {"id": "B342AwrStn00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "value": {"value": 1}, "name": {"value": "Effect: Awake With a Roar"}, "target": {"connection": "B342AwrEvt00001X:outputs:target"}}, "position": {"x": 1280, "y": 0}},
+      {"id": "B342AwrStn00002X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "value": {"value": 1}, "name": {"value": "Effect: Awake With a Roar"}, "target": {"connection": "B342AwrEvt00001X:outputs:target"}}, "position": {"x": 1280, "y": -160}}
+    ]
+  },
+  {
+    "id": "B342GlaTrg00001X",
+    "name": "Gladiator's Roar — Frightened/Stunned",
+    "folder": "Feats",
+    "description": "Apply frightened 1/2/3 by Gladiator's Roar Fortitude-save outcome and stunned 1 on a critical failure; sonic damage and cone targeting remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "gladiators-roar"],
+    "variables": {"B342GlaEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B342GlaEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B342GlaEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B342GlaEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B342GlaMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B342GlaMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:gladiators-roar"}, "list": {"connection": "B342GlaEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B342GlaSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B342GlaSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B342GlaEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B342GlaFrt00001X:ins:in"}, "failure": {"connection": "B342GlaFrt00002X:ins:in"}, "criticalFailure": {"connection": "B342GlaFrt00003X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B342GlaFrt00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 1}, "name": {"value": "Effect: Gladiator's Roar"}, "target": {"connection": "B342GlaEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 160}},
+      {"id": "B342GlaFrt00002X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 2}, "name": {"value": "Effect: Gladiator's Roar"}, "target": {"connection": "B342GlaEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B342GlaFrt00003X", "type": "create-condition", "state": "fixed", "outs": {"out": {"connection": "B342GlaStn00001X:ins:in"}}, "inputs": {"condition": {"value": "frightened"}, "value": {"value": 3}, "name": {"value": "Effect: Gladiator's Roar"}, "target": {"connection": "B342GlaEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -160}},
+      {"id": "B342GlaStn00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "value": {"value": 1}, "name": {"value": "Effect: Gladiator's Roar"}, "target": {"connection": "B342GlaEvt00001X:outputs:target"}}, "position": {"x": 1280, "y": -160}}
+    ]
+  },
+  {
+    "id": "B342MjpTrg00001X",
+    "name": "Majestic Proclamation — Dazzled/Blinded",
+    "folder": "Feats",
+    "description": "Apply dazzled for 1 minute on a successful Majestic Proclamation check and blinded for 1 round plus dazzled on a critical success; Demoralize, sentinel-form, and area targeting remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "majestic-proclamation"],
+    "variables": {"B342MjpEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B342MjpEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B342MjpEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B342MjpEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "skill-check"}}, "outs": {"out": {"connection": "B342MjpMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B342MjpMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:majestic-proclamation"}, "list": {"connection": "B342MjpEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B342MjpSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B342MjpSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B342MjpEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B342MjpDaz00001X:ins:in"}, "criticalSuccess": {"connection": "B342MjpDaz00002X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B342MjpDaz00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Majestic Proclamation"}, "target": {"connection": "B342MjpEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B342MjpDaz00002X", "type": "create-condition", "state": "timed", "outs": {"out": {"connection": "B342MjpBli00001X:ins:in"}}, "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Majestic Proclamation"}, "target": {"connection": "B342MjpEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}},
+      {"id": "B342MjpBli00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "blinded"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Majestic Proclamation"}, "target": {"connection": "B342MjpEvt00001X:outputs:target"}}, "position": {"x": 1280, "y": -80}}
+    ]
+  },
+  {
+    "id": "B342AlsTrg00001X",
+    "name": "All Returns to Slumber — Slowed",
+    "folder": "Feats",
+    "description": "Apply slowed 1 on a critical failure against All Returns to Slumber; reaction restriction, waking-world requirements, area targeting, and immunity remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "all-returns-to-slumber"],
+    "variables": {"B342AlsEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B342AlsEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B342AlsEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B342AlsEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B342AlsMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B342AlsMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:all-returns-to-slumber"}, "list": {"connection": "B342AlsEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B342AlsSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B342AlsSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B342AlsEvt00001X:outputs:outcome"}}, "outs": {"criticalFailure": {"connection": "B342AlsSlo00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B342AlsSlo00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "slowed"}, "value": {"value": 1}, "name": {"value": "Effect: All Returns to Slumber"}, "target": {"connection": "B342AlsEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  },
+  {
+    "id": "B342FliTrg00001X",
+    "name": "Fling Head — Frightened",
+    "folder": "Feats",
+    "description": "Apply frightened 1/2/3 by Fling Head Will-save outcome; distance-based recovery restriction, multi-target action count, and head handling remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "fling-head"],
+    "variables": {"B342FliEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B342FliEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B342FliEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B342FliEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B342FliMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B342FliMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:fling-head"}, "list": {"connection": "B342FliEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B342FliSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B342FliSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B342FliEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B342FliFrt00001X:ins:in"}, "failure": {"connection": "B342FliFrt00002X:ins:in"}, "criticalFailure": {"connection": "B342FliFrt00003X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B342FliFrt00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 1}, "name": {"value": "Effect: Fling Head"}, "target": {"connection": "B342FliEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 160}},
+      {"id": "B342FliFrt00002X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 2}, "name": {"value": "Effect: Fling Head"}, "target": {"connection": "B342FliEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B342FliFrt00003X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 3}, "name": {"value": "Effect: Fling Head"}, "target": {"connection": "B342FliEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -160}}
+    ]
+  },
+  {
+    "id": "B342DikTrg00001X",
+    "name": "Disturbing Knowledge — Frightened/Confused",
+    "folder": "Feats",
+    "description": "Apply frightened 1 on a successful Disturbing Knowledge check and confused 1 plus frightened 1 on a critical success; self-targeted critical-failure fear, immunity, and area targeting remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "feat", "disturbing-knowledge"],
+    "variables": {"B342DikEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B342DikEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B342DikEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B342DikEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "skill-check"}}, "outs": {"out": {"connection": "B342DikMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B342DikMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:disturbing-knowledge"}, "list": {"connection": "B342DikEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B342DikSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B342DikSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B342DikEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B342DikFrt00001X:ins:in"}, "criticalSuccess": {"connection": "B342DikFrt00002X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B342DikFrt00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 1}, "name": {"value": "Effect: Disturbing Knowledge"}, "target": {"connection": "B342DikEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B342DikFrt00002X", "type": "create-condition", "state": "fixed", "outs": {"out": {"connection": "B342DikCnf00001X:ins:in"}}, "inputs": {"condition": {"value": "frightened"}, "value": {"value": 1}, "name": {"value": "Effect: Disturbing Knowledge"}, "target": {"connection": "B342DikEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}},
+      {"id": "B342DikCnf00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "confused"}, "value": {"value": 1}, "name": {"value": "Effect: Disturbing Knowledge"}, "target": {"connection": "B342DikEvt00001X:outputs:target"}}, "position": {"x": 1280, "y": -80}}
+    ]
+  }
+]

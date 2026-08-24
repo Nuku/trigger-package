@@ -1,0 +1,544 @@
+[
+  {
+    "id": "BtlCryFeatTrig01",
+    "name": "Battle Cry",
+    "folder": "Feats & Features",
+    "description": "When Battle Cry's Demoralize check succeeds, apply frightened 1; on a critical success, apply frightened 2.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "feat",
+      "battle-cry"
+    ],
+    "variables": {
+      "BtlCryCheckNode1:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "BtlCryCheckNode1:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      },
+      "BtlCryCheckNode1:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      }
+    },
+    "nodes": [
+      {
+        "id": "BtlCryCheckNode1",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "skill-check"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "BtlCryMatchNode1:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "BtlCryMatchNode1",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:battle-cry"
+          },
+          "list": {
+            "connection": "BtlCryCheckNode1:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "BtlCrySplitNode1:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "BtlCrySplitNode1",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "BtlCryCheckNode1:outputs:outcome"
+          }
+        },
+        "outs": {
+          "success": {
+            "connection": "BtlCryFearNode01:ins:in"
+          },
+          "criticalSuccess": {
+            "connection": "BtlCryFearNode02:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "BtlCryFearNode01",
+        "type": "increase-condition",
+        "inputs": {
+          "condition": {
+            "value": "frightened"
+          },
+          "max": {
+            "value": 1
+          },
+          "value": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Battle Cry"
+          },
+          "target": {
+            "connection": "BtlCryCheckNode1:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 60
+        }
+      },
+      {
+        "id": "BtlCryFearNode02",
+        "type": "increase-condition",
+        "inputs": {
+          "condition": {
+            "value": "frightened"
+          },
+          "max": {
+            "value": 2
+          },
+          "value": {
+            "value": 2
+          },
+          "name": {
+            "value": "Effect: Battle Cry"
+          },
+          "target": {
+            "connection": "BtlCryCheckNode1:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": -60
+        }
+      }
+    ]
+  },
+  {
+    "id": "DazDisplayFeat01",
+    "name": "Dazzling Display",
+    "folder": "Feats & Features",
+    "description": "When a Dazzling Display Demoralize check succeeds, apply frightened 1; on a critical success, apply frightened 2.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "feat",
+      "dazzling-display"
+    ],
+    "variables": {
+      "DazDispCheck0001:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "DazDispCheck0001:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      },
+      "DazDispCheck0001:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      }
+    },
+    "nodes": [
+      {
+        "id": "DazDispCheck0001",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "skill-check"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "DazDispMatch0001:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "DazDispMatch0001",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:dazzling-display"
+          },
+          "list": {
+            "connection": "DazDispCheck0001:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "DazDispSplit0001:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "DazDispSplit0001",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "DazDispCheck0001:outputs:outcome"
+          }
+        },
+        "outs": {
+          "success": {
+            "connection": "DazDpFearNode001:ins:in"
+          },
+          "criticalSuccess": {
+            "connection": "DazDpFearNode002:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "DazDpFearNode001",
+        "type": "increase-condition",
+        "inputs": {
+          "condition": {
+            "value": "frightened"
+          },
+          "max": {
+            "value": 1
+          },
+          "value": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Dazzling Display"
+          },
+          "target": {
+            "connection": "DazDispCheck0001:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 60
+        }
+      },
+      {
+        "id": "DazDpFearNode002",
+        "type": "increase-condition",
+        "inputs": {
+          "condition": {
+            "value": "frightened"
+          },
+          "max": {
+            "value": 2
+          },
+          "value": {
+            "value": 2
+          },
+          "name": {
+            "value": "Effect: Dazzling Display"
+          },
+          "target": {
+            "connection": "DazDispCheck0001:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": -60
+        }
+      }
+    ]
+  },
+  {
+    "id": "CmbtGrabFeat0001",
+    "name": "Combat Grab",
+    "folder": "Feats & Features",
+    "description": "After a successful Combat Grab Strike, apply grabbed for 1 round.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "feat",
+      "combat-grab"
+    ],
+    "variables": {
+      "CmbtGrabAttack01:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "CmbtGrabAttack01:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      },
+      "CmbtGrabAttack01:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      }
+    },
+    "nodes": [
+      {
+        "id": "CmbtGrabAttack01",
+        "type": "attack-roll-event",
+        "outs": {
+          "out": {
+            "connection": "CmbtGrabMatch001:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "CmbtGrabMatch001",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:combat-grab"
+          },
+          "list": {
+            "connection": "CmbtGrabAttack01:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "CmbtGrabSplit001:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "CmbtGrabSplit001",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "CmbtGrabAttack01:outputs:outcome"
+          }
+        },
+        "outs": {
+          "success": {
+            "connection": "CmbtGrabGrab0001:ins:in"
+          },
+          "criticalSuccess": {
+            "connection": "CmbtGrabGrab0001:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "CmbtGrabGrab0001",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "grabbed"
+          },
+          "duration": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Combat Grab"
+          },
+          "target": {
+            "connection": "CmbtGrabAttack01:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      }
+    ]
+  },
+  {
+    "id": "DsoOpenFeat00001",
+    "name": "Disorienting Opening",
+    "folder": "Feats & Features",
+    "description": "When a character with Disorienting Opening hits with Reactive Strike, apply off-guard for 1 round.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "feat",
+      "disorienting-opening"
+    ],
+    "variables": {
+      "DsoOpenCheckNode:outputs:origin": {
+        "type": "target",
+        "isArray": false,
+        "label": "Origin"
+      },
+      "DsoOpenCheckNode:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "DsoOpenCheckNode:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      },
+      "DsoOpenCheckNode:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      }
+    },
+    "nodes": [
+      {
+        "id": "DsoOpenCheckNode",
+        "type": "attack-roll-event",
+        "outs": {
+          "out": {
+            "connection": "DsoOpnHasSlug001:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "DsoOpnHasSlug001",
+        "type": "has-item-slug",
+        "state": "slug",
+        "inputs": {
+          "slug": {
+            "value": "disorienting-opening"
+          },
+          "target": {
+            "connection": "DsoOrgGetNode001:outputs:entry"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "DsoOpnReactive01:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "DsoOrgGetNode001",
+        "type": "__variable_getter__",
+        "inputs": {
+          "entry": {
+            "connection": "DsoOpenCheckNode:outputs:origin"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 180
+        }
+      },
+      {
+        "id": "DsoOpnReactive01",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:reactive-strike"
+          },
+          "list": {
+            "connection": "DsoOpenCheckNode:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "DsoOpnSplitNod01:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "DsoOpnSplitNod01",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "DsoOpenCheckNode:outputs:outcome"
+          }
+        },
+        "outs": {
+          "success": {
+            "connection": "DsoOpnOffNode001:ins:in"
+          },
+          "criticalSuccess": {
+            "connection": "DsoOpnOffNode001:ins:in"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      },
+      {
+        "id": "DsoOpnOffNode001",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "off-guard"
+          },
+          "duration": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Disorienting Opening"
+          },
+          "target": {
+            "connection": "DsoOpenCheckNode:outputs:target"
+          }
+        },
+        "position": {
+          "x": 1280,
+          "y": 0
+        }
+      }
+    ]
+  }
+]

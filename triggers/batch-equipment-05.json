@@ -1,0 +1,185 @@
+[
+  {
+    "id": "EQ5RobeTrg000001",
+    "name": "Robe of the Erinys (Major)",
+    "folder": "Equipment",
+    "description": "On a critical failure against the robe's activated Fortitude save, apply sickened 1 for 1 round.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "equipment",
+      "robe-of-the-erinys-major"
+    ],
+    "variables": {
+      "EQ5RobeEvt000001:outputs:roller": {
+        "type": "target",
+        "isArray": false,
+        "label": "Roller"
+      },
+      "EQ5RobeEvt000001:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      },
+      "EQ5RobeEvt000001:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      }
+    },
+    "nodes": [
+      {
+        "id": "EQ5RobeEvt000001",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "EQ5RobeMch000001:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "EQ5RobeMch000001",
+        "type": "match-predicate",
+        "inputs": {
+          "options": {
+            "connection": "EQ5RobeEvt000001:outputs:options"
+          },
+          "predicate": {
+            "value": "[\n  \"item:slug:robe-of-the-erinys-major\",\n  \"check:outcome:critical-failure\"\n]"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "EQ5RobeSic000001:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "EQ5RobeSic000001",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "sickened"
+          },
+          "value": {
+            "value": 1
+          },
+          "duration": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Robe of the Erinys"
+          },
+          "target": {
+            "connection": "EQ5RobeEvt000001:outputs:roller"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      }
+    ]
+  },
+  {
+    "id": "EQ5FrostTrg00001",
+    "name": "Frost Vial (Greater)",
+    "folder": "Equipment",
+    "description": "When a Frost Vial hits with its Strike, apply slowed 1 to the target until the end of the attacker's next turn; bomb damage and scaling remain manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "equipment",
+      "frost-vial-greater"
+    ],
+    "variables": {
+      "EQ5FrostEvt00001:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "EQ5FrostEvt00001:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      }
+    },
+    "nodes": [
+      {
+        "id": "EQ5FrostEvt00001",
+        "type": "attack-roll-event",
+        "outs": {
+          "out": {
+            "connection": "EQ5FrostMch00001:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "EQ5FrostMch00001",
+        "type": "match-predicate",
+        "inputs": {
+          "options": {
+            "connection": "EQ5FrostEvt00001:outputs:options"
+          },
+          "predicate": {
+            "value": "[\n  \"item:slug:frost-vial-greater\",\n  \"check:outcome:success\"\n]"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "EQ5FrostSlo00001:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "EQ5FrostSlo00001",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "slowed"
+          },
+          "value": {
+            "value": 1
+          },
+          "duration": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Frost Vial"
+          },
+          "target": {
+            "connection": "EQ5FrostEvt00001:outputs:target"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      }
+    ]
+  }
+]

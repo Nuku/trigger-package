@@ -1,0 +1,89 @@
+[
+  {
+    "id": "B330RvlTrg00001X",
+    "name": "Revealing Light — Dazzled",
+    "folder": "Spells",
+    "description": "Apply dazzled for 2 rounds on a successful Revealing Light save, 1 minute on a failure, or 10 minutes on a critical failure; invisibility/concealment interaction and area targeting remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "revealing-light"],
+    "variables": {"B330RvlEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B330RvlEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B330RvlEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B330RvlEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B330RvlMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B330RvlMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:revealing-light"}, "list": {"connection": "B330RvlEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B330RvlSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B330RvlSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B330RvlEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B330RvlDaz00001X:ins:in"}, "failure": {"connection": "B330RvlDaz00002X:ins:in"}, "criticalFailure": {"connection": "B330RvlDaz00003X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B330RvlDaz00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 2}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Revealing Light"}, "target": {"connection": "B330RvlEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 160}},
+      {"id": "B330RvlDaz00002X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Revealing Light"}, "target": {"connection": "B330RvlEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B330RvlDaz00003X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 10}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Revealing Light"}, "target": {"connection": "B330RvlEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -160}}
+    ]
+  },
+  {
+    "id": "B330AshTrg00001X",
+    "name": "Ash Cloud — Dazzled/Blinded",
+    "folder": "Spells",
+    "description": "Apply dazzled on a failed Ash Cloud Fortitude save and blinded on a critical failure; recurring area timing, fire damage, and cloud placement remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "ash-cloud"],
+    "variables": {"B330AshEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B330AshEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B330AshEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B330AshEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B330AshMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B330AshMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:ash-cloud"}, "list": {"connection": "B330AshEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B330AshSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B330AshSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B330AshEvt00001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B330AshDaz00001X:ins:in"}, "criticalFailure": {"connection": "B330AshBli00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B330AshDaz00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "dazzled"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Ash Cloud"}, "target": {"connection": "B330AshEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 80}},
+      {"id": "B330AshBli00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "blinded"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Ash Cloud"}, "target": {"connection": "B330AshEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -80}}
+    ]
+  },
+  {
+    "id": "B330DfyTrg00001X",
+    "name": "Defy the Gods — Drained/Stupefied",
+    "folder": "Spells",
+    "description": "Apply drained and stupefied by Defy the Gods save outcome; divine/holy/unholy qualification, damage, resistance, and target selection remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "defy-the-gods"],
+    "variables": {"B330DfyEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B330DfyEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B330DfyEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B330DfyEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B330DfyMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B330DfyMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:defy-the-gods"}, "list": {"connection": "B330DfyEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B330DfySpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B330DfySpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B330DfyEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B330DfyDrn00001X:ins:in"}, "failure": {"connection": "B330DfyDrn00002X:ins:in"}, "criticalFailure": {"connection": "B330DfyDrn00003X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B330DfyDrn00001X", "type": "create-condition", "state": "timed", "outs": {"out": {"connection": "B330DfyStp00001X:ins:in"}}, "inputs": {"condition": {"value": "drained"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Defy the Gods"}, "target": {"connection": "B330DfyEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 160}},
+      {"id": "B330DfyDrn00002X", "type": "create-condition", "state": "timed", "outs": {"out": {"connection": "B330DfyStp00002X:ins:in"}}, "inputs": {"condition": {"value": "drained"}, "value": {"value": 2}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Defy the Gods"}, "target": {"connection": "B330DfyEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B330DfyDrn00003X", "type": "create-condition", "state": "timed", "outs": {"out": {"connection": "B330DfyStp00003X:ins:in"}}, "inputs": {"condition": {"value": "drained"}, "value": {"value": 3}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Defy the Gods"}, "target": {"connection": "B330DfyEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -160}},
+      {"id": "B330DfyStp00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "stupefied"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Defy the Gods"}, "target": {"connection": "B330DfyEvt00001X:outputs:target"}}, "position": {"x": 1280, "y": 160}},
+      {"id": "B330DfyStp00002X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "stupefied"}, "value": {"value": 2}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Defy the Gods"}, "target": {"connection": "B330DfyEvt00001X:outputs:target"}}, "position": {"x": 1280, "y": 0}},
+      {"id": "B330DfyStp00003X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "stupefied"}, "value": {"value": 3}, "duration": {"value": 1}, "unit": {"value": "minutes"}, "name": {"value": "Effect: Defy the Gods"}, "target": {"connection": "B330DfyEvt00001X:outputs:target"}}, "position": {"x": 1280, "y": -160}}
+    ]
+  },
+  {
+    "id": "B330DwtTrg00001X",
+    "name": "Dead Weight — Off-Guard/Slowed",
+    "folder": "Spells",
+    "description": "Apply off-guard on a successful Dead Weight Fortitude save, plus slowed 1/2 on failure/critical failure; thrall destruction, area targeting, and damage remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "dead-weight"],
+    "variables": {"B330DwtEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B330DwtEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B330DwtEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B330DwtEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B330DwtMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B330DwtMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:dead-weight"}, "list": {"connection": "B330DwtEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B330DwtSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B330DwtSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B330DwtEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B330DwtOfg00001X:ins:in"}, "failure": {"connection": "B330DwtOfg00002X:ins:in"}, "criticalFailure": {"connection": "B330DwtOfg00003X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B330DwtOfg00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "off-guard"}, "name": {"value": "Effect: Dead Weight"}, "target": {"connection": "B330DwtEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 160}},
+      {"id": "B330DwtOfg00002X", "type": "create-condition", "state": "fixed", "outs": {"out": {"connection": "B330DwtSlo00001X:ins:in"}}, "inputs": {"condition": {"value": "off-guard"}, "name": {"value": "Effect: Dead Weight"}, "target": {"connection": "B330DwtEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}},
+      {"id": "B330DwtOfg00003X", "type": "create-condition", "state": "fixed", "outs": {"out": {"connection": "B330DwtSlo00002X:ins:in"}}, "inputs": {"condition": {"value": "off-guard"}, "name": {"value": "Effect: Dead Weight"}, "target": {"connection": "B330DwtEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -160}},
+      {"id": "B330DwtSlo00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "slowed"}, "value": {"value": 1}, "name": {"value": "Effect: Dead Weight"}, "target": {"connection": "B330DwtEvt00001X:outputs:target"}}, "position": {"x": 1280, "y": 0}},
+      {"id": "B330DwtSlo00002X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "slowed"}, "value": {"value": 2}, "name": {"value": "Effect: Dead Weight"}, "target": {"connection": "B330DwtEvt00001X:outputs:target"}}, "position": {"x": 1280, "y": -160}}
+    ]
+  },
+  {
+    "id": "B330UpsTrg00001X",
+    "name": "Unsettling Perspective — Stunned",
+    "folder": "Spells",
+    "description": "Apply stunned 1 on a critical failure against Unsettling Perspective; mental damage and Recall Knowledge information remain native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "unsettling-perspective"],
+    "variables": {"B330UpsEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B330UpsEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B330UpsEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
+    "nodes": [
+      {"id": "B330UpsEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B330UpsMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
+      {"id": "B330UpsMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:unsettling-perspective"}, "list": {"connection": "B330UpsEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B330UpsSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B330UpsSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B330UpsEvt00001X:outputs:outcome"}}, "outs": {"criticalFailure": {"connection": "B330UpsStn00001X:ins:in"}}, "position": {"x": 640, "y": 0}},
+      {"id": "B330UpsStn00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stunned"}, "value": {"value": 1}, "name": {"value": "Effect: Unsettling Perspective"}, "target": {"connection": "B330UpsEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+    ]
+  }
+]
