@@ -1,0 +1,94 @@
+[
+  {
+    "id": "DrinkEssTrig0001",
+    "name": "Drink Essence — Choice",
+    "folder": "Monster Abilities",
+    "description": "When Drink Essence is used, ask the user whether to increase drained or stupefied, then apply the selected condition by 1 up to 4. Requirements, healing, and any repeat-use restrictions remain native/manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "sf2e",
+      "monster-ability",
+      "drink-essence",
+      "await-select"
+    ],
+    "variables": {
+      "DrinkEssEvt00001:outputs:targets": {
+        "type": "target",
+        "isArray": true,
+        "label": "Targets"
+      }
+    },
+    "nodes": [
+      {
+        "id": "DrinkEssEvt00001",
+        "type": "action-chat-event",
+        "inputs": {
+          "slug": {
+            "value": "drink-essence"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "DrinkEssSel00001:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "DrinkEssSel00001",
+        "type": "await-select",
+        "state": "list",
+        "inputs": {
+          "title": {
+            "value": "Choose Drink Essence condition"
+          },
+          "timeout": {
+            "value": 30
+          },
+          "list": {
+            "value": [
+              "drained",
+              "stupefied"
+            ]
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "DrinkEssInc00001:ins:in"
+          }
+        },
+        "position": {
+          "x": 480,
+          "y": 0
+        }
+      },
+      {
+        "id": "DrinkEssInc00001",
+        "type": "increase-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "connection": "DrinkEssSel00001:outputs:value"
+          },
+          "max": {
+            "value": 4
+          },
+          "value": {
+            "value": 1
+          },
+          "target": {
+            "connection": "DrinkEssEvt00001:outputs:targets"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      }
+    ]
+  }
+]

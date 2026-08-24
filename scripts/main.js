@@ -978,6 +978,7 @@ Hooks.once("triggerEngine.registerTriggers", (registerTriggers) => {
   registerTriggers("trigger-engine", "pf2e-trigger", "modules/trigger-package/triggers/batch-214-monsters.json");
   registerTriggers("trigger-engine", "pf2e-trigger", "modules/trigger-package/triggers/batch-214-spells.json");
   registerTriggers("trigger-engine", "pf2e-trigger", "modules/trigger-package/triggers/batch-489-sf2e-feats.json");
+  registerTriggers("trigger-engine", "pf2e-trigger", "modules/trigger-package/triggers/batch-492-new-capabilities.json");
 });
 
 

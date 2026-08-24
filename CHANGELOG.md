@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.3
+
+- Added selectable `Drink Essence` automation using the Trigger Engine `Await Select` node.
+
 ## 0.1.2
 
 - Removed 22 triggers duplicated by the public PF2e Trigger Trove.

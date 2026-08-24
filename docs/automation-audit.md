@@ -5978,3 +5978,7 @@ The reported red invalid entries were traced to the unsupported `persistent-dama
 ## Batch 491 Trigger Trove deduplication
 
 Compared the module's trigger names against the public [PF2e Trigger Trove](https://github.com/pedrogrullada/pf2e-trigger-trove) repository. The trove contained 109 trigger definitions; 22 exact-name duplicates were removed from this package, including Bon Mot, Brutal Beating, Enfeeble, Fear, Fearsome, Frightful Presence, Slow, Stench, and Unbalancing Blow. Distinctly named triggers were retained, and no Trigger Trove files were copied into this module.
+
+## Batch 492 Trigger Engine capability audit
+
+Used the Trigger Engine 1.27+ `Await Select` action node and propagated action user context to replace the two manual-choice `Drink Essence` triggers with one selectable automation. The trigger asks the acting user to choose drained or stupefied, then increases the selected condition up to 4. The native requirements, healing, and repeat-use restrictions remain manual. No Trigger Trove definition named `Drink Essence — Choice` was present.
