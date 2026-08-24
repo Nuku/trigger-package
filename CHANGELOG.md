@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.4
+
+- Refactored `Drink Essence` to use a reusable `Execute Trigger` condition-increase helper.
+
 ## 0.1.3
 
 - Added selectable `Drink Essence` automation using the Trigger Engine `Await Select` node.

@@ -3,91 +3,89 @@
     "id": "DrinkEssTrig0001",
     "name": "Drink Essence — Choice",
     "folder": "Monster Abilities",
-    "description": "When Drink Essence is used, ask the user whether to increase drained or stupefied, then apply the selected condition by 1 up to 4. Requirements, healing, and any repeat-use restrictions remain native/manual.",
+    "description": "When Drink Essence is used, ask the acting user whether to increase drained or stupefied, then execute the shared condition-increase helper. Requirements, healing, and repeat-use restrictions remain native/manual.",
     "priority": 0,
-    "tags": [
-      "pf2e",
-      "sf2e",
-      "monster-ability",
-      "drink-essence",
-      "await-select"
-    ],
+    "tags": ["pf2e", "sf2e", "monster-ability", "drink-essence", "await-select", "execute-trigger"],
     "variables": {
-      "DrinkEssEvt00001:outputs:targets": {
-        "type": "target",
-        "isArray": true,
-        "label": "Targets"
-      }
+      "DrinkEssEvt00001:outputs:targets": {"type": "target", "isArray": true, "label": "Targets"}
     },
     "nodes": [
       {
         "id": "DrinkEssEvt00001",
         "type": "action-chat-event",
-        "inputs": {
-          "slug": {
-            "value": "drink-essence"
-          }
-        },
-        "outs": {
-          "out": {
-            "connection": "DrinkEssSel00001:ins:in"
-          }
-        },
-        "position": {
-          "x": 0,
-          "y": 0
-        }
+        "inputs": {"slug": {"value": "drink-essence"}},
+        "outs": {"out": {"connection": "DrinkEssSel00001:ins:in"}},
+        "position": {"x": 0, "y": 0}
       },
       {
         "id": "DrinkEssSel00001",
         "type": "await-select",
         "state": "list",
         "inputs": {
-          "title": {
-            "value": "Choose Drink Essence condition"
-          },
-          "timeout": {
-            "value": 30
-          },
-          "list": {
-            "value": [
-              "drained",
-              "stupefied"
-            ]
+          "title": {"value": "Choose Drink Essence condition"},
+          "timeout": {"value": 30},
+          "list": {"value": ["drained", "stupefied"]}
+        },
+        "outs": {"out": {"connection": "DrinkEssExe00001:ins:in"}},
+        "position": {"x": 480, "y": 0}
+      },
+      {
+        "custom": {
+          "inputs": {
+            "DrinkEssTarInpt1": {"id": "DrinkEssTarInpt1", "isArray": true, "label": "Target", "slug": "input", "type": "target"},
+            "DrinkEssConInpt1": {"id": "DrinkEssConInpt1", "isArray": false, "label": "Condition", "slug": "input", "type": "text"},
+            "DrinkEssValInpt1": {"id": "DrinkEssValInpt1", "isArray": false, "label": "Value", "slug": "input", "type": "number"},
+            "DrinkEssMaxInpt1": {"id": "DrinkEssMaxInpt1", "isArray": false, "label": "Maximum", "slug": "input", "type": "number"}
           }
         },
-        "outs": {
-          "out": {
-            "connection": "DrinkEssInc00001:ins:in"
+        "id": "DrinkEssExe00001",
+        "type": "execute-trigger",
+        "inputs": {
+          "path": {"value": "trigger-engine:pf2e-trigger:DrinkEssHlp00001"},
+          "DrinkEssTarInpt1": {"connection": "DrinkEssEvt00001:outputs:targets"},
+          "DrinkEssConInpt1": {"connection": "DrinkEssSel00001:outputs:value"},
+          "DrinkEssValInpt1": {"value": 1},
+          "DrinkEssMaxInpt1": {"value": 4}
+        },
+        "outs": {},
+        "position": {"x": 960, "y": 0}
+      }
+    ]
+  },
+  {
+    "id": "DrinkEssHlp00001",
+    "name": "Shared Condition Increase Helper",
+    "folder": "Internal Helpers",
+    "description": "Reusable Execute Trigger helper for increasing a selected valued condition on one or more targets.",
+    "priority": 0,
+    "tags": ["pf2e", "sf2e", "internal-helper", "execute-event"],
+    "variables": {},
+    "nodes": [
+      {
+        "custom": {
+          "outputs": {
+            "DrinkEssTarOut01": {"id": "DrinkEssTarOut01", "isArray": true, "label": "Target", "slug": "output", "type": "target"},
+            "DrinkEssConOut01": {"id": "DrinkEssConOut01", "isArray": false, "label": "Condition", "slug": "output", "type": "text"},
+            "DrinkEssValOut01": {"id": "DrinkEssValOut01", "isArray": false, "label": "Value", "slug": "output", "type": "number"},
+            "DrinkEssMaxOut01": {"id": "DrinkEssMaxOut01", "isArray": false, "label": "Maximum", "slug": "output", "type": "number"}
           }
         },
-        "position": {
-          "x": 480,
-          "y": 0
-        }
+        "id": "DrinkEssRun00001",
+        "type": "execute-event",
+        "outs": {"out": {"connection": "DrinkEssInc00001:ins:in"}},
+        "position": {"x": 0, "y": 0}
       },
       {
         "id": "DrinkEssInc00001",
         "type": "increase-condition",
         "state": "fixed",
         "inputs": {
-          "condition": {
-            "connection": "DrinkEssSel00001:outputs:value"
-          },
-          "max": {
-            "value": 4
-          },
-          "value": {
-            "value": 1
-          },
-          "target": {
-            "connection": "DrinkEssEvt00001:outputs:targets"
-          }
+          "condition": {"connection": "DrinkEssRun00001:outputs:DrinkEssConOut01"},
+          "max": {"connection": "DrinkEssRun00001:outputs:DrinkEssMaxOut01"},
+          "value": {"connection": "DrinkEssRun00001:outputs:DrinkEssValOut01"},
+          "target": {"connection": "DrinkEssRun00001:outputs:DrinkEssTarOut01"}
         },
-        "position": {
-          "x": 960,
-          "y": 0
-        }
+        "position": {"x": 480, "y": 0}
       }
     ]
   }
