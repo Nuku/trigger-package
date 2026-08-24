@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.2
+
+- Removed 22 triggers duplicated by the public PF2e Trigger Trove.
+
 ## 0.1.1
 
 - Removed invalid `persistent-damage` Trigger Engine nodes and preserved valid condition branches where possible.

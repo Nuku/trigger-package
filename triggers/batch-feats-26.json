@@ -1,40 +1,117 @@
 [
   {
-    "id": "B26UnbalTrg0001X",
-    "name": "Unbalancing Blow",
-    "folder": "Feats & Features",
-    "description": "After a qualifying Unbalancing Blow Strike critically succeeds and deals damage, apply off-guard to the target until the end of the attacker's next turn. The thief racket prerequisite and confirming that the Strike deals damage remain manual.",
-    "priority": 0,
-    "tags": ["pf2e", "feat", "unbalancing-blow"],
-    "variables": {
-      "B26UnbalEvt0001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
-      "B26UnbalEvt0001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
-      "B26UnbalEvt0001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
-    },
-    "nodes": [
-      {"id": "B26UnbalEvt0001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B26UnbalMch0001X:ins:in"}}, "position": {"x": 0, "y": 0}},
-      {"id": "B26UnbalMch0001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:unbalancing-blow"}, "list": {"connection": "B26UnbalEvt0001X:outputs:options"}}, "outs": {"true": {"connection": "B26UnbalSpl0001X:ins:in"}}, "position": {"x": 320, "y": 0}},
-      {"id": "B26UnbalSpl0001X", "type": "split-outcome", "inputs": {"input": {"connection": "B26UnbalEvt0001X:outputs:outcome"}}, "outs": {"criticalSuccess": {"connection": "B26UnbalOff0001X:ins:in"}}, "position": {"x": 640, "y": 0}},
-      {"id": "B26UnbalOff0001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "expiry": {"value": "turn-end"}, "name": {"value": "Effect: Unbalancing Blow"}, "target": {"connection": "B26UnbalEvt0001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
-    ]
-  },
-  {
     "id": "B26ChainTrg0001X",
     "name": "Chain of Words",
     "folder": "Feats & Features",
     "description": "After a qualifying Chain of Words basic Reflex save critically fails, apply immobilized for 1 round. The paired-rune activation, area placement, damage, and identifying creatures outside the area remain manual.",
     "priority": 0,
-    "tags": ["pf2e", "feat", "chain-of-words"],
+    "tags": [
+      "pf2e",
+      "feat",
+      "chain-of-words"
+    ],
     "variables": {
-      "B26ChainEvt0001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
-      "B26ChainEvt0001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
-      "B26ChainEvt0001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+      "B26ChainEvt0001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B26ChainEvt0001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B26ChainEvt0001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
     },
     "nodes": [
-      {"id": "B26ChainEvt0001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B26ChainMch0001X:ins:in"}}, "position": {"x": 0, "y": 0}},
-      {"id": "B26ChainMch0001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:chain-of-words"}, "list": {"connection": "B26ChainEvt0001X:outputs:options"}}, "outs": {"true": {"connection": "B26ChainSpl0001X:ins:in"}}, "position": {"x": 320, "y": 0}},
-      {"id": "B26ChainSpl0001X", "type": "split-outcome", "inputs": {"input": {"connection": "B26ChainEvt0001X:outputs:outcome"}}, "outs": {"criticalFailure": {"connection": "B26ChainImb0001X:ins:in"}}, "position": {"x": 640, "y": 0}},
-      {"id": "B26ChainImb0001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "immobilized"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Chain of Words"}, "target": {"connection": "B26ChainEvt0001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+      {
+        "id": "B26ChainEvt0001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B26ChainMch0001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B26ChainMch0001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:chain-of-words"
+          },
+          "list": {
+            "connection": "B26ChainEvt0001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B26ChainSpl0001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B26ChainSpl0001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B26ChainEvt0001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "criticalFailure": {
+            "connection": "B26ChainImb0001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B26ChainImb0001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "immobilized"
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "rounds"
+          },
+          "name": {
+            "value": "Effect: Chain of Words"
+          },
+          "target": {
+            "connection": "B26ChainEvt0001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      }
     ]
   },
   {
@@ -43,17 +120,118 @@
     "folder": "Feats & Features",
     "description": "After a qualifying Ivy Playhouse Strike hits, apply clumsy 1 to the target until the end of the attacker's next turn. The Dandy prerequisite and the feat's damage adjustment and nonlethal details remain manual.",
     "priority": 0,
-    "tags": ["pf2e", "feat", "ivy-playhouse-strike"],
+    "tags": [
+      "pf2e",
+      "feat",
+      "ivy-playhouse-strike"
+    ],
     "variables": {
-      "B26IvyEvt000001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
-      "B26IvyEvt000001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
-      "B26IvyEvt000001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+      "B26IvyEvt000001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B26IvyEvt000001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B26IvyEvt000001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
     },
     "nodes": [
-      {"id": "B26IvyEvt000001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": {"out": {"connection": "B26IvyMch000001X:ins:in"}}, "position": {"x": 0, "y": 0}},
-      {"id": "B26IvyMch000001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:ivy-playhouse-strike"}, "list": {"connection": "B26IvyEvt000001X:outputs:options"}}, "outs": {"true": {"connection": "B26IvySpl000001X:ins:in"}}, "position": {"x": 320, "y": 0}},
-      {"id": "B26IvySpl000001X", "type": "split-outcome", "inputs": {"input": {"connection": "B26IvyEvt000001X:outputs:outcome"}}, "outs": {"success": {"connection": "B26IvyClm000001X:ins:in"}, "criticalSuccess": {"connection": "B26IvyClm000001X:ins:in"}}, "position": {"x": 640, "y": 0}},
-      {"id": "B26IvyClm000001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "clumsy"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "expiry": {"value": "turn-end"}, "name": {"value": "Effect: Ivy Playhouse Strike"}, "target": {"connection": "B26IvyEvt000001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+      {
+        "id": "B26IvyEvt000001X",
+        "type": "attack-roll-event",
+        "state": "attack",
+        "inputs": {},
+        "outs": {
+          "out": {
+            "connection": "B26IvyMch000001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B26IvyMch000001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:ivy-playhouse-strike"
+          },
+          "list": {
+            "connection": "B26IvyEvt000001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B26IvySpl000001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B26IvySpl000001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B26IvyEvt000001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "success": {
+            "connection": "B26IvyClm000001X:ins:in"
+          },
+          "criticalSuccess": {
+            "connection": "B26IvyClm000001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B26IvyClm000001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "clumsy"
+          },
+          "value": {
+            "value": 1
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "rounds"
+          },
+          "expiry": {
+            "value": "turn-end"
+          },
+          "name": {
+            "value": "Effect: Ivy Playhouse Strike"
+          },
+          "target": {
+            "connection": "B26IvyEvt000001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      }
     ]
   },
   {
@@ -62,17 +240,110 @@
     "folder": "Feats & Features",
     "description": "After a qualifying Flinging Blow Strike, apply prone when the target fails its Fortitude save. The Strike, push distance, save result, and obstacle or damage handling remain manual.",
     "priority": 0,
-    "tags": ["pf2e", "feat", "flinging-blow"],
+    "tags": [
+      "pf2e",
+      "feat",
+      "flinging-blow"
+    ],
     "variables": {
-      "B26FlingEvt0001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
-      "B26FlingEvt0001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
-      "B26FlingEvt0001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+      "B26FlingEvt0001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B26FlingEvt0001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B26FlingEvt0001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
     },
     "nodes": [
-      {"id": "B26FlingEvt0001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B26FlingMch0001X:ins:in"}}, "position": {"x": 0, "y": 0}},
-      {"id": "B26FlingMch0001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:flinging-blow"}, "list": {"connection": "B26FlingEvt0001X:outputs:options"}}, "outs": {"true": {"connection": "B26FlingSpl0001X:ins:in"}}, "position": {"x": 320, "y": 0}},
-      {"id": "B26FlingSpl0001X", "type": "split-outcome", "inputs": {"input": {"connection": "B26FlingEvt0001X:outputs:outcome"}}, "outs": {"failure": {"connection": "B26FlingPrn0001X:ins:in"}, "criticalFailure": {"connection": "B26FlingPrn0001X:ins:in"}}, "position": {"x": 640, "y": 0}},
-      {"id": "B26FlingPrn0001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "prone"}, "name": {"value": "Effect: Flinging Blow"}, "target": {"connection": "B26FlingEvt0001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+      {
+        "id": "B26FlingEvt0001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "saving-throw"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B26FlingMch0001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B26FlingMch0001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:flinging-blow"
+          },
+          "list": {
+            "connection": "B26FlingEvt0001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B26FlingSpl0001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B26FlingSpl0001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B26FlingEvt0001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "failure": {
+            "connection": "B26FlingPrn0001X:ins:in"
+          },
+          "criticalFailure": {
+            "connection": "B26FlingPrn0001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B26FlingPrn0001X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "prone"
+          },
+          "name": {
+            "value": "Effect: Flinging Blow"
+          },
+          "target": {
+            "connection": "B26FlingEvt0001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      }
     ]
   }
 ]

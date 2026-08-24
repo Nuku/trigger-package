@@ -1,42 +1,146 @@
 [
   {
-    "id": "F16BonMotTrg0001",
-    "name": "Bon Mot",
-    "folder": "Feats & Features",
-    "description": "After a successful Bon Mot Diplomacy check, apply stupefied 1 for 1 round; on a critical success, apply stupefied 2 for 1 round. The linguistic, mental, and immunity rules remain manual.",
-    "priority": 0,
-    "tags": ["pf2e", "feat", "bon-mot"],
-    "variables": {
-      "F16BonMotEvt001X:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
-      "F16BonMotEvt001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
-      "F16BonMotEvt001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
-    },
-    "nodes": [
-      {"id": "F16BonMotEvt001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "skill-check"}}, "outs": {"out": {"connection": "F16BonMotMch001X:ins:in"}}, "position": {"x": 0, "y": 0}},
-      {"id": "F16BonMotMch001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:bon-mot"}, "list": {"connection": "F16BonMotEvt001X:outputs:options"}}, "outs": {"true": {"connection": "F16BonMotSpl001X:ins:in"}}, "position": {"x": 320, "y": 0}},
-      {"id": "F16BonMotSpl001X", "type": "split-outcome", "inputs": {"input": {"connection": "F16BonMotEvt001X:outputs:outcome"}}, "outs": {"success": {"connection": "F16BonMotStp001X:ins:in"}, "criticalSuccess": {"connection": "F16BonMotStp002X:ins:in"}}, "position": {"x": 640, "y": 0}},
-      {"id": "F16BonMotStp001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stupefied"}, "value": {"value": 1}, "duration": {"value": 1}, "name": {"value": "Effect: Bon Mot"}, "target": {"connection": "F16BonMotEvt001X:outputs:roller"}}, "position": {"x": 960, "y": -60}},
-      {"id": "F16BonMotStp002X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stupefied"}, "value": {"value": 2}, "duration": {"value": 1}, "name": {"value": "Effect: Bon Mot"}, "target": {"connection": "F16BonMotEvt001X:outputs:roller"}}, "position": {"x": 960, "y": 60}}
-    ]
-  },
-  {
     "id": "F16EvnglzTrg001X",
     "name": "Evangelize",
     "folder": "Feats & Features",
     "description": "After a successful Evangelize check, apply stupefied 1 for 1 round; on a critical success, apply stupefied 2 for 1 round. The linguistic, mental, and target-immunity rules remain manual.",
     "priority": 0,
-    "tags": ["pf2e", "feat", "evangelize"],
+    "tags": [
+      "pf2e",
+      "feat",
+      "evangelize"
+    ],
     "variables": {
-      "F16EvnglzEvt001X:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
-      "F16EvnglzEvt001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
-      "F16EvnglzEvt001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+      "F16EvnglzEvt001X:outputs:roller": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "F16EvnglzEvt001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "F16EvnglzEvt001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
     },
     "nodes": [
-      {"id": "F16EvnglzEvt001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "skill-check"}}, "outs": {"out": {"connection": "F16EvnglzMch001X:ins:in"}}, "position": {"x": 0, "y": 0}},
-      {"id": "F16EvnglzMch001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:evangelize"}, "list": {"connection": "F16EvnglzEvt001X:outputs:options"}}, "outs": {"true": {"connection": "F16EvnglzSpl001X:ins:in"}}, "position": {"x": 320, "y": 0}},
-      {"id": "F16EvnglzSpl001X", "type": "split-outcome", "inputs": {"input": {"connection": "F16EvnglzEvt001X:outputs:outcome"}}, "outs": {"success": {"connection": "F16EvnglzStp001X:ins:in"}, "criticalSuccess": {"connection": "F16EvnglzStp002X:ins:in"}}, "position": {"x": 640, "y": 0}},
-      {"id": "F16EvnglzStp001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stupefied"}, "value": {"value": 1}, "duration": {"value": 1}, "name": {"value": "Effect: Evangelize"}, "target": {"connection": "F16EvnglzEvt001X:outputs:roller"}}, "position": {"x": 960, "y": -60}},
-      {"id": "F16EvnglzStp002X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "stupefied"}, "value": {"value": 2}, "duration": {"value": 1}, "name": {"value": "Effect: Evangelize"}, "target": {"connection": "F16EvnglzEvt001X:outputs:roller"}}, "position": {"x": 960, "y": 60}}
+      {
+        "id": "F16EvnglzEvt001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "skill-check"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "F16EvnglzMch001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "F16EvnglzMch001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:evangelize"
+          },
+          "list": {
+            "connection": "F16EvnglzEvt001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "F16EvnglzSpl001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "F16EvnglzSpl001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "F16EvnglzEvt001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "success": {
+            "connection": "F16EvnglzStp001X:ins:in"
+          },
+          "criticalSuccess": {
+            "connection": "F16EvnglzStp002X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "F16EvnglzStp001X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "stupefied"
+          },
+          "value": {
+            "value": 1
+          },
+          "duration": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Evangelize"
+          },
+          "target": {
+            "connection": "F16EvnglzEvt001X:outputs:roller"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": -60
+        }
+      },
+      {
+        "id": "F16EvnglzStp002X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "stupefied"
+          },
+          "value": {
+            "value": 2
+          },
+          "duration": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Evangelize"
+          },
+          "target": {
+            "connection": "F16EvnglzEvt001X:outputs:roller"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 60
+        }
+      }
     ]
   },
   {
@@ -45,17 +149,113 @@
     "folder": "Feats & Features",
     "description": "After a successful Goading Feint, apply off-guard to the target for 1 round; on a critical success, apply the same condition to the target against all the user's attacks. Feint and attack-scope requirements remain manual.",
     "priority": 0,
-    "tags": ["pf2e", "feat", "goading-feint"],
+    "tags": [
+      "pf2e",
+      "feat",
+      "goading-feint"
+    ],
     "variables": {
-      "F16GodFntEvt001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
-      "F16GodFntEvt001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
-      "F16GodFntEvt001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+      "F16GodFntEvt001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "F16GodFntEvt001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "F16GodFntEvt001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
     },
     "nodes": [
-      {"id": "F16GodFntEvt001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "skill-check"}}, "outs": {"out": {"connection": "F16GodFntMch001X:ins:in"}}, "position": {"x": 0, "y": 0}},
-      {"id": "F16GodFntMch001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:goading-feint"}, "list": {"connection": "F16GodFntEvt001X:outputs:options"}}, "outs": {"true": {"connection": "F16GodFntSpl001X:ins:in"}}, "position": {"x": 320, "y": 0}},
-      {"id": "F16GodFntSpl001X", "type": "split-outcome", "inputs": {"input": {"connection": "F16GodFntEvt001X:outputs:outcome"}}, "outs": {"success": {"connection": "F16GodFntOff001X:ins:in"}, "criticalSuccess": {"connection": "F16GodFntOff001X:ins:in"}}, "position": {"x": 640, "y": 0}},
-      {"id": "F16GodFntOff001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "name": {"value": "Effect: Goading Feint"}, "target": {"connection": "F16GodFntEvt001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
+      {
+        "id": "F16GodFntEvt001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "skill-check"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "F16GodFntMch001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "F16GodFntMch001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:goading-feint"
+          },
+          "list": {
+            "connection": "F16GodFntEvt001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "F16GodFntSpl001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "F16GodFntSpl001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "F16GodFntEvt001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "success": {
+            "connection": "F16GodFntOff001X:ins:in"
+          },
+          "criticalSuccess": {
+            "connection": "F16GodFntOff001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "F16GodFntOff001X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "off-guard"
+          },
+          "duration": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Goading Feint"
+          },
+          "target": {
+            "connection": "F16GodFntEvt001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      }
     ]
   },
   {
@@ -64,17 +264,113 @@
     "folder": "Feats & Features",
     "description": "After a successful Distracting Feint, apply off-guard to the target for 1 round. The Feint action, target restrictions, and exact attack scope remain manual.",
     "priority": 0,
-    "tags": ["pf2e", "feat", "distracting-feint"],
+    "tags": [
+      "pf2e",
+      "feat",
+      "distracting-feint"
+    ],
     "variables": {
-      "F16DstrFntEvt001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
-      "F16DstrFntEvt001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
-      "F16DstrFntEvt001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
+      "F16DstrFntEvt001:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "F16DstrFntEvt001:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "F16DstrFntEvt001:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
     },
     "nodes": [
-      {"id": "F16DstrFntEvt001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "skill-check"}}, "outs": {"out": {"connection": "F16DstrFntMch001:ins:in"}}, "position": {"x": 0, "y": 0}},
-      {"id": "F16DstrFntMch001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:distracting-feint"}, "list": {"connection": "F16DstrFntEvt001:outputs:options"}}, "outs": {"true": {"connection": "F16DstrFntSpl001:ins:in"}}, "position": {"x": 320, "y": 0}},
-      {"id": "F16DstrFntSpl001", "type": "split-outcome", "inputs": {"input": {"connection": "F16DstrFntEvt001:outputs:outcome"}}, "outs": {"success": {"connection": "F16DstrFntOff001:ins:in"}, "criticalSuccess": {"connection": "F16DstrFntOff001:ins:in"}}, "position": {"x": 640, "y": 0}},
-      {"id": "F16DstrFntOff001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "name": {"value": "Effect: Distracting Feint"}, "target": {"connection": "F16DstrFntEvt001:outputs:target"}}, "position": {"x": 960, "y": 0}}
+      {
+        "id": "F16DstrFntEvt001",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "skill-check"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "F16DstrFntMch001:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "F16DstrFntMch001",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:distracting-feint"
+          },
+          "list": {
+            "connection": "F16DstrFntEvt001:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "F16DstrFntSpl001:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "F16DstrFntSpl001",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "F16DstrFntEvt001:outputs:outcome"
+          }
+        },
+        "outs": {
+          "success": {
+            "connection": "F16DstrFntOff001:ins:in"
+          },
+          "criticalSuccess": {
+            "connection": "F16DstrFntOff001:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "F16DstrFntOff001",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "off-guard"
+          },
+          "duration": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Distracting Feint"
+          },
+          "target": {
+            "connection": "F16DstrFntEvt001:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      }
     ]
   }
 ]

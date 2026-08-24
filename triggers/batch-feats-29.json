@@ -1,6 +1,334 @@
 [
-{"id":"B29BBTrg0000001X","name":"Brutal Beating","folder":"Feats & Features","description":"After a qualifying Brutal Beating Strike critically succeeds and deals damage, apply frightened 1 to the target. Weapon selection, damage confirmation, and the rogue feat requirement remain manual.","priority":0,"tags":["pf2e","feat","brutal-beating"],"variables":{"B29BBEvt0000001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"B29BBEvt0000001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"},"B29BBEvt0000001X:outputs:outcome":{"type":"outcome","isArray":false,"label":"Outcome"}},"nodes":[{"id":"B29BBEvt0000001X","type":"attack-roll-event","state":"attack","inputs":{},"outs":{"out":{"connection":"B29BBMch0000001X:ins:in"}},"position":{"x":0,"y":0}},{"id":"B29BBMch0000001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:brutal-beating"},"list":{"connection":"B29BBEvt0000001X:outputs:options"}},"outs":{"true":{"connection":"B29BBSpl0000001X:ins:in"}},"position":{"x":320,"y":0}},{"id":"B29BBSpl0000001X","type":"split-outcome","inputs":{"input":{"connection":"B29BBEvt0000001X:outputs:outcome"}},"outs":{"criticalSuccess":{"connection":"B29BBFgt0000001X:ins:in"}},"position":{"x":640,"y":0}},{"id":"B29BBFgt0000001X","type":"create-condition","state":"fixed","inputs":{"condition":{"value":"frightened"},"value":{"value":1},"name":{"value":"Effect: Brutal Beating"},"target":{"connection":"B29BBEvt0000001X:outputs:target"}},"position":{"x":960,"y":0}}]},
-{"id":"B29DRTrg0000001X","name":"Death Roll","folder":"Feats & Features","description":"After a qualifying Death Roll jaws Strike hits, apply prone to the target. Crocodile or hybrid shape, the grabbed prerequisite, the water bonus, and releasing the grab on a miss remain manual.","priority":0,"tags":["pf2e","feat","death-roll"],"variables":{"B29DREvt0000001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"B29DREvt0000001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"},"B29DREvt0000001X:outputs:outcome":{"type":"outcome","isArray":false,"label":"Outcome"}},"nodes":[{"id":"B29DREvt0000001X","type":"attack-roll-event","state":"attack","inputs":{},"outs":{"out":{"connection":"B29DRMch0000001X:ins:in"}},"position":{"x":0,"y":0}},{"id":"B29DRMch0000001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:death-roll"},"list":{"connection":"B29DREvt0000001X:outputs:options"}},"outs":{"true":{"connection":"B29DRSpl0000001X:ins:in"}},"position":{"x":320,"y":0}},{"id":"B29DRSpl0000001X","type":"split-outcome","inputs":{"input":{"connection":"B29DREvt0000001X:outputs:outcome"}},"outs":{"success":{"connection":"B29DRPrn0000001X:ins:in"},"criticalSuccess":{"connection":"B29DRPrn0000001X:ins:in"}},"position":{"x":640,"y":0}},{"id":"B29DRPrn0000001X","type":"create-condition","state":"fixed","inputs":{"condition":{"value":"prone"},"name":{"value":"Effect: Death Roll"},"target":{"connection":"B29DREvt0000001X:outputs:target"}},"position":{"x":960,"y":0}}]},
-{"id":"B29WTTrg0000001X","name":"Whirling Throw","folder":"Feats & Features","description":"After a qualifying Whirling Throw Athletics check critically succeeds, apply prone to the target. Grabbed or restrained prerequisites, distance, impact damage, size modifiers, and releasing the hold on a critical failure remain manual.","priority":0,"tags":["pf2e","feat","whirling-throw"],"variables":{"B29WTEvt0000001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"B29WTEvt0000001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"},"B29WTEvt0000001X:outputs:outcome":{"type":"outcome","isArray":false,"label":"Outcome"}},"nodes":[{"id":"B29WTEvt0000001X","type":"check-roll-event","state":"check","inputs":{"for":{"value":"skill-check"}},"outs":{"out":{"connection":"B29WTMch0000001X:ins:in"}},"position":{"x":0,"y":0}},{"id":"B29WTMch0000001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:whirling-throw"},"list":{"connection":"B29WTEvt0000001X:outputs:options"}},"outs":{"true":{"connection":"B29WTSpl0000001X:ins:in"}},"position":{"x":320,"y":0}},{"id":"B29WTSpl0000001X","type":"split-outcome","inputs":{"input":{"connection":"B29WTEvt0000001X:outputs:outcome"}},"outs":{"criticalSuccess":{"connection":"B29WTPrn0000001X:ins:in"}},"position":{"x":640,"y":0}},{"id":"B29WTPrn0000001X","type":"create-condition","state":"fixed","inputs":{"condition":{"value":"prone"},"name":{"value":"Effect: Whirling Throw"},"target":{"connection":"B29WTEvt0000001X:outputs:target"}},"position":{"x":960,"y":0}}]},
-{"id":"B29STTrg0000001X","name":"Sudden Terror","folder":"Feats & Features","description":"After a qualifying Sudden Terror Demoralize succeeds, apply frightened 1; the hidden-target upgrade to frightened 2 and 24-hour witness immunity remain manual.","priority":0,"tags":["pf2e","feat","sudden-terror"],"variables":{"B29STEvt0000001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"B29STEvt0000001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"},"B29STEvt0000001X:outputs:outcome":{"type":"outcome","isArray":false,"label":"Outcome"}},"nodes":[{"id":"B29STEvt0000001X","type":"check-roll-event","state":"check","inputs":{"for":{"value":"skill-check"}},"outs":{"out":{"connection":"B29STMch0000001X:ins:in"}},"position":{"x":0,"y":0}},{"id":"B29STMch0000001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:sudden-terror"},"list":{"connection":"B29STEvt0000001X:outputs:options"}},"outs":{"true":{"connection":"B29STSpl0000001X:ins:in"}},"position":{"x":320,"y":0}},{"id":"B29STSpl0000001X","type":"split-outcome","inputs":{"input":{"connection":"B29STEvt0000001X:outputs:outcome"}},"outs":{"success":{"connection":"B29STFgt0000001X:ins:in"},"criticalSuccess":{"connection":"B29STFgt0000001X:ins:in"}},"position":{"x":640,"y":0}},{"id":"B29STFgt0000001X","type":"create-condition","state":"fixed","inputs":{"condition":{"value":"frightened"},"value":{"value":1},"name":{"value":"Effect: Sudden Terror"},"target":{"connection":"B29STEvt0000001X:outputs:target"}},"position":{"x":960,"y":0}}]}
+  {
+    "id": "B29DRTrg0000001X",
+    "name": "Death Roll",
+    "folder": "Feats & Features",
+    "description": "After a qualifying Death Roll jaws Strike hits, apply prone to the target. Crocodile or hybrid shape, the grabbed prerequisite, the water bonus, and releasing the grab on a miss remain manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "feat",
+      "death-roll"
+    ],
+    "variables": {
+      "B29DREvt0000001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B29DREvt0000001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B29DREvt0000001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B29DREvt0000001X",
+        "type": "attack-roll-event",
+        "state": "attack",
+        "inputs": {},
+        "outs": {
+          "out": {
+            "connection": "B29DRMch0000001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B29DRMch0000001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:death-roll"
+          },
+          "list": {
+            "connection": "B29DREvt0000001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B29DRSpl0000001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B29DRSpl0000001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B29DREvt0000001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "success": {
+            "connection": "B29DRPrn0000001X:ins:in"
+          },
+          "criticalSuccess": {
+            "connection": "B29DRPrn0000001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B29DRPrn0000001X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "prone"
+          },
+          "name": {
+            "value": "Effect: Death Roll"
+          },
+          "target": {
+            "connection": "B29DREvt0000001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      }
+    ]
+  },
+  {
+    "id": "B29WTTrg0000001X",
+    "name": "Whirling Throw",
+    "folder": "Feats & Features",
+    "description": "After a qualifying Whirling Throw Athletics check critically succeeds, apply prone to the target. Grabbed or restrained prerequisites, distance, impact damage, size modifiers, and releasing the hold on a critical failure remain manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "feat",
+      "whirling-throw"
+    ],
+    "variables": {
+      "B29WTEvt0000001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B29WTEvt0000001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B29WTEvt0000001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B29WTEvt0000001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "skill-check"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B29WTMch0000001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B29WTMch0000001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:whirling-throw"
+          },
+          "list": {
+            "connection": "B29WTEvt0000001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B29WTSpl0000001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B29WTSpl0000001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B29WTEvt0000001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "criticalSuccess": {
+            "connection": "B29WTPrn0000001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B29WTPrn0000001X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "prone"
+          },
+          "name": {
+            "value": "Effect: Whirling Throw"
+          },
+          "target": {
+            "connection": "B29WTEvt0000001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      }
+    ]
+  },
+  {
+    "id": "B29STTrg0000001X",
+    "name": "Sudden Terror",
+    "folder": "Feats & Features",
+    "description": "After a qualifying Sudden Terror Demoralize succeeds, apply frightened 1; the hidden-target upgrade to frightened 2 and 24-hour witness immunity remain manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "feat",
+      "sudden-terror"
+    ],
+    "variables": {
+      "B29STEvt0000001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B29STEvt0000001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      },
+      "B29STEvt0000001X:outputs:outcome": {
+        "type": "outcome",
+        "isArray": false,
+        "label": "Outcome"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B29STEvt0000001X",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "skill-check"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B29STMch0000001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B29STMch0000001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:sudden-terror"
+          },
+          "list": {
+            "connection": "B29STEvt0000001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B29STSpl0000001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B29STSpl0000001X",
+        "type": "split-outcome",
+        "inputs": {
+          "input": {
+            "connection": "B29STEvt0000001X:outputs:outcome"
+          }
+        },
+        "outs": {
+          "success": {
+            "connection": "B29STFgt0000001X:ins:in"
+          },
+          "criticalSuccess": {
+            "connection": "B29STFgt0000001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      },
+      {
+        "id": "B29STFgt0000001X",
+        "type": "create-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "frightened"
+          },
+          "value": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Sudden Terror"
+          },
+          "target": {
+            "connection": "B29STEvt0000001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 960,
+          "y": 0
+        }
+      }
+    ]
+  }
 ]

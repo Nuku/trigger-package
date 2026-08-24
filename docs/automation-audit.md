@@ -5974,3 +5974,7 @@ Added eight uncovered SF2e feat automations:
 ## Batch 490 invalid-trigger remediation
 
 The reported red invalid entries were traced to the unsupported `persistent-damage` node type in the installed Trigger Engine 1.29.0. Sixty-five registered triggers used that node. Fifty-four pure persistent-damage triggers were removed, including the invalid Flaming, Greater Flaming, Static Snare, persistent bleed/fire/acid/void spell and equipment entries, and other screenshot-reported persistent-only graphs. Eleven mixed triggers were retained with their valid condition branches while the unsupported damage branches were removed, including Ignite Fireworks, Cutting Insult, Wintershot, Whispers of the Void, Widow's Bite, Camel Spit, Spiritual Disruption, Crucible of Iron, and Scalding Gauntlets (True). No unsupported persistent-damage nodes remain in registered sources. The package now contains 1,261 registered triggers across 972 registered JSON files.
+
+## Batch 491 Trigger Trove deduplication
+
+Compared the module's trigger names against the public [PF2e Trigger Trove](https://github.com/pedrogrullada/pf2e-trigger-trove) repository. The trove contained 109 trigger definitions; 22 exact-name duplicates were removed from this package, including Bon Mot, Brutal Beating, Enfeeble, Fear, Fearsome, Frightful Presence, Slow, Stench, and Unbalancing Blow. Distinctly named triggers were retained, and no Trigger Trove files were copied into this module.
