@@ -1,6 +1,174 @@
 [
-{"id":"E13RuneFTrg0001X","name":"Flaming","folder":"Equipment","description":"Apply persistent fire after a critical Flaming rune hit; weapon selection and recovery remain manual.","priority":0,"tags":["pf2e","equipment","flaming"],"variables":{"E13RuneFEvt0001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"E13RuneFEvt0001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"}},"nodes":[{"id":"E13RuneFEvt0001X","type":"attack-roll-event","outs":{"out":{"connection":"E13RuneFMch0001X:ins:in"}},"position":{"x":0,"y":0}},{"id":"E13RuneFMch0001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:flaming"},"list":{"connection":"E13RuneFEvt0001X:outputs:options"}},"outs":{"true":{"connection":"E13RuneFPer0001X:ins:in"}},"position":{"x":320,"y":0}},{"id":"E13RuneFPer0001X","type":"persistent-damage","state":"fixed","inputs":{"formula":{"value":"1d10[fire]"},"target":{"connection":"E13RuneFEvt0001X:outputs:target"},"name":{"value":"Effect: Flaming"}},"position":{"x":640,"y":0}}]},
-{"id":"E13RuneGTrg0001X","name":"Greater Flaming","folder":"Equipment","description":"Apply persistent fire after a critical Greater Flaming rune hit; weapon selection and recovery remain manual.","priority":0,"tags":["pf2e","equipment","greater-flaming"],"variables":{"E13RuneGEvt0001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"E13RuneGEvt0001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"}},"nodes":[{"id":"E13RuneGEvt0001X","type":"attack-roll-event","outs":{"out":{"connection":"E13RuneGMch0001X:ins:in"}},"position":{"x":0,"y":0}},{"id":"E13RuneGMch0001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:greater-flaming"},"list":{"connection":"E13RuneGEvt0001X:outputs:options"}},"outs":{"true":{"connection":"E13RuneGPer0001X:ins:in"}},"position":{"x":320,"y":0}},{"id":"E13RuneGPer0001X","type":"persistent-damage","state":"fixed","inputs":{"formula":{"value":"2d10[fire]"},"target":{"connection":"E13RuneGEvt0001X:outputs:target"},"name":{"value":"Effect: Greater Flaming"}},"position":{"x":640,"y":0}}]},
-{"id":"E13RuneMTrg0001X","name":"Major Rooting","folder":"Equipment","description":"Apply immobilized after a critical Major Rooting rune hit; Escape and weapon selection remain manual.","priority":0,"tags":["pf2e","equipment","major-rooting"],"variables":{"E13RuneMEvt0001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"E13RuneMEvt0001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"}},"nodes":[{"id":"E13RuneMEvt0001X","type":"attack-roll-event","outs":{"out":{"connection":"E13RuneMMch0001X:ins:in"}},"position":{"x":0,"y":0}},{"id":"E13RuneMMch0001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:major-rooting"},"list":{"connection":"E13RuneMEvt0001X:outputs:options"}},"outs":{"true":{"connection":"E13RuneMImb0001X:ins:in"}},"position":{"x":320,"y":0}},{"id":"E13RuneMImb0001X","type":"create-condition","state":"timed","inputs":{"condition":{"value":"immobilized"},"duration":{"value":1},"unit":{"value":"rounds"},"name":{"value":"Effect: Major Rooting"},"target":{"connection":"E13RuneMEvt0001X:outputs:target"}},"position":{"x":640,"y":0}}]},
-{"id":"E13RuneTTrg0001X","name":"True Rooting","folder":"Equipment","description":"Apply immobilized after a critical True Rooting rune hit; Escape and weapon selection remain manual.","priority":0,"tags":["pf2e","equipment","true-rooting"],"variables":{"E13RuneTEvt0001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"E13RuneTEvt0001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"}},"nodes":[{"id":"E13RuneTEvt0001X","type":"attack-roll-event","outs":{"out":{"connection":"E13RuneTMch0001X:ins:in"}},"position":{"x":0,"y":0}},{"id":"E13RuneTMch0001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:true-rooting"},"list":{"connection":"E13RuneTEvt0001X:outputs:options"}},"outs":{"true":{"connection":"E13RuneTImb0001X:ins:in"}},"position":{"x":320,"y":0}},{"id":"E13RuneTImb0001X","type":"create-condition","state":"timed","inputs":{"condition":{"value":"immobilized"},"duration":{"value":1},"unit":{"value":"rounds"},"name":{"value":"Effect: True Rooting"},"target":{"connection":"E13RuneTEvt0001X:outputs:target"}},"position":{"x":640,"y":0}}]}
+  {
+    "id": "E13RuneMTrg0001X",
+    "name": "Major Rooting",
+    "folder": "Equipment",
+    "description": "Apply immobilized after a critical Major Rooting rune hit; Escape and weapon selection remain manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "equipment",
+      "major-rooting"
+    ],
+    "variables": {
+      "E13RuneMEvt0001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "E13RuneMEvt0001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      }
+    },
+    "nodes": [
+      {
+        "id": "E13RuneMEvt0001X",
+        "type": "attack-roll-event",
+        "outs": {
+          "out": {
+            "connection": "E13RuneMMch0001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "E13RuneMMch0001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:major-rooting"
+          },
+          "list": {
+            "connection": "E13RuneMEvt0001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "E13RuneMImb0001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "E13RuneMImb0001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "immobilized"
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "rounds"
+          },
+          "name": {
+            "value": "Effect: Major Rooting"
+          },
+          "target": {
+            "connection": "E13RuneMEvt0001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      }
+    ]
+  },
+  {
+    "id": "E13RuneTTrg0001X",
+    "name": "True Rooting",
+    "folder": "Equipment",
+    "description": "Apply immobilized after a critical True Rooting rune hit; Escape and weapon selection remain manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "equipment",
+      "true-rooting"
+    ],
+    "variables": {
+      "E13RuneTEvt0001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "E13RuneTEvt0001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      }
+    },
+    "nodes": [
+      {
+        "id": "E13RuneTEvt0001X",
+        "type": "attack-roll-event",
+        "outs": {
+          "out": {
+            "connection": "E13RuneTMch0001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "E13RuneTMch0001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:true-rooting"
+          },
+          "list": {
+            "connection": "E13RuneTEvt0001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "E13RuneTImb0001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "E13RuneTImb0001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "immobilized"
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "rounds"
+          },
+          "name": {
+            "value": "Effect: True Rooting"
+          },
+          "target": {
+            "connection": "E13RuneTEvt0001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      }
+    ]
+  }
 ]

@@ -53,7 +53,7 @@
     },
     "nodes": [
       {"id": "B24OEFEvt000001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "skill-check"}}, "outs": {"out": {"connection": "B24OEFMch000001X:ins:in"}}, "position": {"x": 0, "y": 0}},
-      {"id": "B24OEFMch000001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:overextending-feint"}, "list": {"connection": "B24OEFЕvt000001X:outputs:options"}}, "outs": {"true": {"connection": "B24OEFSpl000001X:ins:in"}}, "position": {"x": 320, "y": 0}},
+      {"id": "B24OEFMch000001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:overextending-feint"}, "list": {"connection": "B24OEFEvt000001X:outputs:options"}}, "outs": {"true": {"connection": "B24OEFSpl000001X:ins:in"}}, "position": {"x": 320, "y": 0}},
       {"id": "B24OEFSpl000001X", "type": "split-outcome", "inputs": {"input": {"connection": "B24OEFEvt000001X:outputs:outcome"}}, "outs": {"success": {"connection": "B24OEFOff000001X:ins:in"}, "criticalSuccess": {"connection": "B24OEFOff000001X:ins:in"}}, "position": {"x": 640, "y": 0}},
       {"id": "B24OEFOff000001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "name": {"value": "Effect: Overextending Feint"}, "target": {"connection": "B24OEFEvt000001X:outputs:target"}}, "position": {"x": 960, "y": 0}}
     ]

@@ -5982,3 +5982,7 @@ Compared the module's trigger names against the public [PF2e Trigger Trove](http
 ## Batch 492 Trigger Engine capability audit
 
 Used the Trigger Engine 1.27+ `Await Select` action node, propagated action user context, and 1.27+ `Execute Trigger` composition to replace the two manual-choice `Drink Essence` triggers with one selectable caller plus a reusable valued-condition helper. The caller asks the acting user to choose drained or stupefied and passes the target, selected condition, value, and maximum into the helper. The native requirements, healing, and repeat-use restrictions remain manual. No Trigger Trove definition named `Drink Essence — Choice` was present.
+
+## Batch 493 invalid-trigger residue cleanup
+
+Audited every trigger JSON file, including sources not currently registered by `scripts/main.js`, against the installed Trigger Engine node registry. Four legacy graphs still contained the unsupported `persistent-damage` node: Flaming, Greater Flaming, Flensing Slice, and Blood Vendetta — Persistent Bleed. They were removed because the installed engine has no compatible persistent-damage node. The full module now contains no `persistent-damage` nodes.

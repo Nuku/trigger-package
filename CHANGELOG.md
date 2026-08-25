@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.5
+
+- Removed four unregistered legacy triggers containing unsupported `persistent-damage` nodes.
+
 ## 0.1.4
 
 - Refactored `Drink Essence` to use a reusable `Execute Trigger` condition-increase helper.

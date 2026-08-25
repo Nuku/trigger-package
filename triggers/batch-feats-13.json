@@ -1,6 +1,272 @@
 [
-{"id":"B13DebilTrg0001X","name":"Debilitating Strike","folder":"Feats","description":"Apply enfeebled 1 after Debilitating Strike; prerequisites remain manual.","priority":0,"tags":["pf2e","feat","debilitating-strike"],"variables":{"B13DebilEvt0001X:outputs:target":{"type":"target","isArray":false,"label":"Target"},"B13DebilEvt0001X:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"}},"nodes":[{"id":"B13DebilEvt0001X","type":"attack-roll-event","outs":{"out":{"connection":"B13DebilMch0001X:ins:in"}},"position":{"x":0,"y":0}},{"id":"B13DebilMch0001X","type":"list-contains","inputs":{"entry":{"value":"item:slug:debilitating-strike"},"list":{"connection":"B13DebilEvt0001X:outputs:options"}},"outs":{"true":{"connection":"B13DebilEnf0001X:ins:in"}},"position":{"x":320,"y":0}},{"id":"B13DebilEnf0001X","type":"increase-condition","state":"fixed","inputs":{"condition":{"value":"enfeebled"},"max":{"value":1},"value":{"value":1},"name":{"value":"Effect: Debilitating Strike"},"target":{"connection":"B13DebilEvt0001X:outputs:target"}},"position":{"x":640,"y":0}}]},
-{"id":"B13FlensTrg001XX","name":"Flensing Slice","folder":"Feats","description":"Apply persistent bleed after Flensing Slice; prerequisites remain manual.","priority":0,"tags":["pf2e","feat","flensing-slice"],"variables":{"B13FlensEvt001XX:outputs:target":{"type":"target","isArray":false,"label":"Target"},"B13FlensEvt001XX:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"}},"nodes":[{"id":"B13FlensEvt001XX","type":"attack-roll-event","outs":{"out":{"connection":"B13FlensMch001XX:ins:in"}},"position":{"x":0,"y":0}},{"id":"B13FlensMch001XX","type":"list-contains","inputs":{"entry":{"value":"item:slug:flensing-slice"},"list":{"connection":"B13FlensEvt001XX:outputs:options"}},"outs":{"true":{"connection":"B13FlensBle001XX:ins:in"}},"position":{"x":320,"y":0}},{"id":"B13FlensBle001XX","type":"persistent-damage","state":"fixed","inputs":{"formula":{"value":"1d8[bleed]"},"target":{"connection":"B13FlensEvt001XX:outputs:target"},"name":{"value":"Effect: Flensing Slice"}},"position":{"x":640,"y":0}}]},
-{"id":"B13AnimateTrg001","name":"Animate Net","folder":"Feats","description":"Apply off-guard after Animate Net; immobilization remains manual.","priority":0,"tags":["pf2e","feat","animate-net"],"variables":{"B13AnimateEvt001:outputs:target":{"type":"target","isArray":false,"label":"Target"},"B13AnimateEvt001:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"}},"nodes":[{"id":"B13AnimateEvt001","type":"check-roll-event","state":"check","inputs":{"for":{"value":"skill-check"}},"outs":{"out":{"connection":"B13AnimateMch001:ins:in"}},"position":{"x":0,"y":0}},{"id":"B13AnimateMch001","type":"list-contains","inputs":{"entry":{"value":"item:slug:animate-net"},"list":{"connection":"B13AnimateEvt001:outputs:options"}},"outs":{"true":{"connection":"B13AnimateOff001:ins:in"}},"position":{"x":320,"y":0}},{"id":"B13AnimateOff001","type":"create-condition","state":"timed","inputs":{"condition":{"value":"off-guard"},"duration":{"value":1},"unit":{"value":"rounds"},"name":{"value":"Effect: Animate Net"},"target":{"connection":"B13AnimateEvt001:outputs:target"}},"position":{"x":640,"y":0}}]},
-{"id":"B13HotTrg001XXXX","name":"Hot Foot","folder":"Feats","description":"Apply off-guard for 1 round after Hot Foot; prerequisites remain manual.","priority":0,"tags":["pf2e","feat","hot-foot"],"variables":{"B13HotEvt001XXXX:outputs:target":{"type":"target","isArray":false,"label":"Target"},"B13HotEvt001XXXX:outputs:options":{"type":"text","isArray":true,"label":"Roll Options"}},"nodes":[{"id":"B13HotEvt001XXXX","type":"check-roll-event","state":"check","inputs":{"for":{"value":"skill-check"}},"outs":{"out":{"connection":"B13HotMch001XXXX:ins:in"}},"position":{"x":0,"y":0}},{"id":"B13HotMch001XXXX","type":"list-contains","inputs":{"entry":{"value":"item:slug:hot-foot"},"list":{"connection":"B13HotEvt001XXXX:outputs:options"}},"outs":{"true":{"connection":"B13HotOff001XXXX:ins:in"}},"position":{"x":320,"y":0}},{"id":"B13HotOff001XXXX","type":"create-condition","state":"timed","inputs":{"condition":{"value":"off-guard"},"duration":{"value":1},"unit":{"value":"rounds"},"name":{"value":"Effect: Hot Foot"},"target":{"connection":"B13HotEvt001XXXX:outputs:target"}},"position":{"x":640,"y":0}}]}
+  {
+    "id": "B13DebilTrg0001X",
+    "name": "Debilitating Strike",
+    "folder": "Feats",
+    "description": "Apply enfeebled 1 after Debilitating Strike; prerequisites remain manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "feat",
+      "debilitating-strike"
+    ],
+    "variables": {
+      "B13DebilEvt0001X:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B13DebilEvt0001X:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B13DebilEvt0001X",
+        "type": "attack-roll-event",
+        "outs": {
+          "out": {
+            "connection": "B13DebilMch0001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B13DebilMch0001X",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:debilitating-strike"
+          },
+          "list": {
+            "connection": "B13DebilEvt0001X:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B13DebilEnf0001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B13DebilEnf0001X",
+        "type": "increase-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": {
+            "value": "enfeebled"
+          },
+          "max": {
+            "value": 1
+          },
+          "value": {
+            "value": 1
+          },
+          "name": {
+            "value": "Effect: Debilitating Strike"
+          },
+          "target": {
+            "connection": "B13DebilEvt0001X:outputs:target"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      }
+    ]
+  },
+  {
+    "id": "B13AnimateTrg001",
+    "name": "Animate Net",
+    "folder": "Feats",
+    "description": "Apply off-guard after Animate Net; immobilization remains manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "feat",
+      "animate-net"
+    ],
+    "variables": {
+      "B13AnimateEvt001:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B13AnimateEvt001:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B13AnimateEvt001",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "skill-check"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B13AnimateMch001:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B13AnimateMch001",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:animate-net"
+          },
+          "list": {
+            "connection": "B13AnimateEvt001:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B13AnimateOff001:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B13AnimateOff001",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "off-guard"
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "rounds"
+          },
+          "name": {
+            "value": "Effect: Animate Net"
+          },
+          "target": {
+            "connection": "B13AnimateEvt001:outputs:target"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      }
+    ]
+  },
+  {
+    "id": "B13HotTrg001XXXX",
+    "name": "Hot Foot",
+    "folder": "Feats",
+    "description": "Apply off-guard for 1 round after Hot Foot; prerequisites remain manual.",
+    "priority": 0,
+    "tags": [
+      "pf2e",
+      "feat",
+      "hot-foot"
+    ],
+    "variables": {
+      "B13HotEvt001XXXX:outputs:target": {
+        "type": "target",
+        "isArray": false,
+        "label": "Target"
+      },
+      "B13HotEvt001XXXX:outputs:options": {
+        "type": "text",
+        "isArray": true,
+        "label": "Roll Options"
+      }
+    },
+    "nodes": [
+      {
+        "id": "B13HotEvt001XXXX",
+        "type": "check-roll-event",
+        "state": "check",
+        "inputs": {
+          "for": {
+            "value": "skill-check"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "B13HotMch001XXXX:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "B13HotMch001XXXX",
+        "type": "list-contains",
+        "inputs": {
+          "entry": {
+            "value": "item:slug:hot-foot"
+          },
+          "list": {
+            "connection": "B13HotEvt001XXXX:outputs:options"
+          }
+        },
+        "outs": {
+          "true": {
+            "connection": "B13HotOff001XXXX:ins:in"
+          }
+        },
+        "position": {
+          "x": 320,
+          "y": 0
+        }
+      },
+      {
+        "id": "B13HotOff001XXXX",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "off-guard"
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "rounds"
+          },
+          "name": {
+            "value": "Effect: Hot Foot"
+          },
+          "target": {
+            "connection": "B13HotEvt001XXXX:outputs:target"
+          }
+        },
+        "position": {
+          "x": 640,
+          "y": 0
+        }
+      }
+    ]
+  }
 ]

@@ -2,7 +2,7 @@
   "id": "trigger-package",
   "title": "Trigger Package",
   "description": "Additional PF2e and SF2e Trigger Engine automation for feats, spells, equipment, and monster abilities.",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "authors": [
     {
       "name": "Nuku"
@@ -10,7 +10,7 @@
   ],
   "url": "https://github.com/Nuku/trigger-package",
   "manifest": "https://raw.githubusercontent.com/Nuku/trigger-package/master/module.json",
-  "download": "https://github.com/Nuku/trigger-package/releases/download/v0.1.4/trigger-package-0.1.4.zip",
+  "download": "https://github.com/Nuku/trigger-package/releases/download/v0.1.5/trigger-package-0.1.5.zip",
   "compatibility": {
     "minimum": "14",
     "verified": "14"
