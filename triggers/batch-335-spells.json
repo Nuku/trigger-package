@@ -45,24 +45,6 @@
     ]
   },
   {
-    "id": "B335AwiTrg00001X",
-    "name": "Attacked from Within — Frightened/Off-Guard",
-    "folder": "Spells",
-    "description": "Apply frightened 1/2 by Will-save outcome and off-guard on a critical failure against Attacked from Within; spirit damage and heightened scaling remain native/manual.",
-    "priority": 0,
-    "tags": ["pf2e", "spell", "attacked-from-within"],
-    "variables": {"B335AwiEvt00001X:outputs:target": {"type": "target", "isArray": false, "label": "Target"}, "B335AwiEvt00001X:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}, "B335AwiEvt00001X:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}},
-    "nodes": [
-      {"id": "B335AwiEvt00001X", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B335AwiMch00001X:ins:in"}}, "position": {"x": 0, "y": 0}},
-      {"id": "B335AwiMch00001X", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:attacked-from-within"}, "list": {"connection": "B335AwiEvt00001X:outputs:options"}}, "outs": {"true": {"connection": "B335AwiSpl00001X:ins:in"}}, "position": {"x": 320, "y": 0}},
-      {"id": "B335AwiSpl00001X", "type": "split-outcome", "inputs": {"input": {"connection": "B335AwiEvt00001X:outputs:outcome"}}, "outs": {"success": {"connection": "B335AwiFrt00001X:ins:in"}, "failure": {"connection": "B335AwiFrt00002X:ins:in"}, "criticalFailure": {"connection": "B335AwiFrt00003X:ins:in"}}, "position": {"x": 640, "y": 0}},
-      {"id": "B335AwiFrt00001X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 1}, "name": {"value": "Effect: Attacked from Within"}, "target": {"connection": "B335AwiEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 160}},
-      {"id": "B335AwiFrt00002X", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "frightened"}, "value": {"value": 2}, "name": {"value": "Effect: Attacked from Within"}, "target": {"connection": "B335AwiEvt00001X:outputs:target"}}, "position": {"x": 960, "y": 0}},
-      {"id": "B335AwiFrt00003X", "type": "create-condition", "state": "fixed", "outs": {"out": {"connection": "B335AwiOfg00001X:ins:in"}}, "inputs": {"condition": {"value": "frightened"}, "value": {"value": 2}, "name": {"value": "Effect: Attacked from Within"}, "target": {"connection": "B335AwiEvt00001X:outputs:target"}}, "position": {"x": 960, "y": -160}},
-      {"id": "B335AwiOfg00001X", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Attacked from Within"}, "target": {"connection": "B335AwiEvt00001X:outputs:target"}}, "position": {"x": 1280, "y": -160}}
-    ]
-  },
-  {
     "id": "B335CotTrg00001X",
     "name": "Call of the Grave — Sickened/Slowed",
     "folder": "Spells",

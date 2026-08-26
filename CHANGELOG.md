@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.6
+
+- Removed 15 triggers duplicated by the installed/public PF2e Trigger Trove.
+
 ## 0.1.5
 
 - Removed four unregistered legacy triggers containing unsupported `persistent-damage` nodes.
