@@ -2,7 +2,7 @@
   "id": "trigger-package",
   "title": "Trigger Package",
   "description": "Additional PF2e and SF2e Trigger Engine automation for feats, spells, equipment, and monster abilities.",
-  "version": "0.1.6",
+  "version": "0.1.9",
   "authors": [
     {
       "name": "Nuku"
@@ -10,7 +10,7 @@
   ],
   "url": "https://github.com/Nuku/trigger-package",
   "manifest": "https://raw.githubusercontent.com/Nuku/trigger-package/master/module.json",
-  "download": "https://github.com/Nuku/trigger-package/releases/download/v0.1.6/trigger-package-0.1.6.zip",
+  "download": "https://github.com/Nuku/trigger-package/releases/download/v0.1.9/trigger-package-0.1.9.zip",
   "compatibility": {
     "minimum": "14",
     "verified": "14"
@@ -38,6 +38,29 @@
         "type": "module",
         "compatibility": {
           "minimum": "1.28.0"
+        }
+      }
+    ],
+    "recommends": [
+      {
+        "id": "pf2e-toolbelt",
+        "type": "module",
+        "compatibility": {
+          "minimum": "3.56.0"
+        }
+      },
+      {
+        "id": "pf2e-hud",
+        "type": "module",
+        "compatibility": {
+          "minimum": "2.55.0"
+        }
+      },
+      {
+        "id": "pf2e-dailies",
+        "type": "module",
+        "compatibility": {
+          "minimum": "4.20.0"
         }
       }
     ]

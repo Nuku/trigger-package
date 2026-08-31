@@ -86,49 +86,6 @@
     ]
   },
   {
-    "id": "MagFetTrig000001",
-    "name": "Magical Fetters — Slowed",
-    "folder": "Spells",
-    "description": "On a failed or critically failed Reflex save against Magical Fetters, apply slowed 1; clumsy, Speed, and Escape effects remain manual.",
-    "priority": 0,
-    "tags": ["pf2e", "spell", "magical-fetters"],
-    "variables": {
-      "MagFetEvt0000001:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
-      "MagFetEvt0000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
-    },
-    "nodes": [
-      {
-        "id": "MagFetEvt0000001",
-        "type": "check-roll-event",
-        "state": "check",
-        "inputs": {"for": {"value": "saving-throw"}},
-        "outs": {"out": {"connection": "MagFetOpt0000001:ins:in"}},
-        "position": {"x": 0, "y": 0}
-      },
-      {
-        "id": "MagFetOpt0000001",
-        "type": "list-contains",
-        "inputs": {"entry": {"value": "item:slug:magical-fetters"}, "list": {"connection": "MagFetEvt0000001:outputs:options"}},
-        "outs": {"true": {"connection": "MagFetOut0000001:ins:in"}},
-        "position": {"x": 320, "y": 0}
-      },
-      {
-        "id": "MagFetOut0000001",
-        "type": "split-outcome",
-        "inputs": {"input": {"connection": "MagFetEvt0000001:outputs:outcome"}},
-        "outs": {"failure": {"connection": "MagFetSlw0000001:ins:in"}, "criticalFailure": {"connection": "MagFetSlw0000001:ins:in"}},
-        "position": {"x": 640, "y": 0}
-      },
-      {
-        "id": "MagFetSlw0000001",
-        "type": "create-condition",
-        "state": "fixed",
-        "inputs": {"condition": {"value": "slowed"}, "value": {"value": 1}, "duration": {"value": 1}, "name": {"value": "Effect: Magical Fetters"}, "target": {"connection": "MagFetEvt0000001:outputs:roller"}},
-        "position": {"x": 960, "y": 0}
-      }
-    ]
-  },
-  {
     "id": "StinkCloudTrig01",
     "name": "Stinking Cloud — Sickened",
     "folder": "Spells",

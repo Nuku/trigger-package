@@ -38,26 +38,6 @@
     ]
   },
   {
-    "id": "S06DistrChat0001",
-    "name": "Distracting Chatter — Off-Guard",
-    "folder": "Spells",
-    "description": "On a successful, failed, or critically failed Will save against Distracting Chatter, apply off-guard for 1, 3, or 10 rounds respectively; auditory flat checks remain manual.",
-    "priority": 0,
-    "tags": ["pf2e", "spell", "distracting-chatter"],
-    "variables": {
-      "S06DistrEvt00001:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
-      "S06DistrEvt00001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
-    },
-    "nodes": [
-      {"id": "S06DistrEvt00001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "S06DistrMch00001:ins:in"}}, "position": {"x": 0, "y": 0}},
-      {"id": "S06DistrMch00001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:distracting-chatter"}, "list": {"connection": "S06DistrEvt00001:outputs:options"}}, "outs": {"true": {"connection": "S06DistrSpl00001:ins:in"}}, "position": {"x": 320, "y": 0}},
-      {"id": "S06DistrSpl00001", "type": "split-outcome", "inputs": {"input": {"connection": "S06DistrEvt00001:outputs:outcome"}}, "outs": {"success": {"connection": "S06DistrOff00001:ins:in"}, "failure": {"connection": "S06DistrOff00002:ins:in"}, "criticalFailure": {"connection": "S06DistrOff00003:ins:in"}}, "position": {"x": 640, "y": 0}},
-      {"id": "S06DistrOff00001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 1}, "name": {"value": "Effect: Distracting Chatter"}, "target": {"connection": "S06DistrEvt00001:outputs:roller"}}, "position": {"x": 960, "y": 120}},
-      {"id": "S06DistrOff00002", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 3}, "name": {"value": "Effect: Distracting Chatter"}, "target": {"connection": "S06DistrEvt00001:outputs:roller"}}, "position": {"x": 960, "y": 0}},
-      {"id": "S06DistrOff00003", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "off-guard"}, "duration": {"value": 10}, "name": {"value": "Effect: Distracting Chatter"}, "target": {"connection": "S06DistrEvt00001:outputs:roller"}}, "position": {"x": 960, "y": -120}}
-    ]
-  },
-  {
     "id": "S06BlossGore0001",
     "name": "Blossoming Gore — Drained",
     "folder": "Spells",

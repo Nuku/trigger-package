@@ -20,25 +20,6 @@
     ]
   },
   {
-    "id": "B14DomiT000001AX",
-    "name": "Dominate — Controlled",
-    "folder": "Spells",
-    "description": "On a Dominate Will save, apply stunned 1 on a success or controlled on a failure or critical failure; end-of-turn saves, order restrictions, and the spell's duration remain manual.",
-    "priority": 0,
-    "tags": ["pf2e", "spell", "dominate"],
-    "variables": {
-      "B14DomiE000001AX:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
-      "B14DomiE000001AX:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
-    },
-    "nodes": [
-      {"id": "B14DomiE000001AX", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B14DomiM000001AX:ins:in"}}, "position": {"x": 0, "y": 0}},
-      {"id": "B14DomiM000001AX", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:dominate"}, "list": {"connection": "B14DomiE000001AX:outputs:options"}}, "outs": {"true": {"connection": "B14DomiS000001AX:ins:in"}}, "position": {"x": 320, "y": 0}},
-      {"id": "B14DomiS000001AX", "type": "split-outcome", "inputs": {"input": {"connection": "B14DomiE000001AX:outputs:outcome"}}, "outs": {"success": {"connection": "B14DomiC000001AX:ins:in"}, "failure": {"connection": "B14DomiC000002AX:ins:in"}, "criticalFailure": {"connection": "B14DomiC000002AX:ins:in"}}, "position": {"x": 640, "y": 0}},
-      {"id": "B14DomiC000001AX", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "stunned", "value2": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Dominate"}, "target": {"connection": "B14DomiE000001AX:outputs:roller"}}, "position": {"x": 960, "y": -80}},
-      {"id": "B14DomiC000002AX", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "controlled"}, "name": {"value": "Effect: Dominate"}, "target": {"connection": "B14DomiE000001AX:outputs:roller"}}, "position": {"x": 960, "y": 80}}
-    ]
-  },
-  {
     "id": "B14FeebT000001AX",
     "name": "Feeblemind — Stupefied",
     "folder": "Spells",

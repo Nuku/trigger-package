@@ -56,24 +56,5 @@
       {"id": "B27BonEnf0000001", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "enfeebled"}, "value": {"value": 1}, "name": {"value": "Effect: Boneshaker"}, "target": {"connection": "B27BonEvt0000001:outputs:target"}}, "position": {"x": 960, "y": 80}},
       {"id": "B27BonEnf0000002", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "enfeebled"}, "value": {"value": 2}, "name": {"value": "Effect: Boneshaker"}, "target": {"connection": "B27BonEvt0000001:outputs:target"}}, "position": {"x": 960, "y": -80}}
     ]
-  },
-  {
-    "id": "B27CasTrg0000001",
-    "name": "Cast into Time — Sickened",
-    "folder": "Spells",
-    "description": "On a Cast into Time Fortitude failure, apply sickened 1 until the end of the target's turn; temporal displacement, damage, placement, and heightened effects remain manual.",
-    "priority": 0,
-    "tags": ["pf2e", "spell", "cast-into-time"],
-    "variables": {
-      "B27CasEvt0000001:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
-      "B27CasEvt0000001:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"},
-      "B27CasEvt0000001:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"}
-    },
-    "nodes": [
-      {"id": "B27CasEvt0000001", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B27CasMch0000001:ins:in"}}, "position": {"x": 0, "y": 0}},
-      {"id": "B27CasMch0000001", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:cast-into-time"}, "list": {"connection": "B27CasEvt0000001:outputs:options"}}, "outs": {"true": {"connection": "B27CasCmp0000001:ins:in"}}, "position": {"x": 320, "y": 0}},
-      {"id": "B27CasCmp0000001", "type": "compare-outcomes", "inputs": {"a": {"connection": "B27CasEvt0000001:outputs:outcome"}, "b": {"value": "failure"}}, "outs": {"true": {"connection": "B27CasSic0000001:ins:in"}}, "position": {"x": 640, "y": 0}},
-      {"id": "B27CasSic0000001", "type": "create-condition", "state": "timed", "inputs": {"condition": {"value": "sickened"}, "value": {"value": 1}, "duration": {"value": 1}, "unit": {"value": "rounds"}, "name": {"value": "Effect: Cast into Time"}, "target": {"connection": "B27CasEvt0000001:outputs:target"}}, "position": {"x": 960, "y": 0}}
-    ]
   }
 ]

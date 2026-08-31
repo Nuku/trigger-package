@@ -1,0 +1,201 @@
+[
+  {
+    "id": "APlayTrg0000001X",
+    "name": "Fade Into Daydreams — Concealed",
+    "folder": "Actions",
+    "description": "When Fade Into Daydreams is actually used, apply concealed to the user for 1 round; the Hide restriction remains native.",
+    "priority": 0,
+    "tags": ["pf2e", "action", "fade-into-daydreams"],
+    "variables": {
+      "APlayEvt0000001X:outputs:origin": {
+        "type": "target",
+        "isArray": false,
+        "label": "User"
+      }
+    },
+    "nodes": [
+      {
+        "id": "APlayEvt0000001X",
+        "type": "action-chat-event",
+        "inputs": {
+          "slug": {
+            "value": "fade-into-daydreams"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "APlayCon0000001X:ins:in"
+          }
+        },
+        "position": { "x": 0, "y": 0 }
+      },
+      {
+        "id": "APlayCon0000001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": { "value": "concealed" },
+          "duration": { "value": 1 },
+          "unit": { "value": "rounds" },
+          "name": { "value": "Effect: Fade Into Daydreams" },
+          "target": { "connection": "APlayEvt0000001X:outputs:origin" }
+        },
+        "position": { "x": 480, "y": 0 }
+      }
+    ]
+  },
+  {
+    "id": "AVeilTrg0000001X",
+    "name": "Part the Veil — Concealed",
+    "folder": "Actions",
+    "description": "When Part the Veil is actually used, apply concealed to the user for 1 minute; hostile-action ending and Hide/Sneak restrictions remain native.",
+    "priority": 0,
+    "tags": ["pf2e", "action", "part-the-veil"],
+    "variables": {
+      "AVeilEvt0000001X:outputs:origin": {
+        "type": "target",
+        "isArray": false,
+        "label": "User"
+      }
+    },
+    "nodes": [
+      {
+        "id": "AVeilEvt0000001X",
+        "type": "action-chat-event",
+        "inputs": {
+          "slug": {
+            "value": "part-the-veil"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "AVeilCon0000001X:ins:in"
+          }
+        },
+        "position": { "x": 0, "y": 0 }
+      },
+      {
+        "id": "AVeilCon0000001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": { "value": "concealed" },
+          "duration": { "value": 1 },
+          "unit": { "value": "minutes" },
+          "name": { "value": "Effect: Part the Veil" },
+          "target": { "connection": "AVeilEvt0000001X:outputs:origin" }
+        },
+        "position": { "x": 480, "y": 0 }
+      }
+    ]
+  },
+  {
+    "id": "ASelfTrg0000001X",
+    "name": "Self Soothe — Reduce Frightened",
+    "folder": "Actions",
+    "description": "When Self Soothe is actually used, reduce the user's frightened condition by 1.",
+    "priority": 0,
+    "tags": ["sf2e", "action", "self-soothe"],
+    "variables": {
+      "ASelfEvt0000001X:outputs:origin": {
+        "type": "target",
+        "isArray": false,
+        "label": "User"
+      }
+    },
+    "nodes": [
+      {
+        "id": "ASelfEvt0000001X",
+        "type": "action-chat-event",
+        "inputs": {
+          "slug": {
+            "value": "self-soothe"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "ASelfDec0000001X:ins:in"
+          }
+        },
+        "position": { "x": 0, "y": 0 }
+      },
+      {
+        "id": "ASelfDec0000001X",
+        "type": "decrease-condition",
+        "state": "fixed",
+        "inputs": {
+          "condition": { "value": "frightened" },
+          "value": { "value": 1 },
+          "name": { "value": "Effect: Self Soothe" },
+          "target": { "connection": "ASelfEvt0000001X:outputs:origin" }
+        },
+        "position": { "x": 480, "y": 0 }
+      }
+    ]
+  },
+  {
+    "id": "AHarvTrg0000001X",
+    "name": "Harvest Blood — Reduce Drained",
+    "folder": "Actions",
+    "description": "When Harvest Blood is actually used, reduce the user's drained condition by 1; the preceding Strike qualification and temporary benefits remain native.",
+    "priority": 0,
+    "tags": ["pf2e", "action", "harvest-blood"],
+    "variables": { "AHarvEvt0000001X:outputs:origin": { "type": "target", "isArray": false, "label": "User" } },
+    "nodes": [
+      { "id": "AHarvEvt0000001X", "type": "action-chat-event", "inputs": { "slug": { "value": "harvest-blood" } }, "outs": { "out": { "connection": "AHarvDec0000001X:ins:in" } }, "position": { "x": 0, "y": 0 } },
+      { "id": "AHarvDec0000001X", "type": "decrease-condition", "state": "fixed", "inputs": { "condition": { "value": "drained" }, "value": { "value": 1 }, "name": { "value": "Effect: Harvest Blood" }, "target": { "connection": "AHarvEvt0000001X:outputs:origin" } }, "position": { "x": 480, "y": 0 } }
+    ]
+  },
+  {
+    "id": "ATactTrg0000001X",
+    "name": "Tactical Retreat — Fleeing",
+    "folder": "Actions",
+    "description": "When Tactical Retreat is actually used, apply fleeing for 1 round; the frightened trigger and Stride remain native.",
+    "priority": 0,
+    "tags": ["pf2e", "action", "tactical-retreat"],
+    "variables": { "ATactEvt0000001X:outputs:origin": { "type": "target", "isArray": false, "label": "User" } },
+    "nodes": [
+      { "id": "ATactEvt0000001X", "type": "action-chat-event", "inputs": { "slug": { "value": "tactical-retreat" } }, "outs": { "out": { "connection": "ATactFle0000001X:ins:in" } }, "position": { "x": 0, "y": 0 } },
+      { "id": "ATactFle0000001X", "type": "create-condition", "state": "timed", "inputs": { "condition": { "value": "fleeing" }, "duration": { "value": 1 }, "unit": { "value": "rounds" }, "name": { "value": "Effect: Tactical Retreat" }, "target": { "connection": "ATactEvt0000001X:outputs:origin" } }, "position": { "x": 480, "y": 0 } }
+    ]
+  },
+  {
+    "id": "ANourTrg0000001X",
+    "name": "Nourishing Light — Remove Dying",
+    "folder": "Actions",
+    "description": "When Nourishing Light is actually used, remove dying from its selected target; unconsciousness and optional healing remain native.",
+    "priority": 0,
+    "tags": ["sf2e", "action", "nourishing-light"],
+    "variables": { "ANourEvt0000001X:outputs:targets": { "type": "target", "isArray": true, "label": "Targets" } },
+    "nodes": [
+      { "id": "ANourEvt0000001X", "type": "action-chat-event", "inputs": { "slug": { "value": "nourishing-light" } }, "outs": { "out": { "connection": "ANourRem0000001X:ins:in" } }, "position": { "x": 0, "y": 0 } },
+      { "id": "ANourRem0000001X", "type": "remove-condition", "state": "fixed", "inputs": { "condition": { "value": "dying" }, "name": { "value": "Effect: Nourishing Light" }, "target": { "connection": "ANourEvt0000001X:outputs:targets" } }, "position": { "x": 480, "y": 0 } }
+    ]
+  },
+  {
+    "id": "AEmpaTrg0000001X",
+    "name": "Empathic Assistance — Reduce Frightened",
+    "folder": "Actions",
+    "description": "When Empathic Assistance is actually used on a frightened ally, reduce that ally's frightened condition by 1; counteract and other mental-effect handling remain native.",
+    "priority": 0,
+    "tags": ["sf2e", "action", "empathic-assistance"],
+    "variables": { "AEmpaEvt0000001X:outputs:targets": { "type": "target", "isArray": true, "label": "Targets" } },
+    "nodes": [
+      { "id": "AEmpaEvt0000001X", "type": "action-chat-event", "inputs": { "slug": { "value": "empathic-assistance" } }, "outs": { "out": { "connection": "AEmpaDec0000001X:ins:in" } }, "position": { "x": 0, "y": 0 } },
+      { "id": "AEmpaDec0000001X", "type": "decrease-condition", "state": "fixed", "inputs": { "condition": { "value": "frightened" }, "value": { "value": 1 }, "name": { "value": "Effect: Empathic Assistance" }, "target": { "connection": "AEmpaEvt0000001X:outputs:targets" } }, "position": { "x": 480, "y": 0 } }
+    ]
+  },
+  {
+    "id": "AReorTrg0000001X",
+    "name": "Reorient — Remove Off-Guard",
+    "folder": "Actions",
+    "description": "When Reorient is actually used, remove off-guard from its selected target; the temporary immunity remains native.",
+    "priority": 0,
+    "tags": ["sf2e", "action", "reorient"],
+    "variables": { "AReorEvt0000001X:outputs:targets": { "type": "target", "isArray": true, "label": "Targets" } },
+    "nodes": [
+      { "id": "AReorEvt0000001X", "type": "action-chat-event", "inputs": { "slug": { "value": "reorient" } }, "outs": { "out": { "connection": "AReorRem0000001X:ins:in" } }, "position": { "x": 0, "y": 0 } },
+      { "id": "AReorRem0000001X", "type": "remove-condition", "state": "fixed", "inputs": { "condition": { "value": "off-guard" }, "name": { "value": "Effect: Reorient" }, "target": { "connection": "AReorEvt0000001X:outputs:targets" } }, "position": { "x": 480, "y": 0 } }
+    ]
+  }
+]

@@ -1,0 +1,159 @@
+[
+  {
+    "id": "OBlndTrg0000001X",
+    "name": "Blinding of the Needle — Blinded",
+    "folder": "Actions",
+    "description": "After the Blinding of the Needle Fortitude save, apply blinded for 1 round on a failure or critical failure; the qualifying Strike and Interact removal remain native.",
+    "priority": 0,
+    "tags": ["pf2e", "action", "blinding-of-the-needle"],
+    "variables": {
+      "OBlndEvt0000001X:outputs:target": { "type": "target", "isArray": false, "label": "Target" },
+      "OBlndEvt0000001X:outputs:options": { "type": "text", "isArray": true, "label": "Roll Options" },
+      "OBlndEvt0000001X:outputs:outcome": { "type": "outcome", "isArray": false, "label": "Outcome" }
+    },
+    "nodes": [
+      { "id": "OBlndEvt0000001X", "type": "check-roll-event", "state": "check", "inputs": { "for": { "value": "saving-throw" } }, "outs": { "out": { "connection": "OBlndMch0000001X:ins:in" } }, "position": { "x": 0, "y": 0 } },
+      { "id": "OBlndMch0000001X", "type": "list-contains", "inputs": { "entry": { "value": "item:slug:blinding-of-the-needle" }, "list": { "connection": "OBlndEvt0000001X:outputs:options" } }, "outs": { "true": { "connection": "OBlndSpl0000001X:ins:in" } }, "position": { "x": 320, "y": 0 } },
+      { "id": "OBlndSpl0000001X", "type": "split-outcome", "inputs": { "input": { "connection": "OBlndEvt0000001X:outputs:outcome" } }, "outs": { "failure": { "connection": "OBlndCon0000001X:ins:in" }, "criticalFailure": { "connection": "OBlndCon0000001X:ins:in" } }, "position": { "x": 640, "y": 0 } },
+      { "id": "OBlndCon0000001X", "type": "create-condition", "state": "timed", "inputs": { "condition": { "value": "blinded" }, "duration": { "value": 1 }, "unit": { "value": "rounds" }, "name": { "value": "Effect: Blinding of the Needle" }, "target": { "connection": "OBlndEvt0000001X:outputs:target" } }, "position": { "x": 960, "y": 0 } }
+    ]
+  },
+  {
+    "id": "OPrmlTrg0000001X",
+    "name": "Primal Howl — Frightened",
+    "folder": "Actions",
+    "description": "After Primal Howl's basic Fortitude save, apply frightened 1 on a failure and frightened 2 on a critical failure; cone targeting and sonic damage remain native.",
+    "priority": 0,
+    "tags": ["pf2e", "action", "primal-howl"],
+    "variables": {
+      "OPrmlEvt0000001X:outputs:target": { "type": "target", "isArray": false, "label": "Target" },
+      "OPrmlEvt0000001X:outputs:options": { "type": "text", "isArray": true, "label": "Roll Options" },
+      "OPrmlEvt0000001X:outputs:outcome": { "type": "outcome", "isArray": false, "label": "Outcome" }
+    },
+    "nodes": [
+      { "id": "OPrmlEvt0000001X", "type": "check-roll-event", "state": "check", "inputs": { "for": { "value": "saving-throw" } }, "outs": { "out": { "connection": "OPrmlMch0000001X:ins:in" } }, "position": { "x": 0, "y": 0 } },
+      { "id": "OPrmlMch0000001X", "type": "list-contains", "inputs": { "entry": { "value": "item:slug:primal-howl" }, "list": { "connection": "OPrmlEvt0000001X:outputs:options" } }, "outs": { "true": { "connection": "OPrmlSpl0000001X:ins:in" } }, "position": { "x": 320, "y": 0 } },
+      { "id": "OPrmlSpl0000001X", "type": "split-outcome", "inputs": { "input": { "connection": "OPrmlEvt0000001X:outputs:outcome" } }, "outs": { "failure": { "connection": "OPrmlF100000001X:ins:in" }, "criticalFailure": { "connection": "OPrmlF200000001X:ins:in" } }, "position": { "x": 640, "y": 0 } },
+      { "id": "OPrmlF100000001X", "type": "create-condition", "state": "fixed", "inputs": { "condition": { "value": "frightened" }, "value": { "value": 1 }, "name": { "value": "Effect: Primal Howl" }, "target": { "connection": "OPrmlEvt0000001X:outputs:target" } }, "position": { "x": 960, "y": 80 } },
+      { "id": "OPrmlF200000001X", "type": "create-condition", "state": "fixed", "inputs": { "condition": { "value": "frightened" }, "value": { "value": 2 }, "name": { "value": "Effect: Primal Howl" }, "target": { "connection": "OPrmlEvt0000001X:outputs:target" } }, "position": { "x": 960, "y": -80 } }
+    ]
+  },
+  {
+    "id": "OLnchTrg0000001X",
+    "name": "Launch Fireworks — Dazzled",
+    "folder": "Actions",
+    "description": "After Launch Fireworks' Flower Fortitude save, apply dazzled for 1 round on a failure or 2 rounds on a critical failure; display selection and other fireworks remain native.",
+    "priority": 0,
+    "tags": ["pf2e", "action", "launch-fireworks"],
+    "variables": {
+      "OLnchEvt0000001X:outputs:target": { "type": "target", "isArray": false, "label": "Target" },
+      "OLnchEvt0000001X:outputs:options": { "type": "text", "isArray": true, "label": "Roll Options" },
+      "OLnchEvt0000001X:outputs:outcome": { "type": "outcome", "isArray": false, "label": "Outcome" }
+    },
+    "nodes": [
+      { "id": "OLnchEvt0000001X", "type": "check-roll-event", "state": "check", "inputs": { "for": { "value": "saving-throw" } }, "outs": { "out": { "connection": "OLnchMch0000001X:ins:in" } }, "position": { "x": 0, "y": 0 } },
+      { "id": "OLnchMch0000001X", "type": "list-contains", "inputs": { "entry": { "value": "item:slug:launch-fireworks" }, "list": { "connection": "OLnchEvt0000001X:outputs:options" } }, "outs": { "true": { "connection": "OLnchSpl0000001X:ins:in" } }, "position": { "x": 320, "y": 0 } },
+      { "id": "OLnchSpl0000001X", "type": "split-outcome", "inputs": { "input": { "connection": "OLnchEvt0000001X:outputs:outcome" } }, "outs": { "failure": { "connection": "OLnchD100000001X:ins:in" }, "criticalFailure": { "connection": "OLnchD200000001X:ins:in" } }, "position": { "x": 640, "y": 0 } },
+      { "id": "OLnchD100000001X", "type": "create-condition", "state": "timed", "inputs": { "condition": { "value": "dazzled" }, "duration": { "value": 1 }, "unit": { "value": "rounds" }, "name": { "value": "Effect: Launch Fireworks" }, "target": { "connection": "OLnchEvt0000001X:outputs:target" } }, "position": { "x": 960, "y": 80 } },
+      { "id": "OLnchD200000001X", "type": "create-condition", "state": "timed", "inputs": { "condition": { "value": "dazzled" }, "duration": { "value": 2 }, "unit": { "value": "rounds" }, "name": { "value": "Effect: Launch Fireworks" }, "target": { "connection": "OLnchEvt0000001X:outputs:target" } }, "position": { "x": 960, "y": -80 } }
+    ]
+  },
+  {
+    "id": "OBldyTrg0000001X",
+    "name": "Bloody Guillotine — Sickened",
+    "folder": "Actions",
+    "description": "After Bloody Guillotine's witnessing Will save, apply sickened 1 on a failure and sickened 2 on a critical failure; the death result and witness eligibility remain native.",
+    "priority": 0,
+    "tags": ["pf2e", "action", "bloody-guillotine"],
+    "variables": {
+      "OBldyEvt0000001X:outputs:target": { "type": "target", "isArray": false, "label": "Target" },
+      "OBldyEvt0000001X:outputs:options": { "type": "text", "isArray": true, "label": "Roll Options" },
+      "OBldyEvt0000001X:outputs:outcome": { "type": "outcome", "isArray": false, "label": "Outcome" }
+    },
+    "nodes": [
+      { "id": "OBldyEvt0000001X", "type": "check-roll-event", "state": "check", "inputs": { "for": { "value": "saving-throw" } }, "outs": { "out": { "connection": "OBldyMch0000001X:ins:in" } }, "position": { "x": 0, "y": 0 } },
+      { "id": "OBldyMch0000001X", "type": "list-contains", "inputs": { "entry": { "value": "item:slug:bloody-guillotine" }, "list": { "connection": "OBldyEvt0000001X:outputs:options" } }, "outs": { "true": { "connection": "OBldySpl0000001X:ins:in" } }, "position": { "x": 320, "y": 0 } },
+      { "id": "OBldySpl0000001X", "type": "split-outcome", "inputs": { "input": { "connection": "OBldyEvt0000001X:outputs:outcome" } }, "outs": { "failure": { "connection": "OBldyS100000001X:ins:in" }, "criticalFailure": { "connection": "OBldyS200000001X:ins:in" } }, "position": { "x": 640, "y": 0 } },
+      { "id": "OBldyS100000001X", "type": "create-condition", "state": "timed", "inputs": { "condition": { "value": "sickened" }, "value": { "value": 1 }, "duration": { "value": 1 }, "unit": { "value": "rounds" }, "name": { "value": "Effect: Bloody Guillotine" }, "target": { "connection": "OBldyEvt0000001X:outputs:target" } }, "position": { "x": 960, "y": 80 } },
+      { "id": "OBldyS200000001X", "type": "create-condition", "state": "timed", "inputs": { "condition": { "value": "sickened" }, "value": { "value": 2 }, "duration": { "value": 1 }, "unit": { "value": "rounds" }, "name": { "value": "Effect: Bloody Guillotine" }, "target": { "connection": "OBldyEvt0000001X:outputs:target" } }, "position": { "x": 960, "y": -80 } }
+    ]
+  },
+  {
+    "id": "SDazzTrg0000001X",
+    "name": "Dazzling Shell — Dazzled/Blinded",
+    "folder": "Actions",
+    "description": "After Dazzling Shell's Fortitude save, apply dazzled for 1 round on a failure, or blinded followed by dazzled on a critical failure; the triggering hit and adjacent targeting remain native.",
+    "priority": 0,
+    "tags": ["sf2e", "action", "dazzling-shell"],
+    "variables": {
+      "SDazzEvt0000001X:outputs:target": { "type": "target", "isArray": false, "label": "Target" },
+      "SDazzEvt0000001X:outputs:options": { "type": "text", "isArray": true, "label": "Roll Options" },
+      "SDazzEvt0000001X:outputs:outcome": { "type": "outcome", "isArray": false, "label": "Outcome" }
+    },
+    "nodes": [
+      { "id": "SDazzEvt0000001X", "type": "check-roll-event", "state": "check", "inputs": { "for": { "value": "saving-throw" } }, "outs": { "out": { "connection": "SDazzMch0000001X:ins:in" } }, "position": { "x": 0, "y": 0 } },
+      { "id": "SDazzMch0000001X", "type": "list-contains", "inputs": { "entry": { "value": "item:slug:dazzling-shell" }, "list": { "connection": "SDazzEvt0000001X:outputs:options" } }, "outs": { "true": { "connection": "SDazzSpl0000001X:ins:in" } }, "position": { "x": 320, "y": 0 } },
+      { "id": "SDazzSpl0000001X", "type": "split-outcome", "inputs": { "input": { "connection": "SDazzEvt0000001X:outputs:outcome" } }, "outs": { "failure": { "connection": "SDazzDaz0000001X:ins:in" }, "criticalFailure": { "connection": "SDazzBli0000001X:ins:in" } }, "position": { "x": 640, "y": 0 } },
+      { "id": "SDazzDaz0000001X", "type": "create-condition", "state": "timed", "inputs": { "condition": { "value": "dazzled" }, "duration": { "value": 1 }, "unit": { "value": "rounds" }, "name": { "value": "Effect: Dazzling Shell" }, "target": { "connection": "SDazzEvt0000001X:outputs:target" } }, "position": { "x": 960, "y": 80 } },
+      { "id": "SDazzBli0000001X", "type": "create-condition", "state": "timed", "outs": { "out": { "connection": "SDazzDaz0000002X:ins:in" } }, "inputs": { "condition": { "value": "blinded" }, "duration": { "value": 1 }, "unit": { "value": "rounds" }, "name": { "value": "Effect: Dazzling Shell" }, "target": { "connection": "SDazzEvt0000001X:outputs:target" } }, "position": { "x": 960, "y": -80 } },
+      { "id": "SDazzDaz0000002X", "type": "create-condition", "state": "timed", "inputs": { "condition": { "value": "dazzled" }, "duration": { "value": 1 }, "unit": { "value": "rounds" }, "name": { "value": "Effect: Dazzling Shell" }, "target": { "connection": "SDazzEvt0000001X:outputs:target" } }, "position": { "x": 1280, "y": -80 } }
+    ]
+  },
+  {
+    "id": "SShimTrg0000001X",
+    "name": "Shimmering Dazzle — Dazzled",
+    "folder": "Actions",
+    "description": "After Shimmering Dazzle's Fortitude save, apply dazzled for 1 round on a failure or critical failure.",
+    "priority": 0,
+    "tags": ["sf2e", "action", "shimmering-dazzle"],
+    "variables": {
+      "SShimEvt0000001X:outputs:target": { "type": "target", "isArray": false, "label": "Target" },
+      "SShimEvt0000001X:outputs:options": { "type": "text", "isArray": true, "label": "Roll Options" },
+      "SShimEvt0000001X:outputs:outcome": { "type": "outcome", "isArray": false, "label": "Outcome" }
+    },
+    "nodes": [
+      { "id": "SShimEvt0000001X", "type": "check-roll-event", "state": "check", "inputs": { "for": { "value": "saving-throw" } }, "outs": { "out": { "connection": "SShimMch0000001X:ins:in" } }, "position": { "x": 0, "y": 0 } },
+      { "id": "SShimMch0000001X", "type": "list-contains", "inputs": { "entry": { "value": "item:slug:shimmering-dazzle" }, "list": { "connection": "SShimEvt0000001X:outputs:options" } }, "outs": { "true": { "connection": "SShimSpl0000001X:ins:in" } }, "position": { "x": 320, "y": 0 } },
+      { "id": "SShimSpl0000001X", "type": "split-outcome", "inputs": { "input": { "connection": "SShimEvt0000001X:outputs:outcome" } }, "outs": { "failure": { "connection": "SShimDaz0000001X:ins:in" }, "criticalFailure": { "connection": "SShimDaz0000001X:ins:in" } }, "position": { "x": 640, "y": 0 } },
+      { "id": "SShimDaz0000001X", "type": "create-condition", "state": "timed", "inputs": { "condition": { "value": "dazzled" }, "duration": { "value": 1 }, "unit": { "value": "rounds" }, "name": { "value": "Effect: Shimmering Dazzle" }, "target": { "connection": "SShimEvt0000001X:outputs:target" } }, "position": { "x": 960, "y": 0 } }
+    ]
+  },
+  {
+    "id": "SContTrg0000001X",
+    "name": "Contaminate — Sickened",
+    "folder": "Actions",
+    "description": "After Contaminate's Fortitude save, apply sickened 1 for 1 minute on a failure; the triggering attack and poison damage remain native.",
+    "priority": 0,
+    "tags": ["sf2e", "action", "contaminate"],
+    "variables": {
+      "SContEvt0000001X:outputs:target": { "type": "target", "isArray": false, "label": "Target" },
+      "SContEvt0000001X:outputs:options": { "type": "text", "isArray": true, "label": "Roll Options" },
+      "SContEvt0000001X:outputs:outcome": { "type": "outcome", "isArray": false, "label": "Outcome" }
+    },
+    "nodes": [
+      { "id": "SContEvt0000001X", "type": "check-roll-event", "state": "check", "inputs": { "for": { "value": "saving-throw" } }, "outs": { "out": { "connection": "SContMch0000001X:ins:in" } }, "position": { "x": 0, "y": 0 } },
+      { "id": "SContMch0000001X", "type": "list-contains", "inputs": { "entry": { "value": "item:slug:contaminate" }, "list": { "connection": "SContEvt0000001X:outputs:options" } }, "outs": { "true": { "connection": "SContSpl0000001X:ins:in" } }, "position": { "x": 320, "y": 0 } },
+      { "id": "SContSpl0000001X", "type": "split-outcome", "inputs": { "input": { "connection": "SContEvt0000001X:outputs:outcome" } }, "outs": { "failure": { "connection": "SContSic0000001X:ins:in" } }, "position": { "x": 640, "y": 0 } },
+      { "id": "SContSic0000001X", "type": "create-condition", "state": "timed", "inputs": { "condition": { "value": "sickened" }, "value": { "value": 1 }, "duration": { "value": 1 }, "unit": { "value": "minutes" }, "name": { "value": "Effect: Contaminate" }, "target": { "connection": "SContEvt0000001X:outputs:target" } }, "position": { "x": 960, "y": 0 } }
+    ]
+  },
+  {
+    "id": "SPuffTrg0000001X",
+    "name": "Puff Up — Off-Guard",
+    "folder": "Actions",
+    "description": "After Puff Up's basic Reflex save, apply off-guard for 1 round on a critical failure; the triggering attack and piercing damage remain native.",
+    "priority": 0,
+    "tags": ["sf2e", "action", "puff-up"],
+    "variables": {
+      "SPuffEvt0000001X:outputs:target": { "type": "target", "isArray": false, "label": "Target" },
+      "SPuffEvt0000001X:outputs:options": { "type": "text", "isArray": true, "label": "Roll Options" },
+      "SPuffEvt0000001X:outputs:outcome": { "type": "outcome", "isArray": false, "label": "Outcome" }
+    },
+    "nodes": [
+      { "id": "SPuffEvt0000001X", "type": "check-roll-event", "state": "check", "inputs": { "for": { "value": "saving-throw" } }, "outs": { "out": { "connection": "SPuffMch0000001X:ins:in" } }, "position": { "x": 0, "y": 0 } },
+      { "id": "SPuffMch0000001X", "type": "list-contains", "inputs": { "entry": { "value": "item:slug:puff-up" }, "list": { "connection": "SPuffEvt0000001X:outputs:options" } }, "outs": { "true": { "connection": "SPuffSpl0000001X:ins:in" } }, "position": { "x": 320, "y": 0 } },
+      { "id": "SPuffSpl0000001X", "type": "split-outcome", "inputs": { "input": { "connection": "SPuffEvt0000001X:outputs:outcome" } }, "outs": { "criticalFailure": { "connection": "SPuffOfg0000001X:ins:in" } }, "position": { "x": 640, "y": 0 } },
+      { "id": "SPuffOfg0000001X", "type": "create-condition", "state": "timed", "inputs": { "condition": { "value": "off-guard" }, "duration": { "value": 1 }, "unit": { "value": "rounds" }, "name": { "value": "Effect: Puff Up" }, "target": { "connection": "SPuffEvt0000001X:outputs:target" } }, "position": { "x": 960, "y": 0 } }
+    ]
+  }
+]

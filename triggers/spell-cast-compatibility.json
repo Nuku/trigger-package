@@ -1,0 +1,63 @@
+[
+  {
+    "id": "SCDisTrg0000001X",
+    "name": "Disappearance — Invisible",
+    "folder": "Spells",
+    "description": "When Disappearance is actually cast, apply invisible for 1 minute to its target; ending the spell after a hostile action remains native/manual.",
+    "priority": 0,
+    "tags": ["pf2e", "sf2e", "spell", "disappearance"],
+    "variables": {
+      "SCDisEvt0000001X:outputs:targets": {
+        "type": "target",
+        "isArray": true,
+        "label": "Targets"
+      }
+    },
+    "nodes": [
+      {
+        "id": "SCDisEvt0000001X",
+        "type": "spell-cast-event",
+        "inputs": {
+          "slug": {
+            "value": "disappearance"
+          }
+        },
+        "outs": {
+          "out": {
+            "connection": "SCDisCon0000001X:ins:in"
+          }
+        },
+        "position": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "SCDisCon0000001X",
+        "type": "create-condition",
+        "state": "timed",
+        "inputs": {
+          "condition": {
+            "value": "invisible"
+          },
+          "duration": {
+            "value": 1
+          },
+          "unit": {
+            "value": "minutes"
+          },
+          "name": {
+            "value": "Effect: Disappearance"
+          },
+          "target": {
+            "connection": "SCDisEvt0000001X:outputs:targets"
+          }
+        },
+        "position": {
+          "x": 480,
+          "y": 0
+        }
+      }
+    ]
+  }
+]

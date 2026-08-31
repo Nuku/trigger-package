@@ -6,7 +6,11 @@ The source-content audit uses PF2e compendium data, while the resulting Trigger 
 
 Triggers whose entire flow is only an action event followed by a chat message are not the goal of this module. Those message-only reminder graphs have been removed. When an action, spell, or effect cannot be represented safely with Trigger Engine automation, it should remain documented as a manual/native limitation rather than receive a reminder-only trigger. Partial automations remain when they perform a real mechanical step and clearly identify what is still manual.
 
-This module is intended to complement the installed PF2e Trigger Trove rather than duplicate its 85 existing triggers. The package currently reaches Batch 486.
+This module is intended to complement the installed PF2e Trigger Trove rather than duplicate its 85 existing triggers. The package's numbered source batches currently reach Batch 492, with compatibility sources registered separately.
+
+## Actual-use capability audit
+
+The installed Trigger Engine 1.32.0 exposes `action-chat-event` with the Toolbelt 3.56.x `All Actionable` roll-option gate, and exposes `spell-cast-event` only when the system is newer than PF2e 8.4.1/SF2e 1.4.1. The current PF2e 8.4.1 and SF2e 1.4.1 releases therefore cannot use the spell-cast event yet; existing spell automations remain on the compatibility action-chat path. Eight unique actual-use action automations are registered only when Trigger Engine and Toolbelt All Actionable are active: Fade Into Daydreams, Part the Veil, Harvest Blood, Tactical Retreat, SF2e Self Soothe, Nourishing Light, Empathic Assistance, and Reorient. Eight action save-outcome automations use Trigger Engine's `check-roll-event`: PF2e Blinding of the Needle, Primal Howl, Launch Fireworks, and Bloody Guillotine; SF2e Dazzling Shell, Shimmering Dazzle, Contaminate, and Puff Up. Eight spell save/attack-outcome automations are also registered: SF2e Sonic Scream, Stumble, Void Scour, Death Sentence, Atomic Blast, and Inject Nanobots, plus PF2e Cutting Insult and Doom Mark. A full comparison of the local PF2e/SF2e spell and action packs found no further safe, non-duplicate candidates: remaining uncovered entries require a preceding Strike, a reaction/trigger context, a choice or area decision, sustain/repeat handling, or effects already performed by the system.
 
 ## Implemented in this batch
 
@@ -209,7 +213,7 @@ This module is intended to complement the installed PF2e Trigger Trove rather th
 
 ## Audit scope
 
-The review compares the installed PF2e `feats`, `spells`, `equipment`, and bestiary/NPC ability packs against every registered trigger source. Candidates are added when an action, item activation, save/check outcome, aura event, condition rider, or duration can be represented without silently replacing rules that still require a Strike, counteract check, targeting decision, or GM adjudication. The package currently reaches Batch 412; entries are kept in separate category files under `triggers/` and registered from `scripts/main.js` so each batch can be audited independently.
+The review compares the installed PF2e/SF2e `spells` and `actions` packs against every registered trigger source. Candidates are added when an action, item activation, save/check outcome, aura event, condition rider, or duration can be represented without silently replacing rules that still require a Strike, counteract check, targeting decision, or GM adjudication. Entries are kept in separate category files under `triggers/` and registered from `scripts/main.js` so each batch can be audited independently.
 
 ## Batch 01 additions
 

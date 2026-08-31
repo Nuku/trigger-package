@@ -5,7 +5,46 @@
  */
 
 const MODULE_ID = "trigger-package";
+const SPELL_CAST_TRIGGER_PATH = "modules/trigger-package/triggers/spell-cast-compatibility.json";
+const ACTIONABLE_TRIGGER_PATH = "modules/trigger-package/triggers/action-use-compatibility.json";
+const ACTION_OUTCOME_TRIGGER_PATH = "modules/trigger-package/triggers/action-outcome-compatibility.json";
+const SPELL_OUTCOME_TRIGGER_PATH = "modules/trigger-package/triggers/spell-outcome-compatibility.json";
+
+function supportsSpellCastEvent() {
+  const triggerEngine = game.modules.get("trigger-engine");
+  const minimumSystemVersion = {
+    pf2e: "8.4.2",
+    sf2e: "1.4.2",
+  }[game.system.id];
+
+  return Boolean(
+    triggerEngine?.active &&
+      !foundry.utils.isNewerVersion("1.32.0", triggerEngine.version) &&
+      minimumSystemVersion &&
+      !foundry.utils.isNewerVersion(minimumSystemVersion, game.system.version),
+  );
+}
+
+function supportsActionableEvents() {
+  const triggerEngine = game.modules.get("trigger-engine");
+  const toolbelt = game.modules.get("pf2e-toolbelt");
+  return Boolean(
+    triggerEngine?.active &&
+      !foundry.utils.isNewerVersion("1.32.0", triggerEngine.version) &&
+      toolbelt?.active &&
+      game.toolbelt?.getToolSetting("actionable", "actionable"),
+  );
+}
+
 Hooks.once("triggerEngine.registerTriggers", (registerTriggers) => {
+  if (supportsSpellCastEvent()) {
+    registerTriggers("trigger-engine", "pf2e-trigger", SPELL_CAST_TRIGGER_PATH);
+  }
+  if (supportsActionableEvents()) {
+    registerTriggers("trigger-engine", "pf2e-trigger", ACTIONABLE_TRIGGER_PATH);
+  }
+  registerTriggers("trigger-engine", "pf2e-trigger", ACTION_OUTCOME_TRIGGER_PATH);
+  registerTriggers("trigger-engine", "pf2e-trigger", SPELL_OUTCOME_TRIGGER_PATH);
   registerTriggers("trigger-engine", "pf2e-trigger", "modules/trigger-package/triggers/pf2e-trigger-package.json");
   registerTriggers("trigger-engine", "pf2e-trigger", "modules/trigger-package/triggers/batch-equipment-28.json");
   registerTriggers("trigger-engine", "pf2e-trigger", "modules/trigger-package/triggers/batch-feats-28.json");

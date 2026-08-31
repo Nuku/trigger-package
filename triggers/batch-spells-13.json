@@ -38,25 +38,6 @@
     ]
   },
   {
-    "id": "B13DiviT000001AX",
-    "name": "Divine Immolation — Persistent Fire",
-    "folder": "Spells",
-    "description": "On a Divine Immolation Reflex save, apply 2d6 persistent fire damage on a failure or 4d6 on a critical failure; area damage, sanctification, and heightened scaling remain native/manual.",
-    "priority": 0,
-    "tags": ["pf2e", "spell", "divine-immolation"],
-    "variables": {
-      "B13DiviE000001AX:outputs:roller": {"type": "target", "isArray": false, "label": "Target"},
-      "B13DiviE000001AX:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
-    },
-    "nodes": [
-      {"id": "B13DiviE000001AX", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "B13DiviM000001AX:ins:in"}}, "position": {"x": 0, "y": 0}},
-      {"id": "B13DiviM000001AX", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:divine-immolation"}, "list": {"connection": "B13DiviE000001AX:outputs:options"}}, "outs": {"true": {"connection": "B13DiviS000001AX:ins:in"}}, "position": {"x": 320, "y": 0}},
-      {"id": "B13DiviS000001AX", "type": "split-outcome", "inputs": {"input": {"connection": "B13DiviE000001AX:outputs:outcome"}}, "outs": {"failure": {"connection": "B13DiviP000001AX:ins:in"}, "criticalFailure": {"connection": "B13DiviP000002AX:ins:in"}}, "position": {"x": 640, "y": 0}},
-      {"id": "B13DiviP000001AX", "type": "create-persistent", "inputs": {"die": {"value": "2d6"}, "target": {"connection": "B13DiviE000001AX:outputs:roller"}, "type": {"value": "fire"}}, "position": {"x": 960, "y": -80}},
-      {"id": "B13DiviP000002AX", "type": "create-persistent", "inputs": {"die": {"value": "4d6"}, "target": {"connection": "B13DiviE000001AX:outputs:roller"}, "type": {"value": "fire"}}, "position": {"x": 960, "y": 80}}
-    ]
-  },
-  {
     "id": "B13EnthT000001AX",
     "name": "Enthrall — Fascinated",
     "folder": "Spells",

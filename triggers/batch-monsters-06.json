@@ -1,26 +1,5 @@
 [
   {
-    "id": "M06BLITRG00001XX",
-    "name": "Blinding Aura — Blinded",
-    "folder": "Monster Abilities",
-    "description": "When a creature fails a Blinding Aura Fortitude save, apply blinded for 1 minute; on a critical failure, apply blinded permanently. Aura timing, incapacitation, and 24-hour immunity remain manual.",
-    "priority": 0,
-    "tags": ["pf2e", "monster-ability", "blinding-aura"],
-    "variables": {
-      "M06BLIEVT00001XX:outputs:target": {"type": "target", "isArray": false, "label": "Target"},
-      "M06BLIEVT00001XX:outputs:roller": {"type": "target", "isArray": false, "label": "Saving Throw Target"},
-      "M06BLIEVT00001XX:outputs:outcome": {"type": "outcome", "isArray": false, "label": "Outcome"},
-      "M06BLIEVT00001XX:outputs:options": {"type": "text", "isArray": true, "label": "Roll Options"}
-    },
-    "nodes": [
-      {"id": "M06BLIEVT00001XX", "type": "check-roll-event", "state": "check", "inputs": {"for": {"value": "saving-throw"}}, "outs": {"out": {"connection": "M06BLIMCH00001XX:ins:in"}}, "position": {"x": 0, "y": 0}},
-      {"id": "M06BLIMCH00001XX", "type": "list-contains", "inputs": {"entry": {"value": "item:slug:blinding-aura"}, "list": {"connection": "M06BLIEVT00001XX:outputs:options"}}, "outs": {"true": {"connection": "M06BLISPL00001XX:ins:input"}}, "position": {"x": 320, "y": 0}},
-      {"id": "M06BLISPL00001XX", "type": "split-outcome", "inputs": {"input": {"connection": "M06BLIEVT00001XX:outputs:outcome"}}, "outs": {"failure": {"connection": "M06BLIFAI00001XX:ins:in"}, "criticalFailure": {"connection": "M06BLICRI00001XX:ins:in"}}, "position": {"x": 640, "y": 0}},
-      {"id": "M06BLIFAI00001XX", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "blinded"}, "duration": {"value": 1}, "name": {"value": "Effect: Blinding Aura"}, "target": {"connection": "M06BLIEVT00001XX:outputs:roller"}}, "position": {"x": 960, "y": 60}},
-      {"id": "M06BLICRI00001XX", "type": "create-condition", "state": "fixed", "inputs": {"condition": {"value": "blinded"}, "name": {"value": "Effect: Blinding Aura"}, "target": {"connection": "M06BLIEVT00001XX:outputs:roller"}}, "position": {"x": 960, "y": -60}}
-    ]
-  },
-  {
     "id": "M06CHGTRG00001XX",
     "name": "Churning Gaze — Sickened",
     "folder": "Monster Abilities",

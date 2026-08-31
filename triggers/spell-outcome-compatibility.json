@@ -1,0 +1,129 @@
+[
+  {
+    "id": "SSoniTrg0000001X",
+    "name": "Sonic Scream — Sickened",
+    "folder": "Spells",
+    "description": "After Sonic Scream's basic Fortitude save, apply sickened 1 on a failure; cone targeting and sonic damage remain native.",
+    "priority": 0,
+    "tags": ["sf2e", "spell", "sonic-scream"],
+    "variables": { "SSoniEvt0000001X:outputs:target": { "type": "target", "isArray": false, "label": "Target" }, "SSoniEvt0000001X:outputs:options": { "type": "text", "isArray": true, "label": "Roll Options" }, "SSoniEvt0000001X:outputs:outcome": { "type": "outcome", "isArray": false, "label": "Outcome" } },
+    "nodes": [
+      { "id": "SSoniEvt0000001X", "type": "check-roll-event", "state": "check", "inputs": { "for": { "value": "saving-throw" } }, "outs": { "out": { "connection": "SSoniMch0000001X:ins:in" } }, "position": { "x": 0, "y": 0 } },
+      { "id": "SSoniMch0000001X", "type": "list-contains", "inputs": { "entry": { "value": "item:slug:sonic-scream" }, "list": { "connection": "SSoniEvt0000001X:outputs:options" } }, "outs": { "true": { "connection": "SSoniSpl0000001X:ins:in" } }, "position": { "x": 320, "y": 0 } },
+      { "id": "SSoniSpl0000001X", "type": "split-outcome", "inputs": { "input": { "connection": "SSoniEvt0000001X:outputs:outcome" } }, "outs": { "failure": { "connection": "SSoniSic0000001X:ins:in" } }, "position": { "x": 640, "y": 0 } },
+      { "id": "SSoniSic0000001X", "type": "create-condition", "state": "fixed", "inputs": { "condition": { "value": "sickened" }, "value": { "value": 1 }, "name": { "value": "Effect: Sonic Scream" }, "target": { "connection": "SSoniEvt0000001X:outputs:target" } }, "position": { "x": 960, "y": 0 } }
+    ]
+  },
+  {
+    "id": "SStumTrg0000001X",
+    "name": "Stumble — Off-Guard/Prone",
+    "folder": "Spells",
+    "description": "After Stumble's Reflex save, apply off-guard for 1 round on a failure and prone on a critical failure; falling distance remains native.",
+    "priority": 0,
+    "tags": ["sf2e", "spell", "stumble"],
+    "variables": { "SStumEvt0000001X:outputs:target": { "type": "target", "isArray": false, "label": "Target" }, "SStumEvt0000001X:outputs:options": { "type": "text", "isArray": true, "label": "Roll Options" }, "SStumEvt0000001X:outputs:outcome": { "type": "outcome", "isArray": false, "label": "Outcome" } },
+    "nodes": [
+      { "id": "SStumEvt0000001X", "type": "check-roll-event", "state": "check", "inputs": { "for": { "value": "saving-throw" } }, "outs": { "out": { "connection": "SStumMch0000001X:ins:in" } }, "position": { "x": 0, "y": 0 } },
+      { "id": "SStumMch0000001X", "type": "list-contains", "inputs": { "entry": { "value": "item:slug:stumble" }, "list": { "connection": "SStumEvt0000001X:outputs:options" } }, "outs": { "true": { "connection": "SStumSpl0000001X:ins:in" } }, "position": { "x": 320, "y": 0 } },
+      { "id": "SStumSpl0000001X", "type": "split-outcome", "inputs": { "input": { "connection": "SStumEvt0000001X:outputs:outcome" } }, "outs": { "failure": { "connection": "SStumOfg0000001X:ins:in" }, "criticalFailure": { "connection": "SStumPrn0000001X:ins:in" } }, "position": { "x": 640, "y": 0 } },
+      { "id": "SStumOfg0000001X", "type": "create-condition", "state": "timed", "inputs": { "condition": { "value": "off-guard" }, "duration": { "value": 1 }, "unit": { "value": "rounds" }, "name": { "value": "Effect: Stumble" }, "target": { "connection": "SStumEvt0000001X:outputs:target" } }, "position": { "x": 960, "y": 80 } },
+      { "id": "SStumPrn0000001X", "type": "create-condition", "state": "fixed", "inputs": { "condition": { "value": "prone" }, "name": { "value": "Effect: Stumble" }, "target": { "connection": "SStumEvt0000001X:outputs:target" } }, "position": { "x": 960, "y": -80 } }
+    ]
+  },
+  {
+    "id": "SVoidTrg0000001X",
+    "name": "Void Scour — Drained",
+    "folder": "Spells",
+    "description": "After Void Scour's Reflex save, apply drained 1 on a failure and drained 2 on a critical failure; persistent void damage and area targeting remain native.",
+    "priority": 0,
+    "tags": ["sf2e", "spell", "void-scour"],
+    "variables": { "SVoidEvt0000001X:outputs:target": { "type": "target", "isArray": false, "label": "Target" }, "SVoidEvt0000001X:outputs:options": { "type": "text", "isArray": true, "label": "Roll Options" }, "SVoidEvt0000001X:outputs:outcome": { "type": "outcome", "isArray": false, "label": "Outcome" } },
+    "nodes": [
+      { "id": "SVoidEvt0000001X", "type": "check-roll-event", "state": "check", "inputs": { "for": { "value": "saving-throw" } }, "outs": { "out": { "connection": "SVoidMch0000001X:ins:in" } }, "position": { "x": 0, "y": 0 } },
+      { "id": "SVoidMch0000001X", "type": "list-contains", "inputs": { "entry": { "value": "item:slug:void-scour" }, "list": { "connection": "SVoidEvt0000001X:outputs:options" } }, "outs": { "true": { "connection": "SVoidSpl0000001X:ins:in" } }, "position": { "x": 320, "y": 0 } },
+      { "id": "SVoidSpl0000001X", "type": "split-outcome", "inputs": { "input": { "connection": "SVoidEvt0000001X:outputs:outcome" } }, "outs": { "failure": { "connection": "SVoidD100000001X:ins:in" }, "criticalFailure": { "connection": "SVoidD200000001X:ins:in" } }, "position": { "x": 640, "y": 0 } },
+      { "id": "SVoidD100000001X", "type": "create-condition", "state": "fixed", "inputs": { "condition": { "value": "drained" }, "value": { "value": 1 }, "name": { "value": "Effect: Void Scour" }, "target": { "connection": "SVoidEvt0000001X:outputs:target" } }, "position": { "x": 960, "y": 80 } },
+      { "id": "SVoidD200000001X", "type": "create-condition", "state": "fixed", "inputs": { "condition": { "value": "drained" }, "value": { "value": 2 }, "name": { "value": "Effect: Void Scour" }, "target": { "connection": "SVoidEvt0000001X:outputs:target" } }, "position": { "x": 960, "y": -80 } }
+    ]
+  },
+  {
+    "id": "SDeadTrg0000001X",
+    "name": "Death Sentence — Paralyzed",
+    "folder": "Spells",
+    "description": "After Death Sentence's Will save, apply paralyzed for 1 round on a failure or 2 rounds on a critical failure; spirit damage remains native.",
+    "priority": 0,
+    "tags": ["sf2e", "spell", "death-sentence"],
+    "variables": { "SDeadEvt0000001X:outputs:target": { "type": "target", "isArray": false, "label": "Target" }, "SDeadEvt0000001X:outputs:options": { "type": "text", "isArray": true, "label": "Roll Options" }, "SDeadEvt0000001X:outputs:outcome": { "type": "outcome", "isArray": false, "label": "Outcome" } },
+    "nodes": [
+      { "id": "SDeadEvt0000001X", "type": "check-roll-event", "state": "check", "inputs": { "for": { "value": "saving-throw" } }, "outs": { "out": { "connection": "SDeadMch0000001X:ins:in" } }, "position": { "x": 0, "y": 0 } },
+      { "id": "SDeadMch0000001X", "type": "list-contains", "inputs": { "entry": { "value": "item:slug:death-sentence" }, "list": { "connection": "SDeadEvt0000001X:outputs:options" } }, "outs": { "true": { "connection": "SDeadSpl0000001X:ins:in" } }, "position": { "x": 320, "y": 0 } },
+      { "id": "SDeadSpl0000001X", "type": "split-outcome", "inputs": { "input": { "connection": "SDeadEvt0000001X:outputs:outcome" } }, "outs": { "failure": { "connection": "SDeadP100000001X:ins:in" }, "criticalFailure": { "connection": "SDeadP200000001X:ins:in" } }, "position": { "x": 640, "y": 0 } },
+      { "id": "SDeadP100000001X", "type": "create-condition", "state": "timed", "inputs": { "condition": { "value": "paralyzed" }, "duration": { "value": 1 }, "unit": { "value": "rounds" }, "name": { "value": "Effect: Death Sentence" }, "target": { "connection": "SDeadEvt0000001X:outputs:target" } }, "position": { "x": 960, "y": 80 } },
+      { "id": "SDeadP200000001X", "type": "create-condition", "state": "timed", "inputs": { "condition": { "value": "paralyzed" }, "duration": { "value": 2 }, "unit": { "value": "rounds" }, "name": { "value": "Effect: Death Sentence" }, "target": { "connection": "SDeadEvt0000001X:outputs:target" } }, "position": { "x": 960, "y": -80 } }
+    ]
+  },
+  {
+    "id": "SAtomTrg0000001X",
+    "name": "Atomic Blast — Dazzled/Blinded",
+    "folder": "Spells",
+    "description": "After Atomic Blast's Fortitude save, apply dazzled for 1 minute on a success, or blinded for 1 minute on a failure or critical failure; radiation and damage remain native.",
+    "priority": 0,
+    "tags": ["sf2e", "spell", "atomic-blast"],
+    "variables": { "SAtomEvt0000001X:outputs:target": { "type": "target", "isArray": false, "label": "Target" }, "SAtomEvt0000001X:outputs:options": { "type": "text", "isArray": true, "label": "Roll Options" }, "SAtomEvt0000001X:outputs:outcome": { "type": "outcome", "isArray": false, "label": "Outcome" } },
+    "nodes": [
+      { "id": "SAtomEvt0000001X", "type": "check-roll-event", "state": "check", "inputs": { "for": { "value": "saving-throw" } }, "outs": { "out": { "connection": "SAtomMch0000001X:ins:in" } }, "position": { "x": 0, "y": 0 } },
+      { "id": "SAtomMch0000001X", "type": "list-contains", "inputs": { "entry": { "value": "item:slug:atomic-blast" }, "list": { "connection": "SAtomEvt0000001X:outputs:options" } }, "outs": { "true": { "connection": "SAtomSpl0000001X:ins:in" } }, "position": { "x": 320, "y": 0 } },
+      { "id": "SAtomSpl0000001X", "type": "split-outcome", "inputs": { "input": { "connection": "SAtomEvt0000001X:outputs:outcome" } }, "outs": { "success": { "connection": "SAtomDaz0000001X:ins:in" }, "failure": { "connection": "SAtomBli0000001X:ins:in" }, "criticalFailure": { "connection": "SAtomBli0000001X:ins:in" } }, "position": { "x": 640, "y": 0 } },
+      { "id": "SAtomDaz0000001X", "type": "create-condition", "state": "timed", "inputs": { "condition": { "value": "dazzled" }, "duration": { "value": 1 }, "unit": { "value": "minutes" }, "name": { "value": "Effect: Atomic Blast" }, "target": { "connection": "SAtomEvt0000001X:outputs:target" } }, "position": { "x": 960, "y": 80 } },
+      { "id": "SAtomBli0000001X", "type": "create-condition", "state": "timed", "inputs": { "condition": { "value": "blinded" }, "duration": { "value": 1 }, "unit": { "value": "minutes" }, "name": { "value": "Effect: Atomic Blast" }, "target": { "connection": "SAtomEvt0000001X:outputs:target" } }, "position": { "x": 960, "y": -80 } }
+    ]
+  },
+  {
+    "id": "SInjeTrg0000001X",
+    "name": "Inject Nanobots — Confused",
+    "folder": "Spells",
+    "description": "After Inject Nanobots' spell attack, apply confused for 1 round on a critical success; acid damage remains native.",
+    "priority": 0,
+    "tags": ["sf2e", "spell", "inject-nanobots"],
+    "variables": { "SInjeEvt0000001X:outputs:target": { "type": "target", "isArray": false, "label": "Target" }, "SInjeEvt0000001X:outputs:options": { "type": "text", "isArray": true, "label": "Roll Options" }, "SInjeEvt0000001X:outputs:outcome": { "type": "outcome", "isArray": false, "label": "Outcome" } },
+    "nodes": [
+      { "id": "SInjeEvt0000001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": { "out": { "connection": "SInjeMch0000001X:ins:in" } }, "position": { "x": 0, "y": 0 } },
+      { "id": "SInjeMch0000001X", "type": "list-contains", "inputs": { "entry": { "value": "item:slug:inject-nanobots" }, "list": { "connection": "SInjeEvt0000001X:outputs:options" } }, "outs": { "true": { "connection": "SInjeSpl0000001X:ins:in" } }, "position": { "x": 320, "y": 0 } },
+      { "id": "SInjeSpl0000001X", "type": "split-outcome", "inputs": { "input": { "connection": "SInjeEvt0000001X:outputs:outcome" } }, "outs": { "criticalSuccess": { "connection": "SInjeCon0000001X:ins:in" } }, "position": { "x": 640, "y": 0 } },
+      { "id": "SInjeCon0000001X", "type": "create-condition", "state": "timed", "inputs": { "condition": { "value": "confused" }, "duration": { "value": 1 }, "unit": { "value": "rounds" }, "name": { "value": "Effect: Inject Nanobots" }, "target": { "connection": "SInjeEvt0000001X:outputs:target" } }, "position": { "x": 960, "y": 0 } }
+    ]
+  },
+  {
+    "id": "PCuttTrg0000001X",
+    "name": "Cutting Insult — Frightened",
+    "folder": "Spells",
+    "description": "After Cutting Insult's Will save, apply frightened 1 on a success, frightened 2 on a failure, or frightened 3 on a critical failure; mental and persistent bleed damage remain native.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "cutting-insult"],
+    "variables": { "PCuttEvt0000001X:outputs:target": { "type": "target", "isArray": false, "label": "Target" }, "PCuttEvt0000001X:outputs:options": { "type": "text", "isArray": true, "label": "Roll Options" }, "PCuttEvt0000001X:outputs:outcome": { "type": "outcome", "isArray": false, "label": "Outcome" } },
+    "nodes": [
+      { "id": "PCuttEvt0000001X", "type": "check-roll-event", "state": "check", "inputs": { "for": { "value": "saving-throw" } }, "outs": { "out": { "connection": "PCuttMch0000001X:ins:in" } }, "position": { "x": 0, "y": 0 } },
+      { "id": "PCuttMch0000001X", "type": "list-contains", "inputs": { "entry": { "value": "item:slug:cutting-insult" }, "list": { "connection": "PCuttEvt0000001X:outputs:options" } }, "outs": { "true": { "connection": "PCuttSpl0000001X:ins:in" } }, "position": { "x": 320, "y": 0 } },
+      { "id": "PCuttSpl0000001X", "type": "split-outcome", "inputs": { "input": { "connection": "PCuttEvt0000001X:outputs:outcome" } }, "outs": { "success": { "connection": "PCuttF100000001X:ins:in" }, "failure": { "connection": "PCuttF200000001X:ins:in" }, "criticalFailure": { "connection": "PCuttF300000001X:ins:in" } }, "position": { "x": 640, "y": 0 } },
+      { "id": "PCuttF100000001X", "type": "create-condition", "state": "fixed", "inputs": { "condition": { "value": "frightened" }, "value": { "value": 1 }, "name": { "value": "Effect: Cutting Insult" }, "target": { "connection": "PCuttEvt0000001X:outputs:target" } }, "position": { "x": 960, "y": 100 } },
+      { "id": "PCuttF200000001X", "type": "create-condition", "state": "fixed", "inputs": { "condition": { "value": "frightened" }, "value": { "value": 2 }, "name": { "value": "Effect: Cutting Insult" }, "target": { "connection": "PCuttEvt0000001X:outputs:target" } }, "position": { "x": 960, "y": 0 } },
+      { "id": "PCuttF300000001X", "type": "create-condition", "state": "fixed", "inputs": { "condition": { "value": "frightened" }, "value": { "value": 3 }, "name": { "value": "Effect: Cutting Insult" }, "target": { "connection": "PCuttEvt0000001X:outputs:target" } }, "position": { "x": 960, "y": -100 } }
+    ]
+  },
+  {
+    "id": "PDoomTrg0000001X",
+    "name": "Doom Mark — Enfeebled/Stupefied",
+    "folder": "Spells",
+    "description": "After Doom Mark's spell attack hits, apply enfeebled 1 and stupefied 1 to the marked target; the mark's duration and death-triggered rider remain native.",
+    "priority": 0,
+    "tags": ["pf2e", "spell", "doom-mark"],
+    "variables": { "PDoomEvt0000001X:outputs:target": { "type": "target", "isArray": false, "label": "Target" }, "PDoomEvt0000001X:outputs:options": { "type": "text", "isArray": true, "label": "Roll Options" }, "PDoomEvt0000001X:outputs:outcome": { "type": "outcome", "isArray": false, "label": "Outcome" } },
+    "nodes": [
+      { "id": "PDoomEvt0000001X", "type": "attack-roll-event", "state": "attack", "inputs": {}, "outs": { "out": { "connection": "PDoomMch0000001X:ins:in" } }, "position": { "x": 0, "y": 0 } },
+      { "id": "PDoomMch0000001X", "type": "list-contains", "inputs": { "entry": { "value": "item:slug:doom-mark" }, "list": { "connection": "PDoomEvt0000001X:outputs:options" } }, "outs": { "true": { "connection": "PDoomSpl0000001X:ins:in" } }, "position": { "x": 320, "y": 0 } },
+      { "id": "PDoomSpl0000001X", "type": "split-outcome", "inputs": { "input": { "connection": "PDoomEvt0000001X:outputs:outcome" } }, "outs": { "success": { "connection": "PDoomEnf0000001X:ins:in" }, "criticalSuccess": { "connection": "PDoomEnf0000001X:ins:in" } }, "position": { "x": 640, "y": 0 } },
+      { "id": "PDoomEnf0000001X", "type": "create-condition", "state": "fixed", "outs": { "out": { "connection": "PDoomStu0000001X:ins:in" } }, "inputs": { "condition": { "value": "enfeebled" }, "value": { "value": 1 }, "name": { "value": "Effect: Doom Mark" }, "target": { "connection": "PDoomEvt0000001X:outputs:target" } }, "position": { "x": 960, "y": 0 } },
+      { "id": "PDoomStu0000001X", "type": "create-condition", "state": "fixed", "inputs": { "condition": { "value": "stupefied" }, "value": { "value": 1 }, "name": { "value": "Effect: Doom Mark" }, "target": { "connection": "PDoomEvt0000001X:outputs:target" } }, "position": { "x": 1280, "y": 0 } }
+    ]
+  }
+]

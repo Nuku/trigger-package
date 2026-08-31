@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.1.9
+
+- Added the audited PF2e/SF2e action and spell outcome automations, with actual-use integrations gated on the required modules.
+- Fixed release metadata and packaged the expanded trigger set for Foundry.
+
+## 0.1.8
+
+- Added the actual-use action audit compatibility set: PF2e Fade Into Daydreams and Part the Veil apply concealed to the user, and SF2e Self Soothe reduces frightened by 1. These registrations are gated on Trigger Engine and PF2e Toolbelt All Actionable.
+- Completed the local PF2e/SF2e spell and action comparison against installed PF2e Trigger Trove; no additional safe, unique candidates were found beyond these action automations and the existing spell-cast compatibility entry.
+- Expanded the actual-use set with PF2e Harvest Blood and Tactical Retreat, plus SF2e Nourishing Light and Empathic Assistance.
+- Added unique save-outcome riders for PF2e Blinding of the Needle, Primal Howl, Launch Fireworks, and Bloody Guillotine, plus SF2e Dazzling Shell, Shimmering Dazzle, Contaminate, and Puff Up.
+- Added SF2e Reorient actual-use cleanup and unique spell outcome riders for Sonic Scream, Stumble, Void Scour, Death Sentence, Atomic Blast, and Inject Nanobots.
+- Added PF2e spell outcome riders for Cutting Insult and Doom Mark.
+
+## 0.1.7
+- Reviewed compatibility with PF2e Toolbelt 3.56.0, PF2e Dailies 4.20.0, PF2e HUD 2.55.0, and Trigger Engine 1.32.0.
+- Added a gated `Disappearance — Invisible` automation using Trigger Engine's `Spell Cast` event; it is registered only with Trigger Engine 1.32.0+ and PF2e/SF2e 8.4.2/1.4.2+.
+- Existing `action-chat-event` automations remain the compatibility path: with Toolbelt 3.56.0's **All Actionable** setting enabled, they respond to actual **Use** actions; without Toolbelt or that setting, their legacy behavior is unchanged.
+- Kept existing spell action graphs instead of duplicating them with `Spell Cast`; the new event is reserved for future spell-specific automations that need post-variant cast timing and are gated by Trigger Engine/system versions.
+- Added recommended, optional module metadata for the Toolbelt, HUD, and Dailies integrations.
+
 ## 0.1.6
 
 - Removed 15 triggers duplicated by the installed/public PF2e Trigger Trove.
